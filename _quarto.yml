@@ -1,0 +1,27 @@
+project:
+  type: book
+
+book:
+  title: "A Five Day Crash Course in R"
+  author: "January Weiner"
+  date: "20/9/2024"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - day1-intro-to-r.qmd
+    - day2-complex-structures.qmd
+    - day3-reading-your-data.qmd
+    - day4-manipulating-your-data.qmd
+    - day5-visualization-and-statistics.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+
+
