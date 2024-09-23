@@ -1,0 +1,981 @@
+# Day 2: Complex data structures
+
+## Goals for today
+
+ * Complex data structures (matrices, lists and data frames)
+ * Logical vectors and subsetting
+
+## Logical vectors
+
+### Truth and falsehood
+
+Yesterday, we mentioned briefly two special values in R: `TRUE` and `FALSE`.
+These are logical constants, and they are used to represent truth and
+falsehood, respectively. Using these values, it is possible to create
+*logical vectors* – vectors that contain only these two values.
+
+
+```{r}
+logical_vector <- c(TRUE, FALSE, TRUE, TRUE, FALSE)
+```
+
+The `FALSE` value is equivalent to `0`, and `TRUE` is equivalent to `1`.
+That means, we can use logical vectors in arithmetic operations. One very
+common application of this is using `sum()` to count the number of `TRUE`
+values in a logical vector.
+
+
+```{r}
+sum(logical_vector)
+```
+
+Logical vectors are incredibly useful, because they can be used to subset
+other objects. For example, if you have a vector of numbers, you can use a
+logical vector to select some of the elements.
+
+
+```{r}
+numbers <- 1:5
+numbers[ logical_vector ]
+```
+
+The real usefulness of logical vectors comes when you create them using
+different operators that check for equality, inequality, etc. Let's look at
+that in more detail.
+
+::: {.callout-tip}
+## TRUE, FALSE and T and F
+
+In R, `TRUE` and `FALSE` are the only two logical constants. However, there
+are also two other constants, `T` and `F`, which are equivalent to `TRUE`
+and `FALSE`, respectively. **Do not use them**. Unlike `TRUE` and `FALSE`,
+they can be overwritten, which can lead to chaos and mayhem.
+:::
+
+
+
+### Comparison operators
+
+There are six comparison operators in R:
+
+ * `==` – equality
+ * `!=` – inequality
+ * `>` – greater than
+ * `<` – less than
+ * `>=` – greater than or equal to
+ * `<=` – less than or equal to
+
+They are vectorized like any other arithmetic operators, but their result
+is not a number – but a logical value. Take a look:
+
+
+```{r}
+numbers <- c(42, 3, -17, 0, -2, 1)
+numbers > 0
+```
+
+For each element of the vector, R checks if it is greater than zero. If it
+is, it returns `TRUE`, otherwise `FALSE`, producing, in the end, a vector
+containing as many elements as there were in the vector `numbers`. This
+logical vector can be used to subset the original vector.
+
+
+```{r}
+# prints only numbers greater than 0
+numbers[ numbers > 0 ]
+
+# prints only numbers different from 0
+numbers[ numbers != 0 ]
+```
+
+But wait, there is more. There is a number of functions that check the
+elements of a vector and return logical vectors. One of the most commonly
+used and most useful of these is the `is.na()` function, which checks if
+an element is "not available". This will come in handy later, when we start
+reading data from files – data which is full of NA's!
+
+
+```{r}
+numbers <- c(42, 3, NA, 0, -2, 1)
+is.na(numbers)
+```
+
+But hey, this does not tell us *which* elements are NA's. It is easy to see
+in the example above, but what if we have a vector with a million elements?
+Actually, to answer which elements are NA's you can simply use the `which()`
+function:
+
+
+```{r}
+which(is.na(numbers))
+```
+
+Fine, but what about the numbers which are *not* `NA`? What if we want to
+find all "good" numbers and store them for future use? In this case, we can
+use the `!` operator, which negates the logical vector. That is, each `TRUE`
+becomes `FALSE` and each `FALSE` becomes `TRUE`.
+
+
+```{r}
+nas <- is.na(numbers)
+nas
+# change TRUE to FALSE and FALSE to TRUE
+!nas
+useful_numbers <- numbers[!nas]
+useful_numbers
+```
+
+There is one more thing to mention here. The comparison operators `==` and
+`!=` can be used to compare strings as well[^strings].
+
+
+```{r}
+patient_measurements <- c(1, 16, 7, 42, 3)
+patient_gender <- c("male", "female", "female", "male", "female")
+patient_measurements[ patient_gender == "male" ]
+```
+
+
+
+
+
+[^strings]: Actually, they can be used to compare any two objects in R.
+Also, the `>` and `<` operators can be used to compare strings, but the
+result is not always what you might expect. Can you guess what it does?
+Hint: pick up a dictionary... or any other alphabetically sorted list.
+
+## Matrices
+
+### Creating matrices
+
+Matrices are just what says on the box: 2-dimensional structures; just like
+in mathematics. They behave in a very similar way to vectors in R, for example, they
+always hold elements of the same type (either numeric, character, etc., but
+never elements of both types). If you have your data stored in an Excel
+spreadsheet, chances are that different columns have different types of
+data. You can hardly use matrices in such a case. In fact, you will
+probably rarely use matrices in R, at least at the beginning – however,
+they are very useful for storing large data sets, for example from a
+transcriptomic analysis. For storing "Excel-like" data you will be using
+lists and data frames, which we will discuss later today.
+Nonetheless, we will spend some time on matrices today – because 90% of
+what you will learn today about matrices you will be able to use with data frames as well.
+
+Creating a matrix is very simple. You can use the `matrix()` function,
+which takes a vector as input and reshapes it into a matrix:
+
+
+```{r}
+mtx <- matrix(1:12, nrow = 3, ncol = 4)
+print(mtx)
+```
+
+As you remember from yesterdays course, the `1:12` is a vector of numbers
+from 1 to 12. The `nrow` and `ncol` parameters specify the number of rows
+and columns, respectively. You don't really need to specify both of them –
+if you specify only one, R will calculate the other one for you.
+
+As you have noticed above, by default the `matrix()` function fills the
+matrix by columns. If you want to fill it by rows, you can use the `byrow`
+parameter:
+
+```{r}
+mtx <- matrix(1:12, nrow = 3, ncol = 4, byrow = TRUE)
+print(mtx)
+```
+
+Here we use a special value – `TRUE` – which is a logical constant. It is
+equivalent to `1`, but it is more readable. You can also use `FALSE` (or
+`0`) to specify that you want to fill the matrix by columns (this is the
+default).
+
+It is also possible to create a large matrix by passing only one value
+(typically 0 or `NA`) and specifying the number of rows and columns. In
+that case, you have to specify both `nrow` and `ncol`.
+
+
+```{r}
+mtx <- matrix(0, nrow = 3, ncol = 4)
+```
+
+You can also create a matrix by binding vectors together, either by rows or
+by columns. The `rbind()` function binds vectors by rows, and the `cbind()`
+function binds vectors by columns. Always make sure that the vectors you bind have
+the same length and the same element type.
+
+
+```{r}
+a <- 1:3
+b <- 4:6
+mtx <- rbind(a, b)
+print(mtx)
+mtx <- cbind(a, b)
+print(mtx)
+```
+
+
+
+
+::: {.callout-tip}
+## Matrices and algebra
+
+R matrices are very powerful for linear algebra operations. If you ever
+learned linear algebra, you will find that R matrices can do pretty much
+everything you learned in class. For example, you can multiply matrices,
+transpose them, invert them, calculate determinants, etc. We will not cover these
+operations in this course.
+:::
+
+Just like vectors have a length
+which you can check with the `length()` function, matrices have dimensions – 
+the number of rows and the number of columns.
+You can access them using the `dim()` function, which returns a vector of
+length 2 (row and column number), and with functions `nrow()` and `ncol()`,
+which return the number of rows and columns, respectively.
+
+
+```{r}
+dim(mtx)
+nrow(mtx)
+ncol(mtx)
+```
+
+
+### Accessing matrix elements
+
+For vectors, we have used the square brackets (`[]`) to access elements.
+Same with matrices, really, however we have two dimensions now. Think about
+that: with vectors we could only select one or more elements. With
+matrices, it should be possible to select an element, a number of elements
+from a row (or the whole row), a number of elements from a column (or the
+whole column), or even a submatrix. All this is possible using the square
+brackets.
+
+
+```{r}
+mtx <- matrix(1:12, nrow = 3, ncol = 4)
+print(mtx)
+
+# Accessing the element in the third row and the second column
+mtx[3, 2]
+
+# Accessing first three numbers in the second column
+mtx[1:3, 2]
+
+# Accessing second to fourth numbers in the first row
+mtx[1, 2:4]
+```
+
+::: {.callout-tip}
+## Rows and columns
+
+When we talk about plotting, the first dimension, "x", is usually the
+horizontal one, and the second dimension, "y", is the vertical one.
+However, in R matrices, just like in real algebra, **the first dimension
+corresponds to the rows, and the second dimension corresponds to the
+columns**. You need to get used to it – it's the same for data frames which
+you will be using extensively.
+:::
+
+If you select more then one row and more than one column, you will get a
+new matrix – albeit smaller than the original one.
+
+
+```{r}
+# Selecting the first two rows and the last two columns
+# This will create a 2 x 2 matrix
+mtx[1:2, 3:4]
+```
+
+If you want to access whole rows or columns, you do not need to specify
+*anything* – simply leave an empty space before (for selecting whole
+columsn)
+or after (for selecting whole rows) the comma.
+
+
+```{r}
+# Selecting the whole second row
+mtx[2, ]
+
+# Selecting the whole third column
+mtx[, 3]
+
+# Row 1 and three - returns a matrix
+sel <- c(1, 3)
+mtx[sel, ]
+```
+
+This last example shows that just like with vectors, we can use a variable
+to make our selection.
+
+::: {.callout-important}
+## Remember!
+ * Rows first, then columns
+ * If you select a single column or a single row, you will get a vector
+ * If you select more than one row or column, you will get a (smaller) matrix
+ * If you select more rows or columns than are present, you will get a
+   "subscript out of bonds" error
+ * Vectors and matrices **always** have only one data type
+   (string, numerical, logical etc.)
+:::
+
+### Row and column names
+
+Just like in case of named vectors, we can name rows and columns of a matrix. However,
+for this we need two different functions: `rownames()` and `colnames()`
+(for row names and column names, duh).
+
+
+```{r}
+rownames(mtx) <- c("first", "second", "third")
+colnames(mtx) <- LETTERS[1:4]
+
+mtx["first", ]
+mtx[ , "A"]
+```
+
+In the code above, we use the `LETTERS` constant, which is a vector
+containing all the letters of the English alphabet. Just like constants
+`pi` and `e`, `LETTERS` is available in R by default, along with its
+lower-case counterpart, `letters`. It is useful for labeling.
+
+Unfortunately, we only have `r length(LETTERS)` letters in the alphabet, so
+what can we do with a matrix that has more columns than that? Well, we can
+use the same trick that Excel uses: after `Z`, we have `AA`, `AB`, etc.
+
+To create such a long vector, we will use two functions: `rep()` and
+`paste0()`.
+
+### Using `rep()` to generate column names
+
+The `rep()` function is a little and very useful utility function that
+repeats element of a vector a given number of times. It either repeats the
+whole vector several times, or, using the `each` parameter, repeats each
+element a given number of times:
+
+
+```{r}
+abc <- LETTERS[1:3] # A, B, C
+abc3 <- rep(abc, 3)
+abc3
+a3b3c3 <- rep(abc, each = 3)
+a3b3c3
+```
+
+In the code above, we created two vectors, each of the length $3 \times 3$;
+first one goes "A, B, C, A, B, C, …", and the second one goes "A, A,
+A, B, B, …". To get at our goal, we would have to paste together the first
+element from the first vector with the first element from the second
+vector etc.:
+
+|a3b3c3|abc3|result|
+|------|----|------|
+|A     |A   |AA    |
+|A     |B   |AB    |
+|A     |C   |AC    |
+|B     |A   |BA    |
+|B     |B   |BB    |
+|B     |C   |BC    |
+
+To do this, we will use the `paste0()` function, which concatenates strings
+and is vectorized, so it does *exactly* what we need.
+
+
+```{r}
+col_names <- paste0(abc3, a3b3c3)
+```
+
+Of course, we need all the letters (we used only three in the example above
+for demonstration purposes).
+
+```{r}
+n <- length(LETTERS)
+abc3 <- rep(LETTERS, n)
+a3b3c3 <- rep(LETTERS, each = n)
+col_names <- paste0(abc3, a3b3c3)
+length(col_names)
+head(col_names)
+tail(col_names)
+```
+
+The `head()` and `tail()` functions are very useful for inspecting the
+beginning and the end of a very large object such as a vector, matrix, or
+data frame. They are very useful for checking if the operation you just
+performed did what you expected it to do.
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-paste-rep}
+### Creating column names
+
+Repeat the procedure above, but generate column names for a matrix with
+more than a 1000 columns. Use the LETTERS constant, but rather then
+generating two-letter column names, generate three-letter column names:
+AAA, AAB, AAC, …, ABA, ABC, …, ZZZ. Store the result in a variable called `col_names`.
+:::
+:::
+
+
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-paste-rep}
+## Matrices - accessing and changing elements
+Assume you have a 48 well-plate for a drug sensitivity analysis with viability scores.
+ 
+ - Create a 48-element vector "drugSensitivity_v" with random numbers between 0 and 1. Use `runif(48)` to generate these values. These reflect your viability scores.
+ - What does the `runif()` function do?
+ - Create a 6x8 matrix "drugSensitivity" from the vector.
+
+Before starting you experiment, you decided to leave out the border wells to avoid edge effects:
+
+ - Change the values of all the border elements to NA.
+
+The rows are treated with inhibitor 1 with increasing concentrations (control, low, medium, high). Columns 2 to 4 are treated with inhibitor 2 with increasing concentrations (control, low, high) and column 5 to 7 are treated with inhibitor 3 (same concentrations as inhibitor 2).
+
+ - Use row and column names to reflect treatments.
+ - What are potential problems of this approach?
+ - Select all wells with inhibitor 3.
+ - Which wells can be used as negative control?
+ - Select only wells with a combination of inhibitor 1 and inhibitor 2.
+:::
+:::
+
+
+## Lists
+
+### Creating lists
+
+The objects that we have discussed so far – vectors and matrices – can only
+hold one type of data; you cannot mix strings with numbers, for example.
+This is obviously a problem – quite frequently you need to store both
+numbers and strings in one object. This is where lists come in.
+
+Lists are created using the `list()` function. Lists have elements, just
+like vectors; but unlike vectors, every element can be of any possible
+type. It can be a vector, of course, but can also be a matrix, a data
+frame, even a function – or another list. Actually, it is quite common to
+have a list of lists (or even list of lists of lists) in R.
+
+
+```{r}
+lst <- list(numbers=1:3, strings=c("a", "bu"), 
+            matrix = matrix(1:4, nrow = 2), 
+            logical = c(TRUE, FALSE))
+lst
+```
+
+### Accessing elements of a list
+
+Like vectors, lists can be named. In fact, they very often are. However,
+accessing them is a bit different than with vectors.
+
+You can use `[` and `]` square brackets to access elements of a list, but
+this produces *another list*, containing only the selected elements. Thus,
+if you type `lst["numbers"]`, you will get a list with one element, which
+is the vector of numbers:
+
+
+```{r}
+lst["numbers"]
+```
+
+You can see that it is a list because of this weird `$` (dollar) sign,
+which we will discuss in a moment. However, you can also check its type
+directly:
+
+
+```{r}
+typeof(lst["numbers"])
+```
+
+If, however, you want to work with the actual vector that is stored in the
+"numbers" slot of the list, you need to use one of two approaches. First
+approach is to use *double square brackets*:
+
+
+```{r}
+lst[["numbers"]]
+typeof(lst[["numbers"]])
+```
+
+That requires a lot of typing, four times square brackets and then, in
+addition, the quote marks. But programmers are lazy, and therefore, we have
+a shortcut: the `$` sign. It is used to access elements of a list by name:
+
+
+```{r}
+lst$numbers
+```
+
+You will use this construct *a lot* in R.
+
+The elements of a list behave *exactly* like regular variables. If an
+element is a vector, you can do with it all the things you can do with a
+vector; if it is a matrix, you can treat is as a matrix (because it *is* a
+matrix).
+
+
+```{r}
+patient_data <- list(name = "John Doe", age = 42, 
+                     measurements = runif(5))
+patient_data
+patient_data$measurements[1]
+patient_data$measurements[1] <- 42
+patient_data$measurements * 3
+```
+
+Since the lists are named, there must be a way to access and modify these
+names. And, of course, there is: the `names()` function.
+
+
+```{r}
+names(patient_data)
+names(patient_data) <- c("patient_name", "patient_age", "patient_measurements")
+names(patient_data)[3] <- "crp_measurement"
+```
+
+
+
+
+### Lists as return values
+
+A common application of lists has something to do with functions.
+Remeber that a function can return only one object? But what if a function
+would like to return several things at once? It can return a list!
+
+We will run now our first statistical test. First, we need to generate two
+groups of measurements to compare. We will simulate them using the
+`rnorm()` function which produces normally distributed random numbers. The
+function takes additional parameters, `mean` and `sd`, which specify the
+mean and the standard deviation of the distribution, respectively. That
+allows us to ensure that the groups differ:
+
+
+```{r}
+group_a <- rnorm(10, mean = 10, sd = 2)
+group_b <- rnorm(10, mean = 14, sd = 2)
+```
+
+Of course, before running any statistical test we usually want to have a
+look at the data, to see if the groups differ visually. We can do this by
+using the `boxplot()` function, which creates a boxplot of the data.
+
+
+```{r}
+boxplot(group_a, group_b)
+```
+
+::: {.callout-tip}
+## Boxplot
+
+Boxplots are a great way to visualize the data. The whiskers show the
+minimum and maximum values (excluding outliers, which are shown as separate
+points), the box shows the interquartile range (25th to 75th percentile),
+and the thick line in the middle of the box shows the median. There are
+better ways, which we will discuss on Day 5, but still, boxplots are pretty
+cool.
+:::
+
+OK, now we run a t-test. We will use the `t.test()` function for that, and
+store the result in a variable called `t_test`.
+
+
+```{r}
+t_test <- t.test(group_a, group_b)
+typeof(t_test)
+t_test
+```
+
+As you can see, the result is a list. However, when we print it to the
+console, it *does not look like one*. This is because R has a special
+function for formatting the results of a t-test[^oo], so that it is easier to 
+read.
+
+[^oo]: OK, this is way beyond the scope of this course, but the result
+returned by t.test has the class "htest". This *is* a list, but also it is
+something special, which is why R knows to print it in a different way. R
+is a functional language, but it also allows object oriented (OO)
+programming.
+
+Nonetheless, we can access the elements of the list in the usual way:
+
+
+```{r}
+t_test$p.value
+```
+
+### Replacing, adding and removing elements of a list
+
+You can assign elements to a list using the `$` sign. If the element does not
+exist yet in the list, it will be created; if it does, it will be replaced.
+
+To remove an element, you need to use the special value `NULL`.
+
+
+```{r}
+person <- list(name = "January", age = 117, pets=c("cat", "dog"))
+
+# change the age
+person$age <- 118
+
+# add a new element
+person$city <- "Hoppegarten"
+
+# remove pets
+person$pets <- NULL
+person
+```
+
+## Data Frames
+
+### Creating data frames
+
+Finally, we come to possibly the most important data structure in R – at
+least for us, biologists and medical researchers: data frames. Data frames
+are the closest thing to an Excel spreadsheet in R. They are used to store
+data in a tabular form, where each column can be of a different type. This
+makes them perfect for storing data from experiments, clinical trials, etc.
+You will be using them *a lot*.
+
+In R, data frames are *lists* that were made to behave a lot like
+*matrices*. Thus, everything that you learned so far about lists can be
+applied to data frames, including accessing their elements (columns) using
+the `$` operator. However, there are some differences between data frames
+and matrices.
+
+The main feature of data frame that makes them a bit like matrices is the
+fact that each element of a data frame is a vector[^df] and that these vectors
+have always the same length. This means that one of the major differences
+between data frames and, say, Excel spreadsheets, is that a column of a
+data frame contains only elements of a single type. If a "cell" in a data
+frame is a character string, then the whole column is a character vector;
+if it is numerical, then the whole column is a numerical vector, etc.
+
+[^df]: Actually, it is a bit more complicated than that, but for now, let's
+just say that each column of a data frame is a vector.
+
+This may seem like a limitation, but it is, in fact, a good thing. It makes
+data more consistent and less prone to errors.
+
+Like lists, data frames can be named or not, but typically they are. The
+names of a data frame are precisely the column names and you can access
+them (and modify) using both, `names` and `colnames` functions.
+
+```{r}
+names <- c("January", "William", "Bill")
+lastn <- c("Weiner", "Shakespeare", "Gates")
+age   <- c(NA, 460, 65)
+
+people <- data.frame(names=names, last_names=lastn, age=age)
+people
+names(people)
+colnames(people)
+```
+
+Like matrices, data frames have dimensions, which you can access using the
+`dim()`, `nrow()` and `ncol()` functions.
+
+
+```{r}
+dim(people)
+nrow(people)
+ncol(people)
+```
+
+Also, like matrices, the data frames can have rownames; however, for
+reasons that will be clear later, they are not as important as column
+names and in fact, we will not be using them[^rownames].
+
+[^rownames]: Row names in R data frames are very old school. Many people
+still use them, and many R functions produce them. However, we will be
+using the packages from the tidyverse family further down the line, which
+ignore the rownames, and for good reasons.
+
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-paste-rep}
+ * Create a 5x3 matrix with random numbers. Use `matrix` and `rnorm`.
+ * Turn the matrix into a data frame. Use `as.data.frame` for that.
+ * Add column and row names.
+ * Add a column. Each value in the column should be "A" (a string). Use the
+   `rep` function for that.
+ * Add a column with five numbers from 0 to 1. Use the `seq` function for that. 
+   Hint: look at the help for the `seq` function (`?seq`).
+:::
+:::
+
+
+### Accessing and modifying columns of a data frame
+
+Since data frames *are* lists, you can access their columns using the `$`
+operator. This is the most common way of accessing columns of a data frame:
+
+
+```{r}
+people$names
+```
+
+You can also access columns using the square brackets, just like with
+matrices, using a comma to denote the columns and rows. However, there is a
+fine difference between matrices and data frames: if you select a single
+row, you will not get a vector, but a data frame with one row. If you think
+about that, it makes perfect sense: the different columns can have
+different data types, so they cannot be easily combined into a vector
+without losing some information.
+
+
+```{r}
+people[1, ]
+```
+
+::: {.callout-caution}
+There is an issue when you try to access a single column of a data frame.
+We will discuss it at length in the following, but basically, this behavior
+is different for different *flavors* of data frames: base R data frames
+created with `data.frame()` return a vector, while others may return a data
+frame. Watch out for this!
+:::
+
+
+### Subsetting data frames with logical vectors
+
+Just like with vectors, you can use logical vectors to subset data frames.
+This is extremely useful and very common in R. For example, we might want
+to select only rows that do not contain NA values in the `age` column.
+
+
+```{r}
+people_with_age <- people[!is.na(people$age), ]
+people_with_age
+```
+
+That way we have filtered the data frame, leaving only persons with known
+age.
+
+Actually, for data frames, you will commonly use the `filter()` function
+(which we will introduce tomorrow). However:
+
+ * the `filter()` function also uses logical vectors;
+ * you can subset many different data types using logical vectors
+   (including matrices, lists, vectors, data frames), but `filter()` works
+   only with data frames; and
+ * sometimes using logical vectors is just more convenient.
+
+
+
+## Libraries in R
+
+### Installing and loading packages
+
+Starting tomorrow, we will cease to only use "base" R functions (that is,
+functions that are available in R "out of the box") and start using
+additional packages. Packages in R are collections of functions (and often
+some other things, like data sets, documents and more).
+
+Packages need to be installed before they can be used – but once you have
+installed a package, you don't need to install it again (unless you upgrade
+R or want to update the package to a newer version).
+
+However, to use a package, you also need to load it using the `library()`
+function. This you must do every time you start a new R session, because R
+"forgets" which packages have been loaded the previous time. It is a bit
+like with the software for your operating system: you need to install your
+browser only once, but you have to start each each time after you start
+your computer.
+
+Installing packages *usually* is straightforward, however at times it can
+be tricky.
+
+::: {.callout-tip}
+## package '---' was built under R version x.y.z
+
+At times you will get a warning that a package was "built" under a
+different version of R than the one that you are running. It is not an
+error (just a warning), and most of the time
+it can be ignored. It means what it says: that the installed package was
+built (e.g., compiled) with a different version of R. This can sometimes
+lead to problems, but most of the time it does not.
+:::
+
+We will return to installing packages from different sources on Day 5.
+
+::: {.callout-important}
+## Remember!
+
+Remember: you need to install a package only once with `install.package()`,
+but you need to load it every time you start a new R session with
+`library()`.
+:::
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-paste-rep}
+Use `install.packages` to install the package `colorDF` from CRAN. Then,
+load the package using `library(colorDF)`. What does that package do? How
+can you check that? (Hint: use `??colorDF`).
+:::
+:::
+
+### Data frames, tibbles & co.: different flavors of R
+
+It is now time to reveal some ugly truths about R. R is open source, and
+everyone can modify it, add new packages etc. This is great and resulted in
+the vibrant user community that R has. Also, there is hardly a statistical
+method or framework that is not represented in R. In addition, developing
+and publishing new packages for R is incredibly easy, at least compared to
+some other languages.
+
+However, this has a downside. There are many different flavors of R, and,
+unfortunately, some of the most popular packages or groups of packages can
+clash. We will spend now some time with one particular example: data
+frames. Firstly, because you will be using data frames a lot, secondly,
+because it neatly illustrates the problem, and thirdly to introduce a new
+type of data – `tibbles`.
+
+Base R data frames are created using the `data.frame()` function. They are
+useful and we use them a lot, but they have one tiny inconsistency that can
+cause a lot of trouble. Say, you define your data frame like this:
+
+
+```{r}
+df <- data.frame(a = 1:3, b = c("a", "b", "c"))
+```
+
+When you access a single column of this data frame using the square
+brackets `[ ]`, you will get a vector. We can check it with the
+`is.data.frame()` function:
+
+
+```{r}
+is.data.frame(df[ , 1])
+```
+
+This is consistent with the behavior of matrices (where one column or one
+row becomes a vector), but not with the behavior of the data frames
+themselves: because when you access a single row, you are getting a data
+frame, not a vector:
+
+
+```{r}
+is.data.frame(df[1, ])
+```
+
+This inconsistency can mess up your code. Imagine that you have somehow
+automatically selected some columns of a data frame – for example, by
+selecting columns that start with a certain letter (we will learn how to do
+that on Day 4). You store it in the variable called `sel_cols`. You can
+select the columns from the data frame using the `df[ , sel_cols]` syntax.
+However, depending on whether there was a single column selected or more,
+you will get either a vector or a data frame. This is annoying and in the
+worst case scenario, it can break your program.
+
+Many people noticed this, and proposed solutions. In R, it is possible to
+take a class of an object (like `data.frame`) and modify it. One of such
+most commonly used modifications is called a `tibble` and has been
+implemented in the Tidyverse group of packages, which we will be using
+extensively in the days to come.
+
+### Data frames and tibbles
+
+The Tidyverse data frame is called a `tibble`. It behaves almost exactly
+like a data frame, with a few crucial differences:
+
+ * when printing the tibble to the console, the output is nicer
+ * tibbles never have row names (and that is why we will not be using them)
+ * when you access a single column of a tibble, you **always** get a tibble, not a vector
+
+To use tibbles, you need the `tidyverse` package[^tidyverse]. You can install it using
+`install.packages("tidyverse")` and load it using `library(tidyverse)`.
+
+[^tidyverse]: Actually, the `tidyverse` package is a meta-package: it just
+loads a collection of packages that are often used together. The `tibble`
+package which defines tibbles is one of them.
+
+
+```{r warning=FALSE, message=FALSE}
+library(tidyverse)
+tbl <- tibble(a = 1:3, b = c("a", "b", "c"))
+tbl
+is.data.frame(tbl)
+is_tibble(tbl)
+```
+
+As you can see, a tibble is *both* a data frame and a tibble.
+You can use tibbles as a drop-in replacement for data frames. We will be
+seeing it a lot, because many useful functions from the Tidyverse family
+produce tibbles, not data frames. However, for you, as the user, the
+differences will be mostly cosmetic. So far, so good. 
+
+However, if you are reading this book, chances are that you are a biologist
+or medical researcher, and that means that sooner or later you will be
+using packages from the Bioconductor project. Bioconductor is a collection
+of R packages for bioinformatics, genomics, and related fields. They are
+incredibly valuable, you can hardly do bioinformatics without them.
+However, Bioconductor defines its own alternative to data.frames, called 
+DataFrame. It is a bit different from data frames, and it is not compatible
+with tibbles. If you want to process DataFrames produced by Bioconductor
+packages with Tidyverse functions, you need to convert them to a regular
+`data.frame` using the `as.data.frame()` function.
+
+The code below will not work until you install the Bioconductor package
+S4Vectors. Don't worry if it does not work – we will not be using Bioconductor
+in this course, but I wanted to show you where the problem is.
+
+```{r warning=FALSE, message=FALSE}
+library(S4Vectors)
+DF <- DataFrame(a = 1:3, b = c("a", "b", "c"))
+DF
+is.data.frame(DF)
+```
+
+As you can see, the `DataFrame` object is not a `data.frame`. And this
+means that the Tidyverse function `filter()` does not see it as one (you
+will learn about the `filter()` function on Day 4):
+
+
+```{r error=TRUE}
+library(tidyverse)
+filter(DF, a > 1)
+```
+
+
+## Review
+
+Things you learned today:
+
+ * Logical vectors:
+   * subsetting with logical vectors
+   * using comparison operators like `>` to create logical vectors
+   * using the `is.na()` function to check for NA values
+   * using the `which()` function to find the positions of `TRUE` values
+   * using the `!` operator to negate logical vectors
+ * Matrices:
+   * creating matrices using the `matrix()` function
+   * measuring matrices with `dim()`, `nrow()` and `ncol()`
+   * rows first, then columns
+   * accessing elements, rows, columns and submatrices of a matrix
+   * naming rows and columns of a matrix
+ * Lists:
+   * creating lists using the `list()` function
+   * accessing elements of a list using `[`, `[[` and `$`
+   * lists as return values from functions
+   * replacing, adding and removing elements of a list
+ * Data frames:
+   * creating data frames using the `data.frame()` function
+   * accessing and modifying column names of a data frame
+   * accessing and modifying elements of a data frame
+   * subsetting data frames
+   * adding and removing columns from a data frame
+   * merging data frames
+   * creating tibbles with Tidyverse and `tibble()`
+ * Other:
+   * constant vectors `LETTERS` and `letters`
+   * using the `rep()` function
+   * generating random numbers with `rnorm()` and `runif()`
+   * generating sequences with `seq()`
+   * runnning a t-test using function `t.test()`
+   * making a boxplot with `boxplot()`
+   * the special value `NULL` 
+   * converting matrices to data frames with `as.data.frame()`
+   * installing packages with `install.packages()`
+   * loading packages with `library()`
+
+

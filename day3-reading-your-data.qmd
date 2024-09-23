@@ -1,0 +1,435 @@
+# Day 3: Reading and Writing Files
+
+## Aims for today
+
+* Reading data
+* Cleaning data
+* Regular expressions
+* Searching, sorting and selecting - a start
+
+Today is a special day. If there is one thing that I would like you to
+learn from this course, it is how to read and write the data.
+
+## Reading data
+
+### Data types
+
+In your work you will encounter many different types of data. Most
+frequently, you will work with tabular data, either as Excel files or as
+comma or tab separated values (CSV and TSV files, respectively). I am sure
+you have worked with such files before.
+
+To read these files, we will use two packages: `readr` and `readxl`. The
+former, `readr`, is part of the `tidyverse` package, so when you load the
+Tidyverse using `library(tidyverse)`, `readr` is loaded as well. The latter,
+`readxl`, is a separate package that you need to install and load
+separately.
+
+There are also "base R" functions `read.table`, `read.csv`,
+`read.tsv` (there is no function for reading XLS[X] files in base R). These
+are always available when you start R, but don't use them. The tidyverse
+functions are not only faster, but also much better behaving and, which is
+most important, they are safer – it is less likely to mess up your data
+with them.
+
+Tidyverse functions return *tibbles*, which, as you remember from
+yesterday, are a special flavor of data frames. Just to refresh your
+memory, here are key facts about tibbles:
+
+ * in most of the cases, they behave exactly like data frames
+ * when you print them, they are nicer
+ * tibbles have no row names
+ * when you select columns using `[ , sel ]`, you *always* get a tibble,
+   even if you selected only one column
+
+
+---------------------------- ------------------------------- ------------------------------- --------------------------
+Data type                    Function                        Package                         Notes
+---------------------------- ------------------------------- ------------------------------- --------------------------
+Columns separated by spaces  `read_table()`                  `readr`/`tidyverse`             one or more
+                                                                                             spaces separate 
+                                                                                             each column
+                                                             
+TSV / TAB separated values   `read_tsv()`                    `readr`/`tidyverse`             Delimiter is tab (`\t`).
+                                                             
+CSV / comma separated        `read_csv()`                    `readr`/`tidyverse`             Comma separated values
+                                                                                             
+Any delimiter                `read_delim()`                  `readr`/`tidyverse`             Customizable
+                                                             
+XLS (old Excel)              `read_xls()`                    `readxl`                        Avoid using XLS files.
+                             `read_excel()`                                                  From the
+                                                                                             `readxl`
+                                                                                             package.
+                                                             
+XLSX (new Excel)             `read_xlsx()`                   `readxl`                        From the `readxl` package.
+                             `read_excel()`                                                  You need to
+                                                                                             provide the
+                                                                                             sheet number
+                                                                                             you wish to
+                                                                                             read. 
+                                                                                             Note: returns a tibble,
+                                                                                             not a data frame! 
+---------------------------- ------------------------------- ------------------------------- --------------------------
+
+As you can see, the functions we recommend to use can be used by loading
+the packages `tidyverse` and `readxl`. If you haven't done that yet, please
+install these packages now:
+
+
+```{r eval=FALSE}
+install.packages("tidyverse")
+install.packages("readxl")
+```
+
+However, before we start using these functions, we need to dive into a very
+important problem: where are your files?
+
+::: {.callout-important}
+## Remember!
+ * For reading text files (csv, tsv etc.), use the `readr` package. This
+   package is loaded automatically when you load the `tidyverse` package:
+   `library(tidyverse)`. Then, use the functions `read_csv`, `read_tsv` etc.
+ * For reading Excel files, use the `readxl` package: `library(readxl)`.
+   Then, use the function `read_excel`.
+:::
+
+### Where is my file? Relative and absolute paths
+
+We are coming now to a crucial problem and a source of endless frustration
+for beginning R programmers: how to tell R where your file is. Fortunately,
+there are many ways to deal with that, both with R and RStudio. Still, this
+is a key problem and we would like you to spend some time on the following
+chapter.
+
+In order to access a file, a program (any program) needs what is known a
+*path*. Path is a character string that tells the program how to get to the
+file and looks, for example, like this on a Windows computer:
+`C:/Users/johndoe/Documents/RProjects/MyFirstRProject/data.csv`, and like
+this on a Mac: `/Users/johndoe/Documents/RProjects/MyFirstRProject/data.csv`.
+
+::: {.callout-tip}
+## Path separators on different systems
+
+Most computer systems separate the directories and files in a path using a
+slash (`/`). However, Windows uses a backslash (`\ `). This is a source of
+endless frustration for R users, because in R character vectors, the slash
+has a special meaning. To use backslashes, you need to "escape" them by
+putting another backslash in front of each backslash. So instead of
+`C:\Users\johndoe\Documents`, you need to write
+`C:\\Users\\johndoe\\Documents`. Alternatively, you can use the forward
+slash even on a Windows system, so type `C:/Users/johndoe/Documents`. We
+recommend the latter approach.
+
+This is also why simply copying a path from the Windows Explorer to your R
+script will not work in R – because the copied text contains single
+backslashes.
+:::
+
+
+If R cannot find your file, it will return an error message. At first, you
+will be seeing this error *a lot*:
+
+
+```{r error=TRUE,warning=FALSE,message=FALSE}
+library(tidyverse)
+mydata <- read_csv("data.csv")
+```
+
+Before we proceed, you need to understand one important thing. When you
+start your RStudio and R session, the R session runs in a specific
+directory. This is called the *working directory*. You can check what is
+using the `getwd()` function[^setwd]:
+
+[^setwd]: You can change it using the `setwd()` function, but avoid doing
+that. This path leads to madness, trust me on that.
+
+
+```{r echo=FALSE}
+getwd <- function() {
+  return("C:/Users/johndoe/Documents/RProjects/MyFirstRProject")
+}
+```
+
+
+```{r}
+getwd()
+```
+
+```{r echo=FALSE}
+rm(getwd)
+```
+
+Of course, the result will be different on your computer. By the way, the above is
+called an *absolute* path. That means that it works no matter where you are
+in your system, because a program can always find the file or directory
+using this path.
+
+
+The easiest way to read the data is this: copy your data files to the
+directory returned by `getwd()`.
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-simple-reading}
+### Reading your first file
+
+ * Check your working directory using `getwd()`
+ * Load the tidyverse package using `library(tidyverse)`
+ * Go to the URL [https://github.com/bihealth/RCrashcourse-book/Datasets](https://github.com/bihealth/RCrashcourse-book/Datasets)
+ * Click on "iris.csv"
+ * Click on the "Download raw file" button on the right side of the screen 
+ * Save the file in the directory returned by `getwd()`
+ * Read the file using `read_csv("iris.csv")`
+:::
+:::
+
+The following code should work without an error:
+
+
+```{r eval=FALSE}
+library(tidyverse)
+iris_data <- read_csv("iris.csv")
+```
+
+Now the contents of the file are stored in the `iris_data` object. There
+are many ways to have a look at it:
+
+ * type `iris_data` or `print(iris_data)` in the console
+ * type `View(iris_data)` in the console
+ * click on the little spreadsheet icon next to the `iris_data` object in
+   the Environment tab in RStudio (upper right panel)
+
+Please make sure that the above works for you. If it does not, read the
+instructions again. In RStudio, there is a "Files" tab in the lower right
+panel. You should see your working directory as well as the "iris.csv"
+file there.
+
+### Reading with relative paths
+
+OK, so far, so good. That was easy. Now comes a slightly harder part.
+
+Saving your data files in the working directory works well if you have one
+or two. However, the more files you read and write, the more cluttered your
+project directory becomes. You will soon find yourself in a situation where
+you have no idea which file is which.
+
+It is generally a good idea to keep your data files in a separate
+directory, or even multiple directories. 
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-simple-reading-directory}
+### Reading your first file from a data directory
+
+ * In the working directory, create a new directory called "Data"
+ * Move the "iris.csv" file to the "Data" directory
+ * Read the file using `read_csv("Data/iris.csv")`
+:::
+:::
+
+The path "Data/iris.csv" is called a *relative* path, because it is
+relative to the working directory and will not work from another location.
+So why should we use relative paths? Wouldn't it be easier to use absolute
+paths all the time, for example `read_csv("C:/Users/johndoe/Documents/RProjects/MyFirstRProject/Data/iris.csv")`?
+
+Actually, no. The problem is that if you move your R project to another
+location, of if you share it with someone else, the absolute path will no
+longer work. In other words, the absolute path is not portable.
+
+::: {.callout-important}
+## Remember!
+
+Do not use absolute paths in your code. Always use relative paths.
+:::
+
+### More on relative paths
+
+Some times the data files are not in your R project directory. For example,
+you are writing your PhD thesis. You have created a directory called "PhD",
+which contains directories "manuscript", "data", "images", "R_project" and so on. You
+use R to do a part of the calculations, but you want to keep the data files
+in the "data" directory. How to read them?
+
+When you type `getwd()`, you will get the path to the "R_project"
+directory, something like `C:/Users/johndoe/Documents/PhD/R_project`. The
+date files are in the directory `C:/Users/johndoe/Documents/PhD/data`. To
+get the relative path from the R project directory to the data directory,
+think about how you would navigate from one directory to another in the
+Windows Explorer or Finder. You need to go up one level, to get into
+"PhD", and then down again to "data".
+
+Getting "up one level" in a path is done by using `..`. So the relative
+path to the file "iris.csv" in your "data" directory is `../data/iris.csv`.
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-reading-directory-relative}
+### Reading a file from a data directory using relative paths
+
+ * In the directory that contains the working directory create a directory
+   called "Data". That is, if your working directory is
+   `C:/Users/johndoe/Documents/PhD/R_project`, create the directory
+   `C:/Users/johndoe/Documents/PhD/Data`
+ * Move the "iris.csv" file to the new "Data" directory
+ * Read the file using `read_csv("../Data/iris.csv")`
+:::
+:::
+
+But what about the case when your data directory is at a completely
+different location? For example, on a different drive, or maybe on your
+desktop? 
+
+First, I don't recommend keeping your data files separately from the R
+project directory. In general, try to put everything in one place, as part
+of one structure. This structure can be complex, but it should be coherent.
+If necessary, copy the data files into your R project directory.
+
+However, sometimes it simply isn't possible. Maybe the files are huge and
+you need to read them from a special drive. In this case, there are three
+options.
+
+**Using absolute paths.** Yes, I told you not to use absolute paths, but
+sometimes you have no choice.
+
+**Create shortcuts.** In all systems it is possible to create shortcuts to
+your data directories (on Unix-like systems like MacOS they are called
+"symbolic links"). You can put these shortcuts in your R project directory
+– R will treat them as normal directories.
+
+**Create a complex relative path.** Depending on how far "away" your data
+directory is, you can create a complex relative path. For example, if your
+R project directory is `C:/Users/johndoe/Documents/PhD/R_project` and your
+data directory is `D:/Data`, you can use the path `../../../../Data/iris.csv`.
+Unfortunately, despite being a relative path, this is not very portable
+(and it is easy to lose count on the `..`'s).
+
+### Using RStudio to import files
+
+RStudio has a very nice feature that allows you to import files using a
+point-and-click interface. When you click on a data file in the "Files" tab
+(lower right panel), you will see two options: "View File" and "Import
+Dataset". Choosing the latter opens a dialog window which shows a preview
+of the file and allows you to construct your `read_csv`, `read_tsv` or
+another command using a point-and-click interface. You also see a preview
+of the expression that will be executed.
+
+This feature is particularly useful when you are not sure about the format
+of the data to import, e.g. what type of delimiter is used, how many lines
+should be skipped etc. 
+
+Then you can click on "Import" to actually run the command, however I would
+recommend another approach. Clicking on "Import" runs the command directly
+in the console, bypassing your script – and you should always enter the
+code in your script before executing it.
+
+Rather than clicking on "Import", click on the little Copy icon next to the
+"Code preview" field, and then cancel the dialog. Paste the copied code
+into your script, and then run it.
+
+There is one more thing to modify. The code generated by RStudio often uses
+absolute paths. Try to modify it to use relative paths to ensure
+portability of your script.
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-opening-data}
+### Reading data
+
+ * Go to the URL [https://github.com/bihealth/RCrashcourse-book/Datasets](https://github.com/bihealth/RCrashcourse-book/Datasets)
+ * Download the following files: 
+   * `TB_ORD_Gambia_Sutherland_biochemicals.csv`
+   * `iris.tsv`
+   * `meta_data_botched.xlsx` 
+ * Alternatively, you can download the whole repository as a ZIP file and unpack it.
+ * Save the files in the "Data" directory in your working directory – or
+   another location of your choice.
+ * Read the files using the appriopriate functions. Consult the table above
+   for the correct function names, or use the RStudio data import feature.
+   Make sure that you are using relative paths.
+:::
+:::
+
+### Reading Excel files
+
+Reading files sometimes requires diligence. This is especially true for
+Excel files – they can contain multiple sheets, tables often do not start
+on the first row etc.
+
+The package `readxl` (which you hopefully successfully used to read the
+XLSX file in the previous exercise) contains several example files. They
+have been installed on your system when you installed the package. Manually
+finding these example files is annoying, and that is why the `readxl`
+package provides a convenience function, `readxl_example()`, that returns
+the absolute path to the file (yes, I know what I said about absolute
+paths; this is an exception). 
+
+```{r}
+library(readxl)
+fn <- readxl_example("deaths.xls")
+print(fn)
+deaths <- read_excel(fn)
+```
+
+If you view this file (or if you use the RStudio data import feature), you
+will notice that the actual data in this file starts on line 5; the first 4
+lines contain the text "Lots of people simply cannot resist writing some notes
+at the top of their spreadsheets or merging cells". To skip these lines, we
+need to use an argument to the `read_excel` function. If you look up the
+help file for the function, you will find the following line:
+
+|skip	| Minimum number of rows to skip before reading anything, be it column names or data. Leading empty rows are automatically skipped, so this is a lower bound. Ignored if range is given.|
+
+Therefore, we can modify the code above to skip the first four lines:
+
+```{r}
+deaths <- read_excel(fn, skip=4)
+```
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-opening-data-with-options}
+### Reading data with options
+
+If you take a closer look at the file `deaths.xls`, you will notice that
+there is some extra text at the bottom of the file as well. How can you
+omit that part when reading? *Hint: there are two ways to do that. If in
+doubt, look up the "examples" section of the `readxl` helpfile.*
+:::
+:::
+ 
+
+## Diagnosing and cleaning data
+
+### Diagnosing datasets
+
+Congratulations! You are now proficient in reading data into R. Believe me
+or not, this alone is an important step forward – many who try their hand
+at R get stuck at this point.
+
+However, reading data is only the first step. In most of the cases, the
+data requires some treatment: cleaning, transformation, filtering etc. In
+many projects that I have worked on as a bioinformatician, data import,
+diagnosis and cleaning took up the majority of time spent on the project.
+Unfortunately, this is necessary before any real fun with the data can
+start.
+
+Let us examine the file "iris.csv" that you have just read. First, note
+that when you read the data using `read_csv`, the function conveniently
+shows what types of data were assigned to each column:
+
+
+```{r}
+iris_data <- read_csv("Datasets/iris.csv")
+```
+
+
+
+
+
+## Review
+
+Things that you learned today:
+
+ * Reading and writing
+   * `read_csv`, `read_tsv`, `read_delim`, `read_xls`, `read_xlsx`
+   * reading a file from working directory
+   * reading a file from a different directory using relative paths
+ * Paths
+   * Get the current working directory with `getwd()`
+   * relative and absolute paths
+

@@ -102,6 +102,8 @@ specific).
 
 ### Workspaces, history and environments
 
+### Tab completion
+
 ## Let's start with R
 
 ### R as a calculator
@@ -255,6 +257,12 @@ does not contain the `<-` operator, it will not modify any variables.
 [^exceptions]: There are exceptions to this rule, but they are relatively rare and
 we will not discuss them here.
 
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-variables-and-rstudio}
+Create a variable using `x <- 42`. Take a look at the Environment pane in
+RStudio (top left part of the window). Do you notice anything?
+:::
+:::
 
 ### Character variables
 
@@ -301,6 +309,9 @@ paste0(name, city)
 
 There are other types of data types in R. Later on, we will briefly touch on
 *factors*, which look like character strings but behave like numbers.
+Another important data type is a *logical* type, which can have only two
+values: `TRUE` and `FALSE`. We will talk about logical types in more detail
+tomorrow.
 And under the hood, numeric vectors can be either integers (numbers like 1,
 2, ...) or floating point numbers (numbers like 1.1, 2.2 or $\pi$).
 :::
@@ -320,7 +331,9 @@ Create the following variables in your script:
 :::
 :::
 
-### Vectors and vectorization
+## Vectors and vectorization
+
+### Vectors
 
 Variables can (and do) store a lot more than single values. One of the most
 basic and important data types in R is a **vector**. A vector is simply a
@@ -343,6 +356,17 @@ numbers <- c(10, 42, 33, 14, 25)
 person <- c("January", "Weiner", "Hoppegarten")
 ```
 
+It is also possible to combine two vectors longer than 1 into one:
+
+
+```{r}
+first_v <- c(1, 2, 3)
+second_v <- c(4, 5)
+combined_v <- c(first_v, second_v)
+print(combined_v)
+```
+
+
 You can access individual elements of a vector using the `[ ]` operator:
 
 
@@ -364,14 +388,23 @@ numbers[sel]
 ```
 
 As you can see, not only can you use a vector as an index, but you can also
-use a *variable* as an index. 
+use a *variable* as an index.
+
+::: {.callout-warning}
+## Do not use a comma
+
+It is tempting to select, say, first and the third element of a
+vector `numbers` by writing `numbers[1, 3]`. This will not work! As you
+will see tomorrow, this way of writing is for two-dimensional objects. You
+must use a vector as an index: `numbers[c(1, 3)]`.
+:::
 
 
 ::: {.callout-tip}
 ## Vectors and indices
 
 In many (most?) programming languages, the first element of a vector is
-accessed using the index 0. For example in Python, to access the firs
+accessed using the index 0. For example in Python, to access the first
 element of an array, you need to type `array[0]`. This has something to do
 with how computers work. In R, the first element
 is always `1` – R was designed by statisticians, and in mathematics we
@@ -379,8 +412,70 @@ always start counting from 1. For some reason, this seems to make some computer
 scientists angry.
 :::
 
-But wait, there is more. What happens if we add a value to a vector? Try it:
+### Named vectors
 
+Accessing elements of a vector using indices is all well and good, but
+sometimes it can be very inconvenient, especially if the vectors are very
+long. Or maybe you do not remember the order in which you have stored the
+elements of the vector – was the last name first, or second element of the
+`person` vector?
+
+Vectors allow you to name their elements. We can either define the names at
+the very beginning, when we create the vector, or we can add them later
+using the `names()` function. Here is how you can do it:
+
+
+```{r}
+person <- c(first="January", last="Weiner", city="Hoppegarten")
+```
+
+Once you have named the elements of a vector, you can access them using
+their names:
+
+
+```{r}
+person["city"]
+person[c("first", "last")]
+```
+
+### Assigning values to selected elements
+
+OK, one more thing about vectors. Above we have selected elements from a
+vector. It turns out, we can do more with that selections then just print
+it to a console:
+
+
+```{r}
+numbers <- c(10, 42, 33, 14, 25)
+sel <- c(1, 5)
+numbers[sel] <- c(100, 500)
+numbers
+```
+
+Here is what happened: we assigned new values to the first and the fifth
+element of the vector `numbers`. This is a very powerful feature of R and
+you will be using it a lot.
+
+
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-accessing}
+## Accessing and modifying vectors
+
+ * Create a vector with the first 10 prime numbers. Call it `primes`.
+ * How do you access the 3rd, 5th and 7th prime number? 
+ * What happens when you do `primes[11]`?
+ * What happens when you do `primes[11] <- 11`?
+ * What happens when you do `primes[-1]`?
+ * Change the 3rd, 5th and 7th prime number to 100, 500 and 700,
+   respectively.
+:::
+:::
+
+### Vectorization
+
+Vectors are very useful – but wait, there is more. What happens if we add a
+value to a vector? Try it:
 
 ```{r}
 numbers <- c(10, 42, 33, 14, 25)
@@ -391,21 +486,19 @@ As you can see, R has added the value 10 to every single element of the
 vector `numbers`. The same thing happens with other operators, like `-`,
 `*` and `/`. Try it yourself.
 
-::: {.callout-caution icon=false appearance="simple"}
-::: {#exr-vectorisation}
-## Vectorisation
-
- * Create a vector with several numbers and try to add, subtract, multiply and
-   divide it by a single number. What happens?
- * Say, you have three values which are the diameters of three circles: 1,
-   5 and 13. You would like to have a vector containing the areas of these
-   circles. What is the simplest way of doing that?
-:::
-:::
-
 This is called **vectorization** and it is one of the most powerful features
 of R compared to other languages. It will allow you to write very concise
 and, at the same time, readable code.
+
+The vectorization works not only with operators like `+`, `-`, `*` and `/`,
+but with many functions. For example, it works with most of the
+mathematical functions like `sin()` or `log()`. Try it:
+
+
+```{r}
+log10(numbers)
+sin(numbers)
+```
 
 However, there is a catch. What happens if you try to add two vectors when
 both of them with more than one element? First, let us try to add two
@@ -482,22 +575,92 @@ length(numbers1)
 length(numbers2)
 ```
 
-OK, one more thing about vectors. Above we have selected elements from a
-vector. It turns out, we can do more with that selections then just print
-it to a console:
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-vectorisation}
+## Vectorisation
+
+ * Create a vector with several numbers and try to add, subtract, multiply and
+   divide it by a single number. What happens?
+ * Say, you have three values which are the diameters of three circles: 1,
+   5 and 13. You would like to have a vector containing the areas of these
+   circles. What is the simplest way of doing that?
+ * How do you check the length of this vector?
+ * One vector, `lengths`, contains the lengths of the sides of three rectangles,
+   and the other, `widths`, contains their widths. Create a
+   vector containing the areas of these rectangles.
+:::
+:::
+
+### The special value `NA`
+
+One more thing: there are a couple of special values in R that you should
+know about. One of the most prominent, useful and frequently encountered is
+the `NA` value, which stands for "Not Available". You will see it
+frequently when you work with data.
+
+It is possible to apply mathematical operations to `NA` values, but the
+result is inadvertently `NA`:
 
 
 ```{r}
-numbers <- c(10, 42, 33, 14, 25)
-sel <- c(1, 5)
-numbers[sel] <- c(100, 500)
-numbers
+NA + 1
+numbers <- c(1, 2, NA, 4)
+numbers * 3
 ```
 
-Here is what happened: we assigned new values to the first and the fifth
-element of the vector `numbers`. This is a very powerful feature of R and
-you will be using it a lot.
+This also goes for some functions, which, quite often, have a special
+parameter to omit the `NA` values. For example, the `mean()` function
+calculates the mean of a vector:
 
+
+```{r}
+numbers <- c(1, 2, NA, 4)
+mean(numbers)
+mean(numbers, na.rm=TRUE)
+```
+
+::: {.callout-tip}
+## Useful functions
+
+There is a whole bunch of functions that you can use to work with vectors,
+and here are some of them – with mostly self-explanatory names: `sum()`,
+`min()`, `max()`, `range()`, `sd()`, `var()`, `median()`, `quantile()`.
+Look them up in the help system by typing, for example, `?sum` in the console.
+:::
+
+The `NA` value very frequently pop up when you try to convert a character
+vector holding what looks like numbers into a numeric vector. We will see
+many such examples in the days to come; the conversion is often done using
+the `as.numeric()` function. For example, it is quite common that values
+typed in a spreadsheet contain comments or values which look like this `> 50`
+(measurement out of range).
+
+
+```{r}
+imported_data <- c("10", "20", "30", "> 50", "40", "N.A.", "60 (unsure)")
+# this will generate a warning
+imported_data <- as.numeric(imported_data)
+imported_data
+```
+
+As you can see, R conveniently warns you that some elements of the vector
+were changed to `NA`. Look out for that warning!
+
+::: {.callout-tip}
+## Special values
+There are a few other special values in R that behave similarly to `NA`.
+`Inf` stands for infinity, you will get it when you divide a positive number by zero:
+`1/0`. `-Inf` is the negative infinity (when you divide a negative number
+by 0), and `NaN` stands for "Not a Number" – this is what you get when you
+try to subtracting `Inf - Inf` or dividing `0/0`. They have also other uses
+– for example, if a function wants to know how many rows of output you
+would like to see, and your answer is "all of them", you can use `Inf` as
+the number of rows.
+:::
+
+
+
+## Putting it all together
 
 ### Water lillies on a lake
 
@@ -535,10 +698,18 @@ consider the first few days. On day 1, the area is $1\% = 0.01$. On day 2, is tw
 that, that is, $0.01 \times 2 = 0.01 \times 2^1 = 0.02$. On day 3, it is
 twice the area from the previous day: $0.02 \times 2 = 0.04 = 0.01 \times 2
 \times 2 = 0.01 \times 2^2$. And again, on day 4, it is $0.01 \times 2^3$.
-And so on[^formula].
+And so on[^formula]. We can show it in a table:
 
 [^formula]: If started counting from 0 – that is, if we designated the
 first day as Day 0 – the formula would be $0.01 \times 2^n$.
+
+| Day | Area | Calculation | Formula |
+|-----|------|---------|---------|
+| 1   | 0.01 | $0.01$ | $0.01 \times 2^0$ |
+| 2   | 0.02 | $0.01 \times 2$ | $0.01 \times 2^1$ |
+| 3   | 0.04 | $0.01 \times 2 \times 2$ | $0.01 \times 2^2$ |
+| 4   | 0.08 | $0.01 \times 2 \times 2 \times 2$ | $0.01 \times 2^3$ |
+| 5   | 0.16 | $0.01 \times 2 \times 2 \times 2 \times 2$ | $0.01 \times 2^4$ |
 
 Once we have the formula, it is very easy to calculate the area covered by
 water lillies on the first 10 days. We will use vectorization to do this:
@@ -578,7 +749,96 @@ always be specified. We will talk about this in more detail later.
 Note another thing on this plot: after day 7, the area is greater than 1.
 But 1 means 100%, so after day 7, the lily covers more than the entire
 lake. Obviously, this is not possible – and it shows a limitation of our
-model.
+model. We can show it by adding a horizontal line to the plot:
+
+
+```{r}
+plot(days, area, type="b")
+abline(h=1, col="red")
+```
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-lilies-plot}
+## Plotting water lilies
+
+ * Create the same plot using the `plot()` function, but add, as a parameter, `col="blue"`. What happens? 
+ * Use the argument `xlab` to label the x-axis with "Day". Use the argument
+   `ylab` to label the y-axis with "Area". Use the argument `main` to give
+   the plot a title.
+ * Use the argument `ylim=c(0, 1)` to change the range of the y-axis. How
+   would you change the limit of the x axis?
+ * What is the formula for the area of the lily assuming
+   that each day, the lily covers 1.5 times the area of the previous day?
+ * Create a new area vector (call it `area_slow`) which will be calculated
+   with the new formula.
+ * Add the new vector to the plot using the function `lines()`. What does
+   the `lines()` function do? (Hint: type `?lines` in the console).
+
+:::
+:::
+
+### Functions in R
+
+R is a so-called *functional* language. This is different from many other
+languages (including Python). It has some interesting implications which we
+will partially explore over the next few days. For now, however, we will be
+content with one important statement: in R, most of the stuff you do, you
+do using functions. A function takes zero or more arguments and returns
+exactly one argument.
+
+During this course, we will not really discuss or require creating your own
+functions. However, we would nonetheless like to show you how it is done.
+There are two reasons for that. Firstly, it is really, really easy.
+Secondly, it will help you understand how functions work in R, and that
+will help you understand how to use functions that others have created.
+
+In the water lilies example we have used a formula to calculate the area of
+the lily on the $n$-th day. The formula includes two parameters: the
+initial fraction of the area covered by the lily on day 1, and the factor by which
+the area is increased each day. We can create a function that will take
+three parameters: the day (or days), the initial fraction and the factor, and return
+the area of the lily on that day. Here is how you can do it:
+
+
+```{r}
+area_lily <- function(day, fct) {
+  ret <- 0.1 * fct^(day - 1)
+  return(ret)
+}
+```
+
+As you can see, the function is created using the `function` keyword. In
+parentheses (`(` and `)`), you specify the arguments that the function
+takes, separated by commas. Then comes the body of the function, enclosed
+in the curly braces (`{` and `}`). On the last line of the function code,
+the `return()` function is used to return the value of the `area_lily`
+function.
+
+One interesting and important fact about the code above is that you use the
+assignment operator `<-` to assign the function to a variable. In other
+words, `area_lily` is, in fact, a variable! A variable which holds not a
+value or character string, but computer code that can be used to do stuff.
+
+Once you have run the code above, you can use it to calculate the area of
+the lily on the first 10 days like this:
+
+```{r}
+area <- area_lily(1:10, 2)
+print(area)
+```
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-lilies-plot}
+## Creating your own function
+
+Modify the `area_lily` function so that it takes three arguments: the day,
+the initial fraction and the factor. Use the new function to calculate the
+area of the lily on the first 10 days with the initial fraction of 0.001 and
+the factor of 1.5. What is the area on the 10th day?
+
+:::
+:::
+
 
 ## Coding practices
 
@@ -634,7 +894,113 @@ separated values (CSV) file that contains the CRP values, call it
 example, you should always put a space around your operators, like `x <- 2`
 (and not `x<-2`), you should always put a space after a comma, like
 `c(1, 2)` and not `c(1,2)` (and also not `c( 1 , 2 )`). 
+Lines should not be too long – 80 characters at most is a good rule of thumb. 
+If a line is too long, you can split it into several lines – R will not
+mind.
 See [here](http://web.stanford.edu/class/cs109l/unrestricted/resources/google-style.html)
 for a more detailed guide on how to format your code.
 
+### Example
 
+The following fragment of code shows how you should *not* format your code:
+
+```{r eval=FALSE,echo=TRUE}
+#| code-line-numbers: true
+a<- 4
+b <-c(1,10, 
+20, 21, 5)
+r<-sqrt(sum((b-mean(b))^2)/
+               a)
+```
+
+The code *is* correct, but it is hard to read. What does it do, quickly? If
+you carefuly examine it, you will see that it calculates the standard
+deviation of the vector `b`, following the formula
+
+$$SD = \sqrt{\frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n-1}}$$
+
+where $n$ is the length of the vector `b`, $x_i$ is the $i$-th element of
+the vector `b` and $\bar{x}$ is the mean of the vector `b`.
+However, there are several issues.
+
+Firstly, there are no comments in the code which would give a hint of what
+it does. Secondly, $n - 1$ (the variable `a`) is hard encoded - if you
+modify the vector `b` by adding one number, the code will execute, but the
+result will be incorrect.
+
+Thirdly, line 4 combines several operations making it very hard to read. It
+should be split for clarity. The following code is much more readable:
+
+```{r eval=FALSE,echo=TRUE}
+#| code-line-numbers: true
+# ---------------------------------------------------------
+# Calculating the standard deviation of a sample
+# ---------------------------------------------------------
+
+# example values for five samples
+samples <- c(1, 10, 20, 21, 5)
+samples_n <- length(samples)
+
+# calculate standard deviation of samples manually
+samples_mean <- mean(samples)
+samples_devs <- samples - samples_mean
+
+# samples variance
+samples_var <- sum(samples_devs^2) / 
+                (samples_n - 1)
+
+samples_sd <- sqrt(samples_var)
+```
+
+This makes it absolutely clear what you are trying to do, and, in addition,
+calculates the mean, the deviations, sample length and sample variance –
+all of which might come in handy later on.
+Also note of the use of `# ----`... comments. Programmers often use these
+to highlight the beginning of a new section of code. This is not necessary,
+but adds to readability. Lines 14 and 15 show how you can split a line of
+code in a way that is both readable and clear.
+
+Of course, the example is a bit silly – R has a lot of built-in statistical
+functions, and standard deviation naturally is one of them. You can
+calculate the standard deviation of a vector `b` using the `sd()` function:
+
+```{r eval=FALSE,echo=TRUE}
+samples_sd <- sd(samples)
+```
+
+Nonetheless, the principle stands.
+
+## Review
+
+Things that you learned today:
+
+ * Working with R and RStudio
+   * Creating and running scripts
+   * Using the console
+   * Using the "Environment" panel of RStudio
+   * Using comments with the `#` sign
+   * Using tab completion
+ * Variables
+   * Assigning values to variables
+   * Using variables in calculations
+   * Using character variables
+   * pasting together character variables with `paste()` and `paste0()`
+ * Vectors
+   * Creating vectors with `c()` and `:`
+   * Accessing elements of a vector with `[ ]`
+   * Named vectors
+   * Assigning values to selected elements
+   * Vectorization
+   * Recycling
+ * Useful functions
+   * `sqrt()`, `log()`, `log2()`, `log10()`, `sin()`, `cos()`, `tan()`
+   * `sum()`, `mean()`, `min()`, `max()`, `range()`, `sd()`, `var()`, `median()`, `quantile()`
+ * Other
+   * The special values `NA`, `Inf`, `-Inf`, `NaN`
+   * Logical values `TRUE` and `FALSE`
+   * Functions in R
+   * Plotting with `plot()`
+   * Adding parameters to functions
+   * Coding practices
+
+XXX
