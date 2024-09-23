@@ -8,7 +8,7 @@
 
 <meta name="author" content="January Weiner">
 
-<title>A Five Day Crash Course in R</title>
+<title>Five days of R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -31,7 +65,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./intro.html" rel="next">
+<link href="./day1-intro-to-r.html" rel="next">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -97,7 +131,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">A Five Day Crash Course in R</a> 
+      <a href="./">Five days of R</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -111,12 +145,6 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Preface</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introduction</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -165,7 +193,18 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#five-days-of-r" id="toc-five-days-of-r" class="nav-link" data-scroll-target="#five-days-of-r">Five days of R</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a>
+  <ul class="collapse">
+  <li><a href="#installing-r-and-rstudio" id="toc-installing-r-and-rstudio" class="nav-link" data-scroll-target="#installing-r-and-rstudio">Installing R and RStudio</a></li>
+  <li><a href="#installing-r-packages" id="toc-installing-r-packages" class="nav-link" data-scroll-target="#installing-r-packages">Installing R packages</a></li>
+  <li><a href="#installing-quarto" id="toc-installing-quarto" class="nav-link" data-scroll-target="#installing-quarto">Installing Quarto</a></li>
+  </ul></li>
+  <li><a href="#the-structure-of-this-book" id="toc-the-structure-of-this-book" class="nav-link" data-scroll-target="#the-structure-of-this-book">The structure of this book</a></li>
+  <li><a href="#general-advice" id="toc-general-advice" class="nav-link" data-scroll-target="#general-advice">General advice</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -174,7 +213,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">A Five Day Crash Course in R</h1>
+<h1 class="title">Five days of R</h1>
+<p class="subtitle lead">A crash-course in R</p>
 </div>
 
 
@@ -203,12 +243,87 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
-<p>This is a Quarto book.</p>
-<p>To learn more about Quarto books visit <a href="https://quarto.org/docs/books" class="uri">https://quarto.org/docs/books</a>.</p>
+<section id="introduction" class="level1 unnumbered">
+<h1 class="unnumbered">Introduction</h1>
+<section id="five-days-of-r" class="level2">
+<h2 class="anchored" data-anchor-id="five-days-of-r">Five days of R</h2>
+<p>I have been teaching R to biologists and medical students for many years now. At the Core Unit for Bioinformatics at the Berlin Institute of Health, Charité - Universitätsmedizin Berlin, we have developed a five-day, 5 hour per day crash course running for the last three years. This book is a companion to that course.</p>
+<p>This is also the reason for how the materials in the book are arranged. Rather then discussing everything about vectors first, then everything about matrices etc., we start with easy things, and return to them later to build on them. I call this “helical learning”<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> – we spiral around the same topics, but each time going a bit deeper, and each time you will understand a bit more. This is also why some topics are spread between the days – by trial and error, we have found the amount of material that can be covered in a day of learning.</p>
+<p>There are two goals of this book. The first one is that after five days of learning R, you will be able to load, inspect, manipulate and save data files (such as Excel tables or CSV files), make some basic plots and perform simple statistical tests. The second goal is that you are in a good starting position to continue learning R on your own.</p>
+<p>In other words, this course should give you a jump start, allow to overcome this first hurdle of learning R.</p>
+</section>
+<section id="prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
+<section id="installing-r-and-rstudio" class="level3">
+<h3 class="anchored" data-anchor-id="installing-r-and-rstudio">Installing R and RStudio</h3>
+<p>Before you dive in to the course, we would like to ask you to install both R and RStudio. The installation depends on your operating system, so please refer to specific instructions which can be found at the following links:</p>
+<p>XXX</p>
+</section>
+<section id="installing-r-packages" class="level3">
+<h3 class="anchored" data-anchor-id="installing-r-packages">Installing R packages</h3>
+<p>During the course we will use several R packages that you need to install on your computer. On Day 2, we will discuss installing and loading packages, and we will make a note to install the required packages when they are needed. However, you can also install them right now, after you have installed R and RStudio. This can be more effective – after all, installing might take some time.</p>
+<p>Here is the list of packages that you will have to install:</p>
+<ul>
+<li><code>tidyverse</code></li>
+<li><code>ggplot2</code></li>
+<li><code>colorDF</code></li>
+<li><code>pander</code></li>
+<li><code>readxl</code></li>
+<li><code>writexl</code></li>
+<li><code>tinytex</code> (only if you want to produce PDF output from Rmarkdown)</li>
+</ul>
+<p>You can install them by running the following code in your RStudio:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"ggplot2"</span>, <span class="st">"colorDF"</span>,</span>
+<span id="cb1-2"><a href="#cb1-2"></a>                  <span class="st">"pander"</span>, <span class="st">"readxl"</span>, <span class="st">"writexl"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3"></a>                  <span class="st">"tinytex"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="installing-quarto" class="level3">
+<h3 class="anchored" data-anchor-id="installing-quarto">Installing Quarto</h3>
+<p>On Day 5, we will be discussing Rmarkdown. Your basic RStudio setup will allow you to create Rmarkdown documents, but if you wish, you can also use Quarto – which is a sort of “Rmarkdown on steroids”, much nicer looking and efficient. However, for this you need to install the Quarto program. See the Quarto website (<a href="https://quarto.org/docs/get-started/">https://quarto.org/docs/get-started/</a>) for details.</p>
+</section>
+</section>
+<section id="the-structure-of-this-book" class="level2">
+<h2 class="anchored" data-anchor-id="the-structure-of-this-book">The structure of this book</h2>
+<p>This book is divided into five chapters, each corresponding to one day of the course. At the beginning of each chapter, you will find a short list of topics for the given day.</p>
+<p>In each chapter there are several exercises. <em>However</em>, that does not mean that you should <em>only</em> do the exercises. In fact, you should try out <em>every</em> piece of code that is in the book. Copy it (there is a button next to each code block that will do it for you), paste it into your RStudio and run it. Then try to modify it and see what happens.</p>
+<p>Exercises in this book are important. They are not only there to check if you understood the material, but they can also introduce new concepts or ideas. This is because this book is not only about learning R, but also learning <em>how to learn about R</em>. So, for example, sometimes we will want you to figure stuff on your own rather than give you a ready-made answer.</p>
+<p>Each chapter is ended by a “Review” section, which contains a list of things that you have learned that day. It is really important that you go through that list and make sure that you understand everything on it. Some of the new things appeared in the exercises, so if you skipped them, you might want to go back and do them.</p>
+<p>If you do all that, I personally <em>guarantee you</em> that by the end of this course you will be able to use R in your work.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Remember!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Run all code chunks in your RStudio.</li>
+<li>Do all exercises.</li>
+<li>Go through the “Review” section at the end of each chapter.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="general-advice" class="level2">
+<h2 class="anchored" data-anchor-id="general-advice">General advice</h2>
+<p>The course is a real crash course. There is a lot of material coming at you in a very short time. You will feel overloaded and overwhelmed – this is normal. Don’t worry! It will soon get better, and in a few days you will be able to do fairly advanced things with R.</p>
+<p>The key is to keep playing with your R; trying out new things, breaking it. Please go through all exercises in that book, even if they seem simple at the first glance (some of them are tricky, others are used to smuggle in new concepts and useful tidbits of information).</p>
+<p>Whenever you feel you don’t understand something, stop and try to figure it out. Use internet search very liberally. Many answers can be found on sites such as StackOverflow, R-bloggers, or in the R documentation. Try out the code you will find in these sources – just copy-paste it into your RStudio and adapt it to your needs. Feel free to use Large Language Models (such as GPT) – they are very good at explaining code, especially when you are learning basic concepts.</p>
+<p>However, if you want to learn R, simply doing this course will not be enough. You need to start using it in a real world setting. Unfortunately – the better you already are at Excel, Word and other such tools, the harder it will be switching to R: tasks that are a breeze in Excel will at first require you to spend substantially more time in R. However, trust me: it pays off in the long run. Therefore, for best results, force yourself to use R <em>even if at first it is less efficient then other tools</em>.</p>
 
 
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>I got this idea from the professor Barbara Płytycz from the Jagiellonian University, who taught me my first “helix” of the immune system.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
@@ -636,8 +751,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./intro.html" class="pagination-link" aria-label="Introduction">
-        <span class="nav-page-text">Introduction</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./day1-intro-to-r.html" class="pagination-link" aria-label="Day 1: Introduction to R">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Day 1: Introduction to R</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

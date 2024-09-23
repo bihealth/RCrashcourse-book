@@ -9,7 +9,6 @@ book:
   date: "20/9/2024"
   chapters:
     - index.qmd
-    - intro.qmd
     - day1-intro-to-r.qmd
     - day2-complex-structures.qmd
     - day3-reading-your-data.qmd

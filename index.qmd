@@ -1,5 +1,140 @@
-# Preface {.unnumbered}
+# Introduction {.unnumbered}
 
-This is a Quarto book.
+## Five days of R
 
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
+I have been teaching R to biologists and medical students for many years
+now. At the Core Unit for Bioinformatics at the Berlin Institute of Health,
+Charité - Universitätsmedizin Berlin, we have developed a five-day, 5 hour
+per day crash course running for the last three years. This book is a
+companion to that course.
+
+This is also the reason for how the materials in the book are arranged.
+Rather then discussing everything about vectors first, then everything
+about matrices etc., we start with easy things, and return to them later to
+build on them. I call this "helical learning"[^helical] – we spiral around the same
+topics, but each time going a bit deeper, and each time you will understand
+a bit more. This is also why some topics are spread between the days – by
+trial and error, we have found the amount of material that can be covered
+in a day of learning.
+
+[^helical]: I got this idea from the professor Barbara Płytycz from the
+Jagiellonian University, who taught me my first "helix" of the immune system.
+
+There are two goals of this book. The first one is that 
+after five days of learning R, you will be able to load, inspect,
+manipulate and save data files (such as Excel tables or CSV files), make
+some basic plots and perform simple statistical tests. The second goal is
+that you are in a good starting position to continue learning R on your own.
+
+In other words, this course should give you a jump start, allow to overcome
+this first hurdle of learning R.
+
+## Prerequisites
+
+### Installing R and RStudio
+
+Before you dive in to the course, we would like to ask you to install both
+R and RStudio. The installation depends on your operating system, so please
+refer to specific instructions which can be found at the following links:
+
+XXX
+
+### Installing R packages
+
+During the course we will use several R packages that you need to install
+on your computer. On Day 2, we will discuss installing and loading
+packages, and we will make a note to install the required packages when
+they are needed. However, you can also install them right now, after you
+have installed R and RStudio. This can be more effective – after all,
+installing might take some time.
+
+Here is the list of packages that you will have to install:
+
+ * `tidyverse`
+ * `ggplot2`
+ * `colorDF`
+ * `pander`
+ * `readxl`
+ * `writexl`
+ * `tinytex` (only if you want to produce PDF output from Rmarkdown)
+
+You can install them by running the following code in your RStudio:
+
+```{r eval=FALSE}
+install.packages(c("tidyverse", "ggplot2", "colorDF",
+                  "pander", "readxl", "writexl",
+                  "tinytex"))
+```
+
+### Installing Quarto
+
+On Day 5, we will be discussing Rmarkdown. Your basic RStudio setup will
+allow you to create Rmarkdown documents, but if you wish, you can also use
+Quarto – which is a sort of "Rmarkdown on steroids", much nicer looking and
+efficient. However, for this you need to install the Quarto program.
+See the Quarto website
+([https://quarto.org/docs/get-started/](https://quarto.org/docs/get-started/))
+for details.
+
+## The structure of this book
+
+This book is divided into five chapters, each corresponding to one day of
+the course. At the beginning of each chapter, you will find a short list of
+topics for the given day.
+
+In each chapter there are several exercises. *However*, that does not mean
+that you should *only* do the exercises. In fact, you should try out
+*every* piece of code that is in the book. Copy it (there is a button next
+to each code block that will do it for you), paste it into your RStudio and
+run it. Then try to modify it and see what happens.
+
+Exercises in this book are important. They are not only there to check if
+you understood the material, but they can also introduce new concepts or
+ideas. This is because this book is not only about learning R, but also
+learning *how to learn about R*. So, for example, sometimes we will want
+you to figure stuff on your own rather than give you a ready-made answer.
+
+Each chapter is ended by a "Review" section, which contains a list of
+things that you have learned that day. It is really important that you go
+through that list and make sure that you understand everything on it. Some
+of the new things appeared in the exercises, so if you skipped them, you
+might want to go back and do them.
+
+If you do all that, I personally *guarantee you* that by the end of this
+course you will be able to use R in your work.
+
+::: {.callout-important}
+## Remember!
+
+ * Run all code chunks in your RStudio.
+ * Do all exercises.
+ * Go through the "Review" section at the end of each chapter.
+:::
+
+## General advice
+
+The course is a real crash course. There is a lot of material coming at you
+in a very short time. You will feel overloaded and overwhelmed – this is
+normal. Don't worry! It will soon get better, and in a few days you will be
+able to do fairly advanced things with R.
+
+The key is to keep playing with your R; trying out new things, breaking it.
+Please go through all exercises in that book, even if they seem simple at
+the first glance (some of them are tricky, others are used to smuggle in new
+concepts and useful tidbits of information).
+
+Whenever you feel you don't understand something, stop and try to figure it
+out. Use internet search very liberally. Many answers can be found on sites
+such as StackOverflow, R-bloggers, or in the R documentation. Try out the
+code you will find in these sources – just copy-paste it into your RStudio
+and adapt it to your needs. Feel free to use Large Language Models (such as
+GPT) – they are very good at explaining code, especially when you are
+learning basic concepts.
+
+However, if you want to learn R, simply doing this course will not be
+enough. You need to start using it in a real world setting. Unfortunately –
+the better you already are at Excel, Word and other such tools, the harder
+it will be switching to R: tasks that are a breeze in Excel will at first require
+you to spend substantially more time in R. However, trust me: it pays off
+in the long run. Therefore, for best results, force yourself to use R *even
+if at first it is less efficient then other tools*.
