@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.54">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; Day 2: Complex data structures – A Five Day Crash Course in R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./day3-reading-your-data.html" rel="next">
+<link href="./day1-intro-to-r.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="custom.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./day2-complex-structures.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Day 2: Complex data structures</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">A Five Day Crash Course in R</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day1-intro-to-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Day 1: Introduction to R</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day2-complex-structures.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Day 2: Complex data structures</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day3-reading-your-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Day 3: Reading and Writing Files</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day4-manipulating-your-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">day4-manipulating-your-data.html</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./day5-visualization-and-statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">day5-visualization-and-statistics.html</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#goals-for-today" id="toc-goals-for-today" class="nav-link active" data-scroll-target="#goals-for-today"><span class="header-section-number">2.1</span> Goals for today</a></li>
+  <li><a href="#logical-vectors" id="toc-logical-vectors" class="nav-link" data-scroll-target="#logical-vectors"><span class="header-section-number">2.2</span> Logical vectors</a>
+  <ul class="collapse">
+  <li><a href="#truth-and-falsehood" id="toc-truth-and-falsehood" class="nav-link" data-scroll-target="#truth-and-falsehood"><span class="header-section-number">2.2.1</span> Truth and falsehood</a></li>
+  <li><a href="#comparison-operators" id="toc-comparison-operators" class="nav-link" data-scroll-target="#comparison-operators"><span class="header-section-number">2.2.2</span> Comparison operators</a></li>
+  </ul></li>
+  <li><a href="#matrices" id="toc-matrices" class="nav-link" data-scroll-target="#matrices"><span class="header-section-number">2.3</span> Matrices</a>
+  <ul class="collapse">
+  <li><a href="#creating-matrices" id="toc-creating-matrices" class="nav-link" data-scroll-target="#creating-matrices"><span class="header-section-number">2.3.1</span> Creating matrices</a></li>
+  <li><a href="#accessing-matrix-elements" id="toc-accessing-matrix-elements" class="nav-link" data-scroll-target="#accessing-matrix-elements"><span class="header-section-number">2.3.2</span> Accessing matrix elements</a></li>
+  <li><a href="#row-and-column-names" id="toc-row-and-column-names" class="nav-link" data-scroll-target="#row-and-column-names"><span class="header-section-number">2.3.3</span> Row and column names</a></li>
+  <li><a href="#using-rep-to-generate-column-names" id="toc-using-rep-to-generate-column-names" class="nav-link" data-scroll-target="#using-rep-to-generate-column-names"><span class="header-section-number">2.3.4</span> Using <code>rep()</code> to generate column names</a></li>
+  </ul></li>
+  <li><a href="#lists" id="toc-lists" class="nav-link" data-scroll-target="#lists"><span class="header-section-number">2.4</span> Lists</a>
+  <ul class="collapse">
+  <li><a href="#creating-lists" id="toc-creating-lists" class="nav-link" data-scroll-target="#creating-lists"><span class="header-section-number">2.4.1</span> Creating lists</a></li>
+  <li><a href="#accessing-elements-of-a-list" id="toc-accessing-elements-of-a-list" class="nav-link" data-scroll-target="#accessing-elements-of-a-list"><span class="header-section-number">2.4.2</span> Accessing elements of a list</a></li>
+  <li><a href="#lists-as-return-values" id="toc-lists-as-return-values" class="nav-link" data-scroll-target="#lists-as-return-values"><span class="header-section-number">2.4.3</span> Lists as return values</a></li>
+  <li><a href="#replacing-adding-and-removing-elements-of-a-list" id="toc-replacing-adding-and-removing-elements-of-a-list" class="nav-link" data-scroll-target="#replacing-adding-and-removing-elements-of-a-list"><span class="header-section-number">2.4.4</span> Replacing, adding and removing elements of a list</a></li>
+  </ul></li>
+  <li><a href="#data-frames" id="toc-data-frames" class="nav-link" data-scroll-target="#data-frames"><span class="header-section-number">2.5</span> Data Frames</a>
+  <ul class="collapse">
+  <li><a href="#creating-data-frames" id="toc-creating-data-frames" class="nav-link" data-scroll-target="#creating-data-frames"><span class="header-section-number">2.5.1</span> Creating data frames</a></li>
+  <li><a href="#accessing-and-modifying-columns-of-a-data-frame" id="toc-accessing-and-modifying-columns-of-a-data-frame" class="nav-link" data-scroll-target="#accessing-and-modifying-columns-of-a-data-frame"><span class="header-section-number">2.5.2</span> Accessing and modifying columns of a data frame</a></li>
+  <li><a href="#subsetting-data-frames-with-logical-vectors" id="toc-subsetting-data-frames-with-logical-vectors" class="nav-link" data-scroll-target="#subsetting-data-frames-with-logical-vectors"><span class="header-section-number">2.5.3</span> Subsetting data frames with logical vectors</a></li>
+  </ul></li>
+  <li><a href="#libraries-in-r" id="toc-libraries-in-r" class="nav-link" data-scroll-target="#libraries-in-r"><span class="header-section-number">2.6</span> Libraries in R</a>
+  <ul class="collapse">
+  <li><a href="#installing-and-loading-packages" id="toc-installing-and-loading-packages" class="nav-link" data-scroll-target="#installing-and-loading-packages"><span class="header-section-number">2.6.1</span> Installing and loading packages</a></li>
+  <li><a href="#data-frames-tibbles-co.-different-flavors-of-r" id="toc-data-frames-tibbles-co.-different-flavors-of-r" class="nav-link" data-scroll-target="#data-frames-tibbles-co.-different-flavors-of-r"><span class="header-section-number">2.6.2</span> Data frames, tibbles &amp; co.: different flavors of R</a></li>
+  <li><a href="#data-frames-and-tibbles" id="toc-data-frames-and-tibbles" class="nav-link" data-scroll-target="#data-frames-and-tibbles"><span class="header-section-number">2.6.3</span> Data frames and tibbles</a></li>
+  </ul></li>
+  <li><a href="#review" id="toc-review" class="nav-link" data-scroll-target="#review"><span class="header-section-number">2.7</span> Review</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Day 2: Complex data structures</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="goals-for-today" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="goals-for-today"><span class="header-section-number">2.1</span> Goals for today</h2>
+<ul>
+<li>Complex data structures (matrices, lists and data frames)</li>
+<li>Logical vectors and subsetting</li>
+</ul>
+</section>
+<section id="logical-vectors" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="logical-vectors"><span class="header-section-number">2.2</span> Logical vectors</h2>
+<section id="truth-and-falsehood" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="truth-and-falsehood"><span class="header-section-number">2.2.1</span> Truth and falsehood</h3>
+<p>Yesterday, we mentioned briefly two special values in R: <code>TRUE</code> and <code>FALSE</code>. These are logical constants, and they are used to represent truth and falsehood, respectively. Using these values, it is possible to create <em>logical vectors</em> – vectors that contain only these two values.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>logical_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>FALSE</code> value is equivalent to <code>0</code>, and <code>TRUE</code> is equivalent to <code>1</code>. That means, we can use logical vectors in arithmetic operations. One very common application of this is using <code>sum()</code> to count the number of <code>TRUE</code> values in a logical vector.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">sum</span>(logical_vector)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+</div>
+<p>Logical vectors are incredibly useful, because they can be used to subset other objects. For example, if you have a vector of numbers, you can use a logical vector to select some of the elements.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>numbers <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>numbers[ logical_vector ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 3 4</code></pre>
+</div>
+</div>
+<p>The real usefulness of logical vectors comes when you create them using different operators that check for equality, inequality, etc. Let’s look at that in more detail.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+TRUE, FALSE and T and F
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In R, <code>TRUE</code> and <code>FALSE</code> are the only two logical constants. However, there are also two other constants, <code>T</code> and <code>F</code>, which are equivalent to <code>TRUE</code> and <code>FALSE</code>, respectively. <strong>Do not use them</strong>. Unlike <code>TRUE</code> and <code>FALSE</code>, they can be overwritten, which can lead to chaos and mayhem.</p>
+</div>
+</div>
+</section>
+<section id="comparison-operators" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="comparison-operators"><span class="header-section-number">2.2.2</span> Comparison operators</h3>
+<p>There are six comparison operators in R:</p>
+<ul>
+<li><code>==</code> – equality</li>
+<li><code>!=</code> – inequality</li>
+<li><code>&gt;</code> – greater than</li>
+<li><code>&lt;</code> – less than</li>
+<li><code>&gt;=</code> – greater than or equal to</li>
+<li><code>&lt;=</code> – less than or equal to</li>
+</ul>
+<p>They are vectorized like any other arithmetic operators, but their result is not a number – but a logical value. Take a look:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>numbers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">42</span>, <span class="dv">3</span>, <span class="sc">-</span><span class="dv">17</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">1</span>)</span>
+<span id="cb6-2"><a href="#cb6-2"></a>numbers <span class="sc">&gt;</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  TRUE  TRUE FALSE FALSE FALSE  TRUE</code></pre>
+</div>
+</div>
+<p>For each element of the vector, R checks if it is greater than zero. If it is, it returns <code>TRUE</code>, otherwise <code>FALSE</code>, producing, in the end, a vector containing as many elements as there were in the vector <code>numbers</code>. This logical vector can be used to subset the original vector.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># prints only numbers greater than 0</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>numbers[ numbers <span class="sc">&gt;</span> <span class="dv">0</span> ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 42  3  1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># prints only numbers different from 0</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>numbers[ numbers <span class="sc">!=</span> <span class="dv">0</span> ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  42   3 -17  -2   1</code></pre>
+</div>
+</div>
+<p>But wait, there is more. There is a number of functions that check the elements of a vector and return logical vectors. One of the most commonly used and most useful of these is the <code>is.na()</code> function, which checks if an element is “not available”. This will come in handy later, when we start reading data from files – data which is full of NA’s!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>numbers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">42</span>, <span class="dv">3</span>, <span class="cn">NA</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">1</span>)</span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="fu">is.na</span>(numbers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE FALSE  TRUE FALSE FALSE FALSE</code></pre>
+</div>
+</div>
+<p>But hey, this does not tell us <em>which</em> elements are NA’s. It is easy to see in the example above, but what if we have a vector with a million elements? Actually, to answer which elements are NA’s you can simply use the <code>which()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">which</span>(<span class="fu">is.na</span>(numbers))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+</div>
+<p>Fine, but what about the numbers which are <em>not</em> <code>NA</code>? What if we want to find all “good” numbers and store them for future use? In this case, we can use the <code>!</code> operator, which negates the logical vector. That is, each <code>TRUE</code> becomes <code>FALSE</code> and each <code>FALSE</code> becomes <code>TRUE</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>nas <span class="ot">&lt;-</span> <span class="fu">is.na</span>(numbers)</span>
+<span id="cb16-2"><a href="#cb16-2"></a>nas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE FALSE  TRUE FALSE FALSE FALSE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># change TRUE to FALSE and FALSE to TRUE</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="sc">!</span>nas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>useful_numbers <span class="ot">&lt;-</span> numbers[<span class="sc">!</span>nas]</span>
+<span id="cb20-2"><a href="#cb20-2"></a>useful_numbers</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 42  3  0 -2  1</code></pre>
+</div>
+</div>
+<p>There is one more thing to mention here. The comparison operators <code>==</code> and <code>!=</code> can be used to compare strings as well<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>patient_measurements <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">16</span>, <span class="dv">7</span>, <span class="dv">42</span>, <span class="dv">3</span>)</span>
+<span id="cb22-2"><a href="#cb22-2"></a>patient_gender <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"male"</span>, <span class="st">"female"</span>, <span class="st">"female"</span>, <span class="st">"male"</span>, <span class="st">"female"</span>)</span>
+<span id="cb22-3"><a href="#cb22-3"></a>patient_measurements[ patient_gender <span class="sc">==</span> <span class="st">"male"</span> ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  1 42</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="matrices" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="matrices"><span class="header-section-number">2.3</span> Matrices</h2>
+<section id="creating-matrices" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="creating-matrices"><span class="header-section-number">2.3.1</span> Creating matrices</h3>
+<p>Matrices are just what says on the box: 2-dimensional structures; just like in mathematics. They behave in a very similar way to vectors in R, for example, they always hold elements of the same type (either numeric, character, etc., but never elements of both types). If you have your data stored in an Excel spreadsheet, chances are that different columns have different types of data. You can hardly use matrices in such a case. In fact, you will probably rarely use matrices in R, at least at the beginning – however, they are very useful for storing large data sets, for example from a transcriptomic analysis. For storing “Excel-like” data you will be using lists and data frames, which we will discuss later today. Nonetheless, we will spend some time on matrices today – because 90% of what you will learn today about matrices you will be able to use with data frames as well.</p>
+<p>Creating a matrix is very simple. You can use the <code>matrix()</code> function, which takes a vector as input and reshapes it into a matrix:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>mtx <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">4</span>)</span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="fu">print</span>(mtx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    1    4    7   10
+[2,]    2    5    8   11
+[3,]    3    6    9   12</code></pre>
+</div>
+</div>
+<p>As you remember from yesterdays course, the <code>1:12</code> is a vector of numbers from 1 to 12. The <code>nrow</code> and <code>ncol</code> parameters specify the number of rows and columns, respectively. You don’t really need to specify both of them – if you specify only one, R will calculate the other one for you.</p>
+<p>As you have noticed above, by default the <code>matrix()</code> function fills the matrix by columns. If you want to fill it by rows, you can use the <code>byrow</code> parameter:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>mtx <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">4</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="fu">print</span>(mtx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    1    2    3    4
+[2,]    5    6    7    8
+[3,]    9   10   11   12</code></pre>
+</div>
+</div>
+<p>Here we use a special value – <code>TRUE</code> – which is a logical constant. It is equivalent to <code>1</code>, but it is more readable. You can also use <code>FALSE</code> (or <code>0</code>) to specify that you want to fill the matrix by columns (this is the default).</p>
+<p>It is also possible to create a large matrix by passing only one value (typically 0 or <code>NA</code>) and specifying the number of rows and columns. In that case, you have to specify both <code>nrow</code> and <code>ncol</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>mtx <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can also create a matrix by binding vectors together, either by rows or by columns. The <code>rbind()</code> function binds vectors by rows, and the <code>cbind()</code> function binds vectors by columns. Always make sure that the vectors you bind have the same length and the same element type.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a>b <span class="ot">&lt;-</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a>mtx <span class="ot">&lt;-</span> <span class="fu">rbind</span>(a, b)</span>
+<span id="cb29-4"><a href="#cb29-4"></a><span class="fu">print</span>(mtx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [,1] [,2] [,3]
+a    1    2    3
+b    4    5    6</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>mtx <span class="ot">&lt;-</span> <span class="fu">cbind</span>(a, b)</span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="fu">print</span>(mtx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     a b
+[1,] 1 4
+[2,] 2 5
+[3,] 3 6</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Matrices and algebra
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>R matrices are very powerful for linear algebra operations. If you ever learned linear algebra, you will find that R matrices can do pretty much everything you learned in class. For example, you can multiply matrices, transpose them, invert them, calculate determinants, etc. We will not cover these operations in this course.</p>
+</div>
+</div>
+<p>Just like vectors have a length which you can check with the <code>length()</code> function, matrices have dimensions – the number of rows and the number of columns. You can access them using the <code>dim()</code> function, which returns a vector of length 2 (row and column number), and with functions <code>nrow()</code> and <code>ncol()</code>, which return the number of rows and columns, respectively.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">dim</span>(mtx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">nrow</span>(mtx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">ncol</span>(mtx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+</section>
+<section id="accessing-matrix-elements" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="accessing-matrix-elements"><span class="header-section-number">2.3.2</span> Accessing matrix elements</h3>
+<p>For vectors, we have used the square brackets (<code>[]</code>) to access elements. Same with matrices, really, however we have two dimensions now. Think about that: with vectors we could only select one or more elements. With matrices, it should be possible to select an element, a number of elements from a row (or the whole row), a number of elements from a column (or the whole column), or even a submatrix. All this is possible using the square brackets.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>mtx <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">4</span>)</span>
+<span id="cb39-2"><a href="#cb39-2"></a><span class="fu">print</span>(mtx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    1    4    7   10
+[2,]    2    5    8   11
+[3,]    3    6    9   12</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="co"># Accessing the element in the third row and the second column</span></span>
+<span id="cb41-2"><a href="#cb41-2"></a>mtx[<span class="dv">3</span>, <span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="co"># Accessing first three numbers in the second column</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a>mtx[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4 5 6</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="co"># Accessing second to fourth numbers in the first row</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a>mtx[<span class="dv">1</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  4  7 10</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Rows and columns
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When we talk about plotting, the first dimension, “x”, is usually the horizontal one, and the second dimension, “y”, is the vertical one. However, in R matrices, just like in real algebra, <strong>the first dimension corresponds to the rows, and the second dimension corresponds to the columns</strong>. You need to get used to it – it’s the same for data frames which you will be using extensively.</p>
+</div>
+</div>
+<p>If you select more then one row and more than one column, you will get a new matrix – albeit smaller than the original one.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="co"># Selecting the first two rows and the last two columns</span></span>
+<span id="cb47-2"><a href="#cb47-2"></a><span class="co"># This will create a 2 x 2 matrix</span></span>
+<span id="cb47-3"><a href="#cb47-3"></a>mtx[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    7   10
+[2,]    8   11</code></pre>
+</div>
+</div>
+<p>If you want to access whole rows or columns, you do not need to specify <em>anything</em> – simply leave an empty space before (for selecting whole columsn) or after (for selecting whole rows) the comma.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="co"># Selecting the whole second row</span></span>
+<span id="cb49-2"><a href="#cb49-2"></a>mtx[<span class="dv">2</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  2  5  8 11</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="co"># Selecting the whole third column</span></span>
+<span id="cb51-2"><a href="#cb51-2"></a>mtx[, <span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7 8 9</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a><span class="co"># Row 1 and three - returns a matrix</span></span>
+<span id="cb53-2"><a href="#cb53-2"></a>sel <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)</span>
+<span id="cb53-3"><a href="#cb53-3"></a>mtx[sel, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4]
+[1,]    1    4    7   10
+[2,]    3    6    9   12</code></pre>
+</div>
+</div>
+<p>This last example shows that just like with vectors, we can use a variable to make our selection.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Remember!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Rows first, then columns</li>
+<li>If you select a single column or a single row, you will get a vector</li>
+<li>If you select more than one row or column, you will get a (smaller) matrix</li>
+<li>If you select more rows or columns than are present, you will get a “subscript out of bonds” error</li>
+<li>Vectors and matrices <strong>always</strong> have only one data type (string, numerical, logical etc.)</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="row-and-column-names" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="row-and-column-names"><span class="header-section-number">2.3.3</span> Row and column names</h3>
+<p>Just like in case of named vectors, we can name rows and columns of a matrix. However, for this we need two different functions: <code>rownames()</code> and <code>colnames()</code> (for row names and column names, duh).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a><span class="fu">rownames</span>(mtx) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"first"</span>, <span class="st">"second"</span>, <span class="st">"third"</span>)</span>
+<span id="cb55-2"><a href="#cb55-2"></a><span class="fu">colnames</span>(mtx) <span class="ot">&lt;-</span> LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb55-3"><a href="#cb55-3"></a></span>
+<span id="cb55-4"><a href="#cb55-4"></a>mtx[<span class="st">"first"</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> A  B  C  D 
+ 1  4  7 10 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>mtx[ , <span class="st">"A"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> first second  third 
+     1      2      3 </code></pre>
+</div>
+</div>
+<p>In the code above, we use the <code>LETTERS</code> constant, which is a vector containing all the letters of the English alphabet. Just like constants <code>pi</code> and <code>e</code>, <code>LETTERS</code> is available in R by default, along with its lower-case counterpart, <code>letters</code>. It is useful for labeling.</p>
+<p>Unfortunately, we only have 26 letters in the alphabet, so what can we do with a matrix that has more columns than that? Well, we can use the same trick that Excel uses: after <code>Z</code>, we have <code>AA</code>, <code>AB</code>, etc.</p>
+<p>To create such a long vector, we will use two functions: <code>rep()</code> and <code>paste0()</code>.</p>
+</section>
+<section id="using-rep-to-generate-column-names" class="level3" data-number="2.3.4">
+<h3 data-number="2.3.4" class="anchored" data-anchor-id="using-rep-to-generate-column-names"><span class="header-section-number">2.3.4</span> Using <code>rep()</code> to generate column names</h3>
+<p>The <code>rep()</code> function is a little and very useful utility function that repeats element of a vector a given number of times. It either repeats the whole vector several times, or, using the <code>each</code> parameter, repeats each element a given number of times:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a>abc <span class="ot">&lt;-</span> LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="co"># A, B, C</span></span>
+<span id="cb59-2"><a href="#cb59-2"></a>abc3 <span class="ot">&lt;-</span> <span class="fu">rep</span>(abc, <span class="dv">3</span>)</span>
+<span id="cb59-3"><a href="#cb59-3"></a>abc3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "A" "B" "C" "A" "B" "C" "A" "B" "C"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a>a3b3c3 <span class="ot">&lt;-</span> <span class="fu">rep</span>(abc, <span class="at">each =</span> <span class="dv">3</span>)</span>
+<span id="cb61-2"><a href="#cb61-2"></a>a3b3c3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "A" "A" "A" "B" "B" "B" "C" "C" "C"</code></pre>
+</div>
+</div>
+<p>In the code above, we created two vectors, each of the length <span class="math inline">\(3 \times 3\)</span>; first one goes “A, B, C, A, B, C, …”, and the second one goes “A, A, A, B, B, …”. To get at our goal, we would have to paste together the first element from the first vector with the first element from the second vector etc.:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>a3b3c3</th>
+<th>abc3</th>
+<th>result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>A</td>
+<td>AA</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>B</td>
+<td>AB</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>C</td>
+<td>AC</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>A</td>
+<td>BA</td>
+</tr>
+<tr class="odd">
+<td>B</td>
+<td>B</td>
+<td>BB</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>C</td>
+<td>BC</td>
+</tr>
+</tbody>
+</table>
+<p>To do this, we will use the <code>paste0()</code> function, which concatenates strings and is vectorized, so it does <em>exactly</em> what we need.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a>col_names <span class="ot">&lt;-</span> <span class="fu">paste0</span>(abc3, a3b3c3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Of course, we need all the letters (we used only three in the example above for demonstration purposes).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(LETTERS)</span>
+<span id="cb64-2"><a href="#cb64-2"></a>abc3 <span class="ot">&lt;-</span> <span class="fu">rep</span>(LETTERS, n)</span>
+<span id="cb64-3"><a href="#cb64-3"></a>a3b3c3 <span class="ot">&lt;-</span> <span class="fu">rep</span>(LETTERS, <span class="at">each =</span> n)</span>
+<span id="cb64-4"><a href="#cb64-4"></a>col_names <span class="ot">&lt;-</span> <span class="fu">paste0</span>(abc3, a3b3c3)</span>
+<span id="cb64-5"><a href="#cb64-5"></a><span class="fu">length</span>(col_names)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 676</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a><span class="fu">head</span>(col_names)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "AA" "BA" "CA" "DA" "EA" "FA"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="fu">tail</span>(col_names)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "UZ" "VZ" "WZ" "XZ" "YZ" "ZZ"</code></pre>
+</div>
+</div>
+<p>The <code>head()</code> and <code>tail()</code> functions are very useful for inspecting the beginning and the end of a very large object such as a vector, matrix, or data frame. They are very useful for checking if the operation you just performed did what you expected it to do.</p>
+<div class="callout callout-style-simple callout-caution no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exr-paste-rep" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 2.1 (Creating column names)</strong></span> Repeat the procedure above, but generate column names for a matrix with more than a 1000 columns. Use the LETTERS constant, but rather then generating two-letter column names, generate three-letter column names: AAA, AAB, AAC, …, ABA, ABC, …, ZZZ. Store the result in a variable called <code>col_names</code>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-caution no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exr-paste-rep" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 2.2 (Matrices - accessing and changing elements)</strong></span> Assume you have a 48 well-plate for a drug sensitivity analysis with viability scores.</p>
+<ul>
+<li>Create a 48-element vector “drugSensitivity_v” with random numbers between 0 and 1. Use <code>runif(48)</code> to generate these values. These reflect your viability scores.</li>
+<li>What does the <code>runif()</code> function do?</li>
+<li>Create a 6x8 matrix “drugSensitivity” from the vector.</li>
+</ul>
+<p>Before starting you experiment, you decided to leave out the border wells to avoid edge effects:</p>
+<ul>
+<li>Change the values of all the border elements to NA.</li>
+</ul>
+<p>The rows are treated with inhibitor 1 with increasing concentrations (control, low, medium, high). Columns 2 to 4 are treated with inhibitor 2 with increasing concentrations (control, low, high) and column 5 to 7 are treated with inhibitor 3 (same concentrations as inhibitor 2).</p>
+<ul>
+<li>Use row and column names to reflect treatments.</li>
+<li>What are potential problems of this approach?</li>
+<li>Select all wells with inhibitor 3.</li>
+<li>Which wells can be used as negative control?</li>
+<li>Select only wells with a combination of inhibitor 1 and inhibitor 2.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="lists" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="lists"><span class="header-section-number">2.4</span> Lists</h2>
+<section id="creating-lists" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="creating-lists"><span class="header-section-number">2.4.1</span> Creating lists</h3>
+<p>The objects that we have discussed so far – vectors and matrices – can only hold one type of data; you cannot mix strings with numbers, for example. This is obviously a problem – quite frequently you need to store both numbers and strings in one object. This is where lists come in.</p>
+<p>Lists are created using the <code>list()</code> function. Lists have elements, just like vectors; but unlike vectors, every element can be of any possible type. It can be a vector, of course, but can also be a matrix, a data frame, even a function – or another list. Actually, it is quite common to have a list of lists (or even list of lists of lists) in R.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>lst <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">numbers=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">strings=</span><span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"bu"</span>), </span>
+<span id="cb70-2"><a href="#cb70-2"></a>            <span class="at">matrix =</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">nrow =</span> <span class="dv">2</span>), </span>
+<span id="cb70-3"><a href="#cb70-3"></a>            <span class="at">logical =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>))</span>
+<span id="cb70-4"><a href="#cb70-4"></a>lst</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$numbers
+[1] 1 2 3
+
+$strings
+[1] "a"  "bu"
+
+$matrix
+     [,1] [,2]
+[1,]    1    3
+[2,]    2    4
+
+$logical
+[1]  TRUE FALSE</code></pre>
+</div>
+</div>
+</section>
+<section id="accessing-elements-of-a-list" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="accessing-elements-of-a-list"><span class="header-section-number">2.4.2</span> Accessing elements of a list</h3>
+<p>Like vectors, lists can be named. In fact, they very often are. However, accessing them is a bit different than with vectors.</p>
+<p>You can use <code>[</code> and <code>]</code> square brackets to access elements of a list, but this produces <em>another list</em>, containing only the selected elements. Thus, if you type <code>lst["numbers"]</code>, you will get a list with one element, which is the vector of numbers:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a>lst[<span class="st">"numbers"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$numbers
+[1] 1 2 3</code></pre>
+</div>
+</div>
+<p>You can see that it is a list because of this weird <code>$</code> (dollar) sign, which we will discuss in a moment. However, you can also check its type directly:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a><span class="fu">typeof</span>(lst[<span class="st">"numbers"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "list"</code></pre>
+</div>
+</div>
+<p>If, however, you want to work with the actual vector that is stored in the “numbers” slot of the list, you need to use one of two approaches. First approach is to use <em>double square brackets</em>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a>lst[[<span class="st">"numbers"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a><span class="fu">typeof</span>(lst[[<span class="st">"numbers"</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "integer"</code></pre>
+</div>
+</div>
+<p>That requires a lot of typing, four times square brackets and then, in addition, the quote marks. But programmers are lazy, and therefore, we have a shortcut: the <code>$</code> sign. It is used to access elements of a list by name:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1"></a>lst<span class="sc">$</span>numbers</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 2 3</code></pre>
+</div>
+</div>
+<p>You will use this construct <em>a lot</em> in R.</p>
+<p>The elements of a list behave <em>exactly</em> like regular variables. If an element is a vector, you can do with it all the things you can do with a vector; if it is a matrix, you can treat is as a matrix (because it <em>is</em> a matrix).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1"></a>patient_data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">name =</span> <span class="st">"John Doe"</span>, <span class="at">age =</span> <span class="dv">42</span>, </span>
+<span id="cb82-2"><a href="#cb82-2"></a>                     <span class="at">measurements =</span> <span class="fu">runif</span>(<span class="dv">5</span>))</span>
+<span id="cb82-3"><a href="#cb82-3"></a>patient_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$name
+[1] "John Doe"
+
+$age
+[1] 42
+
+$measurements
+[1] 0.6379641 0.4131733 0.4816066 0.8988432 0.3906390</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a>patient_data<span class="sc">$</span>measurements[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6379641</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1"></a>patient_data<span class="sc">$</span>measurements[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">42</span></span>
+<span id="cb86-2"><a href="#cb86-2"></a>patient_data<span class="sc">$</span>measurements <span class="sc">*</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 126.000000   1.239520   1.444820   2.696530   1.171917</code></pre>
+</div>
+</div>
+<p>Since the lists are named, there must be a way to access and modify these names. And, of course, there is: the <code>names()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1"></a><span class="fu">names</span>(patient_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "name"         "age"          "measurements"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1"></a><span class="fu">names</span>(patient_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"patient_name"</span>, <span class="st">"patient_age"</span>, <span class="st">"patient_measurements"</span>)</span>
+<span id="cb90-2"><a href="#cb90-2"></a><span class="fu">names</span>(patient_data)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">"crp_measurement"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="lists-as-return-values" class="level3" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="lists-as-return-values"><span class="header-section-number">2.4.3</span> Lists as return values</h3>
+<p>A common application of lists has something to do with functions. Remeber that a function can return only one object? But what if a function would like to return several things at once? It can return a list!</p>
+<p>We will run now our first statistical test. First, we need to generate two groups of measurements to compare. We will simulate them using the <code>rnorm()</code> function which produces normally distributed random numbers. The function takes additional parameters, <code>mean</code> and <code>sd</code>, which specify the mean and the standard deviation of the distribution, respectively. That allows us to ensure that the groups differ:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1"></a>group_a <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb91-2"><a href="#cb91-2"></a>group_b <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">14</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Of course, before running any statistical test we usually want to have a look at the data, to see if the groups differ visually. We can do this by using the <code>boxplot()</code> function, which creates a boxplot of the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1"></a><span class="fu">boxplot</span>(group_a, group_b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="day2-complex-structures_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Boxplot
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Boxplots are a great way to visualize the data. The whiskers show the minimum and maximum values (excluding outliers, which are shown as separate points), the box shows the interquartile range (25th to 75th percentile), and the thick line in the middle of the box shows the median. There are better ways, which we will discuss on Day 5, but still, boxplots are pretty cool.</p>
+</div>
+</div>
+<p>OK, now we run a t-test. We will use the <code>t.test()</code> function for that, and store the result in a variable called <code>t_test</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1"></a>t_test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(group_a, group_b)</span>
+<span id="cb93-2"><a href="#cb93-2"></a><span class="fu">typeof</span>(t_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "list"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1"></a>t_test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  group_a and group_b
+t = -6.5406, df = 17.461, p-value = 4.415e-06
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -7.246881 -3.717248
+sample estimates:
+mean of x mean of y 
+ 9.191735 14.673799 </code></pre>
+</div>
+</div>
+<p>As you can see, the result is a list. However, when we print it to the console, it <em>does not look like one</em>. This is because R has a special function for formatting the results of a t-test<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, so that it is easier to read.</p>
+<p>Nonetheless, we can access the elements of the list in the usual way:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1"></a>t_test<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.414877e-06</code></pre>
+</div>
+</div>
+</section>
+<section id="replacing-adding-and-removing-elements-of-a-list" class="level3" data-number="2.4.4">
+<h3 data-number="2.4.4" class="anchored" data-anchor-id="replacing-adding-and-removing-elements-of-a-list"><span class="header-section-number">2.4.4</span> Replacing, adding and removing elements of a list</h3>
+<p>You can assign elements to a list using the <code>$</code> sign. If the element does not exist yet in the list, it will be created; if it does, it will be replaced.</p>
+<p>To remove an element, you need to use the special value <code>NULL</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1"></a>person <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">name =</span> <span class="st">"January"</span>, <span class="at">age =</span> <span class="dv">117</span>, <span class="at">pets=</span><span class="fu">c</span>(<span class="st">"cat"</span>, <span class="st">"dog"</span>))</span>
+<span id="cb99-2"><a href="#cb99-2"></a></span>
+<span id="cb99-3"><a href="#cb99-3"></a><span class="co"># change the age</span></span>
+<span id="cb99-4"><a href="#cb99-4"></a>person<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="dv">118</span></span>
+<span id="cb99-5"><a href="#cb99-5"></a></span>
+<span id="cb99-6"><a href="#cb99-6"></a><span class="co"># add a new element</span></span>
+<span id="cb99-7"><a href="#cb99-7"></a>person<span class="sc">$</span>city <span class="ot">&lt;-</span> <span class="st">"Hoppegarten"</span></span>
+<span id="cb99-8"><a href="#cb99-8"></a></span>
+<span id="cb99-9"><a href="#cb99-9"></a><span class="co"># remove pets</span></span>
+<span id="cb99-10"><a href="#cb99-10"></a>person<span class="sc">$</span>pets <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb99-11"><a href="#cb99-11"></a>person</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$name
+[1] "January"
+
+$age
+[1] 118
+
+$city
+[1] "Hoppegarten"</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="data-frames" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="data-frames"><span class="header-section-number">2.5</span> Data Frames</h2>
+<section id="creating-data-frames" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="creating-data-frames"><span class="header-section-number">2.5.1</span> Creating data frames</h3>
+<p>Finally, we come to possibly the most important data structure in R – at least for us, biologists and medical researchers: data frames. Data frames are the closest thing to an Excel spreadsheet in R. They are used to store data in a tabular form, where each column can be of a different type. This makes them perfect for storing data from experiments, clinical trials, etc. You will be using them <em>a lot</em>.</p>
+<p>In R, data frames are <em>lists</em> that were made to behave a lot like <em>matrices</em>. Thus, everything that you learned so far about lists can be applied to data frames, including accessing their elements (columns) using the <code>$</code> operator. However, there are some differences between data frames and matrices.</p>
+<p>The main feature of data frame that makes them a bit like matrices is the fact that each element of a data frame is a vector<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> and that these vectors have always the same length. This means that one of the major differences between data frames and, say, Excel spreadsheets, is that a column of a data frame contains only elements of a single type. If a “cell” in a data frame is a character string, then the whole column is a character vector; if it is numerical, then the whole column is a numerical vector, etc.</p>
+<p>This may seem like a limitation, but it is, in fact, a good thing. It makes data more consistent and less prone to errors.</p>
+<p>Like lists, data frames can be named or not, but typically they are. The names of a data frame are precisely the column names and you can access them (and modify) using both, <code>names</code> and <code>colnames</code> functions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1"></a>names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"January"</span>, <span class="st">"William"</span>, <span class="st">"Bill"</span>)</span>
+<span id="cb101-2"><a href="#cb101-2"></a>lastn <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Weiner"</span>, <span class="st">"Shakespeare"</span>, <span class="st">"Gates"</span>)</span>
+<span id="cb101-3"><a href="#cb101-3"></a>age   <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">460</span>, <span class="dv">65</span>)</span>
+<span id="cb101-4"><a href="#cb101-4"></a></span>
+<span id="cb101-5"><a href="#cb101-5"></a>people <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">names=</span>names, <span class="at">last_names=</span>lastn, <span class="at">age=</span>age)</span>
+<span id="cb101-6"><a href="#cb101-6"></a>people</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    names  last_names age
+1 January      Weiner  NA
+2 William Shakespeare 460
+3    Bill       Gates  65</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1"></a><span class="fu">names</span>(people)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "names"      "last_names" "age"       </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1"></a><span class="fu">colnames</span>(people)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "names"      "last_names" "age"       </code></pre>
+</div>
+</div>
+<p>Like matrices, data frames have dimensions, which you can access using the <code>dim()</code>, <code>nrow()</code> and <code>ncol()</code> functions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1"></a><span class="fu">dim</span>(people)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1"></a><span class="fu">nrow</span>(people)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1"></a><span class="fu">ncol</span>(people)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+</div>
+<p>Also, like matrices, the data frames can have rownames; however, for reasons that will be clear later, they are not as important as column names and in fact, we will not be using them<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
+<div class="callout callout-style-simple callout-caution no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exr-paste-rep" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 2.3</strong></span> &nbsp;</p>
+<ul>
+<li>Create a 5x3 matrix with random numbers. Use <code>matrix</code> and <code>rnorm</code>.</li>
+<li>Turn the matrix into a data frame. Use <code>as.data.frame</code> for that.</li>
+<li>Add column and row names.</li>
+<li>Add a column. Each value in the column should be “A” (a string). Use the <code>rep</code> function for that.</li>
+<li>Add a column with five numbers from 0 to 1. Use the <code>seq</code> function for that. Hint: look at the help for the <code>seq</code> function (<code>?seq</code>).</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="accessing-and-modifying-columns-of-a-data-frame" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="accessing-and-modifying-columns-of-a-data-frame"><span class="header-section-number">2.5.2</span> Accessing and modifying columns of a data frame</h3>
+<p>Since data frames <em>are</em> lists, you can access their columns using the <code>$</code> operator. This is the most common way of accessing columns of a data frame:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1"></a>people<span class="sc">$</span>names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "January" "William" "Bill"   </code></pre>
+</div>
+</div>
+<p>You can also access columns using the square brackets, just like with matrices, using a comma to denote the columns and rows. However, there is a fine difference between matrices and data frames: if you select a single row, you will not get a vector, but a data frame with one row. If you think about that, it makes perfect sense: the different columns can have different data types, so they cannot be easily combined into a vector without losing some information.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1"></a>people[<span class="dv">1</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    names last_names age
+1 January     Weiner  NA</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There is an issue when you try to access a single column of a data frame. We will discuss it at length in the following, but basically, this behavior is different for different <em>flavors</em> of data frames: base R data frames created with <code>data.frame()</code> return a vector, while others may return a data frame. Watch out for this!</p>
+</div>
+</div>
+</section>
+<section id="subsetting-data-frames-with-logical-vectors" class="level3" data-number="2.5.3">
+<h3 data-number="2.5.3" class="anchored" data-anchor-id="subsetting-data-frames-with-logical-vectors"><span class="header-section-number">2.5.3</span> Subsetting data frames with logical vectors</h3>
+<p>Just like with vectors, you can use logical vectors to subset data frames. This is extremely useful and very common in R. For example, we might want to select only rows that do not contain NA values in the <code>age</code> column.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1"></a>people_with_age <span class="ot">&lt;-</span> people[<span class="sc">!</span><span class="fu">is.na</span>(people<span class="sc">$</span>age), ]</span>
+<span id="cb117-2"><a href="#cb117-2"></a>people_with_age</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    names  last_names age
+2 William Shakespeare 460
+3    Bill       Gates  65</code></pre>
+</div>
+</div>
+<p>That way we have filtered the data frame, leaving only persons with known age.</p>
+<p>Actually, for data frames, you will commonly use the <code>filter()</code> function (which we will introduce tomorrow). However:</p>
+<ul>
+<li>the <code>filter()</code> function also uses logical vectors;</li>
+<li>you can subset many different data types using logical vectors (including matrices, lists, vectors, data frames), but <code>filter()</code> works only with data frames; and</li>
+<li>sometimes using logical vectors is just more convenient.</li>
+</ul>
+</section>
+</section>
+<section id="libraries-in-r" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="libraries-in-r"><span class="header-section-number">2.6</span> Libraries in R</h2>
+<section id="installing-and-loading-packages" class="level3" data-number="2.6.1">
+<h3 data-number="2.6.1" class="anchored" data-anchor-id="installing-and-loading-packages"><span class="header-section-number">2.6.1</span> Installing and loading packages</h3>
+<p>Starting tomorrow, we will cease to only use “base” R functions (that is, functions that are available in R “out of the box”) and start using additional packages. Packages in R are collections of functions (and often some other things, like data sets, documents and more).</p>
+<p>Packages need to be installed before they can be used – but once you have installed a package, you don’t need to install it again (unless you upgrade R or want to update the package to a newer version).</p>
+<p>However, to use a package, you also need to load it using the <code>library()</code> function. This you must do every time you start a new R session, because R “forgets” which packages have been loaded the previous time. It is a bit like with the software for your operating system: you need to install your browser only once, but you have to start each each time after you start your computer.</p>
+<p>Installing packages <em>usually</em> is straightforward, however at times it can be tricky.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+package ‘—’ was built under R version x.y.z
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>At times you will get a warning that a package was “built” under a different version of R than the one that you are running. It is not an error (just a warning), and most of the time it can be ignored. It means what it says: that the installed package was built (e.g., compiled) with a different version of R. This can sometimes lead to problems, but most of the time it does not.</p>
+</div>
+</div>
+<p>We will return to installing packages from different sources on Day 5.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Remember!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Remember: you need to install a package only once with <code>install.package()</code>, but you need to load it every time you start a new R session with <code>library()</code>.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-caution no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exr-paste-rep" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 2.4</strong></span> Use <code>install.packages</code> to install the package <code>colorDF</code> from CRAN. Then, load the package using <code>library(colorDF)</code>. What does that package do? How can you check that? (Hint: use <code>??colorDF</code>).</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="data-frames-tibbles-co.-different-flavors-of-r" class="level3" data-number="2.6.2">
+<h3 data-number="2.6.2" class="anchored" data-anchor-id="data-frames-tibbles-co.-different-flavors-of-r"><span class="header-section-number">2.6.2</span> Data frames, tibbles &amp; co.: different flavors of R</h3>
+<p>It is now time to reveal some ugly truths about R. R is open source, and everyone can modify it, add new packages etc. This is great and resulted in the vibrant user community that R has. Also, there is hardly a statistical method or framework that is not represented in R. In addition, developing and publishing new packages for R is incredibly easy, at least compared to some other languages.</p>
+<p>However, this has a downside. There are many different flavors of R, and, unfortunately, some of the most popular packages or groups of packages can clash. We will spend now some time with one particular example: data frames. Firstly, because you will be using data frames a lot, secondly, because it neatly illustrates the problem, and thirdly to introduce a new type of data – <code>tibbles</code>.</p>
+<p>Base R data frames are created using the <code>data.frame()</code> function. They are useful and we use them a lot, but they have one tiny inconsistency that can cause a lot of trouble. Say, you define your data frame like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">b =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>When you access a single column of this data frame using the square brackets <code>[ ]</code>, you will get a vector. We can check it with the <code>is.data.frame()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1"></a><span class="fu">is.data.frame</span>(df[ , <span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
+<p>This is consistent with the behavior of matrices (where one column or one row becomes a vector), but not with the behavior of the data frames themselves: because when you access a single row, you are getting a data frame, not a vector:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1"></a><span class="fu">is.data.frame</span>(df[<span class="dv">1</span>, ])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p>This inconsistency can mess up your code. Imagine that you have somehow automatically selected some columns of a data frame – for example, by selecting columns that start with a certain letter (we will learn how to do that on Day 4). You store it in the variable called <code>sel_cols</code>. You can select the columns from the data frame using the <code>df[ , sel_cols]</code> syntax. However, depending on whether there was a single column selected or more, you will get either a vector or a data frame. This is annoying and in the worst case scenario, it can break your program.</p>
+<p>Many people noticed this, and proposed solutions. In R, it is possible to take a class of an object (like <code>data.frame</code>) and modify it. One of such most commonly used modifications is called a <code>tibble</code> and has been implemented in the Tidyverse group of packages, which we will be using extensively in the days to come.</p>
+</section>
+<section id="data-frames-and-tibbles" class="level3" data-number="2.6.3">
+<h3 data-number="2.6.3" class="anchored" data-anchor-id="data-frames-and-tibbles"><span class="header-section-number">2.6.3</span> Data frames and tibbles</h3>
+<p>The Tidyverse data frame is called a <code>tibble</code>. It behaves almost exactly like a data frame, with a few crucial differences:</p>
+<ul>
+<li>when printing the tibble to the console, the output is nicer</li>
+<li>tibbles never have row names (and that is why we will not be using them)</li>
+<li>when you access a single column of a tibble, you <strong>always</strong> get a tibble, not a vector</li>
+</ul>
+<p>To use tibbles, you need the <code>tidyverse</code> package<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. You can install it using <code>install.packages("tidyverse")</code> and load it using <code>library(tidyverse)</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb124-2"><a href="#cb124-2"></a>tbl <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">b =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>))</span>
+<span id="cb124-3"><a href="#cb124-3"></a>tbl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+      a b    
+  &lt;int&gt; &lt;chr&gt;
+1     1 a    
+2     2 b    
+3     3 c    </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1"></a><span class="fu">is.data.frame</span>(tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1"></a><span class="fu">is_tibble</span>(tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p>As you can see, a tibble is <em>both</em> a data frame and a tibble. You can use tibbles as a drop-in replacement for data frames. We will be seeing it a lot, because many useful functions from the Tidyverse family produce tibbles, not data frames. However, for you, as the user, the differences will be mostly cosmetic. So far, so good.</p>
+<p>However, if you are reading this book, chances are that you are a biologist or medical researcher, and that means that sooner or later you will be using packages from the Bioconductor project. Bioconductor is a collection of R packages for bioinformatics, genomics, and related fields. They are incredibly valuable, you can hardly do bioinformatics without them. However, Bioconductor defines its own alternative to data.frames, called DataFrame. It is a bit different from data frames, and it is not compatible with tibbles. If you want to process DataFrames produced by Bioconductor packages with Tidyverse functions, you need to convert them to a regular <code>data.frame</code> using the <code>as.data.frame()</code> function.</p>
+<p>The code below will not work until you install the Bioconductor package S4Vectors. Don’t worry if it does not work – we will not be using Bioconductor in this course, but I wanted to show you where the problem is.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1"></a><span class="fu">library</span>(S4Vectors)</span>
+<span id="cb130-2"><a href="#cb130-2"></a>DF <span class="ot">&lt;-</span> <span class="fu">DataFrame</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">b =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>))</span>
+<span id="cb130-3"><a href="#cb130-3"></a>DF</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DataFrame with 3 rows and 2 columns
+          a           b
+  &lt;integer&gt; &lt;character&gt;
+1         1           a
+2         2           b
+3         3           c</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1"></a><span class="fu">is.data.frame</span>(DF)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
+<p>As you can see, the <code>DataFrame</code> object is not a <code>data.frame</code>. And this means that the Tidyverse function <code>filter()</code> does not see it as one (you will learn about the <code>filter()</code> function on Day 4):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb134-2"><a href="#cb134-2"></a><span class="fu">filter</span>(DF, a <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in UseMethod("filter"): no applicable method for 'filter' applied to an object of class "c('DFrame', 'DataFrame', 'SimpleList', 'RectangularData', 'List', 'DataFrame_OR_NULL', 'Vector', 'list_OR_List', 'Annotated', 'vector_OR_Vector')"</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="review" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="review"><span class="header-section-number">2.7</span> Review</h2>
+<p>Things you learned today:</p>
+<ul>
+<li>Logical vectors:
+<ul>
+<li>subsetting with logical vectors</li>
+<li>using comparison operators like <code>&gt;</code> to create logical vectors</li>
+<li>using the <code>is.na()</code> function to check for NA values</li>
+<li>using the <code>which()</code> function to find the positions of <code>TRUE</code> values</li>
+<li>using the <code>!</code> operator to negate logical vectors</li>
+</ul></li>
+<li>Matrices:
+<ul>
+<li>creating matrices using the <code>matrix()</code> function</li>
+<li>measuring matrices with <code>dim()</code>, <code>nrow()</code> and <code>ncol()</code></li>
+<li>rows first, then columns</li>
+<li>accessing elements, rows, columns and submatrices of a matrix</li>
+<li>naming rows and columns of a matrix</li>
+</ul></li>
+<li>Lists:
+<ul>
+<li>creating lists using the <code>list()</code> function</li>
+<li>accessing elements of a list using <code>[</code>, <code>[[</code> and <code>$</code></li>
+<li>lists as return values from functions</li>
+<li>replacing, adding and removing elements of a list</li>
+</ul></li>
+<li>Data frames:
+<ul>
+<li>creating data frames using the <code>data.frame()</code> function</li>
+<li>accessing and modifying column names of a data frame</li>
+<li>accessing and modifying elements of a data frame</li>
+<li>subsetting data frames</li>
+<li>adding and removing columns from a data frame</li>
+<li>merging data frames</li>
+<li>creating tibbles with Tidyverse and <code>tibble()</code></li>
+</ul></li>
+<li>Other:
+<ul>
+<li>constant vectors <code>LETTERS</code> and <code>letters</code></li>
+<li>using the <code>rep()</code> function</li>
+<li>generating random numbers with <code>rnorm()</code> and <code>runif()</code></li>
+<li>generating sequences with <code>seq()</code></li>
+<li>runnning a t-test using function <code>t.test()</code></li>
+<li>making a boxplot with <code>boxplot()</code></li>
+<li>the special value <code>NULL</code></li>
+<li>converting matrices to data frames with <code>as.data.frame()</code></li>
+<li>installing packages with <code>install.packages()</code></li>
+<li>loading packages with <code>library()</code></li>
+</ul></li>
+</ul>
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Actually, they can be used to compare any two objects in R. Also, the <code>&gt;</code> and <code>&lt;</code> operators can be used to compare strings, but the result is not always what you might expect. Can you guess what it does? Hint: pick up a dictionary… or any other alphabetically sorted list.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>OK, this is way beyond the scope of this course, but the result returned by t.test has the class “htest”. This <em>is</em> a list, but also it is something special, which is why R knows to print it in a different way. R is a functional language, but it also allows object oriented (OO) programming.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Actually, it is a bit more complicated than that, but for now, let’s just say that each column of a data frame is a vector.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Row names in R data frames are very old school. Many people still use them, and many R functions produce them. However, we will be using the packages from the tidyverse family further down the line, which ignore the rownames, and for good reasons.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Actually, the <code>tidyverse</code> package is a meta-package: it just loads a collection of packages that are often used together. The <code>tibble</code> package which defines tibbles is one of them.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./day1-intro-to-r.html" class="pagination-link" aria-label="Day 1: Introduction to R">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Day 1: Introduction to R</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./day3-reading-your-data.html" class="pagination-link" aria-label="Day 3: Reading and Writing Files">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Day 3: Reading and Writing Files</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
