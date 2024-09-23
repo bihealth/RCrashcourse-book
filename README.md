@@ -23,4 +23,4 @@ that you are in a good starting position to continue learning R on your own.
 In other words, this course should give you a jump start, allow to overcome
 this first hurdle of learning R.
 
-[Start reading](_book/index.html)
+[Start reading](https://github.io/bihealth/RCrashcourse-book/index.html)
