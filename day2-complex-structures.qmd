@@ -533,7 +533,13 @@ names(patient_data) <- c("patient_name", "patient_age", "patient_measurements")
 names(patient_data)[3] <- "crp_measurement"
 ```
 
+::: {.callout-tip}
+## Tab completion with lists and data frames
 
+If you type the name of your data frame variable in a script, the `$` and
+press the TAB key, RStudio will show you all the elements of a list (or
+columns of the data frame) to choose from. No need for tedious typing!
+:::
 
 
 ### Lists as return values

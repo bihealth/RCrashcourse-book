@@ -1,8 +1,10 @@
 project:
   type: book
+  output-dir: docs
 
 book:
-  title: "A Five Day Crash Course in R"
+  title: "Five days of R"
+  subtitle: "A crash-course in R"
   author: "January Weiner"
   date: "20/9/2024"
   chapters:
@@ -20,6 +22,10 @@ bibliography: references.bib
 format:
   html:
     theme: cosmo
+    code-block-bg: true
+    code-line-numbers: true
+    code-copy: true
+    css: "custom.css"
   pdf:
     documentclass: scrreprt
 

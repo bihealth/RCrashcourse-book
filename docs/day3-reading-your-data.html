@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Day 3: Reading and Writing Files – A Five Day Crash Course in R</title>
+<title>3&nbsp; Day 3: Reading and Writing Files – Five days of R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -131,7 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">A Five Day Crash Course in R</a> 
+      <a href="./">Five days of R</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -212,6 +212,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#diagnosing-and-cleaning-data" id="toc-diagnosing-and-cleaning-data" class="nav-link" data-scroll-target="#diagnosing-and-cleaning-data"><span class="header-section-number">3.3</span> Diagnosing and cleaning data</a>
   <ul class="collapse">
   <li><a href="#diagnosing-datasets" id="toc-diagnosing-datasets" class="nav-link" data-scroll-target="#diagnosing-datasets"><span class="header-section-number">3.3.1</span> Diagnosing datasets</a></li>
+  <li><a href="#using-colordf-to-diagnose-datasets" id="toc-using-colordf-to-diagnose-datasets" class="nav-link" data-scroll-target="#using-colordf-to-diagnose-datasets"><span class="header-section-number">3.3.2</span> Using colorDF to diagnose datasets</a></li>
   </ul></li>
   <li><a href="#review" id="toc-review" class="nav-link" data-scroll-target="#review"><span class="header-section-number">3.4</span> Review</a></li>
   </ul>
@@ -530,10 +531,13 @@ Remember!
 </div>
 </div>
 <p>If you view this file (or if you use the RStudio data import feature), you will notice that the actual data in this file starts on line 5; the first 4 lines contain the text “Lots of people simply cannot resist writing some notes at the top of their spreadsheets or merging cells”. To skip these lines, we need to use an argument to the <code>read_excel</code> function. If you look up the help file for the function, you will find the following line:</p>
-<p>|skip | Minimum number of rows to skip before reading anything, be it column names or data. Leading empty rows are automatically skipped, so this is a lower bound. Ignored if range is given.|</p>
+<pre><code>skip    Minimum number of rows to skip before reading anything,
+        be it column names or data. Leading empty rows are 
+        automatically skipped, so this is a lower bound. Ignored
+        if range is given.</code></pre>
 <p>Therefore, we can modify the code above to skip the first four lines:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>deaths <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(fn, <span class="at">skip=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>deaths <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(fn, <span class="at">skip=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-simple callout-caution no-icon">
 <div class="callout-body d-flex">
@@ -555,13 +559,14 @@ Remember!
 <h3 data-number="3.3.1" class="anchored" data-anchor-id="diagnosing-datasets"><span class="header-section-number">3.3.1</span> Diagnosing datasets</h3>
 <p>Congratulations! You are now proficient in reading data into R. Believe me or not, this alone is an important step forward – many who try their hand at R get stuck at this point.</p>
 <p>However, reading data is only the first step. In most of the cases, the data requires some treatment: cleaning, transformation, filtering etc. In many projects that I have worked on as a bioinformatician, data import, diagnosis and cleaning took up the majority of time spent on the project. Unfortunately, this is necessary before any real fun with the data can start.</p>
-<p>Let us examine the file “iris.csv” that you have just read. The dataset comes from</p>
+<p>Let us examine the file “iris.csv” that you have just read. The dataset comes from a famous paper by Ronald Fisher, who used it to demonstrate his newly developed method called linear discriminant analysis – an early machine learning algorithm, if you will. The dataset contains measurements of 150 flowers of three species of irises: <em>Iris setosa</em>, <em>Iris versicolor</em> and <em>Iris virginica</em>. The measurements are the sepal and petal length and width, four measurements in total. Each row consists of these four measurements, plus a column which contains the species name.</p>
+<p>I have doctored the file to mimick typical problems with imported data, especially in clinical trial settings. Humans who enter data make errors, this is normal and expected, all of us do. Before we analyse them, we need to correct them. Before we correct them, we need to <em>find</em> them.</p>
 <p>First, note that when you read the data using <code>read_csv</code>, the function conveniently shows what types of data were assigned to each column:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>iris_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Datasets/iris.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>iris_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Datasets/iris.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 150 Columns: 5
-── Column specification ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+── Column specification ────────────────────────────────────────────────────────
 Delimiter: ","
 chr (3): Sepal Length, Petal?Length, Species
 dbl (2): Sepal Width, Petal.Width
@@ -570,6 +575,89 @@ dbl (2): Sepal Width, Petal.Width
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 </div>
+<p>This should already ring some alarm bells. First, it looks like the columns are not consistently named: we have <code>Sepal Length</code> and <code>Petal?Length</code>, and also <code>Petal.Width</code>.</p>
+<p>Secondly, we would expect that the measurements are imported as numbers. However, both sepal and petal lengths are imported as characters. We can confirm this by using the <code>class</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">class</span>(iris_data[[<span class="st">"Sepal Length"</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">class</span>(iris_data[[<span class="st">"Sepal Width"</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">class</span>(iris_data[[<span class="st">"Petal?Length"</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">class</span>(iris_data[[<span class="st">"Petal.Width"</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<code>class</code> and <code>typeof</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>class</code> function returns the class of an object, which is a higher-level classification of the object. An object can have multiple classes. The <code>typeof</code> function returns the internal type of the object, which is a lower level classification. For example, both tibbles and data frames have the type <code>list</code>, but their classes are different.</p>
+</div>
+</div>
+<p>Note that instead of using <code>iris_data$Sepal Length</code> (which will not work, because there is a space in the column name), we use the double bracket notation. An alternative would be to use quotes: <code>iris_data$'Sepal Length'</code>. This a reason why want to avoid spaces and special characters in column names (in a moment we will show you how to standardize column names). If you use tab-completion with RStudio, the quotes will be inserted automatically.</p>
+<p>Another way how we can diagnose the dataset is to use the <code>str</code> function. This provides a more detailed summary for each column:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">str</span>(iris_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>spc_tbl_ [150 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ Sepal Length: chr [1:150] "5.1" "4.9" "4.7" "4.6" ...
+ $ Sepal Width : num [1:150] 3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+ $ Petal?Length: chr [1:150] "1.4" "1.4" "1.3" "1.5" ...
+ $ Petal.Width : num [1:150] 0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
+ $ Species     : chr [1:150] "setosa" "setosa" "setosa" "setosa" ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   `Sepal Length` = col_character(),
+  ..   `Sepal Width` = col_double(),
+  ..   `Petal?Length` = col_character(),
+  ..   Petal.Width = col_double(),
+  ..   Species = col_character()
+  .. )
+ - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
+</div>
+</div>
+</section>
+<section id="using-colordf-to-diagnose-datasets" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="using-colordf-to-diagnose-datasets"><span class="header-section-number">3.3.2</span> Using colorDF to diagnose datasets</h3>
+<p>I have written a package called <code>colorDF</code> that creates yet another flavor of data frames, which is displayed in the console in color (if you haven’t installed it yet, do so now with <code>install.packages("colorDF")</code>. However, we will only use one convenient function from this data set, <code>summary_colorDF</code>. Because <code>summary_colorDF</code> is too much to type, we will use a shortcut, <code>scdf</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>scdf <span class="ot">&lt;-</span> colorDF<span class="sc">::</span>summary_colorDF</span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="fu">scdf</span>(iris_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Color data frame (class colorDF) 5 x 5:
+ │Col         │Class│NAs  │unique│Summary                                   
+1│Sepal Length│&lt;chr&gt;│    0│    37│5: 10, 5.1: 9, 6.3: 9, 5.7: 8, 6.7: 8, 5.…
+2│Sepal Width │&lt;dbl&gt;│    0│    25│ 2.00 [ 2.80 &lt; 3.00&gt;  3.38] 36.00         
+3│Petal?Length│&lt;chr&gt;│    0│    44│1.4: 13, 1.5: 13, 4.5: 8, 1.3: 7, 1.6: 7,…
+4│Petal.Width │&lt;dbl&gt;│    0│    22│0.1 [0.3 &lt;1.3&gt; 1.8] 2.5                   
+5│Species     │&lt;chr&gt;│    0│     6│virginica: 46, setosa: 45, versicolor: 42…</code></pre>
+</div>
+</div>
+<p>Above we have created a copy of the <code>summary_colorDF</code> function in the variable <code>scdf</code>. This new variable behaves exactly like the original and you can use it just as you would use <code>summary_colorDF</code>. The <code>colorDF::</code> prefix is there so that we don’t have to load the <code>colorDF</code> package. Instead we tell R to look for the function directly in the <code>colorDF</code> package.</p>
+<p>This summary function shows more than just the <code>str</code> function. In addition to column types, for character and factor columns it shows the unique values, ordered by their frequency. For numerical values, it shows their non-parametric summary statistics (range, median, quartiles).</p>
+<p>Hm, when you look at the output you might notice one more thing: for the last column, “Species”, <code>summary_colorDF</code> shows that there are six unique values. However, how can that be? We know that there are only three species in this dataset. We can check this using the <code>unique</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">unique</span>(iris_data[[<span class="st">"Species"</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "setosa"     "Setosa"     "versicolor" "Versicolor" "virginica" 
+[6] "Virginica" </code></pre>
+</div>
+</div>
+<p>There it is. Looks like whoever typed the data<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, sometimes used a lower-case species designation, and sometimes upper-case.</p>
 </section>
 </section>
 <section id="review" class="level2" data-number="3.4">
@@ -587,6 +675,15 @@ dbl (2): Sepal Width, Petal.Width
 <li>Get the current working directory with <code>getwd()</code></li>
 <li>relative and absolute paths</li>
 </ul></li>
+<li>Diagnosing datasets
+<ul>
+<li><code>str</code>, <code>class</code>, <code>typeof</code></li>
+<li><code>summary_colorDF</code></li>
+</ul></li>
+<li>Other
+<ul>
+<li>accessing functions in a package without loading it (<code>colorDF::summary_colorDF</code>)</li>
+</ul></li>
 </ul>
 
 
@@ -595,6 +692,7 @@ dbl (2): Sepal Width, Petal.Width
 <hr>
 <ol>
 <li id="fn1"><p>You can change it using the <code>setwd()</code> function, but avoid doing that. This path leads to madness, trust me on that.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>In this case, it was me.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

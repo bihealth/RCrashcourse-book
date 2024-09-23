@@ -1,5 +1,14 @@
 # Day 3: Reading and Writing Files
 
+
+```{r echo=FALSE}
+options(width=80)
+
+```
+
+
+
+
 ## Aims for today
 
 * Reading data
@@ -373,7 +382,12 @@ at the top of their spreadsheets or merging cells". To skip these lines, we
 need to use an argument to the `read_excel` function. If you look up the
 help file for the function, you will find the following line:
 
-|skip	| Minimum number of rows to skip before reading anything, be it column names or data. Leading empty rows are automatically skipped, so this is a lower bound. Ignored if range is given.|
+```
+skip	Minimum number of rows to skip before reading anything,
+        be it column names or data. Leading empty rows are 
+        automatically skipped, so this is a lower bound. Ignored
+        if range is given.
+```
 
 Therefore, we can modify the code above to skip the first four lines:
 
@@ -408,18 +422,106 @@ diagnosis and cleaning took up the majority of time spent on the project.
 Unfortunately, this is necessary before any real fun with the data can
 start.
 
-Let us examine the file "iris.csv" that you have just read. First, note
+Let us examine the file "iris.csv" that you have just read. The dataset
+comes from a famous paper by Ronald Fisher, who used it to demonstrate
+his newly developed method called linear discriminant analysis – an early
+machine learning algorithm, if you will. The dataset contains measurements
+of 150 flowers of three species of irises: *Iris setosa*, *Iris versicolor*
+and *Iris virginica*. The measurements are the sepal and petal length and
+width, four measurements in total. Each row consists of these four
+measurements, plus a column which contains the species name. 
+
+I have doctored the file to mimick typical problems with imported data,
+especially in clinical trial settings. Humans who enter data make errors,
+this is normal and expected, all of us do. Before we analyse them, we need
+to correct them. Before we correct them, we need to *find* them.
+
+First, note
 that when you read the data using `read_csv`, the function conveniently
 shows what types of data were assigned to each column:
-
 
 ```{r}
 iris_data <- read_csv("Datasets/iris.csv")
 ```
 
+This should already ring some alarm bells. First, it looks like the columns
+are not consistently named: we have `Sepal Length` and `Petal?Length`, and
+also `Petal.Width`.
+
+Secondly, we would expect that the measurements are imported as numbers.
+However, both sepal and petal lengths are imported as characters. We can
+confirm this by using the `class` function:
+
+```{r}
+class(iris_data[["Sepal Length"]])
+class(iris_data[["Sepal Width"]])
+class(iris_data[["Petal?Length"]])
+class(iris_data[["Petal.Width"]])
+```
+
+::: {.callout-tip}
+## `class` and `typeof`
+
+The `class` function returns the class of an object, which is a higher-level
+classification of the object. An object can have multiple classes. The
+`typeof` function returns the internal type of the object, which is a lower
+level classification. For example, both tibbles and data frames have the
+type `list`, but their classes are different.
+:::
 
 
+Note that instead of using `iris_data$Sepal Length` (which will not work,
+because there is a space in the column name), we use the double bracket
+notation. An alternative would be to use quotes: `iris_data$'Sepal Length'`. 
+This a reason why want to avoid spaces and special characters in column names
+(in a moment we will show you how to standardize column names). If you use
+tab-completion with RStudio, the quotes will be inserted automatically.
 
+Another way how we can diagnose the dataset is to use the `str` function.
+This provides a more detailed summary for each column:
+
+```{r}
+str(iris_data)
+```
+
+### Using colorDF to diagnose datasets
+
+I have written a package called `colorDF` that creates yet another flavor
+of data frames, which is displayed in the console in color (if you haven't
+installed it yet, do so now with `install.packages("colorDF")`. However, we
+will only use one convenient function from this data set,
+`summary_colorDF`. Because `summary_colorDF` is too much to type, we will
+use a shortcut, `scdf`.
+
+```{r message=FALSE}
+scdf <- colorDF::summary_colorDF
+scdf(iris_data)
+```
+
+Above we have created a copy of the `summary_colorDF` function in the
+variable `scdf`. This new variable behaves exactly like the original and
+you can use it just as you would use `summary_colorDF`. The `colorDF::`
+prefix is there so that we don't have to load the `colorDF` package.
+Instead we tell R to look for the function directly in the `colorDF` package.
+
+This summary function shows more than just the `str` function. In addition
+to column types, for character and factor columns it shows the unique
+values, ordered by their frequency. For numerical values, it shows their
+non-parametric summary statistics (range, median, quartiles).
+
+Hm, when you look at the output you might notice one more thing: for the
+last column, "Species", `summary_colorDF` shows that there are six unique
+values. However, how can that be? We know that there are only three species
+in this dataset. We can check this using the `unique` function:
+
+```{r}
+unique(iris_data[["Species"]])
+```
+
+There it is. Looks like whoever typed the data[^whoever], sometimes used a lower-case
+species designation, and sometimes upper-case.
+
+[^whoever]: In this case, it was me.
 
 ## Review
 
@@ -432,4 +534,9 @@ Things that you learned today:
  * Paths
    * Get the current working directory with `getwd()`
    * relative and absolute paths
+ * Diagnosing datasets
+   * `str`, `class`, `typeof`
+   * `summary_colorDF`
+ * Other
+   * accessing functions in a package without loading it (`colorDF::summary_colorDF`)
 

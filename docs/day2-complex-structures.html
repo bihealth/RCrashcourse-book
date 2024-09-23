@@ -808,16 +808,16 @@ $age
 [1] 42
 
 $measurements
-[1] 0.6379641 0.4131733 0.4816066 0.8988432 0.3906390</code></pre>
+[1] 0.2536847 0.3608098 0.7842325 0.9418489 0.6641299</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a>patient_data<span class="sc">$</span>measurements[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.6379641</code></pre>
+<pre><code>[1] 0.2536847</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1"></a>patient_data<span class="sc">$</span>measurements[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">42</span></span>
 <span id="cb86-2"><a href="#cb86-2"></a>patient_data<span class="sc">$</span>measurements <span class="sc">*</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 126.000000   1.239520   1.444820   2.696530   1.171917</code></pre>
+<pre><code>[1] 126.000000   1.082429   2.352698   2.825547   1.992390</code></pre>
 </div>
 </div>
 <p>Since the lists are named, there must be a way to access and modify these names. And, of course, there is: the <code>names()</code> function.</p>
@@ -828,6 +828,19 @@ $measurements
 </div>
 <div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1"></a><span class="fu">names</span>(patient_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"patient_name"</span>, <span class="st">"patient_age"</span>, <span class="st">"patient_measurements"</span>)</span>
 <span id="cb90-2"><a href="#cb90-2"></a><span class="fu">names</span>(patient_data)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">"crp_measurement"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tab completion with lists and data frames
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you type the name of your data frame variable in a script, the <code>$</code> and press the TAB key, RStudio will show you all the elements of a list (or columns of the data frame) to choose from. No need for tedious typing!</p>
+</div>
 </div>
 </section>
 <section id="lists-as-return-values" class="level3" data-number="2.4.3">
@@ -875,13 +888,13 @@ Boxplot
     Welch Two Sample t-test
 
 data:  group_a and group_b
-t = -6.5406, df = 17.461, p-value = 4.415e-06
+t = -3.5678, df = 15.71, p-value = 0.002633
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -7.246881 -3.717248
+ -6.574517 -1.668989
 sample estimates:
 mean of x mean of y 
- 9.191735 14.673799 </code></pre>
+ 9.849202 13.970955 </code></pre>
 </div>
 </div>
 <p>As you can see, the result is a list. However, when we print it to the console, it <em>does not look like one</em>. This is because R has a special function for formatting the results of a t-test<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, so that it is easier to read.</p>
@@ -889,7 +902,7 @@ mean of x mean of y
 <div class="cell">
 <div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1"></a>t_test<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 4.414877e-06</code></pre>
+<pre><code>[1] 0.002632791</code></pre>
 </div>
 </div>
 </section>
