@@ -1,4 +1,4 @@
-# Day 2: Complex data structures
+# Complex data structures
 
 ## Goals for today
 
@@ -348,6 +348,7 @@ To create such a long vector, we will use two functions: `rep()` and
 
 ### Using `rep()` to generate column names
 
+[`rep()`]{.aside}
 The `rep()` function is a little and very useful utility function that
 repeats element of a vector a given number of times. It either repeats the
 whole vector several times, or, using the `each` parameter, repeats each

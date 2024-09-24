@@ -7,6 +7,8 @@ book:
   subtitle: "A crash-course in R"
   author: "January Weiner"
   date: "20/9/2024"
+  repo-url: https://github.com/bihealth/RCrashcourse-book/
+  reader-mode: true
   chapters:
     - index.qmd
     - day1-intro-to-r.qmd
@@ -14,19 +16,45 @@ book:
     - day3-reading-your-data.qmd
     - day4-manipulating-your-data.qmd
     - day5-visualization-and-statistics.qmd
+    - appendix-wide-long.qmd
+    - solutions.qmd
     - references.qmd
+  sidebar:
+    search: true
+    style: floating
+    border: true
+  navbar:
+    left:
+      - text: "Introduction"
+        href: "index.qmd"
+      - text: "One"
+        href: "day1-intro-to-r.qmd"
+      - text: "Two"
+        href: "day2-complex-structures.qmd"
+      - text: "Three"
+        href: "day3-reading-your-data.qmd"
+      - text: "Four"
+        href: "day4-manipulating-your-data.qmd"
+      - text: "Five"
+        href: "day5-visualization-and-statistics.qmd"
+      - text: "Solutions"
+        href: "solutions.qmd"
+  comments:
+    hypothesis: true
 
 bibliography: references.bib
 
 format:
   html:
-    theme: cosmo
+    theme: 
+      light: cosmo
+      dark: darkly
     code-block-bg: true
-    code-line-numbers: true
+    code-line-numbers: false
     code-copy: true
     css: "custom.css"
   pdf:
     documentclass: scrreprt
 
 
-
+reference-location: margin

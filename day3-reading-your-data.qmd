@@ -1,9 +1,8 @@
-# Day 3: Reading and Writing Files
+# Reading and Writing Files
 
 
 ```{r echo=FALSE}
 options(width=80)
-
 ```
 
 
@@ -14,7 +13,7 @@ options(width=80)
 * Reading data
 * Cleaning data
 * Regular expressions
-* Searching, sorting and selecting - a start
+* Data management
 
 Today is a special day. If there is one thing that I would like you to
 learn from this course, it is how to read and write the data.
@@ -28,12 +27,14 @@ frequently, you will work with tabular data, either as Excel files or as
 comma or tab separated values (CSV and TSV files, respectively). I am sure
 you have worked with such files before.
 
+[`readr` and `readxl` packages]{.aside}
 To read these files, we will use two packages: `readr` and `readxl`. The
 former, `readr`, is part of the `tidyverse` package, so when you load the
-Tidyverse using `library(tidyverse)`, `readr` is loaded as well. The latter,
+tidyverse using `library(tidyverse)`, `readr` is loaded as well. The latter,
 `readxl`, is a separate package that you need to install and load
 separately.
 
+[`read.table()`, `read.csv()`, `read.tsv()`]{.aside}
 There are also "base R" functions `read.table`, `read.csv`,
 `read.tsv` (there is no function for reading XLS[X] files in base R). These
 are always available when you start R, but don't use them. The tidyverse
@@ -41,7 +42,8 @@ functions are not only faster, but also much better behaving and, which is
 most important, they are safer – it is less likely to mess up your data
 with them.
 
-Tidyverse functions return *tibbles*, which, as you remember from
+[tibbles]{.aside}
+tidyverse functions return *tibbles*, which, as you remember from
 yesterday, are a special flavor of data frames. Just to refresh your
 memory, here are key facts about tibbles:
 
@@ -51,6 +53,9 @@ memory, here are key facts about tibbles:
  * when you select columns using `[ , sel ]`, you *always* get a tibble,
    even if you selected only one column
 
+
+
+[`read_table()`, `read_tsv()`, `read_csv()`, `read_delim()`, `read_xls()`, `read_xlsx()`, `read_excel()`]{.aside}
 
 ---------------------------- ------------------------------- ------------------------------- --------------------------
 Data type                    Function                        Package                         Notes
@@ -110,6 +115,7 @@ there are many ways to deal with that, both with R and RStudio. Still, this
 is a key problem and we would like you to spend some time on the following
 chapter.
 
+[Path]{.aside}
 In order to access a file, a program (any program) needs what is known a
 *path*. Path is a character string that tells the program how to get to the
 file and looks, for example, like this on a Windows computer:
@@ -120,8 +126,8 @@ this on a Mac: `/Users/johndoe/Documents/RProjects/MyFirstRProject/data.csv`.
 ## Path separators on different systems
 
 Most computer systems separate the directories and files in a path using a
-slash (`/`). However, Windows uses a backslash (`\ `). This is a source of
-endless frustration for R users, because in R character vectors, the slash
+slash (`/`). However, Windows uses a backslash (`\ `). This is quite
+annoying for R users, because in R character vectors, the slash
 has a special meaning. To use backslashes, you need to "escape" them by
 putting another backslash in front of each backslash. So instead of
 `C:\Users\johndoe\Documents`, you need to write
@@ -139,11 +145,27 @@ If R cannot find your file, it will return an error message. At first, you
 will be seeing this error *a lot*:
 
 
+```{r echo=FALSE}
+read_csv <- function(x) {
+  msg <- paste0("'", x, "' not found in the current working directory\n('C:/Users/johndoe/Documents/RProjects/MyFirstRProject/').")
+  stop(msg, call. = FALSE)
+}
+```
+
+[Error: file not found]{.aside}
 ```{r error=TRUE,warning=FALSE,message=FALSE}
 library(tidyverse)
 mydata <- read_csv("data.csv")
 ```
 
+```{r echo=FALSE}
+rm(read_csv)
+```
+
+
+
+
+[`getwd()`]{.aside}
 Before we proceed, you need to understand one important thing. When you
 start your RStudio and R session, the R session runs in a specific
 directory. This is called the *working directory*. You can check what is
@@ -173,7 +195,6 @@ called an *absolute* path. That means that it works no matter where you are
 in your system, because a program can always find the file or directory
 using this path.
 
-
 The easiest way to read the data is this: copy your data files to the
 directory returned by `getwd()`.
 
@@ -191,8 +212,7 @@ directory returned by `getwd()`.
 :::
 :::
 
-The following code should work without an error:
-
+The following code should now work without an error:
 
 ```{r eval=FALSE}
 library(tidyverse)
@@ -228,16 +248,17 @@ directory, or even multiple directories.
 ::: {#exr-simple-reading-directory}
 ### Reading your first file from a data directory
 
- * In the working directory, create a new directory called "Data"
- * Move the "iris.csv" file to the "Data" directory
- * Read the file using `read_csv("Data/iris.csv")`
+ * In the working directory, create a new directory called "Datasets"
+ * Move the "iris.csv" file to the "Datasets" directory
+ * Read the file using `read_csv("Datasets/iris.csv")`
 :::
 :::
 
-The path "Data/iris.csv" is called a *relative* path, because it is
+[Relative path]{.aside}
+The path "Datasets/iris.csv" is called a *relative* path, because it is
 relative to the working directory and will not work from another location.
 So why should we use relative paths? Wouldn't it be easier to use absolute
-paths all the time, for example `read_csv("C:/Users/johndoe/Documents/RProjects/MyFirstRProject/Data/iris.csv")`?
+paths all the time, for example `read_csv("C:/Users/johndoe/Documents/RProjects/MyFirstRProject/Datasets/iris.csv")`?
 
 Actually, no. The problem is that if you move your R project to another
 location, of if you share it with someone else, the absolute path will no
@@ -265,6 +286,7 @@ think about how you would navigate from one directory to another in the
 Windows Explorer or Finder. You need to go up one level, to get into
 "PhD", and then down again to "data".
 
+[Up one level with `..`]{.aside}
 Getting "up one level" in a path is done by using `..`. So the relative
 path to the file "iris.csv" in your "data" directory is `../data/iris.csv`.
 
@@ -360,6 +382,7 @@ Reading files sometimes requires diligence. This is especially true for
 Excel files – they can contain multiple sheets, tables often do not start
 on the first row etc.
 
+[Reading excel files with `readxl` package]{.aside}
 The package `readxl` (which you hopefully successfully used to read the
 XLSX file in the previous exercise) contains several example files. They
 have been installed on your system when you installed the package. Manually
@@ -368,6 +391,7 @@ package provides a convenience function, `readxl_example()`, that returns
 the absolute path to the file (yes, I know what I said about absolute
 paths; this is an exception). 
 
+[`readxl_example()`,`read_excel()`]{.aside}
 ```{r}
 library(readxl)
 fn <- readxl_example("deaths.xls")
@@ -380,8 +404,10 @@ will notice that the actual data in this file starts on line 5; the first 4
 lines contain the text "Lots of people simply cannot resist writing some notes
 at the top of their spreadsheets or merging cells". To skip these lines, we
 need to use an argument to the `read_excel` function. If you look up the
-help file for the function, you will find the following line:
+help file for the function (e.g. using `?read_excel`), you will find the
+following line:
 
+[skipping lines with `read_excel(skip=...)`]{.aside}
 ```
 skip	Minimum number of rows to skip before reading anything,
         be it column names or data. Leading empty rows are 
@@ -422,11 +448,12 @@ diagnosis and cleaning took up the majority of time spent on the project.
 Unfortunately, this is necessary before any real fun with the data can
 start.
 
-Let us examine the file "iris.csv" that you have just read. The dataset
+[The `iris` dataset]{.aside}
+Let us examine the file `iris.csv` that you have just read. The dataset
 comes from a famous paper by Ronald Fisher, who used it to demonstrate
 his newly developed method called linear discriminant analysis – an early
 machine learning algorithm, if you will. The dataset contains measurements
-of 150 flowers of three species of irises: *Iris setosa*, *Iris versicolor*
+(in cm) of 150 flowers of three species of irises: *Iris setosa*, *Iris versicolor*
 and *Iris virginica*. The measurements are the sepal and petal length and
 width, four measurements in total. Each row consists of these four
 measurements, plus a column which contains the species name. 
@@ -436,9 +463,8 @@ especially in clinical trial settings. Humans who enter data make errors,
 this is normal and expected, all of us do. Before we analyse them, we need
 to correct them. Before we correct them, we need to *find* them.
 
-First, note
-that when you read the data using `read_csv`, the function conveniently
-shows what types of data were assigned to each column:
+First, note that when you read the data using `read_csv`, the function
+conveniently shows what types of data were assigned to each column:
 
 ```{r}
 iris_data <- read_csv("Datasets/iris.csv")
@@ -448,6 +474,7 @@ This should already ring some alarm bells. First, it looks like the columns
 are not consistently named: we have `Sepal Length` and `Petal?Length`, and
 also `Petal.Width`.
 
+[`class()`]{.aside}
 Secondly, we would expect that the measurements are imported as numbers.
 However, both sepal and petal lengths are imported as characters. We can
 confirm this by using the `class` function:
@@ -464,9 +491,11 @@ class(iris_data[["Petal.Width"]])
 
 The `class` function returns the class of an object, which is a higher-level
 classification of the object. An object can have multiple classes. The
-`typeof` function returns the internal type of the object, which is a lower
+`typeof` function returns the internal storage type of the object, which is a lower
 level classification. For example, both tibbles and data frames have the
 type `list`, but their classes are different.
+Another example:i if `mtx` is a matrix of numbers, `typeof(mtx)` is
+`double`, and `class(mtx)` is `matrix`.
 :::
 
 
@@ -477,6 +506,36 @@ This a reason why want to avoid spaces and special characters in column names
 (in a moment we will show you how to standardize column names). If you use
 tab-completion with RStudio, the quotes will be inserted automatically.
 
+[`summary()`]{.aside}
+We can also use the `summary` function on the whole dataset:
+
+```{r}
+summary(iris_data)
+```
+
+Ops, another problem. Did you notice the maximum value for sepal widths? It
+is 36 cm. This cannot be, way too large for the flowers. Also, both the
+mean and median are around 3 cm, so this must be either an outlier or a
+clerical error.
+
+::: {.callout-tip}
+## The `summary()` functions
+
+Under the hood, there is no single `summary()` function. Instead, different
+classes can have different types of summaries. Whenever you produce a
+result, always try the summary function with it.
+:::
+
+[`glimpse()`]{.aside}
+Alternatively, we can use the tidyverse `glimpse` function. Rather then
+providing a summary, this function uses a terse format to show the data
+type for each column and first few values:
+
+```{r}
+glimpse(iris_data)
+```
+
+[`str()`]{.aside}
 Another way how we can diagnose the dataset is to use the `str` function.
 This provides a more detailed summary for each column:
 
@@ -486,6 +545,7 @@ str(iris_data)
 
 ### Using colorDF to diagnose datasets
 
+[`colorDF`,`summary_colorDF()`]{.aside}
 I have written a package called `colorDF` that creates yet another flavor
 of data frames, which is displayed in the console in color (if you haven't
 installed it yet, do so now with `install.packages("colorDF")`. However, we
@@ -498,9 +558,11 @@ scdf <- colorDF::summary_colorDF
 scdf(iris_data)
 ```
 
+[Copying functions]{.aside}
 Above we have created a copy of the `summary_colorDF` function in the
 variable `scdf`. This new variable behaves exactly like the original and
 you can use it just as you would use `summary_colorDF`. The `colorDF::`
+[`package::function()`]{.aside}
 prefix is there so that we don't have to load the `colorDF` package.
 Instead we tell R to look for the function directly in the `colorDF` package.
 
@@ -509,6 +571,7 @@ to column types, for character and factor columns it shows the unique
 values, ordered by their frequency. For numerical values, it shows their
 non-parametric summary statistics (range, median, quartiles).
 
+[`unique()`]{.aside}
 Hm, when you look at the output you might notice one more thing: for the
 last column, "Species", `summary_colorDF` shows that there are six unique
 values. However, how can that be? We know that there are only three species
@@ -519,9 +582,956 @@ unique(iris_data[["Species"]])
 ```
 
 There it is. Looks like whoever typed the data[^whoever], sometimes used a lower-case
-species designation, and sometimes upper-case.
+species designation, and sometimes upper-case. However, for R (and for
+computers in general), "versicolor" and "Versicolor" are two different things.
 
 [^whoever]: In this case, it was me.
+
+
+[`table()`]{.aside}
+More information can be gained using the `table()` function:
+
+```{r}
+table(iris_data[["Species"]])
+```
+
+Here we not only see the unique values, but also their frequency. The `table()`
+function is very useful for any categorical data, as you will see later.
+
+::: {.callout-important}
+## Lower and upper case
+
+For computers in general and R in particular, "lowercase" and "Uppercase"
+are two different things. Variables `a` and `A` are different, as are
+`versicolor` and `Versicolor`. This is called *case sensitivity*.
+:::
+
+### Checking individual values
+
+We have seen before that some measurement columns were imported as
+character vectors, while others were correctly imported as numbers. To
+understand why, we need to have a closer look at the individual columns.
+
+One of the columns that has been imported as a character vector is the
+"Sepal Length". We will extract the column as a vector and then try to
+manually convert it to a number:
+
+[`as.numeric()`]{.aside}
+```{r}
+sepal_length <- iris_data[["Sepal Length"]]
+as.numeric(sepal_length)
+```
+
+Two things to note: first, R issued a warning, "NAs introduced by
+coercion". That means that some values could not be converted to numbers,
+and were replaced by the special value `NA`[^NA]. Second, *there was no
+error*. R happily allowed you to create a vector of numbers from a vector
+even though there were some problems.
+
+[^NA]: See Day 1 for more information on `NA` values.
+
+When you look at the output, you will easily spot the `NA` values. You
+could even figure out at which positions in the vector they occur. However,
+this is not the way to go – what if you have not 150 values, but 150,000?
+[`is.na()`]{.aside}
+Instead, use the `is.na` function:
+
+```{r}
+# convert to numbers
+sepal_length_n <- as.numeric(sepal_length)
+
+# how many are NA?
+sum(is.na(sepal_length_n))
+
+# which are NA?
+which(is.na(sepal_length_n))
+
+# show the values
+sepal_length[is.na(sepal_length_n)]
+```
+
+One more problem remains: the value "36" in the sepal width column. We can
+check which values are greater than 10 with a similar approach:
+
+```{r}
+sepal_width <- iris_data[["Sepal Width"]]
+
+# how many are greater than 10?
+sum(sepal_width > 10)
+
+# which are greater than 10?
+which(sepal_width > 10)
+
+# show the values
+sepal_width[sepal_width > 10]
+```
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-petal_length}
+### Petal lengths
+
+Repeat the steps above for the `Petal length` column.
+:::
+:::
+
+
+### Diagnosing datasets: a checklist
+
+Whenever you read a data set, you should check the following things:
+
+ **Column names.** Are they consistent? Are they easy to type (no
+ spaces, no special characters)? Are they in the correct order? Are they
+ what you expect them to be? Do you understand what each column *is*?
+
+ **Data types.** Are the columns of the correct type (e.g.
+ numerical columns imported as numbers)?
+
+ **Categorical variables.** Do you see what you expect? Is the
+ number of categories correct? Do you understand what each category *is*?
+
+ **Numerical variables.** Do the summary statistics make sense? Are
+ there any outliers? Missing values? Were the variables imported
+ incorrectly as characters? Why?
+
+ **Missing values.** Are there any missing values? Why? Are they important?
+ How to deal with them?
+
+::: {.callout-tip}
+## Checklist for importing data
+
+ * Column names
+ * Data types
+ * Categorical variables
+ * Numerical variables
+ * Missing values
+:::
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-diagnosing}
+### Botched metadata
+
+Load the file `meta_data_botched.xlsx` using the `readxl` package. Diagnose
+the problems.
+:::
+:::
+
+## Mending the data
+
+### Correcting column names
+
+Column names should contain only letters, numbers and underscores. While
+all other characters are also allowed (so a column name can be `豚肉 "temp."? (°C) 😀`), it
+is *way* easier to work with columns with simple, standardized names.
+
+You already know one way of dealing with this – simply assign new names to the columns:
+
+```{r}
+colnames(iris_data) <- c("sepal_length", "sepal_width", "petal_length",
+                      "petal_width", "species")
+colnames(iris_data)
+```
+
+[`janitor` package]{.aside}
+However, there is a quicker way. The `janitor` package contains a function
+called `clean_names` that does exactly that, automatically and for all
+[`clean_names()`]{.aside}
+columns. Install it with `install.packages("janitor")` if you haven't
+installed it yet.
+
+```{r message=FALSE}
+library(janitor)
+iris_data <- clean_names(iris_data)
+colnames(iris_data)
+```
+
+My advice is to use `clean_names` on every dataset you import.
+
+### Correcting outliers
+
+
+```{r echo=FALSE}
+# function for joining strings
+# with commas and "and"
+pand <- function(x) {
+
+  if(length(x) == 0) {
+    return("")
+  }
+
+  if(length(x) == 1) {
+    return(x)
+  }
+
+  x1 <- paste(x[-length(x)], collapse=", ")
+  x2 <- x[length(x)]
+  return(paste(x1, "and", x2))
+}
+```
+
+
+In the column with sepal widths, which now has the name `sepal_width`, we
+found two values that probably lack the decimal point: 
+`r pand(iris_data$sepal_width[iris_data$sepal_width > 10])`. 
+They are at positions
+`r pand(which(iris_data$sepal_width > 10))`, respectively.
+
+It is tempting to simply substitute the data in the original data frame:
+
+```{r eval=FALSE}
+# works, but don't do it
+iris_data$sepal_width[42] <- 2.3
+```
+
+Unfortunately, this is not a good idea, because this solution is a bit like
+manual editing in a spreadsheet. 
+There is a better way. First, **generalize the issue**. What seems to be
+the problem? The values that are larger than 10 are probably missing a
+decimal point. The simplest solution is to divide them by 10. Using logical
+vectors, we can do that for *all* the values that are larger than 10.
+
+```{r}
+# numbers that are missing a decimal point
+too_large <- iris_data$sepal_width > 10
+
+iris_data$sepal_width[too_large] <- iris_data$sepal_width[too_large] / 10
+```
+
+This a bit hard to read, so we make it more explicit:
+
+```{r}
+# numbers that are missing a decimal point
+sepal_width <- iris_data$sepal_width
+too_large <- sepal_width > 10
+
+sepal_width[too_large] <- sepal_width[too_large] / 10
+sepal_width[too_large]
+```
+
+Looks good. Finally, we assign the corrected values back to the data frame:
+
+```{r}
+iris_data$sepal_width <- sepal_width
+```
+
+As the last step, we need to check whether our approach worked for all
+[`any()`]{.aside}
+values in the column. For this, we will use the `any()` function, which
+returns `TRUE` if any of the values in a logical vector is `TRUE`:
+
+```{r}
+any(iris_data$sepal_width > 10)
+```
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-potential-problem}
+Can you spot what the potential problem with this approach is? Hint: 
+what would happen if the original value was 1.10? Can you think of a better
+approach? Is it actually possible to make sure that our guess is correct?
+:::
+:::
+
+### Correcting categorical data
+
+In the column "species", we found that there are two different values for
+the same species. There are many ways we can handle it. Obviously, we could
+manually assign the correct labels, but that would be a lot of work.
+
+A better way would be to somehow automatically convert all the values. In
+our case, the problem is quite simple: it is sufficient to put all the
+values in uniform lower case, so that `Versicolor` becomes `versicolor`.
+
+[`tolower()`]{.aside}
+We can do that in one line of code thanks to the `tolower` function:
+
+```{r}
+iris_data$species <- tolower(iris_data$species)
+```
+
+[`toupper()`]{.aside}
+There is also a corresponding function, `toupper`, that converts all the
+letters to upper case.
+
+Remember to check that your changes were successful:
+
+```{r}
+table(iris_data$species)
+```
+
+This was a simple case, but what if we had more complex typos? For example,
+"i.versicolor", "vers.", "V" etc. In such cases, you would need to use
+a more sophisticated approach. This approach involves *regular expressions*,
+and will also help us to correct the sepal and petal lengths.
+
+### Incorrectly imported numeric data
+
+```{r echo=FALSE,warning=FALSE}
+sl_prob <- is.na(as.numeric(iris_data$sepal_length))
+pl_prob <- is.na(as.numeric(iris_data$petal_length))
+```
+
+We have two columns which were imported as characters, but should be
+numbers. Their brand-new names are `sepal_length` and `petal_length`. All
+in all, there are `r sum(sl_prob)` problems in the sepal length column and
+`r sum(pl_prob)` in the petal length column, as shown in the table below:
+
+
+```{r echo=FALSE,warning=FALSE,message=FALSE}
+library(pander)
+.x <- "sepal_length"
+map_dfr(c("sepal_length", "petal_length"), ~ {
+  val <- iris_data[[.x]]
+  sel <- is.na(as.numeric(val))
+  corrected <- val |>
+    str_replace(",", ".") |>
+    str_replace("[^[:digit:].]", "") |>
+    as.numeric()
+  tibble(
+    Column = .x,
+    Position = which(sel),
+    Original = paste0('`', val[sel], '`'),
+    Correct = corrected[sel])
+}) |> pander()
+```
+
+The last column in the table above is our target – this is how we would
+like to correct the data. How can we do that?
+
+::: {.callout-tip}
+## Correcting values
+
+Of course, without additional information we can only *guess* that `5,6`
+should be `5.6`. Maybe there were two measurements, 5 and 6? Maybe `5. 4`
+should be `5.04`, and not `5.4`? In a real-world scenario, you would need
+to consult the author(s) of the data, or check your lab book. 
+:::
+
+It is tempting to simply substitute the data in the original data frame:
+
+```{r eval=FALSE}
+# works, but don't do it
+iris_data$sepal_length[70] <- 5.6
+``` 
+
+As before, that is not a good idea. If you receive another version of the
+file, with added lines before the 70th, the position will change and you
+will have to correct the version manually again. Also, if there are new
+problems, like yet another typo in the data, you will have to spot it and
+manually add a line to correct it. Again, we need to generalize the issue.
+
+What is the problem
+on line 70? A comma instead of a decimal dot – maybe someone who typed it
+was used to entering numbers in a German version of Excel, where a comma is
+used instead of a dot. So why not replace *all* the commas by a dot? This
+should do the trick not only for line 70, but also for possible future
+problems.
+
+[`str_replace_all()`]{.aside}
+We will use for that the function `str_replace_all` from
+tidyverse[^stringr]. Before we do that, however, we will make a copy of the
+column. That will allow us to easily see the changes will make, check that
+everything is OK and only then replace the column in the data frame. Later
+on, you will learn more efficient ways of doing this.
+
+[^stringr]: In base R, you can use the `gsub` function. However,
+it has a slightly different syntax, which makes it less convenient
+when you start using pipes tomorrow.
+
+```{r}
+# make a copy
+sepal_length <- iris_data$sepal_length
+
+# record the problematic places
+problems <- is.na(as.numeric(sepal_length))
+sepal_length[problems]
+
+# replace the comma 
+sepal_length <- str_replace_all(sepal_length, ",", ".")
+
+# what was the result?
+sepal_length[problems]
+```
+
+It worked!
+The `str_replace_all` is a general search-and-replace function. You can
+always use it with character vectors to replace stuff.
+
+However, we still have the problem with `> 7.7`. You will find such values
+quite often in clinical settings, along with the counterpart `< 7.7`. These
+may indicate that the measurement was out of range of an instrument.
+However, we cannot usually treat them as missing values, because they
+contain some information. Depending on whether or not we want to keep this
+information, we could either replace them by NAs, or decide to keep the
+value as is (in this case, change `> 7.7` to `7.7`).
+
+In the latter case, we can use the `str_replace_all` function again:
+
+```{r}
+sepal_length <- str_replace_all(sepal_length, "> ", "")
+```
+
+In any case, the last point that remains is to convert the vector to
+numbers and assign it to the column holding sepal lengths. We do it in one
+go and also check if everything is OK:
+
+```{r}
+# finalize
+iris_data$sepal_length <- as.numeric(sepal_length)
+
+# check whether the column is numeric
+is.numeric(iris_data$sepal_length)
+
+# check whether our problems are gone
+iris_data$sepal_length[problems]
+
+# check whether there are any NA's
+any(is.na(iris_data$sepal_length))
+```
+
+[`as.numeric()`]{.aside}
+The new function, `is.numeric()`, checks whether the column `sepal_length` is
+indeed numeric. Finally, we make sure that no NA's were produced in the
+conversion.
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-str_replace}
+
+Find the problems in the following vector and correct them:
+
+```r
+vec <- c(" 5", "5,6", "5.7", "5. 4", "> 5.0", "6.O")
+```
+:::
+:::
+
+## Regular expressions
+
+### Introduction to regular expressions
+
+[Regular expressions]{.aside}
+Regular expressions, regexps for short, are for finding certain patterns in
+the data and handling them automatically. They are quite old (going back at
+least to 1960's) and have remained virtually the same for many decades. You
+will find them in almost all programming languages, and while details may
+differ, the principles are usually the same. The regexps in R are very
+similar to regular expressions in other programming languages such as
+Python. As you may guess, they have a different syntax then R – they are
+something else altogether.
+
+We will not go in depth in regular expressions in R here. Here, just a
+short primer.
+
+[`str_detect()`]{.aside}
+Before we start, let us introduce a new function called `str_detect()`[^grep]. 
+The function is available as soon as you load the `tidyverse` package.
+This
+function is used to search for a pattern in a character vector. For every
+element that matches the pattern, it will return a `TRUE`, otherwise a
+`FALSE`. Say, we have a vector (or data frame column) containing sample
+names, and we want to find all the controls.
+
+[^grep]: In base R, there is the `grep()` function. It is very similar, but
+has a different syntax. We will stick to `str_detect()` for now.
+
+```{r}
+samples <- c("ko_1_ctrl", "ko_2_ctrl", "ko_1_treat", "ko_2_treat",
+            "wt_1_ctrl", "wt_2_ctrl", "wt_1_treat", "wt_2_treat")
+str_detect(samples, "ctrl")
+samples[str_detect(samples, "ctrl")]
+```
+
+In case that someone did not pay attention to lower or upper case, we can
+tell str_detect to ignore the case:
+
+```{r}
+samples <- c("ko_1_ctrl", "ko_2_CTRL", "ko_1_treat", "ko_2_treat",
+            "wt_1_CTRL", "wt_2_ctrl", "wt_1_treat", "wt_2_treat")
+# this does not work
+str_detect(samples, "ctrl")
+# but this does
+str_detect(samples, regex("ctrl", ignore_case=TRUE))
+```
+
+Here we are looking for a literal string "ctrl". However, we can use
+regular expressions to search for more complex patterns. What if the sample
+names are more hap-hazard, like `ko_1_control`, `ko_2_kontrol`,
+`ko_1_ctrl`?
+
+
+```{r}
+samples <- c("ko_1_control", "ko_2_ctrl", "ko_1_trt", "ko_2_treatment",
+            "wt_1_Control", "wt_2_kontrol", "wt_1_Trtmt", "wt_2_treated")
+```
+
+OK, so we got `control`, `ctrl`, `Control` and `kontrol`. A pattern
+emerges:
+
+ * first letter is either `k` or `c` or `C`
+ * then we might have an `on` (or not)
+ * next always comes `tr`
+ * then we might have an `o`
+ * then we always have an `l`
+ * then the word ends.
+
+All this "mights" and "ors" and "eithers" and "always" can be encoded in a
+regular expression:
+
+|Pattern| Explanation|
+|-------|------------|
+|`[kcC]` | must have one of the letters `k`, `c` or `C`|
+|`o?` | zero or one `o` (i.e., "there might be an o")|
+|`n?` | zero or one `n` (i.e., "there might be an n")|
+|`tr` | must have literally the string `tr`|
+|`o?` | zero or one `o` (i.e., "there might be an o")|
+|`l` | must have literally the string `l`|
+|`$` | here must be the end of the string|
+
+Taken together, this gives us the regular expression `[kcC]o?n?tro?l$`.
+This looks weird, but has the magic power of matching all the control-like
+strings in our vector. Let us try it:
+
+```{r}
+str_detect(samples, "[kcC]o?n?tro?l$")
+samples[str_detect(samples, "[kcC]o?n?tro?l$")]
+```
+
+This works, but... what does that all mean?
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-regex1}
+### Quick question
+
+Look at the table above.
+Can you think of other patterns that would match this regular expression? 
+Would `kotrl` work? What about `cotro`?
+:::
+:::
+
+### How regexp works
+
+[regexp rules]{.aside}
+A regular expression is a sequence of characters – a string. However, some
+of these strings have a special meaning. Here is a short table, we will
+discuss these in more detail in a moment:
+
+|Character| Meaning|
+|---------|--------|
+|`a` | a literal character `a`|
+|`.` | any character|
+|`[abc]` | one of the characters `a`, `b` or `c`|
+|`[^abc]` | any character *except* `a`, `b` or `c`|
+|`[a-z]` | any character from `a` to `z`|
+|`[0-9]` | any digit|
+
+These are the so-called "atoms". They stand for something that we want to
+match. In the simplest case (like the `a` above), they stand for themselves.
+Also, did you notice the square brackets? They have *nothing* to do with
+how we use square brackets in R.
+
+In addition we can specify how many times we want to match the atom:
+
+|Quantifier| Meaning|
+|----------|--------|
+|`?` | zero or one|
+|`*` | zero or more|
+|`+` | at least one|
+
+Then, we can "anchor" the pattern in our string:
+
+|Anchor| Meaning|
+|------|--------|
+|`^` | start of the string|
+|`$` | end of the string|
+
+Let us put that together. Say we have the following strings:
+
+```{r}
+strings <- c("a", "ab", "ac", "ad", "bc", "abc", "bac", "cab")
+```
+
+To match these which contain an `a`, we can use the regular expression `a`:
+
+```{r}
+strings[str_detect(strings, "a")]
+```
+
+To match these which *start* with an `a`, we can use the regular expression `^a`:
+
+```{r} 
+strings[str_detect(strings, "^a")]
+```
+
+To find these which start with an `a` followed by `b` or `c`, but not `d`, we
+can use the square brackets:
+
+```{r}
+strings[str_detect(strings, "^a[bc]")]
+```
+
+OK, that was a lot. Take some time to digest it. Regulare expressions are
+what you call in German *gewöhnungsbedürftig* – they require some getting
+used to, but they are worth it.
+
+
+### Usage of regular expressions in R
+
+Most commonly you will use regular expressions in R for two things:
+
+ * Searching for something in a character vector (like we did above)
+ * Replacing something in a character vector, for example using `str_replace_all`
+
+What we did not tell you when we introduced `str_replace_all` is that it
+actually, its second argument is a regular expression. Therefore, we can
+use it to find a pattern and replace it with something else. For example,
+we can unify the following messed up vector denoting the gender of patients:
+
+
+```{r}
+gender <- c("m", "f", "m", "w", "frau",
+            "female", "other", "male", 
+            "männlich", "x", "weiblich")
+```
+
+German and English are mixed here, but we can see a pattern: if the strings
+starts with `m`, it is male, if it starts with either `f` or `w`, it is
+female. And in remaining cases it is "other". We can clean up this mess
+with just three lines of code:
+
+
+```{r}
+gender <- str_replace(gender, "^m.*", "male")
+gender <- str_replace(gender, "^[fw].*", "female")
+gender <- str_replace(gender, "^[^mfw].*", "other")
+```
+
+Note that the `^` character has two different meanings on line 3 above. As
+the first character of a regular expression, it anchors it to the beginning
+of the string. However, inside the square brackets, it negates the
+selection. So, `[^mfw]` means "any character except `m`, `f` or `w`".
+
+The `.*` idiom is a common one in regular expressions. It means "zero or
+more of any character". So, `^m.*` matches both the string "m" and the
+string "male". And because we used `^`, it will only match the strings
+where m is the first letter (so it does not match "female").
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-regex1}
+### Quick question
+
+What would happen if we ommited the `^` at the beginning of the strings above? 
+For example, if we used `[^mfw].*` instead of `^[^mfw].*`?
+Think first, then try it out.
+:::
+:::
+
+But wait, if some characters have a special meaning, how can we replace
+them? For example, how can we replace a dot in a string? The following will
+not work as intended:
+
+```{r}
+vec <- c("5.6", "5.7", "5.8")
+str_replace_all(vec, ".", ",")
+```
+
+Since the character `.` means "any character", *every character* will be
+replaced by a comma in the example above. In order to search or replace
+[escaping characters in a regexp]{.aside}
+special characters, we must *escape* them – which in R means putting two
+backslashes[^bck] in front of them in the regular expression.
+
+[^bck]: In R, it is two backslashes. In other programming languages, it
+is usually a single backslash.
+
+```{r}
+vec <- c("5.6", "5.7", "5.8")
+str_replace_all(vec, "\\.", ",")
+```
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-regex2}
+
+ * Use `str_replace_all()` to make the following uniform: `c("male", "Male ", "M", "F", "female", " Female")`
+ * Using `str_replace_all()` and `toupper()`, clean up the gene names such
+   that they conform to the HGNC (all capital
+   letters, no spaces, no dashes): `c("ankrd22", "ifng", "Nf-kb", " Cxcl 5", "CCL 6.", "ANK.r.d. 12")`
+ * What regular expression matches all of the ankyrin repeat genes (but not other genes) in the following vector: `c("ANKRD22", "ank.rep.d. 12", "ANKRD-33", "ankrd23", "ANKEN", "MAPK", "ifng-1", "ANKA-REP-6")`? Ankyrin repeat domain genes are the first 4 in the vector.
+:::
+:::
+ 
+
+### Correcting columns in `iris_data` with regular expressions
+
+Let us now turn to another column in the data frame, the petal lengths.
+Using the approach we have just learned, we can find the problematic
+values:
+
+```{r}
+petal_length <- iris_data$petal_length
+problems <- is.na(as.numeric(petal_length))
+which(problems)
+petal_length[problems]
+```
+
+We *could* use for example
+`str_replace_all(sepal_length, "k", "")`, to change `5k.1` to `5.1`, but
+that would not be a general solution. What if it is `j` in the new data? We
+should actually remove *everything* that is not a number and not a decimal
+dot. To this end, we will use the regular expressions.
+
+We need to remove anything *but* numbers and decimal dots. We can use the
+square brackets for that:
+
+```{r}
+petal_length <- str_replace_all(petal_length, "[^0-9.]", "")
+```
+
+The `0-9` means anything between 0 and 9, and the `.` is a literal dot. As
+you can see, you don't have to escape the dot if it is already in the
+[`[^0-9]`]{.aside}
+square brackets. The `^` inside the square brackets negates the selection,
+so `[^0-9.]` means exactly what we wanted.
+
+
+```{r}
+# check the problems
+petal_length[problems]
+
+# convert to numbers
+petal_length <- as.numeric(petal_length)
+
+# check for remaining NA's
+any(is.na(petal_length))
+
+# assign
+iris_data$petal_length <- as.numeric(petal_length)
+```
+
+Done! The iris data set is now clean.
+
+
+```{r}
+scdf(iris_data)
+```
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-metadata_botched-2}
+## Correcting metadata
+
+In @exr-diagnosing, you have diagnosed the file
+`meta_data_botched.xlsx`. Now go ahead and correct the problems you have
+found.
+:::
+:::
+
+
+## Writing data
+
+### Keep your data organized
+
+Writing data is *way* easier than reading it. However, you always have to
+come up with a name for the file, and I would like you to follow a few
+points.
+
+ * Never overwrite the original file (we will discuss it in more detail shortly).
+ * Create an output directory and save your files only there, do not mix
+   the original and the output files.
+ * Use a meaningful name, so not `output`, but `iris_cleaned`. No spaces or
+   special characters (use an underscore `_` instead).
+ * Thirdly, always version your files: add a date, your initials, a version number and a date,
+   e.g. `iris_cleaned_2021-09-01_JW_v1.csv`.
+ * Do not use the old Excel XLS format (file extension `.xls`). Use the
+   newer XLSX format (file extension `.xlsx`).
+
+This latter point warrants an explanation. There are two main problems with
+that format. Firstly, it is less portable then XLSX (the new one) – so many
+programs can read XLSX, but not XLS (or, which is worse, they can, but read
+it incorrectly). Secondly, the number of rows and columns in an XLS file is
+severly limited (65536 rows and 256 columns). These limits are easily
+reached in modern bioinformatic datasets.
+
+### Functions to use for writing data
+
+[`write_tsv()`, `write_csv()`,`write_xlsx()`]{.aside}
+
+---------------------------- ------------------------------- ------------------------------- --------------------------
+Data type                    Function                        Package                         Notes
+---------------------------- ------------------------------- ------------------------------- --------------------------
+TSV / TAB separated values   `write_tsv()`                   `readr`                         No rownames!
+                          
+                                                                                             
+CSV / comma separated        `write_csv()`                   `readr`                         No rownames!
+
+XLS (old Excel)                                                                              Just don't use it. No, 
+                                                                                             seriously, don't.
+                                                                                             
+XLSX (new Excel)             `write_xlsx()`                  `writexl`                       No rownames!
+---------------------------- ------------------------------- ------------------------------- --------------------------
+
+Just as in the case of reading data, there are several functions to write
+data. There are also functions in the base R that can be used for writing
+(e.g. `write.csv`), but they are not recommended.
+We advise you to only use the `readr` package for writing TSV and CSV
+files, and the `writexl` package for writing XLSX files.
+
+However, keep in mind that row names are not exported with these packages.
+That is why we do not use row names in this course.
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-writing-data}
+### Writing data
+
+ * In your project directory, create the directory "Data_clean" (if you
+   want, you can use the R function `dir.create()` for that).
+ * Write the cleaned `iris_data` to a new file in the "Data_clean" directory.
+   Use the `write_csv` function from the `readr` package. Use a meaningful
+   name, version it and use a date.
+:::
+:::
+
+## Principles of data management
+
+### Keeping originals
+
+As every day, we end the day with some food for thought. Today, we would
+like to introduce a few important principles that you should follow in your
+everyday work with data – not only in R, but in general.
+
+The first rule is: **always keep the originals**. Whether you have received
+the data from someone, extracted them from a database such as RedCap or
+created it yourself, once you start working with R you should freeze your
+data, version it and not touch it anymore.
+
+Let me reiterate: **do not touch the original data**. If you absolutely
+*have* to edit it by hand, make a copy and add a suffix like `_edited` or
+your initials to the file. However, it is better to perform all editing
+operations in R.
+
+**Versioning.** Always include a date, and possibly your initials and
+version in the file name. If you ever submitted a manuscript of a
+scientific paper, you know how quickly versions can accumulate. It is
+absolutely crucial to know which version of the data was used for which
+analysis.
+
+**Data editing.** Every edit operation on your data should be somehow
+recorded. This is not different from a lab notebook, where you write down
+every step of your experiment. When working with a spreadsheet this is hard
+to do, therefore...
+
+### Use R for data editing
+
+Optimally, your mode of operation should never involve editing data
+directly in a spreadsheet. You should read your data in R and perform all
+operations here, recording them in a script. This has two huge advantages:
+
+ * **Reproducibility.** You and others will be able to trace back all your
+   operations. There will be no doubt whether and which data were edited
+   and how.
+ * **Automation.** When you get updated data (and you will), for example
+   when new samples arrived, you will be able to re-run your script (maybe
+   with a few changes) and get the updated results with minimal effort.
+   Otherwise, you will have to repeat every. Single. Edit. Again.
+
+Consider the example of the `iris.csv` file. We have seen that one of the
+values of sepal width seems to be missing a decimal dot. You *could* edit that in
+the Excel or CSV file directly. You might even make a note of that
+somewhere. However, chances are that you were wrong – maybe that *was* a
+flower wiht a 36 sepal width after all. This change influences your data
+and your analysis results and *must* be documented if you were to do
+science. If you did it in R, you probably have entered a comment in your
+script, something like this:
+
+
+```{r eval=FALSE}
+# There seems to be a missing decimal dot in some of the sepal widths
+# Changing it to 1/10th of the value
+
+sepal_width <- iris_data[["Sepal Width"]]
+sel <- which(sepal_width > 10)
+sepal_width[sel] <- sepal_width[sel] / 10
+
+iris_data[["Sepal Width"]] <- sepal_width
+```
+
+This concisely informs the reader that a change was made, how and why.
+
+And what happens when Ronald Fisher raises from his grave and collects
+[undead Ronald Fisher]{.aside}
+another 150 flowers? You will get an updated data set with 300 flowers and
+import it *again*. In the best case scenario, you will find the problem
+again (or remember it). Then you will have to go into Excel and make the
+same edit again. And all the other edits as well. If you did it in R, you
+simply use your script again.
+
+### Working with Excel and other spreadsheets
+
+[How to work with Excel]{.aside}
+We all use Excel, LibreOffice Calc or Google Sheets. They are great tools,
+no doubt about that. However, by now you can see that certain operations
+make working with R harder, and some even that can mess up your data.
+
+If possible, you should actually avoid working with Excel when working with
+scientific data. Excel does certain operations automatically (depending on
+the settings), so it can change your data *without leaving a trace of the
+changes*. This is the precise opposite of what you want in science.
+
+::: {.callout-tip}
+## Avoid working with Excel
+
+Excel can automatically replace strings with dates, like changing `MARCH9`
+into `9th of March`. However, `MARCH9` is a valid gene name. In fact, it turns
+out that a substantial proportion (about a third!) of all Excel files
+containing gene names and published as supplementary materials online
+contain gene names transformed to dates. Not only that, but even though
+that this has been discovered many years ago and even some genes were
+officialy renamed *because of Excel*, this is still a problem. And Excel is
+now able to recognize dates in many languages, exacerbating the problem
+[@abeysooriya2021gene]. 
+:::
+
+However, sometimes it is unavoidable to work with Excel.
+
+**Don't's:**
+
+ * **Using color and font to encode information**, for example marking the different
+   treatments with different background color or formatting controls in
+   bold. While it is possible to read this information in R, it is not
+   trivial. In addition, even outside of R formatting of cells can be lost
+   when the data is passed around, and this would mean that the information
+   is lost.
+ * **Comments in the same cells as values**, for example `50 (measured twice)`.
+   This prevents the columns to be interpreted as numbers and has to be
+   dealt with in R. Create a separate column for comments, even it is just
+   a single comment in a row.
+ * **Meta-data information in the header.** Very often, column names
+   contain additional information, for example units, dates, encoding (like
+   "0 for male, 1 for female"). This makes it hard to both, import the data
+   and actually use that information. Create a separate sheet in your
+   spreadsheet for meta data, with one row per column name.
+ * **Adding header and tail information**. Just like in the example with
+   `deaths.xlsx` file, additional lines in spreadsheets require you to
+   carefully select what you wish to import. Avoid it if you can, use
+   another sheet.
+ * **More than one table on a spreadsheet**. A spreadsheet should contain a
+   single table. Otherwise, just like in case of header and tail
+   information, you will have to spend some time cautiously selecting the
+   areas that you want to import.
+ * **Merging cells**. Merged cells are a nightmare to
+   work with in R. If you have to, unmerge them before importing the data.
+
+**Do's:**
+
+ * **Use a single table per sheet**. If you have more than one table, use
+   more than one sheet.
+ * **Use a single header row**. If you have more than one header row, use
+   create another sheet with meta-data on the column names.
+ * **Switch off automatic conversion**. Excel can automatically change
+   your data in many ways. For example, it can change gene names to dates.
+   It can also change the decimal separator, which can mess up your data.
+   Newer versions of Excel allow to switch off this behaviour, so do it
+   ([here are the instructions](https://techcommunity.microsoft.com/t5/microsoft-365-insider-blog/control-data-conversions-in-excel-for-windows-and-mac/ba-p/4215336)).
+ * **Control your import.** When importing data from CSV files to TSV
+   files, Excel allows you to control which fields are imported as text,
+   which as dates etc. Use this feature to make sure that your data is
+   correctly imported.
 
 ## Review
 
@@ -535,8 +1545,22 @@ Things that you learned today:
    * Get the current working directory with `getwd()`
    * relative and absolute paths
  * Diagnosing datasets
-   * `str`, `class`, `typeof`
+   * data types: `str`, `class`, `typeof`
+   * summaries: `summary`, `glimpse`
+   * categorical data: `unique`, `table`
    * `summary_colorDF`
+   * diagnosis checklist
+ * Correcting datasets
+   * converting character vectors to numbers with `as.numeric()`
+   * checking a vector with `is.numeric()`
+   * checking a logical vector with `any()`
+   * replacing values with `str_replace_all()`
+ * Principles of data management
+   * keeping originals
+   * versioning
+   * data editing
+   * working with Excel
  * Other
+   * using help pages to find out about functions and their parameters
    * accessing functions in a package without loading it (`colorDF::summary_colorDF`)
 

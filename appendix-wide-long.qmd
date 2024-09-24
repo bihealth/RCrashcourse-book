@@ -1,0 +1,120 @@
+# Appendix 1: Wide vs long data {.unnumbered}
+
+## Wide and Long format
+
+ [Wide and long format]{.aside}
+ Long advantages:
+
+  * easier to filter, process, visualize, do statistics with
+  * focused on measurement ("patient ID" or equivalent is a covariate, and so is measurement type)
+ 
+ Wide advantages:
+
+  * groups data by a covariate ("patient ID")
+  * can be easier to manage (each column one measurement type)
+
+## Converting from wide to long:
+
+First, let's create a wide data set. We use a neat trick here that you have
+not seen before: you can use the base R function `read.table` to read data
+directly from a character string, rather than a file!
+
+
+[`read.table(text=...)`]{.aside}
+```{r}
+wide <- read.table(header=TRUE, text='
+ subject sex control cond1 cond2
+       1   M     7.9  12.3  10.7
+       2   F     6.3  10.6  11.1
+       3   F     9.5  13.1  13.8
+       4   M    11.5  13.4  12.9
+')
+wide
+```
+
+This is clearly a wide format – each row corresponds not to one observation
+(one measurement), but one subject. We want to convert this to long format,
+where each row corresponds to one observation (and therefore, for each
+subject, there are three rows).
+
+
+[`pivot_longer()`]{.aside}
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+
+pivot_longer(wide, cols=control:cond2,
+  names_to="condition", values_to="measurement")
+```
+
+Note that we must put quotes around `condition` and `measurement` in the
+code above. These are column names, but the columns don't exist yet.
+
+## Converting from long to wide
+
+Here is another example data set, this time in long format:
+
+```{r}
+long <- read.table(header=TRUE, text='
+ subject  sampleID sex condition measurement
+       1  ID000001 M   control         7.9
+       1  ID000002 M     cond1        12.3
+       1  ID000003 M     cond2        10.7
+       2  ID000004 F   control         6.3
+       2  ID000005 F     cond1        10.6
+       2  ID000006 F     cond2        11.1
+       3  ID000007 F   control         9.5
+       3  ID000008 F     cond1        13.1
+       3  ID000009 F     cond2        13.8
+')
+long
+```
+
+As you see, there are three subject, each with three measurements (one
+control, one for condition 1, and one for condition 2). We want to convert
+it to wide format, so we expect one row per subject, in total three rows.
+
+However, watch out. The first thing we might want to try does not give the
+expected result:
+
+[`pivot_wider()`]{.aside}
+```{r}
+## not what we wanted!!! Why?
+pivot_wider(long, names_from=condition, values_from=measurement)
+```
+
+The problem is in the sampleID column. Given that names of the variables
+are in the `condition` column, and `measurement` is in the `measurement`
+column, R considers all the remaining columns to be the identifier columns.
+But the column `sampleID` contains only unique values, so they must be put
+in separate rows, as above. 
+
+To fix this, we need to tell R not to use `sampleID` as an identifier
+column; instead, only the subject column should be used as an identifier.
+We can also throw in the `sex` column if we want to keep it, since it has
+only 1 value per subject.
+
+
+[`pivot_wider(id_cols=...)`]{.aside}
+```{r}
+## Instead: 
+pivot_wider(long, id_cols=c(subject, sex),
+                  names_from=condition, values_from=measurement)
+```
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-widelong-exercise}
+## Converting to long format
+
+Convert the following files to long format:
+
+ * `labresults_wide.csv`
+ * The built-in iris data set (`data(iris)`)
+ * `cars.xlsx` (tricky!)
+
+Clean up and convert to long format (what seems to be the problem? How do
+we deal with that?):
+
+ * `mtcars_wide.csv`
+
+:::
+:::

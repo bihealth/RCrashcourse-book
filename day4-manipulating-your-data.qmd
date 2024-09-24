@@ -1,0 +1,1156 @@
+# Manipulating data frames
+
+
+```{r echo=FALSE}
+options(width=80)
+```
+
+```{r echo=FALSE}
+# function for joining strings
+# with commas and "and"
+pand <- function(x) {
+
+  if(length(x) == 0) {
+    return("")
+  }
+
+  if(length(x) == 1) {
+    return(x)
+  }
+
+  x1 <- paste(x[-length(x)], collapse=", ")
+  x2 <- x[length(x)]
+  return(paste(x1, "and", x2))
+}
+```
+
+
+
+
+
+## Aims for today
+
+* Searching, sorting and selecting
+* Matching and merging data
+* Pipes - writing readable code
+* Wide and long format
+
+## Selecting columns
+
+### Selecting columns using square brackets
+
+As you know, if we want the actual column as vector, we use the `$`
+operator:
+
+```{r}
+df <- data.frame(ara=1:5, bera=6:10, cora=11:15, dora=16:20)
+df$ara # same as df[["ara"]]
+```
+
+Just a reminder: you don't want to try to select a single column using
+square brackets (`df[, 1]`), because the behavior is different for data
+frames and tibbles. Better use `df$a` or `df[["a"]]`.
+
+We will now discuss selecting and searching for more than one column.
+Quite often, you want to select only some columns from a data set, or maybe
+you want to change their order.
+As you learned on Day 2, you can select columns from a data frame using
+vectors. This is very similar to how you select elements from a matrix, or
+even a vector. You can use integers, negative integers, or column names.
+
+```{r}
+# select columns 1 to 2
+df2 <- df[ , 1:2]
+
+# select anything but column 2
+df2 <- df[ , -2]
+
+# select all columns in reverse order
+df2 <- df[ , ncol(df):1]
+
+# select columns ara and cora
+df2 <- df[ , c("ara", "cora")]
+
+# select all columns ara and cora, but in reverse order
+df2 <- df[ , c("cora", "ara")]
+```
+
+This is very similar to what we did when dealing with matrices, and
+actually similar to how we select elements from a vector. Note, however,
+that rather than using `4:1` in the line 8 above, we use `ncol(df):1`. This
+ensures that if data frame grows for some reason, we still get all the
+columns.
+
+### Selecting columns using tidyverse
+
+[`select()`]{.aside}
+Tidyverse has the `select()` function, which is a bit more explicit and readable.
+Most importantly, it also has extra features that make it easier to work with.
+
+```{r message=FALSE}
+library(tidyverse)
+# select columns ara and cora
+df2 <- select(df, ara, cora)
+
+# select columns ara to cora
+df2 <- select(df, ara:cora)
+
+# select anything but column bera
+df2 <- select(df, -bera)
+```
+
+Can you spot what is weird about the code above? Exactly! There are no quotes
+around the column names. One would expect that R should throw an error –
+after all, there is no variable "ara" defined yet. However, this is an extra
+feature of tidyverse. It can be confusing at first, but you will soon get
+to like it.
+
+[Tidy evaluation]{.aside}
+What's more, you see the constructs like `ara:cora` or `-bera`. In the base R,
+`ara:cora` means "look up variables ara and cora and return all integers between
+these two values". In Tidyverse, that means "select all columns from ara to
+cora". Similarly, `-bera` means "select all columns except bera". This is
+called **tidy evaluation** and it works only with some tidyverse functions.
+
+::: {.callout-important}
+## Remember!
+
+Tidy evaluation only works with tidyverse functions!
+:::
+
+[`ends_with()`]{.aside}
+Another nice feature of `select()` is that you can use the a few
+specialized helper functions, saving you tedious regular expression and
+column searches. For example, how would you select for columns that end
+with a particular suffix? This is a common enough task in data science –
+many clinical data sets have hundreds of columns and a systematic way of
+naming them, thus allowing to search for example all columns related to
+laboratory diagnostics. This can easily be done with the `ends_with()`
+function:
+
+```{r}
+df2 <- select(df, ends_with("ora"))
+colnames(df2)
+```
+
+[Other tidy selection functions]{.aside}
+There are many more such functions, like `starts_with()`, `contains()`,
+`matches()`, `one_of()`, `everything()` and even `last_col()` (for
+selecting the last column). You can find them all in the help page for
+`select()`.
+
+::: {.callout-tip}
+## To quote or not to quote?
+
+The fact that you don't use quotes around column names in tidyverse is
+confusing for many. As a rule of thumb, at this stage you should use quotes
+around column names, unless:
+
+ * you are using `$` operator (e.g. `df$ara`)
+ * you are using `select()`, `mutate()` or `filter()` from tidyverse
+ * you are using another tidyverse function that uses tidy evaluation (look
+   up the help page if unsure)
+
+Once you start to program your own functions, the tidy evaluation will be
+an additional source of confusion, but burn that bridge when you get to it.
+:::
+
+### Renaming columns
+
+The select function has one more useful feature: you can directly rename
+the variables in the same call.
+
+```{r}
+df2 <- select(df, Alpha=ara, Gamma=cora)
+colnames(df2)
+```
+
+[`rename()`]{.aside}
+However, there is another function which can be used for renaming specific
+columns, aptly named `rename()`[^rename]. The way its syntax works it is
+well suitable for working with pipes (see below), and is a great deal
+easier than renaming the columns using `colnames()`.
+
+[^rename]: Unfortunately, there are many functions in R that are named
+`rename()`. Someone should really rename them (badum-tss).
+
+```{r}
+df2 <- rename(df, Alpha=ara, Gamma=cora)
+colnames(df2)
+```
+
+As you can see, no selection was made here, only renaming. Again, no quotes
+are needed around the column names.
+
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-selecting-columns}
+
+ * Read the file 'Datasets/transcriptomics_results.csv'
+ * What columns are in the file?
+ * Select only the columns 'GeneName', 'Description', 'logFC.F.D1' and 'qval.F.D1'
+ * Rename the columns to 'Gene', 'Description', 'LFC' and 'FDR'
+:::
+:::
+
+
+## Sorting and ordering
+
+### Sorting and ordering vectors
+
+Before we jump to sorting, filtering and ordering data frames, we should
+first discuss these operations on vectors. This is important, because
+although data frames can easily be sorted with functions such as
+`arrange()` from tidyverse, you will have situations in which you need to
+sort a vector, a list or another data type. Secondly, understanding the
+concepts of ordering will aid you also with your work with data frames.
+
+[`sort()`]{.aside}
+The basic R function for sorting is, appropriately, `sort()`. It is as
+simple as it gets:
+
+
+```{r}
+vec <- round(rnorm(10), 2)
+vec
+sort(vec)
+sort(vec, decreasing=TRUE)
+```
+
+The `rnorm()` function generates a vector of random numbers from a normal
+distribution (you met it on Day 2). The `round()` function with parameter
+`2` rounds the numbers to two decimal places. The `sort()` with the
+`decreasing=TRUE` argument sorts the vector in descending order.
+
+[`order()`]{.aside}
+Amazingly, it is hardly ever used. Mostly we need the
+`order()` function. Rather than returning the sorted vector, it returns the
+*indices* of the sorted vector:
+
+
+```{r}
+ord <- order(vec)
+ord
+```
+
+So, what does that mean? Take the first element of `ord`. It is `r ord[1]`. This
+means that the first value to appear in the sorted vector should be the
+element number `r ord[1]` of the original vector, which is `r vec[ord[1]]` and
+the smallest number in `vec` (check it!). Likewise, the second element of
+`ord` is `r ord[2]`, which points to `r vec[ord[2]]`, the second smallest
+element of `vec`.
+
+So what happens if we use the vector `ord` to select element from the vector `vec`? We
+get the sorted vector, that's what:
+
+
+```{r}
+vec[ord]
+```
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-order}
+## Reverse sorting
+
+How can you get the reverse order vector for vec?
+:::
+:::
+
+
+### Sorting character vectors
+
+[Sorting character vectors]{.aside}
+We can also sort character vectors, but the behavior might not be exactly
+what you expect. Take a look:
+
+
+```{r}
+chvec <- c("b", "a", "Zorro", "10", "Anton", "A", "2", "100", "zxy")
+sort(chvec)
+```
+
+OK, so what happened here? The `sort()` function sorts the vector in
+lexicographical order – just like you sort words in a dictionary (or, in
+the olden days, in a phone book). For the most part that seems quite
+intuitive, however take a look at the numbers: `100` comes before `2`. 
+
+Lexicographical order means that the words are sorted
+first by first letter, then by second etc. So a word starting with a `1`
+always comes before a word starting with a `2`, even if it *means* a number
+that is larger than 2. 
+
+This has one important implication for all of us who work with data.
+Identifiers, especially sample and patient identifiers are quite often a
+combination of letters and numbers, e.g. `ID1` or `Patient10`. This can
+cause problems when sorting, as `ID10` will come before `ID2`:
+
+
+```{r}
+chvec <- c("ID1", "ID2", "ID3", "ID4", "ID10", "ID20", "ID100")
+sort(chvec)
+```
+
+There are several solutions for that, but here is one with the tools that
+you already know.
+First, we will extract the numbers from the strings, then we will sort the
+vector based on these numbers:
+
+
+```{r}
+# extract numbers
+chvec_n <- str_replace_all(chvec, "ID", "")
+
+# convert to numeric
+chvec_n <- as.numeric(chvec_n)
+
+# get the order
+ord <- order(chvec_n)
+
+# sort the original vector
+chvec[ord]
+```
+
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-lastname}
+## Sorting by last name
+
+Here is a vector of names. Can you think of how to sort it by last name?
+
+```
+persons <- c("Henry Fonda", "Bob Marley", "Robert F. Kennedy", 
+  "Bob Dylan", "Alan Rickman")
+```
+:::
+:::
+
+### Sorting data frames with `order()`
+
+By now it should be clear that you can use this method to order data from
+data frames (or matrices, or other data types). We will show it on example
+of the `transcriptomics_results.csv` file that you have read in the
+@exr-selecting-columns. I assume that you have read the file and selected
+the columns with something like this:
+
+
+```{r message=FALSE}
+library(tidyverse)
+tr_res <- read_csv("Datasets/transcriptomics_results.csv")
+tr_res <- select(tr_res, 
+                 Gene=GeneName, Description,
+                 logFC=logFC.F.D1, FDR=qval.F.D1)
+```
+
+The transcriptomics data set comes from a vaccine study
+[@weiner2019characterization] and show the changes in gene expression after
+vaccination with a particular adjuvanted fluad vaccine. `logFC` stands for
+log fold change, and `FDR` is the false discovery rate (resulting from 
+raw p-values being corrected using the Benjamini-Hochberg procedure). We
+will sort the data frame by decreasing `logFC`:
+
+
+```{r}
+ord <- order(tr_res$logFC, decreasing=TRUE)
+head(tr_res[ord, ])
+```
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-sorting}
+## Sorting data frames with order()
+
+ * Sort the data frame `tr_res` by increasing `FDR`
+ * Sort the data frame alphabetically by `Gene`
+
+:::
+:::
+
+### Sorting data frames with tidyverse
+
+[`arrange()`]{.aside}
+Tidyverse makes it simple to sort the data frames with the `arrange()`
+function:
+
+
+```{r}
+tr_res <- arrange(tr_res, desc(logFC))
+head(tr_res)
+```
+
+[`desc()`]{.aside}
+Note the use of `desc()` function – rather than specifying an argument like
+`decreasing=TRUE`. 
+
+Using `arrange()`, it is easy to sort by multiple columns:
+
+
+```{r}
+tr_res <- arrange(tr_res, logFC, FDR)
+head(tr_res)
+```
+
+It is also allowed to use the expressions like `logFC * FDR` to sort by the
+sum of the two columns (that doesn't make much sense in this context, but
+you get the idea):
+
+
+```{r}
+tr_res <- arrange(tr_res, logFC * FDR)
+```
+
+[`abs()`]{.aside}
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-sorting-tidyverse}
+## Sorting data frames with arrange()
+
+The `abs()` function returns the absolute value of a number, for 
+example `abs(c(-3, 7))` returns `3, 7`. Use the `arrange()` function 
+to sort the data frame `tr_res` by the decreasing absolute value of
+`logFC`.
+:::
+:::
+
+
+## Modifying and filtering data frames in tidyverse
+
+### Modifying with `mutate()`
+
+[`mutate()`]{.aside}
+Yesteday we have been busy cleaning up data sets. To modify the columns of
+the data frame, we have been using simple assignment. This works, but there
+is another method in tidyverse. Just like with regular assignments, the
+`mutate()` function allows both, creating new columns and modifying
+existing ones.
+
+Below we create a new column `logFC_abs` which contains the absolute value
+of the `logFC` column:
+
+
+```{r}
+tr_res <- mutate(tr_res, logFC_abs = abs(logFC))
+```
+
+Arguably, this is not much simpler than using simple assignment:
+
+
+```{r}
+tr_res$logFC_abs <- abs(tr_res$logFC)
+```
+
+The main difference, as you see, is that `mutate()` operates on data frames
+– it takes a data frame as the first argument and returns a data frame.
+The advantages will be obvious later, when you start to use pipes (see
+below). 
+
+### Using `ifelse()` with `mutate()`
+
+[`ifelse()`]{.aside}
+Say, you would like to create a new column that contains "up" for genes
+that are upregulated (i.e. `logFC >= 0`) and "down" for genes that are
+downregulated (i.e. `logFC < 0`). We *could* do it with simple assignment
+and logical vectors:
+
+
+```{r}
+# default value
+tr_res$direction <- "up"
+
+# create logical vector
+negative <- tr_res$logFC < 0
+
+# change "up" to "down" where logFC < 0
+tr_res$direction[negative] <- "down"
+```
+
+However, this is a frequent operation and a much more convenient way
+exists. It is often used in combination with mutate, although it also can
+work in a normal assignment:
+
+
+```{r}
+tr_res <- mutate(tr_res, 
+                 direction = ifelse(logFC < 0, "down", "up"))
+```
+
+The `ifelse()` function takes three arguments: a logical vector, a value to
+return if the logical vector is `TRUE`, and a value to return if the
+logical vector is `FALSE`. In other words, it "converts" a logical vector
+replacing `TRUE` with the second argument and `FALSE` with the third.
+
+### Filtering with logical vectors and `filter()`
+
+As you have learned, you can filter data frames using logical vectors. This
+is relatively straightforward. For example, we might want to create a table
+with only genes that are significant, that is 
+have an FDR < 0.05:
+
+
+```{r}
+small_fdr <- tr_res$FDR < 0.05
+significant <- tr_res[small_fdr, ]
+```
+
+If you use `nrow(significant)`, you will find that there are
+`r nrow(significant)` significant genes in the data set.
+
+[`filter()`]{.aside}
+The same can be achieved using the `filter()` function from tidyverse:
+
+
+```{r}
+significant <- filter(tr_res, FDR < 0.05)
+```
+
+Simlarly, we can use the `str_detect()` function (which you learned about
+yesterday) to select only genes that contain the word "interferon" in the
+description:
+
+
+```{r}
+interferon <- filter(tr_res, 
+                     str_detect(Description, "interferon"))
+```
+
+There are `r nrow(interferon)` such genes.
+
+But what if we want to set *two* conditions? In statistics it is common to
+set a threshold not only for the p-value or FDR, but also for an effect
+size. In our case, the measure of the effect size is the log2 fold change.
+Thus, we might want to select only genes that are at leas 2-fold upregulated
+or down-regulated. Twofold upregulation corresponds to log2-fold change
+greater than 1, and 2-fold downregulation corresponds to log2-fold change
+less than -1.
+
+One way is to use `filter()` with two parameters:
+
+
+```{r}
+significant <- filter(tr_res, FDR < 0.05, abs(logFC) > 1)
+```
+
+[`&` (logical operator)]{.aside}
+However, there is a more elegant and versatile way.
+We can achieve the same effect by combining two logical vectors with the
+`&` operator:
+
+```{r}
+large_fc <- abs(tr_res$logFC) > 1
+significant <- tr_res[small_fdr & large_fc, ]
+```
+
+Or, in tidyverse,
+
+
+```{r}
+significant <- filter(tr_res, FDR < 0.05 & abs(logFC) > 1)
+```
+
+The `&` operator is the logical AND operator. It combines two logical
+vectors, returning (at the given position) `TRUE` only if both vectors are
+`TRUE`. Take a look:
+
+
+```{r}
+vec1 <- c(TRUE, TRUE, FALSE, FALSE)
+vec2 <- c(TRUE, FALSE, TRUE, FALSE)
+vec1 & vec2
+```
+
+At the first position both vectors are `TRUE`, so the result is `TRUE`. At
+position 2, the first vector is `TRUE` and the second is `FALSE`, so the
+result is `FALSE`. And so on. Try it.
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-logical}
+## Logical vectors
+
+ * Create a logical vector that selects genes that are both significant
+   (FDR < 0.05) and contain the string "interferon" in the Description. How
+   many are there? How many genes are significant and do not contain 
+   "interferon" in the Description column?
+ * How many of the genes containing "interferon" in the Description are
+   are guanylate binding proteins? You can recognize the GBPs by their Gene
+   symbol – it starts with "GBP".
+:::
+:::
+
+### Using the `%in%` operator
+
+[`%in%`]{.aside}
+Another useful utility in searching data frames is the `%in%` operator. It
+compares two vectors; for each element of the first vector, it returns `TRUE`
+if that element is in the second vector, and `FALSE` otherwise.
+
+
+```{r}
+vec1 <- c("a", "b", "c")
+vec2 <- c("a", "b", "x", "y", "z")
+vec1 %in% vec2
+```
+
+The elements 1, of the result are `TRUE`, because both `a` and `b` are in
+`vec2`. The last element, however, is `FALSE`, because `c` is not in `vec2`.
+
+With `%in%` we can for example select a specified subset of genes that we
+are interested in.
+
+
+```{r}
+genes <- c("GBP1", "GBP2", "GBP3", "GBP4", "GBP5", "ANKRD22")
+filter(tr_res, Gene %in% genes)
+```
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-in}
+
+Which of these genes are significant? Use the `&` operator to combine the
+result from `%in%` with the result of `FDR < 0.05`.
+:::
+:::
+
+## Combining data sets
+
+### Binding data frames with `rbind()` and removing duplicates
+
+The simplest way to combine two data frames is to bind them. This can be
+done horizontally (when you have the same number of observations – rows) or
+vertically, by stacking them on top of each other, when you have the same
+columns. The two functions are, respectively, `cbind()` and `rbind()`, and
+they work for both, matrices and data frames.
+
+[`rbind()`]{.aside}
+Let's start with stacking them on top of each other. For example, we might
+have generated two data frames with interesting results: one with
+interferones and the other with guanylate binding proteins, and at some
+point we decide to have them in one data frame. Stacking them can be done
+with the `rbind()` ("row bind") function:
+
+
+```{r}
+interferon <- filter(tr_res, 
+                     str_detect(Description, "interferon"))
+gbp <- filter(tr_res,
+              str_detect(Gene, "GBP"))
+results <- rbind(interferon, gbp)
+```
+
+Note that this works *only* if the data frames have the same columns. If
+you were to try to bind two data frames with different columns, you would
+get an error:
+
+```{r error=TRUE}
+a <- data.frame(a=1:5, b=6:10)
+b <- data.frame(a=11:15, c=16:20)
+rbind(a, b)
+```
+
+OK, but if you have checked the `interferon` and `gbp` data frames, you
+would have noticed that there are some genes that are both interferones and
+guanylate binding proteins. You did not check, because I haven't told you
+yet how to do it. Here is how:
+
+
+[`intersect()`]{.aside}
+```{r}
+intersect(interferon$Gene, gbp$Gene)
+```
+
+[`duplicated()`]{.aside}
+The `intersect()` function returns the elements that are common to two
+vectors. As you can see, there are three: 
+`r pand(intersect(interferon$Gene, gbp$Gene))`. We can get rid of them from
+the `results` table thanks to the function `duplicated()`. For every
+element of a vector, `duplicated()` returns `TRUE` if the element occured
+previously in the vector. So for the vector `c(1, 2, 1)` the result will be
+`FALSE, FALSE, TRUE` - because the second `1` is duplicated. 
+
+To remove the elements which are duplicated, however, we need to use the
+negation – `!` to get `TRUE` for every element which is *not* duplicated.
+Here it is in action:
+
+
+```{r}
+# count the number of the duplicated results
+sum(duplicated(results$Gene))
+
+# number of rows before removing dups
+nrow(results)
+
+# remove duplicates
+results <- filter(results, !duplicated(Gene))
+
+# how many are left?
+nrow(results)
+```
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-dups}
+
+You might have been expecting that there are only three duplicates; after
+all, only three genes were in common between `interferon` and `gbp`- So
+where do these other duplicates come from? What are they?
+:::
+:::
+
+
+### Binding data frames with `cbind()`
+
+Combining data frames (or matrices) horizontally is much easier, because
+you do not have to worry about column names. You just need to make sure
+that the number of rows is identical[^recycling].
+
+[^recycling]: Strictly speaking, the recycling rules apply. See Day 1. This
+can be sometimes useful, but usually it is better to be more explicit.
+
+[`cbind()`]{.aside}
+```{r}
+df1 <- data.frame(a = 1:4, b=11:14)
+df2 <- data.frame(c=21:24)
+cbind(df1, df2)
+```
+
+We will use `cbind()` tomorrow when running a principal component analysis
+(PCA).
+
+
+### Merging data sets
+
+Quite often you will have to merge two data sets. For example, you might
+have one Excel file containing the covariates for the patients (like BMI, 
+age, gender etc.) and another file containing the gene expression data.
+Both data frames must have some identifiers present that allow us to match
+the two data frames.
+
+This is *not* a simple binding operation, because you do not have the
+guarantee that (a) the identifiers between these two data sets are in the
+same order or even that (b) both data frames have exactly the same sets of
+identifiers. Actually, the reverse is more common that not.
+
+In order to merge two data frames we need first to identify by what to
+merge them. In the code below we will concoct two data frames that share
+some of the identifiers.
+
+
+```{r}
+ids_x <- paste0("ID", sample(1:8, 6))
+df_x <- data.frame(ID=ids_x, val_x=rnorm(6))
+df_x
+
+ids_y <- paste0("ID", sample(1:8, 6))
+df_y <- data.frame(ID=ids_y, val_y=rnorm(6, 10, 1))
+df_y
+
+intersect(ids_x, ids_y)
+```
+
+[`sample()`]{.aside}
+
+The `sample()` function is very useful – it generates a random sample by
+choosing elements from a vector. This is what is called *sampling* and
+comes in handy in many situations. Here we use it to create two sets of IDs
+that are similar, but not identical. As you can see from the output of
+`intersect()`, only `r length(intersect(ids_x, ids_y))` elements out of the total 
+`r length(ids_x)` are common between the two data frames.
+
+Merging can be done either with the base R function `merge()`, or with
+corresponding `*_join` functions from the tidyverse. Whether you prefer one
+or the other is a matter of preference; I like `merge()` and we will be
+using it in the examples below.
+
+[Inner join, full join]{.aside}
+
+First, however, let us think *how* we want to merge, or, more specifically,
+what to do with the identifiers that are present in one data frame, but not
+in the other? That depends only on what we want to achieve. Possibly we are
+not interested in any elements that are not present in *both* data frames.
+This is what is called in database lingo an **inner join** Alternatively, we
+might want to keep all possible elements, whether they are found in `df_x`
+or `df_y` only. This is called an **full join**.
+
+[`merge()`]{.aside}
+
+```{r}
+# inner join by ID
+joined <- merge(df_x, df_y, by="ID")
+joined
+
+# full join by ID
+joined <- merge(df_x, df_y, by="ID", all=TRUE)
+joined
+```
+
+As you can see, in the first case there are just 
+`r length(intersect(ids_x, ids_y))` rows – as many as there are common elements
+between the ID columns of the two data frames. In the second case,
+we get all `r nrow(joined)` possible IDs. Where the ID was present in one,
+but not the other data frame, the values were filled up with `NA`'s. To get
+the full join we used the parameter `all=TRUE`, standing for "use *all*
+IDs".
+
+Note: it is possible to omit the `by=` parameter specifying by what column
+to join the data frames. However, do yourself a favor and *always* specify
+the column to join on explicitely.
+
+[Left join, right join]{.aside}
+
+There are two more situations, allthough less common in practice. We might
+want to keep all elements of `df_x`, but discard any elements of `df_y`
+which are not present in `df_x`. This is called a **left join**. Or, vice
+versa, we will discard only these elements which are present in `df_x`, but
+not in `df_y`. This is called, you guessed it, a **right join**.
+
+
+```{r}
+# left join by ID
+joined <- merge(df_x, df_y, by="ID", all.x = TRUE)
+joined
+
+# right join by ID
+joined <- merge(df_x, df_y, by="ID", all.y = TRUE)
+joined
+```
+
+As you can see, in case of the *left* join, there are missing values in the
+*right* column only, and in case of the *right* join – only in the *left*
+column.
+
+
+Let us summarize it in a table:
+
+|Type of join|all x|all y|merge options            |tidyverse alternative      |
+|------------|-----|-----|-------------------------|---------------------------|
+|inner join  |FALSE|FALSE|`merge(x, y)`            |`inner_join(x, y)`         |
+|left join   |TRUE |FALSE|`merge(x, y, all.x=TRUE)`|`left_join(x, y)`          |
+|right join  |FALSE|TRUE |`merge(x, y, all.y=TRUE)`|`right_join(x, y)`         |
+|full join   |TRUE |TRUE |`merge(x, y, all=TRUE)  `|`full_join(x, y)`          |
+
+You don't have to remember the names (inner, left, right, full) – just
+remember the principle: sometimes you need the common elements, sometimes
+you need all elements, and sometimes you need all elements from x or y
+only.
+
+**Different identifier column names**. There is one other thing that you
+should know, because it happens quite often. The two data frames might have
+identifiers in columns that have different names, for example `ID` in one
+and `PatientID` in the other. You can, of course, rename the columns, but
+you can also specify the columns to join on explicitly:
+
+[`merge()` with different column names]{.aside}
+
+```{r}
+df_x <- data.frame(ID=ids_x, val_x=rnorm(6))
+df_y <- data.frame(PatientID=ids_y, val_y=rnorm(6, 10, 1))
+
+# inner join by ID
+joined <- merge(df_x, df_y, by.x="ID", by.y="PatientID")
+```
+
+The resulting data frame has the identifiers in the column name specified
+in the "x" data frame, that is – in this case – in the `ID` column.
+
+
+### Complex merges
+
+The situation above is quite trivial. In real world, unfortunately, the
+situations can be quite complex.
+
+First, there can be duplicates. For example, one data frame contains the
+meta data on a group of lab animals, while the second contains the results
+of the experiments at two time points. This is not a problematic situation,
+but you should understand what happens here:
+
+
+```{r}
+meta_data <- data.frame(ID=paste0("ID", 1:4),
+                        age=sample(1:3, 4, replace=TRUE),
+                        group=rep(c("control", "treated"), each=2))
+meta_data
+crp <- data.frame(ID=rep(paste0("ID", 1:4), each=2),
+                           time=rep(c("day1", "day2"), 4),
+                           CRP=rnorm(8))
+crp
+
+merged_data <- merge(meta_data, crp, by="ID")
+merged_data
+```
+
+As you can see, each line in the `meta_data` data frame is duplicated to
+fill up the information matching the `ID` in the `crp` data frame.
+
+However, chances are the situation is more complex. Imagine that apart from
+the above measurements, you have another set of measurements, say, of the
+albumin (ALB) levels. You would like to merge the two data frames. 
+Naturally, you expect that you will get a data frame with 8 rows.
+The following will not work as expected:
+
+
+```{r}
+albumin <- data.frame(ID=rep(paste0("ID", 1:4), each=2),
+                      time=rep(c("day1", "day2"), 4),
+                      ALB=rnorm(8))
+
+# incorrect code!!!
+crp_alb <- merge(crp, albumin, by="ID")
+crp_alb
+```
+
+Uh-oh, what happened here?
+
+You see, the problem is that the `merge()` function merges the data frames
+by the column `ID`, but it does not take into account the `time` column.
+Since it observes that ID's are duplicated in *both* data frames, it
+creates all possible pairs of the rows: CRP from day1 with ALB day2; 
+but also CRP from day1 and ALB from day1, CRP from day2 and ALB from day1
+and so on. For each identifier. That is why we are getting `4` (and not
+`2`) rows for each identifier.
+
+[Merging by more than one ID]{.aside}
+This is a common problem, and the solution is to merge by more than one
+identifier. The important question is: *what combination of identifiers
+**uniquely** identifies a row in the data frame?* In our case, it is the
+combination of `ID` and `time`. We can specify that in the `by=` parameter:
+
+
+```{r}
+crp_alb <- merge(crp, albumin, by=c("ID", "time"))
+crp_alb
+```
+
+### Bringing it all together
+
+We are now coming to the final exercise in this section. This exercise is
+based on data from the vaccination study [@weiner2019characterization]. One
+file contains meta-data for the samples used in transcriptomic analysis –
+it only includes the subjects and time points for which the gene expression
+data is present. The other file is quite large and contains the results of
+several laboratory tests taken for many patients at many time points. 
+
+Note that the data is not real, just based on real data.
+
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-merging}
+## Merging large data sets
+
+The files `expression_data_vaccination_example.xlsx` and
+`labresults_full.csv` contain data from the same study.
+
+ 1. Read CSV file and the first sheet from the XLSX file.
+ 3. Which columns contains the ID the subjects? Are there any subjects in common? How do
+    you match the subjects?
+ 5. We are interested only in the following information: Subject ID, ARM
+    (group), Time point, sex, age, test name and the actual measurement.
+    Are the measurements numeric? Remember, you can use expressions like `[ , c("ARM", "sex") ]` 
+    or `select(df, ARM, sex)`
+    to select the desired columns from a data set.
+ 4. Use the subjects and / or other information to merge the two data
+    frames however you see fit. Note that there are multiple time points per
+    subject and multiple measurements per subject and time point.
+
+Solution: @sec-exercise-merging
+
+:::
+:::
+
+
+
+## Pipes in R
+
+### Too many parentheses
+
+Remember how functions work? Each function takes some arguments and returns
+a value. And we can use that value to plug in back into another function.
+This allows us to write terse code, for example:
+
+```{r}
+vec <- c(1, NA, 3, 10)
+which(is.na(as.numeric(vec)))
+```
+
+This is quite easy to understand.
+Unfortunately, this can quickly become unreadable. Let us consider cleaning
+up the data from yesterday. We can do it one by one, like this:
+
+```{r eval=TRUE, message=FALSE}
+library(tidyverse)
+library(janitor)
+iris <- read_csv("Datasets/iris.csv")
+iris <- clean_names(iris)
+iris$species <- tolower(iris$species)
+iris$petal_length <- str_replace_all(iris$petal_length ,"[^0-9.]", "") 
+iris$petal_length <- as.numeric(iris$petal_length)
+iris$sepal_length <- str_replace_all(iris$sepal_length, ",", ".")
+iris$sepal_length <- str_replace_all(iris$sepal_length ,"> ", "") 
+iris$sepal_length <- as.numeric(iris$sepal_length)
+```
+
+That is a lot of code. However, we *could* do it all on one line:
+
+
+```{r message=FALSE}
+iris <- 
+  mutate(mutate(mutate(clean_names(read_csv("Datasets/iris.csv")),
+  petal_length = as.numeric(
+  str_replace_all(petal_length, "[^0-9.]", ""))),
+  sepal_length = as.numeric(str_replace_all(
+  str_replace_all(sepal_length, ",", "."), "> ", ""))),
+  species = tolower(species))
+```
+
+If you spend some time deciphering this, you will see that it does
+precisely the same operations as the previous beat of code. However, it is
+unreadable and unmaintainable[^headache].
+
+[^headache]: I got a headache just trying to figure out the correct number
+of parentheses in this code.
+
+### Pipes
+
+[Pipe operator `|>`]{.aside}
+Fortunately, there is a *dirty* trick that results in clean and readable
+code: the pipe operator `|>` (pronounced "pipe"; in older code you might
+see "%>%" instead[^magrittr]). 
+
+[^magrittr]: The idea of the pipe operator was popularized by the `magrittr`
+package, which is a part of Tidyverse, as `%>%`. R users found it so cool that with R
+version 4.1.0, the pipe operator `|>` was included in the base R. There are
+some differences between `|>` and `%>%`, but for our purposes, they are
+equivalent.
+
+Pipe operator allows for writing very clean, very convenient and very
+readable code. The basic idea behind the pipe operator is as follows: 
+`a |> f(b)` is the same as `f(a, b)`. We can say it *pipes* the value of `a`
+to the function `f`. And if a is already the result of a function, say
+`g(a)`, then `g(a) |> f(b)` is the same as `f(g(a), b)`. We build a pipe
+from the output of `g()` to the input of `f()`.
+
+So, for example, the following two
+lines are equivalent:
+
+
+```{r}
+vec <- c(1, NA, 3, 10)
+as.numeric(vec)
+vec |> as.numeric()
+```
+
+Pipe takes whatever is on its left side and inserts it in the parentheses
+of the function on its right side. Now think for a moment what it does to
+constructs like `f1(f2(f3(f4(f5(x)))))`. Now compare this:
+
+
+```{r}
+which(is.na(as.numeric(vec)))
+vec |> as.numeric() |> is.na() |> which()
+```
+
+The two lines are equivalent. However, the latter is much more readable: it
+shows how the value goes into `as.numeric()`, then the output of
+`as.numeric()` goes into `is.na()`, and the resulting logical vector goes
+into `which()`.
+
+See how that works for our iris dataset:
+
+
+```{r message=FALSE}
+iris <- read_csv("Datasets/iris.csv") |>
+        clean_names() |>
+        mutate(species = tolower(species)) |>
+        mutate(petal_length = str_replace_all(petal_length ,"[^0-9.]", "")) |>
+        mutate(petal_length = as.numeric(petal_length)) |>
+        mutate(sepal_length = str_replace_all(sepal_length, ",", ".")) |>
+        mutate(sepal_length = str_replace_all(sepal_length ,"> ", "")) |>
+        mutate(sepal_length = as.numeric(sepal_length))
+```
+
+It is just as clear and readable as the first example, but with some
+additional benefits.
+
+First, think what happens if you want to change the name of the variable,
+say, from `iris` to `flowers`. In the first example, you would have to
+change every single occurence of `iris` to `flowers`. Sure, it would not be
+all too bad if you can do it automatically with a search-and-replace, but
+what if the variable name was `a`?
+
+Second, the pipe facilitates development. You build a pipe line by line,
+and each time you execute the code, all operations are repeated. This is a
+good thing – you avoid the situation where you forget to execute one line
+and the code does not work.
+
+There is an alternative to the above code which uses pipes, but not all on
+the same line:
+
+
+```{r message=FALSE}
+iris <- read_csv("Datasets/iris.csv") |>
+        clean_names() |>
+        mutate(species = tolower(species))
+
+iris$petal_length <- iris$petal_length |> 
+        str_replace_all("[^0-9.]", "") |>
+        as.numeric()
+
+iris$sepal_length <- iris$sepal_length |>
+        str_replace_all(",", ".") |>
+        str_replace_all("> ", "") |>
+        as.numeric()
+```
+
+Whether you prefer this one or the previous is a matter of both, taste and
+context. The second is more appropriate if for each column you have to do a
+lot of manipulations.
+
+One limitation is that in the form that is used here[^limit], the value passed
+on from function to function is always the first argument. This is why we
+are doing the substitutions with the Tidyverse function `str_replace_all()`
+(which takes the character vector as the first argument) rather than the
+base R function `gsub()` (which takes the pattern as the first argument).
+
+[^limit]: This limitation can be circumvented either by using only named
+arguments, or by using a placeholder, `_`. See
+[here](https://stackoverflow.com/questions/70598384/piping-second-or-higher-argument-in-native-pipe)
+for an explanation.
+
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-pipes}
+## Botched meta data
+
+Go back to the code that you have used yesterday for cleaning up the
+dataset from file `meta_data_botched.xlsx`. Use pipes to make it more
+readable.
+
+:::
+:::
+
+## Review
+
+Things that you learned today:
+
+ * Selecting columns in data frames:
+   * using square brackets
+   * using `select()` from tidyverse
+   * tidy evaluation
+   * renaming columns with `rename()`
+ * Sorting, ordering, filtering
+   * `sort()` to sort a vector
+   * `order()` to get the order of a vector
+   * `order()` to sort a data frame
+   * `arrange()` from tidyverse to sort a data frame
+   * filtering with logical vectors
+   * filtering with `filter()` from tidyverse
+   * handling duplicates with `duplicated()`
+   * combining logical vectors with `&`
+   * using `%in%` operator
+ * Merging data frames
+   * `rbind()` and `cbind()`
+   * `merge()` inner, left, right and full joins
+   * merging by more than one column
+ * Pipes in R
+   * using `|>` operator
+   * building pipelines
+ * Other
+   * using `rnorm()` to generate random numbers
+   * using `round()` to round numbers
+   * `sample()` for generating random samples
+

@@ -1,0 +1,5 @@
+# Solutions to Exercises {.unnumbered}
+
+## The merging of two data frames {#sec-exercise-merging}
+
+Solution to @exr-merging.

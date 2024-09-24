@@ -1,0 +1,33 @@
+# Rmarkdown, basic statistics and visualizations
+
+## Rmarkdown
+
+### What is Rmarkdown?
+
+Rmarkdown is a remarkably simple to use and yet powerfull tool. The basic idea is as
+follows: you write a document in a simple text format – for example, a
+manuscript or a report. In that document, you include R "code chunks".
+These code chunks are executed by R, and the output is included in the
+document – including figures or tables. And then, from this single simple
+text document you can create a PDF, a Word document, an HTML page (or a
+whole website!), a book, a slide presentation and much, much more.
+
+In fact, this book you are reading now has been entirely written in 
+Rmarkdown[^rmarkdown]. You can go to the 
+[github repository](https://github.com/bihealth/RCrashcourse-book/) for this 
+book and see the Rmarkdown/Quarto files that generated it – for example,
+[here](https://github.com/bihealth/RCrashcourse-book/blob/main/day5-visualization-and-statistics.qmd)
+is the page you are reading right now. It is also
+possible to create a scientific paper completely in Rmarkdown (here an
+example of such a paper: @weiner2022venn).
+
+[^rmarkdown]: Actually, in its successor called "Quarto".
+
+### Markdown basics
+
+## Basic statistics with R
+
+
+## Visualizations with R
+
+### Base R vs `ggplot2`

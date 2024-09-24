@@ -1,4 +1,4 @@
-# Day 1: Introduction to R
+# Introduction to R
 
 ## Goals for today
 
@@ -632,6 +632,7 @@ The `NA` value very frequently pop up when you try to convert a character
 vector holding what looks like numbers into a numeric vector. We will see
 many such examples in the days to come; the conversion is often done using
 the `as.numeric()` function. For example, it is quite common that values
+[`as.numeric()`]{.aside}
 typed in a spreadsheet contain comments or values which look like this `> 50`
 (measurement out of range).
 

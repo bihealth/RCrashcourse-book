@@ -107,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="custom.css">
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -116,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Introduction</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -132,6 +132,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Five days of R</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/bihealth/RCrashcourse-book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -144,7 +147,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Preface</span></a>
+ <span class="menu-text">Introduction</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -168,13 +171,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./day4-manipulating-your-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">day4-manipulating-your-data.html</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Day 4: Manipulating data frames</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./day5-visualization-and-statistics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">day5-visualization-and-statistics.html</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Day 5: Rmarkdown, basic statistics and visualizations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix-wide-long.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Appendix 1: Wide vs long data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./solutions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Solutions to Exercises</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -209,7 +224,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -243,7 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="introduction" class="level1 unnumbered">
+<section id="introduction" class="level1 unnumbered page-columns page-full">
 <h1 class="unnumbered">Introduction</h1>
 <section id="five-days-of-r" class="level2">
 <h2 class="anchored" data-anchor-id="five-days-of-r">Five days of R</h2>
@@ -270,6 +285,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>pander</code></li>
 <li><code>readxl</code></li>
 <li><code>writexl</code></li>
+<li><code>janitor</code></li>
 <li><code>tinytex</code> (only if you want to produce PDF output from Rmarkdown)</li>
 </ul>
 <p>You can install them by running the following code in your RStudio:</p>
@@ -284,13 +300,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>On Day 5, we will be discussing Rmarkdown. Your basic RStudio setup will allow you to create Rmarkdown documents, but if you wish, you can also use Quarto – which is a sort of “Rmarkdown on steroids”, much nicer looking and efficient. However, for this you need to install the Quarto program. See the Quarto website (<a href="https://quarto.org/docs/get-started/">https://quarto.org/docs/get-started/</a>) for details.</p>
 </section>
 </section>
-<section id="the-structure-of-this-book" class="level2">
+<section id="the-structure-of-this-book" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="the-structure-of-this-book">The structure of this book</h2>
 <p>This book is divided into five chapters, each corresponding to one day of the course. At the beginning of each chapter, you will find a short list of topics for the given day.</p>
-<p>In each chapter there are several exercises. <em>However</em>, that does not mean that you should <em>only</em> do the exercises. In fact, you should try out <em>every</em> piece of code that is in the book. Copy it (there is a button next to each code block that will do it for you), paste it into your RStudio and run it. Then try to modify it and see what happens.</p>
-<p>Exercises in this book are important. They are not only there to check if you understood the material, but they can also introduce new concepts or ideas. This is because this book is not only about learning R, but also learning <em>how to learn about R</em>. So, for example, sometimes we will want you to figure stuff on your own rather than give you a ready-made answer.</p>
-<p>Each chapter is ended by a “Review” section, which contains a list of things that you have learned that day. It is really important that you go through that list and make sure that you understand everything on it. Some of the new things appeared in the exercises, so if you skipped them, you might want to go back and do them.</p>
-<p>If you do all that, I personally <em>guarantee you</em> that by the end of this course you will be able to use R in your work.</p>
+<p>Some parts of the book are highlighted:</p>
+<p><strong>Code blocks with output:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># this is a comment</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The numbers on the left (if present) are not part of the code – they are just line numbers. You can copy the code by clicking on the “Copy” button and it will not copy these numbers.</p>
+<p><strong>Exercises:</strong></p>
+<div class="callout callout-style-simple callout-caution no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exr-example" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 1 (Example)</strong></span> &nbsp;</p>
+<ul>
+<li>This is how an exercise looks like!</li>
+<li>Please do all exercises. It helps a lot.</li>
+<li>Some things are learned only through exercises.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Tips:</strong></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Useful tips
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Some exercises have solutions in the “Solutions” chapter. If they do, please read the solution after you have completed the exercise – often there will be a comment or a hint that will help you understand the material.</li>
+</ul>
+</div>
+</div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -308,6 +361,12 @@ Remember!
 </ul>
 </div>
 </div>
+<div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="margin-aside">New concepts are highlighted on the right margin of the book</span></div></div>
+<p>Take a look at the right margin!</p>
+<p>In each chapter there are several exercises. <em>However</em>, that does not mean that you should <em>only</em> do the exercises. In fact, you should try out <em>every</em> piece of code that is in the book. Copy it (there is a button next to each code block that will do it for you), paste it into your RStudio and run it. Then try to modify it and see what happens.</p>
+<p>Exercises in this book are important. They are not only there to check if you understood the material, but they can also introduce new concepts or ideas. This is because this book is not only about learning R, but also learning <em>how to learn about R</em>. So, for example, sometimes we will want you to figure stuff on your own rather than give you a ready-made answer.</p>
+<p>Each chapter is ended by a “Review” section, which contains a list of things that you have learned that day. It is really important that you go through that list and make sure that you understand everything on it. Some of the new things appeared in the exercises, so if you skipped them, you might want to go back and do them.</p>
+<p>If you do all that, I personally <em>guarantee you</em> that by the end of this course you will be able to use R in your work.</p>
 </section>
 <section id="general-advice" class="level2">
 <h2 class="anchored" data-anchor-id="general-advice">General advice</h2>

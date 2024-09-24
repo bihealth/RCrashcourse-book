@@ -56,6 +56,7 @@ Here is the list of packages that you will have to install:
  * `pander`
  * `readxl`
  * `writexl`
+ * `janitor`
  * `tinytex` (only if you want to produce PDF output from Rmarkdown)
 
 You can install them by running the following code in your RStudio:
@@ -82,6 +83,56 @@ This book is divided into five chapters, each corresponding to one day of
 the course. At the beginning of each chapter, you will find a short list of
 topics for the given day.
 
+Some parts of the book are highlighted:
+
+**Code blocks with output:**
+
+
+```{r}
+# this is a comment
+x <- 1 + 1
+```
+
+The numbers on the left (if present) are not part of the code – they are
+just line numbers. You can copy the code by clicking on the "Copy" button
+and it will not copy these numbers.
+
+**Exercises:**
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-example}
+## Example
+
+ * This is how an exercise looks like!
+ * Please do all exercises. It helps a lot.
+ * Some things are learned only through exercises.
+:::
+:::
+
+**Tips:**
+
+::: {.callout-tip}
+## Useful tips
+
+ * Some exercises have solutions in the "Solutions" chapter. If they do,
+   please read the solution after you have completed the exercise – often
+   there will be a comment or a hint that will help you understand the
+   material.
+:::
+
+::: {.callout-important}
+## Remember!
+
+ * Run all code chunks in your RStudio.
+ * Do all exercises.
+ * Go through the "Review" section at the end of each chapter.
+:::
+
+
+[New concepts are highlighted on the right margin of the book]{.aside}
+
+Take a look at the right margin!
+
 In each chapter there are several exercises. *However*, that does not mean
 that you should *only* do the exercises. In fact, you should try out
 *every* piece of code that is in the book. Copy it (there is a button next
@@ -102,14 +153,6 @@ might want to go back and do them.
 
 If you do all that, I personally *guarantee you* that by the end of this
 course you will be able to use R in your work.
-
-::: {.callout-important}
-## Remember!
-
- * Run all code chunks in your RStudio.
- * Do all exercises.
- * Go through the "Review" section at the end of each chapter.
-:::
 
 ## General advice
 
