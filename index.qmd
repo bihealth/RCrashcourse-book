@@ -1,5 +1,11 @@
 # Introduction {.unnumbered}
 
+```{r setup,include=FALSE}
+# set the default output to SVG
+knitr::opts_chunk$set(dev="svg")
+```
+
+
 ## Five days of R
 
 I have been teaching R to biologists and medical students for many years
@@ -57,25 +63,18 @@ Here is the list of packages that you will have to install:
  * `readxl`
  * `writexl`
  * `janitor`
+ * `broom`
+ * `cowplot`
+ * `ggbeeswarm`
+ * `pheatmap`
  * `tinytex` (only if you want to produce PDF output from Rmarkdown)
 
 You can install them by running the following code in your RStudio:
 
 ```{r eval=FALSE}
-install.packages(c("tidyverse", "ggplot2", "colorDF",
-                  "pander", "readxl", "writexl",
-                  "tinytex"))
+install.packages(c("tidyverse", "ggplot2", "colorDF", "pander", "readxl",
+                   "writexl", "janitor", "broom", "cowplot", "tinytex"))
 ```
-
-### Installing Quarto
-
-On Day 5, we will be discussing Rmarkdown. Your basic RStudio setup will
-allow you to create Rmarkdown documents, but if you wish, you can also use
-Quarto – which is a sort of "Rmarkdown on steroids", much nicer looking and
-efficient. However, for this you need to install the Quarto program.
-See the Quarto website
-([https://quarto.org/docs/get-started/](https://quarto.org/docs/get-started/))
-for details.
 
 ## The structure of this book
 
@@ -97,7 +96,6 @@ The numbers on the left (if present) are not part of the code – they are
 just line numbers. You can copy the code by clicking on the "Copy" button
 and it will not copy these numbers.
 
-**Exercises:**
 
 ::: {.callout-caution icon=false appearance="simple"}
 ::: {#exr-example}
@@ -108,8 +106,6 @@ and it will not copy these numbers.
  * Some things are learned only through exercises.
 :::
 :::
-
-**Tips:**
 
 ::: {.callout-tip}
 ## Useful tips
@@ -129,9 +125,13 @@ and it will not copy these numbers.
 :::
 
 
-[New concepts are highlighted on the right margin of the book]{.aside}
 
 Take a look at the right margin!
+[New concepts are highlighted on the right margin of the book]{.aside}
+
+And again[^again]!
+
+[^again]: And also footnotes.
 
 In each chapter there are several exercises. *However*, that does not mean
 that you should *only* do the exercises. In fact, you should try out

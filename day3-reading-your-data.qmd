@@ -435,7 +435,7 @@ doubt, look up the "examples" section of the `readxl` helpfile.*
 
 ## Diagnosing and cleaning data
 
-### Diagnosing datasets
+### Diagnosing datasets {#sec-diagnosing}
 
 Congratulations! You are now proficient in reading data into R. Believe me
 or not, this alone is an important step forward – many who try their hand
@@ -543,7 +543,7 @@ This provides a more detailed summary for each column:
 str(iris_data)
 ```
 
-### Using colorDF to diagnose datasets
+### Using colorDF to diagnose datasets {#sec-colorDF}
 
 [`colorDF`,`summary_colorDF()`]{.aside}
 I have written a package called `colorDF` that creates yet another flavor
@@ -1322,6 +1322,35 @@ found.
 :::
 :::
 
+
+### Just a quick look {#sec-quick-look}
+
+The newly cleaned up data set begs for a quick look. We already created a
+simple plot before using the `plot()` function, and today I will show you
+how to use the `ggplot2` package to create somewhat nicer plots. In this
+case, it is rather trivial.
+[`ggplot2`]{.aside}
+
+```{r}
+library(ggplot2)
+ggplot(iris_data, aes(x=sepal_length, y=sepal_width, color=species)) +
+  geom_point()
+```
+
+As you can see, the `ggplot` function takes two arguments: the data frame
+and something which is calles *aesthetics* and which is produced by the
+`aes()` function. The `aes()` function serves as a kind of link between the
+data and the plot, showing how what should be plotted. In this case, we
+tell `aes()` that the x-axis should be the sepal length, the y-axis the
+sepal width, and the color should be determined by the species.
+
+Then, a magical thing happens. Whatever is produced by `ggplot()` is not a
+number, but nonetheless can be added with a `+` sign to other stuff. In
+this case, we add a `geom_point()` function, which tells `ggplot` to plot
+points at the x, y coordinates (there are many others, and you will learn
+about them the day after tomorrow).
+
+There, all done. See how *I. setosa* is different from the other two?
 
 ## Writing data
 

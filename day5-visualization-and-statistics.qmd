@@ -1,33 +1,1292 @@
-# Rmarkdown, basic statistics and visualizations
+# R markdown, basic statistics and visualizations
 
-## Rmarkdown
 
-### What is Rmarkdown?
+```{r echo=FALSE}
+set.seed(42)
+```
 
-Rmarkdown is a remarkably simple to use and yet powerfull tool. The basic idea is as
+
+
+
+## R markdown
+
+### What is R markdown?
+
+R markdown is a remarkably simple to use and yet powerfull tool. The basic idea is as
 follows: you write a document in a simple text format – for example, a
-manuscript or a report. In that document, you include R "code chunks".
-These code chunks are executed by R, and the output is included in the
-document – including figures or tables. And then, from this single simple
-text document you can create a PDF, a Word document, an HTML page (or a
-whole website!), a book, a slide presentation and much, much more.
+manuscript, a report, or even a thesis. In that document, you include R
+"code chunks". These code chunks are executed by R, and the output is
+included in the document – including figures or tables. And then, from this
+single simple text document you can create a PDF, a Word document, an HTML
+page (or a whole website!), a book, a slide presentation and much, much
+more.
+
+```{mermaid}
+flowchart LR
+    A(R markdown / Quarto\ndocument\nwith R code) -->|knitr| B(Markdown\nwith R code output)
+    B --> C[LaTeX]
+    C --> CC[PDF]
+    B --> D[Word]
+    B --> E[HTML]
+    B --> F[Presentation]
+    B --> G[Book]
+```
 
 In fact, this book you are reading now has been entirely written in 
-Rmarkdown[^rmarkdown]. You can go to the 
+R markdown[^rmarkdown]. You can go to the 
 [github repository](https://github.com/bihealth/RCrashcourse-book/) for this 
-book and see the Rmarkdown/Quarto files that generated it – for example,
+book and see the R markdown/Quarto files that generated it – for example,
 [here](https://github.com/bihealth/RCrashcourse-book/blob/main/day5-visualization-and-statistics.qmd)
 is the page you are reading right now. It is also
-possible to create a scientific paper completely in Rmarkdown (here an
+possible to create a scientific paper completely in R markdown (here is an
 example of such a paper: @weiner2022venn).
 
 [^rmarkdown]: Actually, in its successor called "Quarto".
 
+Why is this so great?
+
+ * **Reproducibility:** It allows you to keep the methods, analysis itself
+   and the analysis results in one place.
+ * **Avoiding errors:** Whenever you re-run your analysis, R automatically
+   updates all your figures, tables, results, etc. in your document. This
+   prevents you from forgetting to update a figure or a number in your
+   manuscript.
+ * **Flexibility:** You can easily change the output format of your
+   document; you can update your figures or your tables easily without
+   having to resort to manual editing.
+ * **Bibliography**. As you have seen in this book, it is not hard to
+   include bibliography in your document, in any style you desire. You can
+   use a free package manager such as Zotero or Mendeley to manage your
+   bibliography, and produce the bibliography in the format that R markdown
+   uses.
+
+What are the disadvantages?
+
+ * **Steep learning curve.** You have to learn all the stuff first.
+   Luckily, when it comes to R markdown, there are plenty of resources, and
+   after today you will know all the most important stuff.
+ * **No fine control over the layout.** While you can easily use simple
+   formatting commands, you will have to resort to more complex tools to
+   control things like font size of the chapter headers[^css]. Some of us
+   consider it to be a good thing[^me] – this is the boring part that the
+   computers should take care of, but sometimes it is annoying. However,
+   you can always generate a Word file with R markdown that uses a Word
+   template, and then fine tune it in Word.
+ * **Collaboration.** Collaborating with markdown is not as easy as with a
+   Word document, because most people can't use markdown. Often that means
+   that you need to communicate with your co-authors using Word, and then
+   patiently type in their changes into your markdown document.
+
+[^css]: Actually, you can control the format for PDF and HTML output very
+precisely, but then you have to learn LaTeX and CSS, respectively. For
+Word, the only option is to use a Word file with pre-defined styles as a
+template.
+
+[^me]: Me.
+
+::: {.callout-tip}
+## R markdown vs Quarto
+
+ * R markdown is older and more widely supported
+ * Quarto is newer, slightly more complex, with additional features and
+   generally better looking
+
+Documents created in Quarto can largely be processed with R markdown and
+vice versa, only some visual bells & whistles might be lacking.
+
+Both Quarto and R markdown are available if you have installed RStudio.
+Standalone R installations without RStudio may require additional packages
+(e.g. `rmarkdown` for R markdown) or programs (`quarto` for Quarto).
+:::
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-basic-markdown}
+### Create an R markdown document
+
+Go to the "File" menu in Rstudio and choose "New File" -> "R markdown".
+Enter a title and click on "OK". Save the file in your project directory
+and take a look at it. Rstudio has created a simple R markdown file for
+you so that you might get an idea of how it works.
+
+Click on the "knit" icon in the toolbar to render the document. What do you
+see? How does it relate to the content of the document? Try changing a few
+words in the document and click on "knit" again. What happens?
+:::
+::::
+
+
 ### Markdown basics
 
-## Basic statistics with R
+The "R" in R markdown stands for "R", the programming language, combined
+with markdown. But what *is* markdown?
 
+Markdown is a very lightweight formatting system, much like what many of us 
+are using in emails or messengers, stressing words by surrounding them with
+stars etc., but with a few extra features. The idea is that you can write
+the text in a very simple way and it remains readable *even with the
+formatting marks* 
+([take a look!](https://github.com/bihealth/RCrashcourse-book/blob/main/day5-visualization-and-statistics.qmd)).
+[Basic markdown formatting]{.aside}
+
+|Code|Output|
+|----|------|
+|`**bold**`|**bold**|
+|`*italic*`|*italic*|
+|`3^2^`|3^2^|
+|`log~2~`|log~2~|
+|`` `code` ``|`code`|
+|`[URL](https://cubi.bihealth.org)`|[link](https://cubi.bihealth.org)|
+
+----
+
+Here is another feature: lists.
+[Lists in markdown]{.aside}
+
+
+:::: {.columns}
+::: {.column width="50%"}
+Code:
+```
+- item 1
+- item 2
+  - subitem 1
+  - subitem 2
+- item 3
+```
+:::
+::: {.column width="50%"}
+Result:
+
+- item 1
+- item 2
+  - subitem 1
+  - subitem 2
+- item 3
+:::
+::::
+
+----
+
+There is much more to it (look up for example
+[markdown guide](https://rmarkdown.rstudio.com/lesson-1.html) from Rstudio
+or the 
+[Quarto markdown documentation](https://quarto.org/docs/authoring/markdown-basics.html)),
+but you don't need it right now. Just keep in mind that you can always take
+a look at the markdown source of this document to see how things can be done.
+
+::: {.callout-tip}
+## Mathematical formulas
+
+Using a special syntax, it is possible to include virtually any
+mathematical formula in R, both inline variant (like 
+$\sigma=\sqrt{\frac{(x_i-\bar{x})^2}{n}}$) 
+or as a stand-alone block:
+
+$$\sigma=\sqrt{\frac{(x_i-\bar{x})^2}{n}}$$ 
+
+There are several formulas in this book, if you are interested, look up the
+book quarto sources on
+[github](https://github.com/bihealth/RcrashCourse-book/) or 
+check [this guide](https://rpruim.github.io/s341/S19/from-class/MathinRmd.html).
+:::
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-formatting-markdown}
+### Formatting markdown
+
+Try some formatting commands in markdown. For example, try to make a word
+**bold** or *italic*. Try to create a list. 
+:::
+:::
+
+### R markdown header
+
+You might have noticed that at the top of the first R markdown file you
+created there is a block of text that might look something like this:
+
+```markdown
+---
+title: "Untitled"
+author: "JW"
+date: "`​r Sys.Date()`"
+output: html_document
+---
+```
+
+This is a block with meta-information about your document. For example, it
+specifies the title, author and date. Note that date is updated
+automatically every time the document is rendered by executing the r
+command `Sys.Date()` (you will learn about the inline chunks in a moment).
+Naturally, you can run the command in your console or script.
+[`Sys.Date()´]{.aside}
+
+
+```{r}
+Sys.Date()
+```
+
+The `output:` specifies the type of output you would like to have.
+
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-output-options}
+### Choosing output format
+
+When editing your R markdown document, click on the little ▼ arrow next to
+the "Knit" icon in RStudio. Choose the PDF format. Observe what happens to
+the header of your document.
+:::
+:::
+
+
+
+### R code chunks
+
+In between the markdown text, you can include R code chunks. These are
+executed consicutively by R and the output is included in the document.
+Every single fragment of code in this book is a code chunk.
+
+Each chunk starts with a ` ```{r} ` and ends with a ` ``` ` (these should
+[R chunks]{.aside}
+be placed on separate lines). You can also add the chunks by clicking on
+the little green plus sign in the Rstudio toolbar and choosing "R chunk".
+Here is an example of a code chunk:
+
+:::: {.columns}
+::: {.column width="45%"}
+R markdown:
+
+````
+```{{r}}
+x <- 1:10
+print(x)
+plot(x)
+```
+````
+:::
+::: {.column width="5%"}
+:::
+::: {.column width="50%"}
+Output:
+
+```{r}
+x <- 1:10
+print(x)
+plot(x)
+```
+:::
+::::
+
+
+By default, the code itself is also shown in the document. You can
+configure this by clicking on the little cogwheel ⚙ icon to the right of
+the chunk start. You will notice that configuring the options means
+essentially adding stuff like `echo=FALSE` to the chunk start (`echo=FALSE`
+[`echo=FALSE`]{.aside}
+means that the code itself is not shown in the document).
+
+:::: {.columns}
+::: {.column width="45%"}
+R markdown:
+
+````
+```{{r echo=FALSE}}
+x <- 1:10
+print(x)
+plot(x)
+```
+````
+:::
+::: {.column width="5%"}
+:::
+::: {.column width="50%"}
+Output:
+
+```{r echo=FALSE}
+x <- 1:10
+print(x)
+plot(x)
+```
+:::
+::::
+
+
+The code chunks can also be *inline*, that is, you can put directly a code
+chunk in your sentence. For example, when I write that the $pi$
+constant is equal to `r pi`, I am using an inline code chunk:
+
+```markdown
+For example, when I write that the $pi$ constant is 
+equal to `​r pi`, I am using an inline code chunk:
+```
+
+This point is not to save typing. The point is to *update* your document
+whenever you *update* your analysis. For example, if you add samples to
+your data and re-run the analysis, the number of samples that you have
+written in your method section must reflect the change. If you use an
+inline code chunk, it will do so automatically, without you needing to
+painstakingly update each number, each figure, each result in your
+manuscript.
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-basic-markdown}
+### Put your code in your markdown
+
+ * Go back to Day 1, the water lillies example in @sec-lilies. Copy the code
+   to the R markdown, including the plot and @exr-lilies.
+ * Write a brief summary including inline code chunks that show the number
+   of days of the simulation used.
+:::
+:::
 
 ## Visualizations with R
 
 ### Base R vs `ggplot2`
+
+We already had simple examples of plots in R (for example on day one, in
+the Water Lily example - @sec-lilies). We even had a look at the `ggplot2`
+package on Day 3 (@sec-quick-look). Why are there so many plotting systems
+in R?
+
+Actully, the situation is even more complex than you might imagine. Partly
+that is because there are so many different types of plots that it is hard
+to make a single system that would be good for all of them. But the main
+problem, as usual, is that anybody can write their own. And so they did.
+
+Fortunately for us, the two graphic systems – base R and `ggplot2` – are
+sufficient even for the most sophisticated plots. It is useful to know them
+both, however. Base R is simple and allows very quick plotting of simple
+tasks. Moreover, many base R statistical functions have built-in plotting
+capabilities (e.g. you can simply call `plot(model)` for a linear
+regression model to get all relevant plots). `ggplot2`, on the other hand,
+is more complex, but it is also working on a much higher level and takes
+care of many things automatically.
+
+
+Here is a table comparing the basic features of the two
+systems.
+
+------------------------------------------- -------------------------------------------
+Base R                                      ggplot2 
+------------------------------------------- -------------------------------------------
+Simple to use for simple task, gets         More complex, but more powerful and
+very complex for complex tasks              makes complex tasks easier
+
+Many packages                               Many packages
+
+Plots need many lines to be customized      Plots are customized in one line
+
+Low-level, with absolute feature control    High-level, with automatic feature control
+------------------------------------------- -------------------------------------------
+
+Most of what can be done with `ggplot2` can be done with base R, but it
+often requires many more lines of code. On the other hand, it is easier to
+develop a *de novo* approach with base R, because programming new features
+in ggplot is not for the faint of heart.
+
+Let us plot a simple scatter plot with both systems and show how
+customization will look like in both. We will use the `iris` data
+set[^iris].
+
+[^iris]: Not the doctored version we have been loading in the previous
+days, but the built-in original data set. If you have created an `iris`
+variable in your environment, type `rm(iris)` to remove it.
+
+
+**Base R:**
+
+
+```{r}
+colors_map <- c(setosa="red", versicolor="green", virginica="blue")
+colors <- colors_map[iris$Species]
+plot(iris$Sepal.Length, iris$Sepal.Width, 
+     col=colors, pch=19, xlab="Sepal length", 
+     cex=1.5,
+     ylab="Sepal width", main="The iris data set")
+abline(-2.8, 1.1, col="red")
+legend("topright", legend=unique(iris$Species), 
+       col=colors_map[unique(iris$Species)], pch=19)
+```
+
+Note that in the code above the `col=` parameter simply takes a vector
+describing colors. Color management must be done by the user – you cannot
+simply say "choose the viridis palette" (or similar). You also need to
+remember some weird things, like that the `pch=19` means "filled circles"
+(in contrast, `pch=1` means "empty circles", and if you need triangles, you
+have to use `pch=2`)[^manyyears]. And `cex` is the size of the points.
+
+Legend drawing is a completely separate function that slaps the legend on
+top of the existing plot, whatever it is. The `abline()` function draws a
+line on the plot, also not really caring what was drawn before.
+
+[^manyyears]: For many years I had a piece of paper hanging over my desk
+with all the `pch` values written on it and symbols scrawled with pencil
+next to them.
+
+Ggplot2:
+
+```{r}
+library(ggplot2)
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point(size=3) +
+  geom_abline(intercept = -2.8, slope = 1.1, color = "red") +
+  scale_color_viridis_d() +
+  labs(x = "Sepal length", y = "Sepal width", 
+       title = "The iris data set") +
+  theme_minimal()
+```
+
+In this example you see why `ggplot2` is so popular. The code is much
+cleaner and does not require you calling separate functions for each task.
+The parameters have explicit names, easy to remember.
+Legend and abline are directly connected to the plot, and the color scale
+is chosen with a single command. There is no need to separately change
+colors for the legend and the plot. The `theme_minimal()` function changes a
+number of parameters such as the font face used or the background color.
+
+However, some operations can be challenging. If you want your legend placed
+directly on top of the drawing in the right upper corner, you have to
+specify the coordinates manually. And if you want
+triangles... well, you still have to use the numbers, for example using 
+`geom_point(shape=2)` for triangles[^stillthere].
+
+Then again, some complex operations are easy. For example, to add per-group
+LOESS lines to the plot with confidence intervals, you would simply add
+`geom_smooth(method="loess")`. In base R, the same operation requires about
+a dozen lines of code.
+
+[^stillthere]: And here the punchline: I still have this piece of paper
+with symbols scrawled on it.
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-basic-statistics}
+## Ggplot2
+
+ Take the code for the `ggplot2` plot above and make the following
+ modifications:
+
+ * Try adding a `geom_smooth()` layer
+ * Remove `scale_color_viridis_d()` layer. What happens?
+ * Add the following layer: `scale_color_manual(values=colors_map)`. What
+   happens?
+ * Change the color of all points to black (use the `color` parameter in
+   `geom_point()`)
+ * If you wanted to show different shapes for different species rather than
+   different colors, where would you change the plot? Hint: where is the
+   species mentioned in the code?
+:::
+:::
+
+### Esthetics and information channels
+
+The last point in the exercise was sneaky. The answer is: you would need to
+change the `aes()` function call. Rather than use `color=Species`, you would
+have to use `shape=Species`.
+
+The `aes()` function – and the concept of plot esthetics – is at the core
+of `ggplot2`. The idea is that a plot has different information channels,
+such as x position, y position, color, shape, size, etc. Each of these
+can be mapped or linked to a column in the input data frame. This is the
+job of `aes()`. The `geom` functions such as `geom_point()` then use these
+mapping to actually draw the plot.
+
+This is why the layers (`geom_point()`, `scale_color_viridis_d()`, etc.)
+are being *added* to the plot using the `+` operator. Each layer adds
+another piece of information on how to display the plot. Then, the plot is
+displayed all in one go.
+
+The assumption is also that this information is mapped automatically. You
+do not need (or should not need) to specify which precisely color which
+groups get, or which symbols are used for plotting. Rather, you chose a
+particular information channel ("use different shapes depending on
+species") and `ggplot2` takes care of the rest.
+
+Of course, it is still possible to manually specify the colors, shapes etc.
+For example, and as you have seen in the previous exercise, you can use the
+same manual mapping of colors as above by using
+`scale_color_manual(values=colors_map)`.
+
+### PCA and scatter plots
+
+One of the basic plots in statistics is the scatter plot, with two
+continuous variables. They are easy enough to generate in R, but we will do
+it with a twist, introducing you to a new statistical concept: *principal
+component analysis* (PCA).
+[Principal component analysis]{.aside}
+
+Rember how we plotted the iris data set two days ago (@sec-quick-look)? It
+was easy to see the differences between the groups, and if we wanted, we
+could have plotted all four variables on two plots. But what if we had
+thousands of variables? For example, expression of thousands of genes for
+hundreds of samples?
+
+One of the possible approaches is to use a technique like PCA. PCA converts
+the data replacing the original variables with a new, smaller set, that
+however covers all the variance in the data. While the old variables are
+clearly defined, the new ones, called "principal components", result from
+combining them, so they do not correspond to something
+specific[^components]. However,
+they have a few nice properties:
+
+
+ * Most of the variance of the samples sits in the first components, then
+   the next biggest share sits in the second etc. That means that by
+   looking at the first few we are likely to get a very good idea of the
+   overall differences in the data.
+ * The components are orthogonal, that is, they are not correlated with
+   each other. This means that if, say, two groups correspond to one
+   component, then it is quite likely that they will *only* correspond to
+   that component. And thus we are able to say: "this component explains
+   differences between treatments, and this explains gender".
+ * The analysis is unsupervised, that is, we do not need to tell the
+   algorithm which samples belong to which group. It will find the
+   differences on its own (if there are any).
+
+[^components]: Components are the linear combinations of the original
+variables. So for a given sample, we basically add up expression of all
+genes, but each gene has a different weight.
+
+The data set `Datasets/expression_data_vaccination_example.xlsx` contains
+over 8 thousand genes for over 120 samples. Luckily for us, the data is
+pretty much cleaned up and ready for analysis.
+
+
+```{r}
+library(readxl)
+library(tidyverse)
+excel_sheets("Datasets/expression_data_vaccination_example.xlsx")
+meta <- read_excel("Datasets/expression_data_vaccination_example.xlsx",
+                   sheet="targets")
+dim(meta)
+trns <- read_excel("Datasets/expression_data_vaccination_example.xlsx",
+                   sheet="expression") |>
+        as.matrix()
+dim(trns)
+all(meta$ID == colnames(trns))
+```
+
+The `meta` data frame contains the sample information, and the `trns` data
+holds the actual data. We have already converted the expression data to a
+matrix. Before we run the PCA, however, we need to *transpose* it, that is,
+flip the dimensions. PCA wants the variables in columns, and samples in
+rows; however, the `trns` has the variables (genes) in rows and samples in
+columns. Note that we have checked that the column names of the `trns` data
+are identical to the `ID` column of the `meta` data frame.
+
+```{r}
+trns <- t(trns)
+```
+
+The PCA is a built-in function in R, and it is called `prcomp()`. We will
+only use a single parameter, `scale.` (mind the dot!) to tell PCA to scale
+the gene expression before working its magic:
+[`prcomp()`]{.aside}
+
+
+```{r}
+pca <- prcomp(trns, scale.=TRUE)
+names(pca)
+```
+
+The object returned by `prcomp()` is a list, and the element that we are
+particularly interested in is called `x`. This is a matrix of the principal
+components, PC1, PC2 etc. There are quite a few principal components, and
+each one has as many elements as there are samples in the data set:
+
+```{r}
+colnames(pca$x)[1:10]
+dim(pca$x)
+dim(meta)
+```
+
+We won't be interested in more than the first few components, but we want
+to see them in connection with the covariates. Therefore, we will use
+`cbind()` to combine the `meta` data frame with the first few columns of
+the `pca$x` matrix. We will use the `ggplot2` package to plot the data.
+[`cbind()`]{.aside}
+
+```{r}
+library(ggplot2)
+pca_df <- cbind(meta, pca$x[,1:10]) |>
+  filter(Timepoint == "D1")
+ggplot(pca_df, aes(x=PC5, y=PC6, color=b.a.t)) +
+  geom_point()
+```
+
+
+### Boxplots and violin plots
+
+For continuous data, violin plots combined with boxplots or boxplots alone
+are the method of choice. In the following, we will use the sepal
+lengths of the iris dataset[^iris]. First, a boxplot. We have created a
+boxplot a moment ago using the R base function `boxplot()`. Now we will
+do the same with `ggplot2`.
+[`geom_boxplot()`]{.aside}
+
+
+```{r}
+library(ggplot2)
+ggplot(iris, aes(x=Species, y=Sepal.Length)) +
+  geom_boxplot()
+```
+
+The thick line in the middle of the box is the median, the box itself
+goes from the lower quartile to the upper quartile (so its vertical size is
+the interquartile range), and the whiskers show the range of the data
+(excepting the outliers). The points shown are outliers. All in all, it is
+a non-parametric representation – that is, we do not assume that the data
+is normally distributed and we can use it for any kind of continuous data.
+
+However, boxplots are still not perfect, as they do not show the actual
+distribution of the data. Here is a better method – we create a so-called 
+violin plot which extrapolates a distribution from the data points.
+[`geom_violin()`]{.aside}
+In addition, we overlay that with a boxplot to show the quartiles and
+outliers.
+
+```{r}
+ggplot(iris, aes(x=Species, y=Sepal.Length)) +
+  geom_violin() + 
+  geom_boxplot(width=0.1)
+```
+
+Finally, in cases where we do not have too many data points we might want
+to show them directly on the plot (we can combine it with a boxplot or a
+violin plot). A particularly fine way of showing the actual points is
+implemented by the `ggbeeswarm` package and its `geom_beeswarm()` function.
+[`geom_beeswarm()`, `ggbeeswarm`]{.aside}
+
+```{r}
+library(ggbeeswarm)
+ggplot(iris, aes(x=Species, y=Sepal.Length)) +
+  geom_boxplot(outlier.shape=NA) +
+  geom_beeswarm(alpha=.5)
+```
+
+::: {.callout-tip}
+## Show actual data
+
+If possible, always strive to show the actual data points 
+(with `geom_beeswarm()` or `geom_jitter()`) in addition to the summary
+statistics. If not, at least show the distribution (with `geom_violin()`).
+:::
+
+
+
+### Boxplots and violin plots vs bar plots
+
+Bar plots are quite common in scientific literature, despite the fact that
+they actually should be avoided in most scenarios [@barcharthabit2014]. Bar
+plots should actually only be used when showing count or proportion data,
+and the $y$ axis in this case should always start at zero. In all the other
+applications, box plots or, better, violin plots are preferred.
+
+The advantages of the box plots and violin plots over bar plots are evident
+when the data is not normally distributed. Let us construct a small
+example.
+
+```{r}
+n <- 250
+x <- rnorm(n, mean=20, sd=1)
+y <- rbeta(n, 2, 22) * 20  + 18.6
+```
+
+The vectors `x` and `y` are normally distributed and beta distributed,
+respectively, and they have been on purpose manipulated such that the 
+standard deviations calculated with `sd()` are the same, but the means
+differ a bit. This is why, on a bar chart, they would show a clear difference.
+Here is a ggplot2 code that produces a bar chart.
+
+```{r}
+df <- data.frame(value=c(mean(x), mean(y)), 
+                 group=c("x", "y"),
+                 sd=c(sd(x)/sqrt(n), sd(y)/sqrt(n)))
+ggplot(df, aes(x=group, y=value)) + 
+  geom_bar(stat="identity", width=0.5, fill = "skyblue") +
+  geom_errorbar(aes(ymin = value - sd, ymax = value + sd), width = 0.2) +
+  labs(x="Group", y="Value") +
+  coord_cartesian(ylim = c(19.5, 20.5))
+```
+
+Wow, that looks really different! Unfortunately, the above figure *is a
+lie*. It suggests something that it is not true.
+
+Firstly, instead of standard deviations, which show the true spread of the
+data, I used the standard error of the mean (SEM) equal to 
+$\frac{\sigma}{\sqrt{n}}$, which shows the precision
+of the mean estimate and gets very small for large data sets (but it looks
+good on a figure). Secondly, the y-axis does not start at zero, which is
+not OK.
+
+And last but not least, one should not use a bar plot for continuous data,
+because it does not show their real distribution. Let us now produce a box plot and a violin plot.
+
+Before, however, let me introduce yet another useful package,
+`cowplot`[^patchwork]. With this package, we can create composite plots
+that consist of several individual plots. Basically, first you create the
+ggplot plots and save them to a variable; then you use cowplot function
+`plot_grid()` to put the plots . 
+[`cowplot`]{.aside}
+
+[^patchwork]: There is also the newer `patchwork` package, which is more
+elegant and flexible, but the syntax requires a bit of getting used to.
+
+[`plot_grid()`]{.aside}
+
+```{r message=FALSE}
+library(cowplot)
+df <- data.frame(values = c(x, y), 
+                 group = c(rep("x", n), rep("y", n)))
+p1 <- ggplot(df, aes(x=group, y=values)) +
+  geom_boxplot() +
+  labs(x="Group", y="Value")
+
+# violin plot
+p2 <- ggplot(df, aes(x=group, y=values)) +
+  geom_violin() +
+  geom_boxplot(width=0.1) +
+  labs(x="Group", y="Value")
+
+# plot_grid puts the different plots together 
+# ncol=2 -> two columns
+# labels=... -> labels for the plots
+plot_grid(p1, p2, ncol=2, labels=c("A", "B"))
+```
+
+As you can see, the violin plots show a completely different story. The
+group y only looks larger, because the mean is driven by the long upper
+tail of the distribution. The medians are practically identical
+(median of x is `r format(median(x), digits=4)`, 
+median of y is `r format(median(y), digits=4)`), and the
+distributions largely overlap.
+
+Similarly, if you were to run a t-test, which assumes normal distribution,
+the p-value would have been 
+`r format.pval(t.test(x, y)$p.value, digits=2)`; while in a Wilcoxon
+test, which does not assume normal distribution, the p-value would have
+been
+`r format.pval(wilcox.test(x, y)$p.value, digits=2)`.
+
+### Heatmaps
+
+A very common type of figure in high throughput data setting and one which
+is hard to achieve with other tools is the heatmap. There are numerous
+packages and functions (including the base R function `heatmap()`), however
+we will use the `pheatmap()` function from the `pheatmap` package.
+[`pheatmap()`]{.aside}
+
+First, however, we need some data. For starters, we take our beloved iris
+data set; however we will chose only 10 flowers from each species. You
+haven't learned the following idiom yet, but here is how to do it
+efficiently in tidyverse:
+
+
+```{r}
+library(tidyverse)
+iris_sel <- iris |>
+            group_by(Species) |>
+            slice_sample(n=10) |>
+            ungroup()
+table(iris_sel$Species)
+```
+
+The `group_by()` function groups the data by the `Species` column, which
+means that the subsequent functions will affect each group separately. The
+`slice_sample()` is a specialized function only for this purpose – it
+randomly selects rows from a data frame. Finally we remove the grouping
+with the `ungroup()` function.
+
+
+```{r}
+library(pheatmap)
+iris_mtx <- t(as.matrix(iris_sel[, 1:4]))
+pheatmap(iris_mtx)
+```
+
+As you can see, we have first converted the first four columns of the
+matrix into a data frame, then transposed it ("flipped" so the rows become
+columns and vice versa) and finally plotted it with `pheatmap()`.
+
+However, we do not see the species information on the plot. We can add it
+using a special data frame that contains the species information. We will
+also add a few more parameters to the `pheatmap()` function to make the plot
+more readable.
+
+```{r fig.height=4}
+iris_species <- data.frame(species=iris_sel$Species)
+foo <- pheatmap(iris_mtx, labels_col=iris_sel$Species,
+  color = colorRampPalette(c("blue", "white", "red"))(100)
+)
+```
+
+
+
+
+
+
+### Output formats
+
+We will not be spending time here on the details of how to create
+different output formats for plots; however, there is one thing that we
+want to mention.
+
+In general, there are two types of graphical files: raster (bitmap) and vector
+graphics. Raster graphics are made of pixels, like photos, and are good for
+complex images. Vector graphics are made of lines and shapes, like
+drawings, and are good for plots.
+
+The advantage of vector graphics is not only that you can zoom in as much as you
+want and the image will not get pixelated. First and foremost, you can edit
+them using an appropriate tool. Many people use the commercial Adobe
+Illustrator for this task, but there are also free and open source tools like
+[Inkscape](https://inkscape.org/). Both these latter tools will do the job in a
+scientific setting – they will allow you to change the colors, the fonts,
+the line thickness, the text shown etc. of your plots.
+
+Therefore, if possible, you should always save your plots in a vector
+format. You can always convert them to a raster format later, but once a
+plot is in a raster format, converting it to a vector format is practically
+impossible. The only exception is when you have an image with millions of
+data points – sometimes this may challenge your computer's memory (vector
+graphics is more computationally intensive than raster graphics).
+
+R can produce vector graphics in the PDF and in the SVG format. Both
+formats can be edited in Inkscape or Illustrator, but the SVG format is also
+suitable for HTML pages, because SVG is a standard related to HTML – in
+fact, all the plots in this book are in SVG format.
+
+To choose SVG or PDF format, you have the following options:
+
+**Use Rstudio.** In the right hand "Plots" tab on the lower right panel,
+you can click on "Export" and choose one of the available formats,
+including PDF or SVG.
+
+**Using R markdown or Quarto.** You can either use global document options
+or per-chunk options. 
+
+For global options, include the following code at the beginning of your
+R markdown file, just after the header:
+
+````
+```{{r include=FALSE}}
+knitr::opts_chunk$set(dev="svg")
+```
+````
+
+Alternatively, insert this into the header:
+
+````
+knitr:
+  opts_chunk:
+    dev: svg
+````
+
+If you want to make sure that one specific chunk produces SVG, you can
+always set the option in the given chunk:
+
+````
+```{{r dev="svg"}}
+plot(1:10)
+```
+````
+
+**Directly creating graphics in your script.** If you want your script to
+produce a file with the plot, you can do that in one of the many ways. Two
+of them are shown below, one using `svg()`, and the other one using
+`pdf()` or `cairo_pdf()`[^cairo]. Both commands need to be finalized with `dev.off()`:
+
+[^cairo]: The `cairo_pdf()` supports a wider range of characters, including
+Unicode characters, and allows font embedding. Long story short, use it if
+your fonts are garbled.
+
+
+
+```{r eval=FALSE}
+# producing an SVG image file
+svg("test.svg", width=14, height=7)
+plot(1:10)
+dev.off()
+```
+
+This produces an SVG file "test.svg" with the nominal size 14 x 7 inches.
+
+
+```{r eval=FALSE}
+# produce a PDF file
+pdf("test.pdf", width=14, height=7)
+plot(1:10)
+dev.off()
+```
+
+This produces a PDF file "test.pdf" with the nominal size 14 x 7 inches.
+
+
+::: {.callout-important}
+## Remember!
+
+Use SVG format for your plots whenever possible.
+:::
+
+
+## Basic statistics with R
+
+### Statistics with R
+
+R is a powerful tool for statistics. It has a staggering number of packages
+that can be used for statistical analysis. I would venture the guess that
+if someone somewhere came up with a statistical method, then there is an R
+package for it[^almost].
+
+[^almost]: Almost the same goes for bioinformatics and visualization.
+
+One interesting fact about statistics is that is is *way* harder than
+programming in R. In fact, after some initial learning curve, you will find
+that it is much harder to understand, say, which statistical test you
+should use than how to actually run it in R. You will also see that it is
+harder to understand the plots that you have produced then to actually
+produce them.
+
+Nonetheless, it takes a while
+to get into the "R mindset" of doing statistics. It is done very much
+differently than in UI-based software like Graphpad Prism or Excel.
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-basic-statistics}
+## P values
+
+P-values are one of the most basic concepts in statistics, and part of the
+language of science – it is hard to find a scientific paper without any
+p-values. 
+
+ * Take a piece of paper or open a text editor and write down a one- or two-sentence
+   explanation of what a p-value is. 
+ * Only when you have done this, read
+   the section "Clarifications about p-values" in
+   [this](https://en.wikipedia.org/wiki/Misuse_of_p-values) Wikipedia
+   article. Did you get it right? If yes, you are in the minority of
+   scientists.
+:::
+:::
+
+### Descriptive statistics
+
+You have already seen some basic statiscs in R (see Day 1, for example
+[Descriptive statistics]{.aside}
+@tip-functions). Here is a quick reminder of how to get some basic
+statistics for a vector of numbers:
+
+```{r}
+x <- rnorm(1000)
+
+# mean
+mean(x)
+
+# median
+median(x)
+
+# standard deviation
+sd(x)
+
+# Some basic statistics in one go
+summary(x)
+```
+
+For a vector of numbers, the `summary()` function returns a vector with six
+numbers. Four of them should be self-explanatory: the minimum, median,
+mean, and maximum. The other two are the first and the third quartile.
+
+The first number is the 1st quartile, also called "the lower quartile" or
+[Quartiles]{.aside}
+25th percentile, which means that 25% of the data are
+below that number. The second is the 75th percentile (or the upper
+quartile), which means that 75% of the data are below the number. Together,
+between the first and the second number, there are 50% of the data. You can
+check it for yourself:
+
+
+```{r}
+s <- summary(x)
+sum(x < s[2]) / length(x)
+sum(x > s[5]) / length(x)
+sum(x > s[2] & x < s[5]) / length(x)
+```
+
+Of particular interest is the so called interquartile range (IQR), which is
+the difference between the upper and lower quartile.
+[Interquartile range]{.aside}
+Just like the median is a robust, non-parametric measure of the "center" of the
+data, the IQR is a robust, non-parametric measure of the "spread" of the
+data. While median corresponds to the parametric mean, IQR corresponds to
+the standard deviation. 
+
+In non-normally distributed data, for example count data (when we count
+things) median and IQR are often more informative than mean and standard
+deviation. We will see that later when we come to visualizing data with bar
+plots.
+
+You can get the IQR using the `IQR()` function:
+[`IQR()`]{.aside}
+
+```{r}
+IQR(x)
+```
+
+For data frames, you can either use the `summary()` function or use the
+`summary_colorDF` function from the `colorDF` package (see @sec-diagnosing
+and @sec-colorDF).
+
+### Simple tests
+
+Most everyday statistical tests are available in base R without the need
+for loading any additional packages. Here we will show you some of them.
+
+**t-test.** The Student's test is one of the most common tests in all
+statistics. It compares two groups of data. In its simplest form, the
+function `t.test()` takes two vectors of numbers.
+[`t.test()`]{.aside}
+
+
+```{r}
+# simulate two vectors with different means
+x <- rnorm(15, mean=1, sd=1)
+y <- rnorm(15, mean=3, sd=1)
+
+# perform the t-test
+t.test(x, y)
+```
+
+The actual output of the `t.test()` function is a list with a lot of
+information, but when printed to the console it shows a human-readable
+summary. 
+
+It is often useful to extract and format the p-value from the output of the
+`t.test()` function. You can save the t.test output to a variable and then
+access the element `p.value`:
+
+```{r}
+res <- t.test(x, y)
+res$p.value
+```
+
+To show the p-value in a more readable format, you can use the `format.pval`
+[`format.pval(..., digits=2)`]{.aside}
+function which converts the number to a string with the correct number of
+significant digits:
+
+```{r}
+format.pval(res$p.value, digits=2)
+```
+
+This allows us to include the p-value in a sentence, for example like this:
+
+```markdown
+"The p-value of the t-test 
+was `​r format.pval(res$p.value, digits=2)`."
+```
+
+This will be rendered as: "The p-value of the t-test was 
+`r format.pval(res$p.value, digits=2)`."
+
+If we doo many tests or want to save the test results in a spreadsheet, it
+might be useful to use the `tidy()` function from the `broom` package.
+[`tidy()`]{.aside}
+
+
+```{r}
+library(broom)
+tidy(res)
+```
+
+The `tidy()` function returns a data frame with the test results. It
+understands many different statistical tests, not only the t-test.
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-t-test}
+## T-test
+
+Use either the builtin iris dataset or the cleaned-up version of the
+doctored data set from Day 3. Perform a t-test to compare the sepal length
+between *Iris setosa* and *Iris versicolor*, as well as between *Iris
+versicolor* and *Iris virginica*.
+:::
+:::
+
+**Paired t-test.** The paired t-test is a special case of the t-test where
+[Paired t-test with `paired=TRUE`]{.aside}
+the two groups are not independent. For example, you might have measured
+the same individuals before and after a treatment. **You are not allowed to
+use a regular t-test if the data is paired**, because one of the most
+fundamental and important assumptions is not met. Also, in many cases,
+using a paired t-test will give you more statistical power.
+
+Consider this example. We first start with randomized vector `x`, then
+build vector `y` by adding a fixed effect and an error term:
+
+[`boxplot()`]{.aside}
+
+```{r}
+x <- rnorm(15, mean=1, sd=1)
+y <- x + 0.5 + rnorm(15, mean=0, sd=.5)
+boxplot(x, y)
+t.test(x, y, paired=TRUE)
+```
+
+The `paired=TRUE` argument tells R that the two vectors are paired. We get
+a p-value of 
+`r format.pval(t.test(x, y, paired=TRUE)$p.value, digits=2)`, whereas with
+regular t-test we would have gotten a p-value of
+`r format.pval(t.test(x, y)$p.value, digits=2)`.
+
+Incidentally, we produced a boxplot. We will talk about boxplots in a
+moment.
+
+**Wilcoxon test.** The Wilcoxon test is a non-parametric version of the
+t-test, and almost as powerful. Use it via `wilcox.test()`:
+[`wilcox.test()`]{.aside}
+
+```{r}
+wilcox.test(x, y)
+```
+
+**$\chi^2$ (Chi-square) test.** If we have two categorical vectors, we can
+[$\chi^2$ test]{.aside}
+use the $\chi^2$ test. Consider the results of the gene expression analysis
+we have looked at yesterday. We can define two vectors:
+"significant/non-significant" and "interferon/noninterferon". These can be
+logical or character vectors, it doesn't matter:
+
+```{r message=FALSE}
+library(tidyverse)
+tr_res <- read_csv("Datasets/transcriptomics_results.csv")
+tr_res <- select(tr_res, 
+                 Gene=GeneName, Description,
+                 logFC=logFC.F.D1, FDR=qval.F.D1)
+interferon <- grepl("interferon", tr_res$Description)
+significant <- tr_res$FDR < 0.01
+table(significant, interferon)
+```
+
+
+```{r echo=FALSE}
+t <- table(significant, interferon)
+```
+
+
+Above we constructed a *contingency* table. Rows show the two
+[Contingency table with `table(x, y)`]{.aside}
+values of `significant` vector, columns – same for the `interferon` vector.
+In other words, most (`r t[1,1]`) genes are neither significant nor
+interferons. However, out of `r t[2,1]+t[2,2]` significant genes, 
+as much as `r t[2,2]` have "interferon" in their description. And vice
+verse, out of the `r t[1,2] + t[2,2]` interferon genes, more than a third
+are significant. Is this significant? To answer this, we can use the
+`chisq.test()`. 
+[`chisq.test()`]{.aside}
+
+
+```{r warning=FALSE}
+chisq.test(significant, interferon)
+```
+
+Yep, looks like it. In fact, the above was a simple case of gene set
+enrichment analysis.
+
+### Correlations
+
+### Simple linear models
+
+We end with an example of linear regression, and the most important reason
+for that is the introduction of formulas in R.
+
+A formula is a weird little construct. It contains variables, and links
+them using the `~` (tilde) sign. On the left side of the `~` are the
+*dependent* variables (the "y"), on the right side are the *independent*
+variables (the "x", or covariates).
+
+Depending on the particular function, the formula can mean different things
+and will have different syntax. For example, in a package like the `DESeq2`
+from Bioconductor, there will be nothing on the left side – because
+`DESeq2` understands that the formula applies to every single gene in the
+input matrix.
+
+Here we will use the `lm()` function, which is the basic linear regression
+[`lm()`]{.aside}
+included in base R. Somewhat similar to tidyverse, you can use column names
+of a data frame in the formula, and specify the data frame with the `data`
+parameter. We will use it to model regression of the mathematical form
+
+$$ y = a + b \cdot x + \epsilon $$
+
+where $a$ is the intercept, $b$ is the slope, and $\epsilon$ is the error.
+
+
+### Correcting for multiple testing
+
+## Conclusions
+
+### Where to go from here
+
+There are numerous resources for R on the web, allow me to recommend a few.
+
+ * [StackOverflow](https://stackoverflow.com) – this is a general Q & A
+   forum for software developers. Most of the questions you have someone
+   has previously asked here.
+ * Online R books
+   * [Hands-On programming with R](https://rstudio-education.github.io/hopr/)
+     A very different approach to teachin R to beginners than the one that
+     I prefer, but maybe you will find it better. Worth checking in any
+     case.
+   * [R for data science (tidyverse)](https://r4ds.had.co.nz/) The
+     tidyverse book, written by the main tidyverse developer.
+   * [R graphics cookbook](https://r-graphics.org/) The cookbook format
+     splits the information in small "recipies" for common problems.
+   * [R markdown: the definitive guide](https://bookdown.org/yihui/rmarkdown/) A 
+     comprehensive guide to R markdown written by the people who created it.
+ * Other books:
+   * [The R Book by Michael J. Crawley](https://www.google.com/search?q=the+r+book)
+     – this is a magnificent book on statistics. It uses very conservative
+     R language (no tidyverse at all), but it discusses at length even the
+     more complex statistical issues. I recommend this book to every person
+     willing to learn statistics with R.
+ * Large Language Models (LLMs): I have good experiences with LLMs
+   (ChatGPT, Perplexity AI) for learning programming languages. While
+   complex tasks may be out of reach for them, they are very good at
+   explaining basics. "How do I do X in R?" or "Why doesn't the following
+   code work?" seem to work quite well. RStudio allows you also to use 
+   [Copilot](https://docs.posit.co/ide/user/ide/guide/tools/copilot.html)
+   which is an LLM model that watches the code you write and tries to guess
+   what you are trying to do. Just remember, that the one thing that LLMs
+   don't know how to say is "I don't know". If something doesn't make sense,
+   or if it is beyond the scope of their learning, they will "hallucinate"
+   – give good sounding advice which is totally bonkers.
+
+### Famous last words
+
+We are now at the end of Five Days of R. You are basically on the beginning
+of your journey. Here is my last advice to you.
+
+::: {.callout-tip}
+## Get on with R
+
+Start working with R, right now, for all your projects; for statistics,
+data management and even preparing reports and documents.
+
+At first, doing the same task in R will take much more time then the same
+task in programs you used before. You will feel that you are wasting your
+time.
+
+You are not. Sooner then you think, it will pay off.
+:::
+
+## Review
+
+ * R markdown / Quarto
+   * creating R markdown documents
+   * basic markdown formatting (**bold**, *italic* etc.)
+   * including R chunks
+   * creating output in different formats
+   * choosing an output format
+ * Visualisations
+   * basic scatterplots with `ggplot()`
+   * understanding esthetics
+   * box plots with `geom_boxplot()` and violin plots with `geom_violin()`

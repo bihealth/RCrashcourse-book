@@ -974,21 +974,21 @@ up the data from yesterday. We can do it one by one, like this:
 ```{r eval=TRUE, message=FALSE}
 library(tidyverse)
 library(janitor)
-iris <- read_csv("Datasets/iris.csv")
-iris <- clean_names(iris)
-iris$species <- tolower(iris$species)
-iris$petal_length <- str_replace_all(iris$petal_length ,"[^0-9.]", "") 
-iris$petal_length <- as.numeric(iris$petal_length)
-iris$sepal_length <- str_replace_all(iris$sepal_length, ",", ".")
-iris$sepal_length <- str_replace_all(iris$sepal_length ,"> ", "") 
-iris$sepal_length <- as.numeric(iris$sepal_length)
+iris_data <- read_csv("Datasets/iris.csv")
+iris_data <- clean_names(iris_data)
+iris_data$species <- tolower(iris_data$species)
+iris_data$petal_length <- str_replace_all(iris_data$petal_length ,"[^0-9.]", "") 
+iris_data$petal_length <- as.numeric(iris_data$petal_length)
+iris_data$sepal_length <- str_replace_all(iris_data$sepal_length, ",", ".")
+iris_data$sepal_length <- str_replace_all(iris_data$sepal_length ,"> ", "") 
+iris_data$sepal_length <- as.numeric(iris_data$sepal_length)
 ```
 
 That is a lot of code. However, we *could* do it all on one line:
 
 
 ```{r message=FALSE}
-iris <- 
+iris_data <- 
   mutate(mutate(mutate(clean_names(read_csv("Datasets/iris.csv")),
   petal_length = as.numeric(
   str_replace_all(petal_length, "[^0-9.]", ""))),
@@ -998,8 +998,8 @@ iris <-
 ```
 
 If you spend some time deciphering this, you will see that it does
-precisely the same operations as the previous beat of code. However, it is
-unreadable and unmaintainable[^headache].
+precisely the same operations as the previous code fragment. However, it is
+completely unreadable and unmaintainable[^headache].
 
 [^headache]: I got a headache just trying to figure out the correct number
 of parentheses in this code.
@@ -1053,7 +1053,7 @@ See how that works for our iris dataset:
 
 
 ```{r message=FALSE}
-iris <- read_csv("Datasets/iris.csv") |>
+iris_data <- read_csv("Datasets/iris.csv") |>
         clean_names() |>
         mutate(species = tolower(species)) |>
         mutate(petal_length = str_replace_all(petal_length ,"[^0-9.]", "")) |>
@@ -1067,8 +1067,8 @@ It is just as clear and readable as the first example, but with some
 additional benefits.
 
 First, think what happens if you want to change the name of the variable,
-say, from `iris` to `flowers`. In the first example, you would have to
-change every single occurence of `iris` to `flowers`. Sure, it would not be
+say, from `iris_data` to `flowers`. In the first example, you would have to
+change every single occurence of `iris_data` to `flowers`. Sure, it would not be
 all too bad if you can do it automatically with a search-and-replace, but
 what if the variable name was `a`?
 
@@ -1082,15 +1082,15 @@ the same line:
 
 
 ```{r message=FALSE}
-iris <- read_csv("Datasets/iris.csv") |>
+iris_data <- read_csv("Datasets/iris.csv") |>
         clean_names() |>
         mutate(species = tolower(species))
 
-iris$petal_length <- iris$petal_length |> 
+iris_data$petal_length <- iris_data$petal_length |> 
         str_replace_all("[^0-9.]", "") |>
         as.numeric()
 
-iris$sepal_length <- iris$sepal_length |>
+iris_data$sepal_length <- iris_data$sepal_length |>
         str_replace_all(",", ".") |>
         str_replace_all("> ", "") |>
         as.numeric()

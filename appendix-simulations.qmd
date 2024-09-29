@@ -1,0 +1,80 @@
+# Simple simulations
+
+One big advantage of using R for statistics is its ability to simulate
+data. This is a very powerful tool not only to do actual calculations (e.g.
+randomization tests), but first and foremost to understand how statistics
+works. 
+
+### Simulating standard deviation
+
+We will now make a simple simulation of a descriptive statistic: the
+standard deviation. You may know that the formula for the standard deviation is
+this:
+
+$$\sigma = \sqrt{\frac{\sum_{i=1}^n (x_i - \bar{x})^2}{n}}$$
+
+However, you may also know that if you have a sample of data, you should
+use the formula
+
+$$s = \sqrt{\frac{\sum_{i=1}^n (x_i - \bar{x})^2}{n - 1}}$$
+
+where $\bar{x}$ is the mean of the data. This is *sample* standard
+deviation which we denote with an $s$ instead of $\sigma$.
+
+Have you ever wondered why we use
+an $n-1$ in the denominator? If you remember your statistics classes, you
+might come up with something about degrees of freedom or estimators. But
+can you actually *see*, can you check what would happen if we used $n$
+instead of $n-1$?
+
+In the following, we will generate a thousand random samples of 10 numbers
+using normal distribution and a pre-selected standard deviation of $1$.
+We will then calculate both the standard deviation $\sigma$ and the sample
+standard deviation $s$. Finally, we will then compare the two with the 
+real value ($1$).
+
+First, we will write a function that calculates both standard deviations.
+The default function from R is `sd()` which uses the `n - 1` formula, so we
+can calculate the `sigma` by multiplying the `sd()` result by
+$\sqrt{\frac{n}{n-1}}$.
+
+First, we will write a function that calculates both standard deviations
+for $n$ random numbers. 
+
+```{r}
+sdsigma <- function(n) {
+  x <- rnorm(n)
+  sd_x <- sd(x)
+  sigma <- sd_x * sqrt((n - 1) / n)
+  return(c(sd=sd_x, sigma=sigma))
+}
+sdsigma(15)
+```
+
+Next, we will generate the data and calculate the standard deviations. A
+simple, yet useful function to generate replicate data is `replicate()`.
+Replicate takes two arguments: the number of replications and the function
+to call for each replication. Here, we will simply call `sdsigma()` 1000 times.
+The results are put together in a result matrix.
+
+```{r}
+simula <- replicate(10000, sdsigma(10))
+```
+
+Replicate returns a matrix with two rows (one for `sd` and one for `sigma`)
+and 1000 columns, here we can see the first ten columns:
+
+```{r}
+simula[,1:10]
+```
+
+Finally, we can calculate the mean of the standard deviations and the mean
+of the sigmas. We could do it manually, or use the `apply()` function, but
+there is a simpler way: the `rowMeans()` function. This function calculates
+the mean of each row of a matrix.
+
+```{r}
+1 - rowMeans(simula)
+```
+
+

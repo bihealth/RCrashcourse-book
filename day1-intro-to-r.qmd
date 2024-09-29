@@ -1,5 +1,6 @@
 # Introduction to R
 
+
 ## Goals for today
 
  * what is R?
@@ -48,6 +49,7 @@ relatively easy to learn, and it is very powerful. However, other choices
 are also worth mentioning.
 
 **Matlab** is a language that is in many ways similar to R. The main
+[Matlab]{.aside}
 differnce is maybe that unlike R, Matlab is not free – it is closed source
 and you have to pay for a license. This has some advantages. For example,
 and as you will see during this course, R development is not centralized
@@ -57,6 +59,7 @@ appears to be faster – and for this, it is often the language of choice for
 areas such as image analysis.
 
 **Python** is completely different story. This is a powerful, fast, general
+[Python]{.aside}
 purpose programming language. It is more versatile than R, has a much more
 standardized syntax and development process. However, it is harder to learn
 and it is not really meant to be used interactively (although it can be –
@@ -69,6 +72,7 @@ R.
 ### Creating a project: start here!
 
 When starting work with a new project, do the following: (i) create a new
+[RStudio projects]{.aside}
 directory for the project, (ii) open an R script file and save it in the
 directory you created and (iii) copy necessary data files.
 
@@ -89,6 +93,7 @@ this project over the next few days (we hope).
 When Rstudio creates a new project, it creates a new directory with the same
 name as the project. Furthermore, it creates a new file in this directory
 called `projectname.Rproj`. This file is used by RStudio to keep track of
+[`projectname.Rproj`]{.aside}
 project-specific settings.
 
 You can open this file by double-clicking on it in the Files pane in
@@ -96,6 +101,7 @@ RStudio. Like most of the files that you will be working with, it is a
 simple text file: you can open it in any text editor, including RStudio.
 
 Later on, if you choose to do so, R can create two hidden files, `Rhistory`
+[`.Rhistory` and `.RData`]{.aside}
 (called `.Rhistory` on Unix-like systems and `_Rhistory` on Windows) and `.RData` (or `_RData`). 
 This files save the state of your R session (of your R workspace, to be
 specific).
@@ -110,14 +116,17 @@ specific).
 
 You can use R as a very powerful calculator. For example, do you want to
 know what $\sin(\pi/2)$ is? Just type `sin(pi/2)` in the console and press
+[`sin()`]{.aside}
 `Enter`. Addition and subtraction work, as expected, with `+` and `-`. To
 multiply two numbers, type `2*3`; to divide, type `2/3`. You can get
 exponents (powers, eg. $2^3$) by typing `2^3`. If the `^` symbol (called
 "caret") is not available on your keyboard, you can use `**` instead.
 Parentheses `()` are used to group expressions, just like in mathematics.
 To logarithmize, you can use `log()`, `log2()` and `log10()` functions. For
+[`log()`, `log2()` and `log10()`]{.aside}
 example, to calculate $\log_{10}(100)$, type `log10(100)`. Can you guess
 how to calculate $\sqrt{2}$? Yes, you are right: `sqrt(2)`. Or `2^(1/2)`,
+[`sqrt()`]{.aside}
 that will also do.
 
 ::: {.callout-caution icon=false appearance="simple"}
@@ -186,6 +195,7 @@ From now on, you should only type your code in script files.
 What if we want to store the result of a calculation for later use? We can
 do this by assigning the result to a variable. In R, you assign a value to a
 variable using the `<-` operator: 
+[`<-` assignment operator]{.aside}
 
 
 ```{r}
@@ -196,6 +206,7 @@ z <- x + y
 
 If you want to see the value of a variable, just type its name in the
 console and press `Enter`, or use `print()` function:
+[`print()`]{.aside}
 
 
 ```{r}
@@ -219,7 +230,7 @@ its content:
 ```{r}
 x <- 2
 y <- x
-print(x)
+x
 ```
 
 We now come to a very important point which we will revisit often, as it is
@@ -233,7 +244,7 @@ x <- 2
 # prints 0.9092974:
 sin(x) 
 # prints 2
-print(x) 
+x 
 ```
 
 In the code above, the value of `x` is not changed by the `sin()` function.
@@ -244,7 +255,7 @@ x <- 2
 # does not print anything:
 x <- sin(x) 
 # prints 0.9092974:
-print(x)    
+x    
 ```
 
 Please spend some time on this, as it is a very common source of errors.
@@ -282,13 +293,14 @@ Character variables cannot be used with algebraic computations, the
 following code will throw an error:
 
 
-```{r eval=FALSE}
+```{r error=TRUE}
 # this does not work!
 name + city
 ```
 
 However, if you want to "add" two character strings (that is, concatenate
 them), you can use the `paste()` function:
+[`paste()`]{.aside}
 
 
 ```{r}
@@ -297,6 +309,7 @@ paste(name, city)
 
 Quite often, you don't want to have a space between the two strings. This
 is such a common operation that R has a shortcut for it:
+[`paste0()`]{.aside}
 
 
 ```{r}
@@ -345,7 +358,9 @@ exactly like that in R: any single value is a 1-element vector, including
 all the variables that you have created in the previous exercise.
 
 To create a vector with more than one value, you can use the `c()` function
+[`c()`]{.aside}
 ("c" stands for "combine"). For integer numbers, you can use the `:` operator
+[Creating a sequence of numbers with `:`]{.aside}
 to create a sequence of numbers.
 For example:
 
@@ -357,6 +372,7 @@ person <- c("January", "Weiner", "Hoppegarten")
 ```
 
 It is also possible to combine two vectors longer than 1 into one:
+[Combining vectors]{.aside}
 
 
 ```{r}
@@ -368,6 +384,7 @@ print(combined_v)
 
 
 You can access individual elements of a vector using the `[ ]` operator:
+[Accessing elements of a vector with `[ ]`]{.aside}
 
 
 ```{r}
@@ -423,6 +440,7 @@ elements of the vector – was the last name first, or second element of the
 Vectors allow you to name their elements. We can either define the names at
 the very beginning, when we create the vector, or we can add them later
 using the `names()` function. Here is how you can do it:
+[Named vectors]{.aside}
 
 
 ```{r}
@@ -432,17 +450,27 @@ person <- c(first="January", last="Weiner", city="Hoppegarten")
 Once you have named the elements of a vector, you can access them using
 their names:
 
-
 ```{r}
 person["city"]
 person[c("first", "last")]
 ```
+
+Or, we can change the names with the `names()` function:
+[`names()`]{.aside}
+
+
+```{r}
+names(person) <- c("name", "given", "place")
+person
+```
+
 
 ### Assigning values to selected elements
 
 OK, one more thing about vectors. Above we have selected elements from a
 vector. It turns out, we can do more with that selections then just print
 it to a console:
+[Assigning values to selected elements]{.aside}
 
 
 ```{r}
@@ -487,6 +515,7 @@ vector `numbers`. The same thing happens with other operators, like `-`,
 `*` and `/`. Try it yourself.
 
 This is called **vectorization** and it is one of the most powerful features
+[Vectorization]{.aside}
 of R compared to other languages. It will allow you to write very concise
 and, at the same time, readable code.
 
@@ -529,14 +558,17 @@ numbers2 <- c(4, 5)
 numbers1 + numbers2
 ```
 
+
 Ooops, what exactly happened here? First thing to note is that *there was
 no error*. There was a *warning*, but still our code executed and produced
 a result. But what is that result? For the first element of the result, it
 is clear enough: `1 + 4 = 5`. Same for the second, `2 + 5 = 7`. But what
 about the third? It seems that R added `3 + 4 = 7`. But why?
 
+
 R noticed that it is missing an element to be added to the third element of
 the vector `numbers1`. So, it did what is called **recycling**. It
+[Recycling]{.aside}
 "rewound" the vector `numbers2` to the beginning and added the first
 element of `numbers2` to the third element of `numbers1`. However, since
 after the rewinding and adding one element of vector `numbers2` was left
@@ -568,6 +600,7 @@ check the length of both vectors.
 With vectors that have only a couple of numbers it is quite easy to see
 what is happening, but what if you have thousands of variables? In other
 words, how to check the lenght of a vector? You can use the `length()`:
+[`length()`]{.aside}
 
 
 ```{r}
@@ -591,11 +624,27 @@ length(numbers2)
 :::
 :::
 
+::: {.callout-tip}
+## Messages, Warnings and Errors
+
+R has three types of information to pass to you: messages, warnings and
+errors. Messages are just that – messages. Warnings are messages that tell
+you that something might be wrong and you should pay attention, but R will
+nonetheless do what you asked it to do. Errors stop the execution of your
+code, but warnings do not.
+
+You should pay attention to warnings, but you do not have always to do
+something about them – some you can safely ignore. Errors, on the other
+hand, you should always fix.
+:::
+
+
 ### The special value `NA`
 
 One more thing: there are a couple of special values in R that you should
 know about. One of the most prominent, useful and frequently encountered is
 the `NA` value, which stands for "Not Available". You will see it
+[`NA`]{.aside}
 frequently when you work with data.
 
 It is possible to apply mathematical operations to `NA` values, but the
@@ -610,6 +659,7 @@ numbers * 3
 
 This also goes for some functions, which, quite often, have a special
 parameter to omit the `NA` values. For example, the `mean()` function
+[`mean()`]{.aside}
 calculates the mean of a vector:
 
 
@@ -619,12 +669,13 @@ mean(numbers)
 mean(numbers, na.rm=TRUE)
 ```
 
-::: {.callout-tip}
+::: {.callout-tip #tip-functions}
 ## Useful functions
 
 There is a whole bunch of functions that you can use to work with vectors,
 and here are some of them – with mostly self-explanatory names: `sum()`,
 `min()`, `max()`, `range()`, `sd()`, `var()`, `median()`, `quantile()`.
+[Descriptive statistics: `sum()`, `min()`, `max()` etc.]{.aside}
 Look them up in the help system by typing, for example, `?sum` in the console.
 :::
 
@@ -650,6 +701,7 @@ were changed to `NA`. Look out for that warning!
 ::: {.callout-tip}
 ## Special values
 There are a few other special values in R that behave similarly to `NA`.
+[`Inf`, `-Inf` and `NaN`]{.aside}
 `Inf` stands for infinity, you will get it when you divide a positive number by zero:
 `1/0`. `-Inf` is the negative infinity (when you divide a negative number
 by 0), and `NaN` stands for "Not a Number" – this is what you get when you
@@ -660,10 +712,9 @@ the number of rows.
 :::
 
 
-
 ## Putting it all together
 
-### Water lillies on a lake
+### Water lillies on a lake {#sec-lilies}
 
 There is an old puzzle that goes: "On a lake, there is a water lily. Each
 day the lily doubles in size. After 30 days, the lily covers the entire
@@ -733,7 +784,10 @@ days, the second vector is the area.
 plot(days, area, type="b")
 ```
 
+[plot(..., type="b")]{.aside}
+
 O-K, days and area are clear, but what is this `type="b"`? This is a
+[Named arguments]{.aside}
 so-called *named* argument[^argument]. The `plot()` function has many arguments, and
 if you want to use only some of them, you can use their names with an equal
 sign. You will see that a lot in the days to come. This particular
@@ -742,10 +796,10 @@ argument, `type`, tells R what kind of plot to draw. The `"b"` stands for
 you can use `"p"` (or simple leave the argument out), if you want only
 lines, you can use `"l"`.
 
-[^argument]: Full disclosure: all arguments can be named in R. However,
-some of the arguments have a default value, so we do not have to specify
-them unless we need them. The `type` argument is one of them. Others must
-always be specified. We will talk about this in more detail later.
+[^argument]: Full disclosure: all arguments have names in R and can be
+named explicitely. However, some of the arguments have a default value, so
+we do not have to specify them unless we need them. The `type` argument is
+one of them. Others must always be specified.
 
 Note another thing on this plot: after day 7, the area is greater than 1.
 But 1 means 100%, so after day 7, the lily covers more than the entire
@@ -757,6 +811,8 @@ model. We can show it by adding a horizontal line to the plot:
 plot(days, area, type="b")
 abline(h=1, col="red")
 ```
+
+[abline()]{.aside}
 
 ::: {.callout-caution icon=false appearance="simple"}
 ::: {#exr-lilies-plot}
@@ -794,11 +850,13 @@ Secondly, it will help you understand how functions work in R, and that
 will help you understand how to use functions that others have created.
 
 In the water lilies example we have used a formula to calculate the area of
-the lily on the $n$-th day. The formula includes two parameters: the
-initial fraction of the area covered by the lily on day 1, and the factor by which
-the area is increased each day. We can create a function that will take
-three parameters: the day (or days), the initial fraction and the factor, and return
-the area of the lily on that day. Here is how you can do it:
+the lily on the $n$-th day. The formula includes three parameters: the
+initial fraction of the area covered by the lily on day 1, the day number and the factor by which
+the area is increased each day. We will now create a function that takes
+two parameters: the day (or days) and the factor, and return
+the area of the lily on that day. Here is how you can do it using
+`function()` keyword in R:
+[`function() { ... }`]{.aside}
 
 
 ```{r}
@@ -815,17 +873,25 @@ in the curly braces (`{` and `}`). On the last line of the function code,
 the `return()` function is used to return the value of the `area_lily`
 function.
 
-One interesting and important fact about the code above is that you use the
-assignment operator `<-` to assign the function to a variable. In other
-words, `area_lily` is, in fact, a variable! A variable which holds not a
-value or character string, but computer code that can be used to do stuff.
-
 Once you have run the code above, you can use it to calculate the area of
 the lily on the first 10 days like this:
 
 ```{r}
 area <- area_lily(1:10, 2)
-print(area)
+area
+```
+
+One interesting and important fact about the defining the functions is that
+you use the assignment operator `<-` to assign the function to a variable.
+In other words, `area_lily` *is*, in fact, a variable! A variable which holds
+not a value or character string, but computer code that can be used to do
+stuff. You can copy it to another variable and it will behave exactly as
+the original function:
+
+
+```{r}
+area_lily2 <- area_lily
+area_lily2(1:10, 2)
 ```
 
 ::: {.callout-caution icon=false appearance="simple"}
@@ -880,6 +946,7 @@ more readable and understandable. Here are some of them.
 
 **Comments**. Comments are lines in your code that are not executed. In R,
 they start with a `#` sign. Comments help to explain what exactly are you
+[Comments with `#`]{.aside}
 trying to achieve with your code. The old saying goes: "Code tells you how,
 comments tell you why". You can hardly overdo with comments, but you can
 easily underdo.
@@ -889,7 +956,10 @@ meaningful. If you have a variable that stores the number of days, call it
 `days`, not `x`. If you have a function that calculates the area of a
 circle, call it `calculate_circle_area()`, not `f()`. If you have a comma
 separated values (CSV) file that contains the CRP values, call it
-`crp_values.csv`, not `data.txt`.
+`crp_values.csv`, not `data.txt`. This is sometimes much more difficult
+than it looks, but it is very important. Also, that does not mean that you
+can't use short names – but use it only for "throwaway" variables that are used
+only once or twice, or for example code.
 
 **Formatting**. Your code should be formatted in a consistent way. For
 example, you should always put a space around your operators, like `x <- 2`
@@ -964,6 +1034,7 @@ code in a way that is both readable and clear.
 Of course, the example is a bit silly – R has a lot of built-in statistical
 functions, and standard deviation naturally is one of them. You can
 calculate the standard deviation of a vector `b` using the `sd()` function:
+[`sd()`]{.aside}
 
 ```{r eval=FALSE,echo=TRUE}
 samples_sd <- sd(samples)
