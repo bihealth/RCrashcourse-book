@@ -167,23 +167,23 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./day1-intro-to-r.html"> 
-<span class="menu-text">Day One</span></a>
+<span class="menu-text">One</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./day2-complex-structures.html"> 
-<span class="menu-text">Day Two</span></a>
+<span class="menu-text">Two</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./day3-reading-your-data.html"> 
-<span class="menu-text">Day Three</span></a>
+<span class="menu-text">Three</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./day4-manipulating-your-data.html"> 
-<span class="menu-text">Day Four</span></a>
+<span class="menu-text">Four</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./day5-visualization-and-statistics.html"> 
-<span class="menu-text">Day Five</span></a>
+<span class="menu-text">Five</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./solutions.html"> 
@@ -248,19 +248,19 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./day3-reading-your-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Day 3: Reading and Writing Files</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Reading and Writing Files</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./day4-manipulating-your-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Day 4: Manipulating data frames</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Manipulating data frames</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./day5-visualization-and-statistics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Day 5: Rmarkdown, basic statistics and visualizations</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">R markdown, basic statistics and visualizations</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -356,7 +356,7 @@ window.Quarto = {
 <li>Logical vectors and subsetting</li>
 </ul>
 </section>
-<section id="logical-vectors" class="level2" data-number="2.2">
+<section id="logical-vectors" class="level2 page-columns page-full" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="logical-vectors"><span class="header-section-number">2.2</span> Logical vectors</h2>
 <section id="truth-and-falsehood" class="level3" data-number="2.2.1">
 <h3 data-number="2.2.1" class="anchored" data-anchor-id="truth-and-falsehood"><span class="header-section-number">2.2.1</span> Truth and falsehood</h3>
@@ -394,7 +394,7 @@ TRUE, FALSE and T and F
 </div>
 </div>
 </section>
-<section id="comparison-operators" class="level3" data-number="2.2.2">
+<section id="comparison-operators" class="level3 page-columns page-full" data-number="2.2.2">
 <h3 data-number="2.2.2" class="anchored" data-anchor-id="comparison-operators"><span class="header-section-number">2.2.2</span> Comparison operators</h3>
 <p>There are six comparison operators in R:</p>
 <ul>
@@ -460,7 +460,7 @@ TRUE, FALSE and T and F
 </div>
 </div>
 <p>There is one more thing to mention here. The comparison operators <code>==</code> and <code>!=</code> can be used to compare strings as well<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
-<div class="cell">
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;Actually, they can be used to compare any two objects in R. Also, the <code>&gt;</code> and <code>&lt;</code> operators can be used to compare strings, but the result is not always what you might expect. Can you guess what it does? Hint: pick up a dictionary… or any other alphabetically sorted list.</p></div></div><div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>patient_measurements <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">16</span>, <span class="dv">7</span>, <span class="dv">42</span>, <span class="dv">3</span>)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>patient_gender <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"male"</span>, <span class="st">"female"</span>, <span class="st">"female"</span>, <span class="st">"male"</span>, <span class="st">"female"</span>)</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>patient_measurements[ patient_gender <span class="sc">==</span> <span class="st">"male"</span> ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -793,7 +793,7 @@ Remember!
 </div>
 </section>
 </section>
-<section id="lists" class="level2" data-number="2.4">
+<section id="lists" class="level2 page-columns page-full" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="lists"><span class="header-section-number">2.4</span> Lists</h2>
 <section id="creating-lists" class="level3" data-number="2.4.1">
 <h3 data-number="2.4.1" class="anchored" data-anchor-id="creating-lists"><span class="header-section-number">2.4.1</span> Creating lists</h3>
@@ -871,16 +871,16 @@ $age
 [1] 42
 
 $measurements
-[1] 0.05721389 0.84496532 0.95358735 0.22773064 0.28702054</code></pre>
+[1] 0.8864576 0.9799993 0.1017460 0.5568097 0.3134730</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>patient_data<span class="sc">$</span>measurements[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.05721389</code></pre>
+<pre><code>[1] 0.8864576</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>patient_data<span class="sc">$</span>measurements[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">42</span></span>
 <span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>patient_data<span class="sc">$</span>measurements <span class="sc">*</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 126.0000000   2.5348959   2.8607621   0.6831919   0.8610616</code></pre>
+<pre><code>[1] 126.000000   2.939998   0.305238   1.670429   0.940419</code></pre>
 </div>
 </div>
 <p>Since the lists are named, there must be a way to access and modify these names. And, of course, there is: the <code>names()</code> function.</p>
@@ -906,7 +906,7 @@ Tab completion with lists and data frames
 </div>
 </div>
 </section>
-<section id="lists-as-return-values" class="level3" data-number="2.4.3">
+<section id="lists-as-return-values" class="level3 page-columns page-full" data-number="2.4.3">
 <h3 data-number="2.4.3" class="anchored" data-anchor-id="lists-as-return-values"><span class="header-section-number">2.4.3</span> Lists as return values</h3>
 <p>A common application of lists has something to do with functions. Remeber that a function can return only one object? But what if a function would like to return several things at once? It can return a list!</p>
 <p>We will run now our first statistical test. First, we need to generate two groups of measurements to compare. We will simulate them using the <code>rnorm()</code> function which produces normally distributed random numbers. The function takes additional parameters, <code>mean</code> and <code>sd</code>, which specify the mean and the standard deviation of the distribution, respectively. That allows us to ensure that the groups differ:</p>
@@ -920,7 +920,7 @@ Tab completion with lists and data frames
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="day2-complex-structures_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="day2-complex-structures_files/figure-html/unnamed-chunk-30-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -951,21 +951,21 @@ Boxplot
     Welch Two Sample t-test
 
 data:  group_a and group_b
-t = -3.5, df = 17.99, p-value = 0.002559
+t = -4.0542, df = 17.436, p-value = 0.0007877
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -3.8805146 -0.9692339
+ -5.140512 -1.625947
 sample estimates:
 mean of x mean of y 
- 10.53429  12.95917 </code></pre>
+ 10.48349  13.86672 </code></pre>
 </div>
 </div>
 <p>As you can see, the result is a list. However, when we print it to the console, it <em>does not look like one</em>. This is because R has a special function for formatting the results of a t-test<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, so that it is easier to read.</p>
-<p>Nonetheless, we can access the elements of the list in the usual way:</p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;OK, this is way beyond the scope of this course, but the result returned by t.test has the class “htest”. This <em>is</em> a list, but also it is something special, which is why R knows to print it in a different way. R is a functional language, but it also allows object oriented (OO) programming.</p></div></div><p>Nonetheless, we can access the elements of the list in the usual way:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>t_test<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.002558707</code></pre>
+<pre><code>[1] 0.0007877351</code></pre>
 </div>
 </div>
 </section>
@@ -998,14 +998,14 @@ $city
 </div>
 </section>
 </section>
-<section id="data-frames" class="level2" data-number="2.5">
+<section id="data-frames" class="level2 page-columns page-full" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="data-frames"><span class="header-section-number">2.5</span> Data Frames</h2>
-<section id="creating-data-frames" class="level3" data-number="2.5.1">
+<section id="creating-data-frames" class="level3 page-columns page-full" data-number="2.5.1">
 <h3 data-number="2.5.1" class="anchored" data-anchor-id="creating-data-frames"><span class="header-section-number">2.5.1</span> Creating data frames</h3>
 <p>Finally, we come to possibly the most important data structure in R – at least for us, biologists and medical researchers: data frames. Data frames are the closest thing to an Excel spreadsheet in R. They are used to store data in a tabular form, where each column can be of a different type. This makes them perfect for storing data from experiments, clinical trials, etc. You will be using them <em>a lot</em>.</p>
 <p>In R, data frames are <em>lists</em> that were made to behave a lot like <em>matrices</em>. Thus, everything that you learned so far about lists can be applied to data frames, including accessing their elements (columns) using the <code>$</code> operator. However, there are some differences between data frames and matrices.</p>
 <p>The main feature of data frame that makes them a bit like matrices is the fact that each element of a data frame is a vector<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> and that these vectors have always the same length. This means that one of the major differences between data frames and, say, Excel spreadsheets, is that a column of a data frame contains only elements of a single type. If a “cell” in a data frame is a character string, then the whole column is a character vector; if it is numerical, then the whole column is a numerical vector, etc.</p>
-<p>This may seem like a limitation, but it is, in fact, a good thing. It makes data more consistent and less prone to errors.</p>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;Actually, it is a bit more complicated than that, but for now, let’s just say that each column of a data frame is a vector.</p></div></div><p>This may seem like a limitation, but it is, in fact, a good thing. It makes data more consistent and less prone to errors.</p>
 <p>Like lists, data frames can be named or not, but typically they are. The names of a data frame are precisely the column names and you can access them (and modify) using both, <code>names</code> and <code>colnames</code> functions.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"January"</span>, <span class="st">"William"</span>, <span class="st">"Bill"</span>)</span>
@@ -1045,7 +1045,7 @@ $city
 </div>
 </div>
 <p>Also, like matrices, the data frames can have rownames; however, for reasons that will be clear later, they are not as important as column names and in fact, we will not be using them<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
-<div class="callout callout-style-simple callout-caution no-icon">
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;Row names in R data frames are very old school. Many people still use them, and many R functions produce them. However, we will be using the packages from the tidyverse family further down the line, which ignore the rownames, and for good reasons.</p></div></div><div class="callout callout-style-simple callout-caution no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
@@ -1117,7 +1117,7 @@ Caution
 </ul>
 </section>
 </section>
-<section id="libraries-in-r" class="level2" data-number="2.6">
+<section id="libraries-in-r" class="level2 page-columns page-full" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="libraries-in-r"><span class="header-section-number">2.6</span> Libraries in R</h2>
 <section id="installing-and-loading-packages" class="level3" data-number="2.6.1">
 <h3 data-number="2.6.1" class="anchored" data-anchor-id="installing-and-loading-packages"><span class="header-section-number">2.6.1</span> Installing and loading packages</h3>
@@ -1190,7 +1190,7 @@ Remember!
 <p>This inconsistency can mess up your code. Imagine that you have somehow automatically selected some columns of a data frame – for example, by selecting columns that start with a certain letter (we will learn how to do that on Day 4). You store it in the variable called <code>sel_cols</code>. You can select the columns from the data frame using the <code>df[ , sel_cols]</code> syntax. However, depending on whether there was a single column selected or more, you will get either a vector or a data frame. This is annoying and in the worst case scenario, it can break your program.</p>
 <p>Many people noticed this, and proposed solutions. In R, it is possible to take a class of an object (like <code>data.frame</code>) and modify it. One of such most commonly used modifications is called a <code>tibble</code> and has been implemented in the Tidyverse group of packages, which we will be using extensively in the days to come.</p>
 </section>
-<section id="data-frames-and-tibbles" class="level3" data-number="2.6.3">
+<section id="data-frames-and-tibbles" class="level3 page-columns page-full" data-number="2.6.3">
 <h3 data-number="2.6.3" class="anchored" data-anchor-id="data-frames-and-tibbles"><span class="header-section-number">2.6.3</span> Data frames and tibbles</h3>
 <p>The Tidyverse data frame is called a <code>tibble</code>. It behaves almost exactly like a data frame, with a few crucial differences:</p>
 <ul>
@@ -1199,7 +1199,7 @@ Remember!
 <li>when you access a single column of a tibble, you <strong>always</strong> get a tibble, not a vector</li>
 </ul>
 <p>To use tibbles, you need the <code>tidyverse</code> package<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. You can install it using <code>install.packages("tidyverse")</code> and load it using <code>library(tidyverse)</code>.</p>
-<div class="cell">
+<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;Actually, the <code>tidyverse</code> package is a meta-package: it just loads a collection of packages that are often used together. The <code>tibble</code> package which defines tibbles is one of them.</p></div></div><div class="cell">
 <div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">b =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>))</span>
 <span id="cb124-3"><a href="#cb124-3" aria-hidden="true" tabindex="-1"></a>tbl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1304,16 +1304,7 @@ Remember!
 
 
 </section>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn1"><p>Actually, they can be used to compare any two objects in R. Also, the <code>&gt;</code> and <code>&lt;</code> operators can be used to compare strings, but the result is not always what you might expect. Can you guess what it does? Hint: pick up a dictionary… or any other alphabetically sorted list.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>OK, this is way beyond the scope of this course, but the result returned by t.test has the class “htest”. This <em>is</em> a list, but also it is something special, which is why R knows to print it in a different way. R is a functional language, but it also allows object oriented (OO) programming.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Actually, it is a bit more complicated than that, but for now, let’s just say that each column of a data frame is a vector.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>Row names in R data frames are very old school. Many people still use them, and many R functions produce them. However, we will be using the packages from the tidyverse family further down the line, which ignore the rownames, and for good reasons.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>Actually, the <code>tidyverse</code> package is a meta-package: it just loads a collection of packages that are often used together. The <code>tibble</code> package which defines tibbles is one of them.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
+
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1887,8 +1878,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./day3-reading-your-data.html" class="pagination-link" aria-label="Day 3: Reading and Writing Files">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Day 3: Reading and Writing Files</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./day3-reading-your-data.html" class="pagination-link" aria-label="Reading and Writing Files">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Reading and Writing Files</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

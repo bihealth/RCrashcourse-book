@@ -158,23 +158,23 @@ div.csl-indent {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./day1-intro-to-r.html"> 
-<span class="menu-text">Day One</span></a>
+<span class="menu-text">One</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./day2-complex-structures.html"> 
-<span class="menu-text">Day Two</span></a>
+<span class="menu-text">Two</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./day3-reading-your-data.html"> 
-<span class="menu-text">Day Three</span></a>
+<span class="menu-text">Three</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./day4-manipulating-your-data.html"> 
-<span class="menu-text">Day Four</span></a>
+<span class="menu-text">Four</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./day5-visualization-and-statistics.html"> 
-<span class="menu-text">Day Five</span></a>
+<span class="menu-text">Five</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./solutions.html"> 
@@ -245,13 +245,13 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./day4-manipulating-your-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Day 4: Manipulating data frames</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Manipulating data frames</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./day5-visualization-and-statistics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Day 5: Rmarkdown, basic statistics and visualizations</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">R markdown, basic statistics and visualizations</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -294,8 +294,8 @@ div.csl-indent {
   </ul></li>
   <li><a href="#diagnosing-and-cleaning-data" id="toc-diagnosing-and-cleaning-data" class="nav-link" data-scroll-target="#diagnosing-and-cleaning-data"><span class="header-section-number">3.3</span> Diagnosing and cleaning data</a>
   <ul class="collapse">
-  <li><a href="#diagnosing-datasets" id="toc-diagnosing-datasets" class="nav-link" data-scroll-target="#diagnosing-datasets"><span class="header-section-number">3.3.1</span> Diagnosing datasets</a></li>
-  <li><a href="#using-colordf-to-diagnose-datasets" id="toc-using-colordf-to-diagnose-datasets" class="nav-link" data-scroll-target="#using-colordf-to-diagnose-datasets"><span class="header-section-number">3.3.2</span> Using colorDF to diagnose datasets</a></li>
+  <li><a href="#sec-diagnosing" id="toc-sec-diagnosing" class="nav-link" data-scroll-target="#sec-diagnosing"><span class="header-section-number">3.3.1</span> Diagnosing datasets</a></li>
+  <li><a href="#sec-colorDF" id="toc-sec-colorDF" class="nav-link" data-scroll-target="#sec-colorDF"><span class="header-section-number">3.3.2</span> Using colorDF to diagnose datasets</a></li>
   <li><a href="#checking-individual-values" id="toc-checking-individual-values" class="nav-link" data-scroll-target="#checking-individual-values"><span class="header-section-number">3.3.3</span> Checking individual values</a></li>
   <li><a href="#diagnosing-datasets-a-checklist" id="toc-diagnosing-datasets-a-checklist" class="nav-link" data-scroll-target="#diagnosing-datasets-a-checklist"><span class="header-section-number">3.3.4</span> Diagnosing datasets: a checklist</a></li>
   </ul></li>
@@ -312,6 +312,7 @@ div.csl-indent {
   <li><a href="#how-regexp-works" id="toc-how-regexp-works" class="nav-link" data-scroll-target="#how-regexp-works"><span class="header-section-number">3.5.2</span> How regexp works</a></li>
   <li><a href="#usage-of-regular-expressions-in-r" id="toc-usage-of-regular-expressions-in-r" class="nav-link" data-scroll-target="#usage-of-regular-expressions-in-r"><span class="header-section-number">3.5.3</span> Usage of regular expressions in R</a></li>
   <li><a href="#correcting-columns-in-iris_data-with-regular-expressions" id="toc-correcting-columns-in-iris_data-with-regular-expressions" class="nav-link" data-scroll-target="#correcting-columns-in-iris_data-with-regular-expressions"><span class="header-section-number">3.5.4</span> Correcting columns in <code>iris_data</code> with regular expressions</a></li>
+  <li><a href="#sec-quick-look" id="toc-sec-quick-look" class="nav-link" data-scroll-target="#sec-quick-look"><span class="header-section-number">3.5.5</span> Just a quick look</a></li>
   </ul></li>
   <li><a href="#writing-data" id="toc-writing-data" class="nav-link" data-scroll-target="#writing-data"><span class="header-section-number">3.6</span> Writing data</a>
   <ul class="collapse">
@@ -480,7 +481,7 @@ Path separators on different systems
 ('C:/Users/johndoe/Documents/RProjects/MyFirstRProject/').</code></pre>
 </div>
 </div>
-<div class="page-columns page-full"><p> Before we proceed, you need to understand one important thing. When you start your RStudio and R session, the R session runs in a specific directory. This is called the <em>working directory</em>. You can check what is using the <code>getwd()</code> function<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:</p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>getwd()</code></span></div></div>
+<div class="page-columns page-full"><p> Before we proceed, you need to understand one important thing. When you start your RStudio and R session, the R session runs in a specific directory. This is called the <em>working directory</em>. You can check what is using the <code>getwd()</code> function<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:</p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>getwd()</code></span><div id="fn1"><p><sup>1</sup>&nbsp;You can change it using the <code>setwd()</code> function, but avoid doing that. This path leads to madness, trust me on that.</p></div></div></div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -670,8 +671,8 @@ Remember!
 </section>
 <section id="diagnosing-and-cleaning-data" class="level2 page-columns page-full" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="diagnosing-and-cleaning-data"><span class="header-section-number">3.3</span> Diagnosing and cleaning data</h2>
-<section id="diagnosing-datasets" class="level3 page-columns page-full" data-number="3.3.1">
-<h3 data-number="3.3.1" class="anchored" data-anchor-id="diagnosing-datasets"><span class="header-section-number">3.3.1</span> Diagnosing datasets</h3>
+<section id="sec-diagnosing" class="level3 page-columns page-full" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="sec-diagnosing"><span class="header-section-number">3.3.1</span> Diagnosing datasets</h3>
 <p>Congratulations! You are now proficient in reading data into R. Believe me or not, this alone is an important step forward – many who try their hand at R get stuck at this point.</p>
 <p>However, reading data is only the first step. In most of the cases, the data requires some treatment: cleaning, transformation, filtering etc. In many projects that I have worked on as a bioinformatician, data import, diagnosis and cleaning took up the majority of time spent on the project. Unfortunately, this is necessary before any real fun with the data can start.</p>
 <div class="page-columns page-full"><p> Let us examine the file <code>iris.csv</code> that you have just read. The dataset comes from a famous paper by Ronald Fisher, who used it to demonstrate his newly developed method called linear discriminant analysis – an early machine learning algorithm, if you will. The dataset contains measurements (in cm) of 150 flowers of three species of irises: <em>Iris setosa</em>, <em>Iris versicolor</em> and <em>Iris virginica</em>. The measurements are the sepal and petal length and width, four measurements in total. Each row consists of these four measurements, plus a column which contains the species name.</p><div class="no-row-height column-margin column-container"><span class="margin-aside">The <code>iris</code> dataset</span></div></div>
@@ -793,8 +794,8 @@ $ Species        &lt;chr&gt; "setosa", "setosa", "setosa", "setosa", "setosa", "
 </div>
 </div>
 </section>
-<section id="using-colordf-to-diagnose-datasets" class="level3 page-columns page-full" data-number="3.3.2">
-<h3 data-number="3.3.2" class="anchored" data-anchor-id="using-colordf-to-diagnose-datasets"><span class="header-section-number">3.3.2</span> Using colorDF to diagnose datasets</h3>
+<section id="sec-colorDF" class="level3 page-columns page-full" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="sec-colorDF"><span class="header-section-number">3.3.2</span> Using colorDF to diagnose datasets</h3>
 <div class="page-columns page-full"><p> I have written a package called <code>colorDF</code> that creates yet another flavor of data frames, which is displayed in the console in color (if you haven’t installed it yet, do so now with <code>install.packages("colorDF")</code>. However, we will only use one convenient function from this data set, <code>summary_colorDF</code>. Because <code>summary_colorDF</code> is too much to type, we will use a shortcut, <code>scdf</code>.</p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>colorDF</code>,<code>summary_colorDF()</code></span></div></div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>scdf <span class="ot">&lt;-</span> colorDF<span class="sc">::</span>summary_colorDF</span>
@@ -820,7 +821,7 @@ $ Species        &lt;chr&gt; "setosa", "setosa", "setosa", "setosa", "setosa", "
 </div>
 </div>
 <p>There it is. Looks like whoever typed the data<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, sometimes used a lower-case species designation, and sometimes upper-case. However, for R (and for computers in general), “versicolor” and “Versicolor” are two different things.</p>
-<div class="page-columns page-full"><p> More information can be gained using the <code>table()</code> function:</p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>table()</code></span></div></div>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;In this case, it was me.</p></div></div><div class="page-columns page-full"><p> More information can be gained using the <code>table()</code> function:</p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>table()</code></span></div></div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(iris_data[[<span class="st">"Species"</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -868,7 +869,7 @@ Lower and upper case
 </div>
 </div>
 <p>Two things to note: first, R issued a warning, “NAs introduced by coercion”. That means that some values could not be converted to numbers, and were replaced by the special value <code>NA</code><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Second, <em>there was no error</em>. R happily allowed you to create a vector of numbers from a vector even though there were some problems.</p>
-<div class="page-columns page-full"><p>When you look at the output, you will easily spot the <code>NA</code> values. You could even figure out at which positions in the vector they occur. However, this is not the way to go – what if you have not 150 values, but 150,000?  Instead, use the <code>is.na</code> function:</p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>is.na()</code></span></div></div>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;See Day 1 for more information on <code>NA</code> values.</p></div></div><div class="page-columns page-full"><p>When you look at the output, you will easily spot the <code>NA</code> values. You could even figure out at which positions in the vector they occur. However, this is not the way to go – what if you have not 150 values, but 150,000?  Instead, use the <code>is.na</code> function:</p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>is.na()</code></span></div></div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># convert to numbers</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>sepal_length_n <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(sepal_length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1149,7 +1150,7 @@ Correcting values
 </div>
 <p>As before, that is not a good idea. If you receive another version of the file, with added lines before the 70th, the position will change and you will have to correct the version manually again. Also, if there are new problems, like yet another typo in the data, you will have to spot it and manually add a line to correct it. Again, we need to generalize the issue.</p>
 <p>What is the problem on line 70? A comma instead of a decimal dot – maybe someone who typed it was used to entering numbers in a German version of Excel, where a comma is used instead of a dot. So why not replace <em>all</em> the commas by a dot? This should do the trick not only for line 70, but also for possible future problems.</p>
-<div class="page-columns page-full"><p> We will use for that the function <code>str_replace_all</code> from tidyverse<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. Before we do that, however, we will make a copy of the column. That will allow us to easily see the changes will make, check that everything is OK and only then replace the column in the data frame. Later on, you will learn more efficient ways of doing this.</p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>str_replace_all()</code></span></div></div>
+<div class="page-columns page-full"><p> We will use for that the function <code>str_replace_all</code> from tidyverse<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. Before we do that, however, we will make a copy of the column. That will allow us to easily see the changes will make, check that everything is OK and only then replace the column in the data frame. Later on, you will learn more efficient ways of doing this.</p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>str_replace_all()</code></span><div id="fn4"><p><sup>4</sup>&nbsp;In base R, you can use the <code>gsub</code> function. However, it has a slightly different syntax, which makes it less convenient when you start using pipes tomorrow.</p></div></div></div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a copy</span></span>
 <span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>sepal_length <span class="ot">&lt;-</span> iris_data<span class="sc">$</span>sepal_length</span>
@@ -1221,7 +1222,7 @@ Correcting values
 <h3 data-number="3.5.1" class="anchored" data-anchor-id="introduction-to-regular-expressions"><span class="header-section-number">3.5.1</span> Introduction to regular expressions</h3>
 <div class="page-columns page-full"><p> Regular expressions, regexps for short, are for finding certain patterns in the data and handling them automatically. They are quite old (going back at least to 1960’s) and have remained virtually the same for many decades. You will find them in almost all programming languages, and while details may differ, the principles are usually the same. The regexps in R are very similar to regular expressions in other programming languages such as Python. As you may guess, they have a different syntax then R – they are something else altogether.</p><div class="no-row-height column-margin column-container"><span class="margin-aside">Regular expressions</span></div></div>
 <p>We will not go in depth in regular expressions in R here. Here, just a short primer.</p>
-<div class="page-columns page-full"><p> Before we start, let us introduce a new function called <code>str_detect()</code><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. The function is available as soon as you load the <code>tidyverse</code> package. This function is used to search for a pattern in a character vector. For every element that matches the pattern, it will return a <code>TRUE</code>, otherwise a <code>FALSE</code>. Say, we have a vector (or data frame column) containing sample names, and we want to find all the controls.</p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>str_detect()</code></span></div></div>
+<div class="page-columns page-full"><p> Before we start, let us introduce a new function called <code>str_detect()</code><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. The function is available as soon as you load the <code>tidyverse</code> package. This function is used to search for a pattern in a character vector. For every element that matches the pattern, it will return a <code>TRUE</code>, otherwise a <code>FALSE</code>. Say, we have a vector (or data frame column) containing sample names, and we want to find all the controls.</p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>str_detect()</code></span><div id="fn5"><p><sup>5</sup>&nbsp;In base R, there is the <code>grep()</code> function. It is very similar, but has a different syntax. We will stick to <code>str_detect()</code> for now.</p></div></div></div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"ko_1_ctrl"</span>, <span class="st">"ko_2_ctrl"</span>, <span class="st">"ko_1_treat"</span>, <span class="st">"ko_2_treat"</span>,</span>
 <span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>            <span class="st">"wt_1_ctrl"</span>, <span class="st">"wt_2_ctrl"</span>, <span class="st">"wt_1_treat"</span>, <span class="st">"wt_2_treat"</span>)</span>
@@ -1475,7 +1476,7 @@ Correcting values
 <pre><code>[1] ",,," ",,," ",,,"</code></pre>
 </div>
 </div>
-<div class="page-columns page-full"><p>Since the character <code>.</code> means “any character”, <em>every character</em> will be replaced by a comma in the example above. In order to search or replace  special characters, we must <em>escape</em> them – which in R means putting two backslashes<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> in front of them in the regular expression.</p><div class="no-row-height column-margin column-container"><span class="margin-aside">escaping characters in a regexp</span></div></div>
+<div class="page-columns page-full"><p>Since the character <code>.</code> means “any character”, <em>every character</em> will be replaced by a comma in the example above. In order to search or replace  special characters, we must <em>escape</em> them – which in R means putting two backslashes<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> in front of them in the regular expression.</p><div class="no-row-height column-margin column-container"><span class="margin-aside">escaping characters in a regexp</span><div id="fn6"><p><sup>6</sup>&nbsp;In R, it is two backslashes. In other programming languages, it is usually a single backslash.</p></div></div></div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"5.6"</span>, <span class="st">"5.7"</span>, <span class="st">"5.8"</span>)</span>
 <span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace_all</span>(vec, <span class="st">"</span><span class="sc">\\</span><span class="st">."</span>, <span class="st">","</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1567,6 +1568,25 @@ Correcting values
 </div>
 </div>
 </div>
+</section>
+<section id="sec-quick-look" class="level3 page-columns page-full" data-number="3.5.5">
+<h3 data-number="3.5.5" class="anchored" data-anchor-id="sec-quick-look"><span class="header-section-number">3.5.5</span> Just a quick look</h3>
+<div class="page-columns page-full"><p>The newly cleaned up data set begs for a quick look. We already created a simple plot before using the <code>plot()</code> function, and today I will show you how to use the <code>ggplot2</code> package to create somewhat nicer plots. In this case, it is rather trivial. </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>ggplot2</code></span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb121-2"><a href="#cb121-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris_data, <span class="fu">aes</span>(<span class="at">x=</span>sepal_length, <span class="at">y=</span>sepal_width, <span class="at">color=</span>species)) <span class="sc">+</span></span>
+<span id="cb121-3"><a href="#cb121-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="day3-reading-your-data_files/figure-html/unnamed-chunk-55-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As you can see, the <code>ggplot</code> function takes two arguments: the data frame and something which is calles <em>aesthetics</em> and which is produced by the <code>aes()</code> function. The <code>aes()</code> function serves as a kind of link between the data and the plot, showing how what should be plotted. In this case, we tell <code>aes()</code> that the x-axis should be the sepal length, the y-axis the sepal width, and the color should be determined by the species.</p>
+<p>Then, a magical thing happens. Whatever is produced by <code>ggplot()</code> is not a number, but nonetheless can be added with a <code>+</code> sign to other stuff. In this case, we add a <code>geom_point()</code> function, which tells <code>ggplot</code> to plot points at the x, y coordinates (there are many others, and you will learn about them the day after tomorrow).</p>
+<p>There, all done. See how <em>I. setosa</em> is different from the other two?</p>
 </section>
 </section>
 <section id="writing-data" class="level2 page-columns page-full" data-number="3.6">
@@ -1667,14 +1687,14 @@ Correcting values
 </ul>
 <p>Consider the example of the <code>iris.csv</code> file. We have seen that one of the values of sepal width seems to be missing a decimal dot. You <em>could</em> edit that in the Excel or CSV file directly. You might even make a note of that somewhere. However, chances are that you were wrong – maybe that <em>was</em> a flower wiht a 36 sepal width after all. This change influences your data and your analysis results and <em>must</em> be documented if you were to do science. If you did it in R, you probably have entered a comment in your script, something like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="co"># There seems to be a missing decimal dot in some of the sepal widths</span></span>
-<span id="cb121-2"><a href="#cb121-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Changing it to 1/10th of the value</span></span>
-<span id="cb121-3"><a href="#cb121-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb121-4"><a href="#cb121-4" aria-hidden="true" tabindex="-1"></a>sepal_width <span class="ot">&lt;-</span> iris_data[[<span class="st">"Sepal Width"</span>]]</span>
-<span id="cb121-5"><a href="#cb121-5" aria-hidden="true" tabindex="-1"></a>sel <span class="ot">&lt;-</span> <span class="fu">which</span>(sepal_width <span class="sc">&gt;</span> <span class="dv">10</span>)</span>
-<span id="cb121-6"><a href="#cb121-6" aria-hidden="true" tabindex="-1"></a>sepal_width[sel] <span class="ot">&lt;-</span> sepal_width[sel] <span class="sc">/</span> <span class="dv">10</span></span>
-<span id="cb121-7"><a href="#cb121-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb121-8"><a href="#cb121-8" aria-hidden="true" tabindex="-1"></a>iris_data[[<span class="st">"Sepal Width"</span>]] <span class="ot">&lt;-</span> sepal_width</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="co"># There seems to be a missing decimal dot in some of the sepal widths</span></span>
+<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Changing it to 1/10th of the value</span></span>
+<span id="cb122-3"><a href="#cb122-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-4"><a href="#cb122-4" aria-hidden="true" tabindex="-1"></a>sepal_width <span class="ot">&lt;-</span> iris_data[[<span class="st">"Sepal Width"</span>]]</span>
+<span id="cb122-5"><a href="#cb122-5" aria-hidden="true" tabindex="-1"></a>sel <span class="ot">&lt;-</span> <span class="fu">which</span>(sepal_width <span class="sc">&gt;</span> <span class="dv">10</span>)</span>
+<span id="cb122-6"><a href="#cb122-6" aria-hidden="true" tabindex="-1"></a>sepal_width[sel] <span class="ot">&lt;-</span> sepal_width[sel] <span class="sc">/</span> <span class="dv">10</span></span>
+<span id="cb122-7"><a href="#cb122-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-8"><a href="#cb122-8" aria-hidden="true" tabindex="-1"></a>iris_data[[<span class="st">"Sepal Width"</span>]] <span class="ot">&lt;-</span> sepal_width</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This concisely informs the reader that a change was made, how and why.</p>
 <div class="page-columns page-full"><p>And what happens when Ronald Fisher raises from his grave and collects  another 150 flowers? You will get an updated data set with 300 flowers and import it <em>again</em>. In the best case scenario, you will find the problem again (or remember it). Then you will have to go into Excel and make the same edit again. And all the other edits as well. If you did it in R, you simply use your script again.</p><div class="no-row-height column-margin column-container"><span class="margin-aside">undead Ronald Fisher</span></div></div>
@@ -1762,21 +1782,11 @@ Avoid working with Excel
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-abeysooriya2021gene" class="csl-entry" role="listitem">
-Abeysooriya, Mandhri, Megan Soria, Mary Sravya Kasu, and Mark Ziemann. 2021. <span>“Gene Name Errors: Lessons Not Learned.”</span> <em>PLoS Computational Biology</em> 17 (7): e1008984.
+Abeysooriya, Mandhri, Megan Soria, Mary Sravya Kasu, and Mark Ziemann. 2021. <span>“Gene Name Errors: Lessons Not Learned.”</span> <em>PLoS Computational Biology</em> 17 (7): e1008984. <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008984">https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008984</a>.
 </div>
 </div>
 </section>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn1"><p>You can change it using the <code>setwd()</code> function, but avoid doing that. This path leads to madness, trust me on that.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>In this case, it was me.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>See Day 1 for more information on <code>NA</code> values.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>In base R, you can use the <code>gsub</code> function. However, it has a slightly different syntax, which makes it less convenient when you start using pipes tomorrow.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>In base R, there is the <code>grep()</code> function. It is very similar, but has a different syntax. We will stick to <code>str_detect()</code> for now.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>In R, it is two backslashes. In other programming languages, it is usually a single backslash.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
+
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -2350,8 +2360,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./day4-manipulating-your-data.html" class="pagination-link" aria-label="Day 4: Manipulating data frames">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Day 4: Manipulating data frames</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./day4-manipulating-your-data.html" class="pagination-link" aria-label="Manipulating data frames">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Manipulating data frames</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

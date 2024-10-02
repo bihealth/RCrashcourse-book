@@ -158,23 +158,23 @@ div.csl-indent {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./day1-intro-to-r.html"> 
-<span class="menu-text">Day One</span></a>
+<span class="menu-text">One</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./day2-complex-structures.html"> 
-<span class="menu-text">Day Two</span></a>
+<span class="menu-text">Two</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./day3-reading-your-data.html"> 
-<span class="menu-text">Day Three</span></a>
+<span class="menu-text">Three</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./day4-manipulating-your-data.html"> 
-<span class="menu-text">Day Four</span></a>
+<span class="menu-text">Four</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./day5-visualization-and-statistics.html"> 
-<span class="menu-text">Day Five</span></a>
+<span class="menu-text">Five</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./solutions.html"> 
@@ -251,7 +251,7 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./day5-visualization-and-statistics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Rmarkdown, basic statistics and visualizations</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">R markdown, basic statistics and visualizations</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -490,15 +490,15 @@ To quote or not to quote?
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>vec <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">10</span>), <span class="dv">2</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>vec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] -0.70 -0.33 -0.69 -0.75 -0.26  1.20 -0.39 -0.16 -0.26  1.23</code></pre>
+<pre><code> [1]  1.35 -2.04 -0.34 -1.26  0.43 -0.31  2.40  0.17  0.02 -0.49</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] -0.75 -0.70 -0.69 -0.39 -0.33 -0.26 -0.26 -0.16  1.20  1.23</code></pre>
+<pre><code> [1] -2.04 -1.26 -0.49 -0.34 -0.31  0.02  0.17  0.43  1.35  2.40</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(vec, <span class="at">decreasing=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  1.23  1.20 -0.16 -0.26 -0.26 -0.33 -0.39 -0.69 -0.70 -0.75</code></pre>
+<pre><code> [1]  2.40  1.35  0.43  0.17  0.02 -0.31 -0.34 -0.49 -1.26 -2.04</code></pre>
 </div>
 </div>
 <p>The <code>rnorm()</code> function generates a vector of random numbers from a normal distribution (you met it on Day 2). The <code>round()</code> function with parameter <code>2</code> rounds the numbers to two decimal places. The <code>sort()</code> with the <code>decreasing=TRUE</code> argument sorts the vector in descending order.</p>
@@ -507,15 +507,15 @@ To quote or not to quote?
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">order</span>(vec)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>ord</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  4  1  3  7  2  5  9  8  6 10</code></pre>
+<pre><code> [1]  2  4 10  3  6  9  8  5  1  7</code></pre>
 </div>
 </div>
-<p>So, what does that mean? Take the first element of <code>ord</code>. It is 4. This means that the first value to appear in the sorted vector should be the element number 4 of the original vector, which is -0.75 and the smallest number in <code>vec</code> (check it!). Likewise, the second element of <code>ord</code> is 1, which points to -0.7, the second smallest element of <code>vec</code>.</p>
+<p>So, what does that mean? Take the first element of <code>ord</code>. It is 2. This means that the first value to appear in the sorted vector should be the element number 2 of the original vector, which is -2.04 and the smallest number in <code>vec</code> (check it!). Likewise, the second element of <code>ord</code> is 4, which points to -1.26, the second smallest element of <code>vec</code>.</p>
 <p>So what happens if we use the vector <code>ord</code> to select element from the vector <code>vec</code>? We get the sorted vector, that’s what:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>vec[ord]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] -0.75 -0.70 -0.69 -0.39 -0.33 -0.26 -0.26 -0.16  1.20  1.23</code></pre>
+<pre><code> [1] -2.04 -1.26 -0.49 -0.34 -0.31  0.02  0.17  0.43  1.35  2.40</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-caution no-icon">
@@ -583,7 +583,7 @@ To quote or not to quote?
 </div>
 </div>
 </section>
-<section id="sorting-data-frames-with-order" class="level3 page-columns page-full" data-number="4.3.3">
+<section id="sorting-data-frames-with-order" class="level3" data-number="4.3.3">
 <h3 data-number="4.3.3" class="anchored" data-anchor-id="sorting-data-frames-with-order"><span class="header-section-number">4.3.3</span> Sorting data frames with <code>order()</code></h3>
 <p>By now it should be clear that you can use this method to order data from data frames (or matrices, or other data types). We will show it on example of the <code>transcriptomics_results.csv</code> file that you have read in the <a href="#exr-selecting-columns" class="quarto-xref">Exercise&nbsp;<span>4.1</span></a>. I assume that you have read the file and selected the columns with something like this:</p>
 <div class="cell">
@@ -594,7 +594,7 @@ To quote or not to quote?
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">logFC=</span>logFC.F.D1, <span class="at">FDR=</span>qval.F.D1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The transcriptomics data set comes from a vaccine study <span class="citation" data-cites="weiner2019characterization">(<a href="references.html#ref-weiner2019characterization" role="doc-biblioref">Weiner et al. 2019</a>)</span> and show the changes in gene expression after vaccination with a particular adjuvanted fluad vaccine. <code>logFC</code> stands for log fold change, and <code>FDR</code> is the false discovery rate (resulting from raw p-values being corrected using the Benjamini-Hochberg procedure). We will sort the data frame by decreasing <code>logFC</code>:</p>
-<div class="no-row-height column-margin column-container"></div><div class="cell">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">order</span>(tr_res<span class="sc">$</span>logFC, <span class="at">decreasing=</span><span class="cn">TRUE</span>)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tr_res[ord, ])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -911,32 +911,32 @@ To quote or not to quote?
 <span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>df_x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   ID       val_x
-1 ID6 -0.04278474
-2 ID4  0.85095586
-3 ID3  0.26088040
-4 ID8 -0.61587198
-5 ID2 -0.49012494
-6 ID7 -0.96600942</code></pre>
+1 ID2  1.09672919
+2 ID8  0.00808038
+3 ID3 -0.38056621
+4 ID6  3.01396674
+5 ID1 -0.23325437
+6 ID7 -1.04420192</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>ids_y <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"ID"</span>, <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>df_y <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ID=</span>ids_y, <span class="at">val_y=</span><span class="fu">rnorm</span>(<span class="dv">6</span>, <span class="dv">10</span>, <span class="dv">1</span>))</span>
 <span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>df_y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   ID     val_y
-1 ID5  9.949744
-2 ID4  8.750580
-3 ID8  8.261917
-4 ID3 10.433766
-5 ID1 12.306198
-6 ID7 10.063938</code></pre>
+1 ID3 10.575114
+2 ID6  9.999062
+3 ID4 10.629807
+4 ID1 10.007609
+5 ID8  8.439559
+6 ID7  8.720487</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>(ids_x, ids_y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "ID4" "ID3" "ID8" "ID7"</code></pre>
+<pre><code>[1] "ID8" "ID3" "ID6" "ID1" "ID7"</code></pre>
 </div>
 </div>
 <div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>sample()</code></span></div></div>
-<p>The <code>sample()</code> function is very useful – it generates a random sample by choosing elements from a vector. This is what is called <em>sampling</em> and comes in handy in many situations. Here we use it to create two sets of IDs that are similar, but not identical. As you can see from the output of <code>intersect()</code>, only 4 elements out of the total 6 are common between the two data frames.</p>
+<p>The <code>sample()</code> function is very useful – it generates a random sample by choosing elements from a vector. This is what is called <em>sampling</em> and comes in handy in many situations. Here we use it to create two sets of IDs that are similar, but not identical. As you can see from the output of <code>intersect()</code>, only 5 elements out of the total 6 are common between the two data frames.</p>
 <p>Merging can be done either with the base R function <code>merge()</code>, or with corresponding <code>*_join</code> functions from the tidyverse. Whether you prefer one or the other is a matter of preference; I like <code>merge()</code> and we will be using it in the examples below.</p>
 <div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="margin-aside">Inner join, full join</span></div></div>
 <p>First, however, let us think <em>how</em> we want to merge, or, more specifically, what to do with the identifiers that are present in one data frame, but not in the other? That depends only on what we want to achieve. Possibly we are not interested in any elements that are not present in <em>both</em> data frames. This is what is called in database lingo an <strong>inner join</strong> Alternatively, we might want to keep all possible elements, whether they are found in <code>df_x</code> or <code>df_y</code> only. This is called an <strong>full join</strong>.</p>
@@ -946,28 +946,28 @@ To quote or not to quote?
 <span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>joined <span class="ot">&lt;-</span> <span class="fu">merge</span>(df_x, df_y, <span class="at">by=</span><span class="st">"ID"</span>)</span>
 <span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>joined</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   ID      val_x     val_y
-1 ID3  0.2608804 10.433766
-2 ID4  0.8509559  8.750580
-3 ID7 -0.9660094 10.063938
-4 ID8 -0.6158720  8.261917</code></pre>
+<pre><code>   ID       val_x     val_y
+1 ID1 -0.23325437 10.007609
+2 ID3 -0.38056621 10.575114
+3 ID6  3.01396674  9.999062
+4 ID7 -1.04420192  8.720487
+5 ID8  0.00808038  8.439559</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># full join by ID</span></span>
 <span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>joined <span class="ot">&lt;-</span> <span class="fu">merge</span>(df_x, df_y, <span class="at">by=</span><span class="st">"ID"</span>, <span class="at">all=</span><span class="cn">TRUE</span>)</span>
 <span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>joined</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   ID       val_x     val_y
-1 ID1          NA 12.306198
-2 ID2 -0.49012494        NA
-3 ID3  0.26088040 10.433766
-4 ID4  0.85095586  8.750580
-5 ID5          NA  9.949744
-6 ID6 -0.04278474        NA
-7 ID7 -0.96600942 10.063938
-8 ID8 -0.61587198  8.261917</code></pre>
+1 ID1 -0.23325437 10.007609
+2 ID2  1.09672919        NA
+3 ID3 -0.38056621 10.575114
+4 ID4          NA 10.629807
+5 ID6  3.01396674  9.999062
+6 ID7 -1.04420192  8.720487
+7 ID8  0.00808038  8.439559</code></pre>
 </div>
 </div>
-<p>As you can see, in the first case there are just 4 rows – as many as there are common elements between the ID columns of the two data frames. In the second case, we get all 8 possible IDs. Where the ID was present in one, but not the other data frame, the values were filled up with <code>NA</code>’s. To get the full join we used the parameter <code>all=TRUE</code>, standing for “use <em>all</em> IDs”.</p>
+<p>As you can see, in the first case there are just 5 rows – as many as there are common elements between the ID columns of the two data frames. In the second case, we get all 7 possible IDs. Where the ID was present in one, but not the other data frame, the values were filled up with <code>NA</code>’s. To get the full join we used the parameter <code>all=TRUE</code>, standing for “use <em>all</em> IDs”.</p>
 <p>Note: it is possible to omit the <code>by=</code> parameter specifying by what column to join the data frames. However, do yourself a favor and <em>always</em> specify the column to join on explicitely.</p>
 <div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="margin-aside">Left join, right join</span></div></div>
 <p>There are two more situations, allthough less common in practice. We might want to keep all elements of <code>df_x</code>, but discard any elements of <code>df_y</code> which are not present in <code>df_x</code>. This is called a <strong>left join</strong>. Or, vice versa, we will discard only these elements which are present in <code>df_x</code>, but not in <code>df_y</code>. This is called, you guessed it, a <strong>right join</strong>.</p>
@@ -977,24 +977,24 @@ To quote or not to quote?
 <span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>joined</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   ID       val_x     val_y
-1 ID2 -0.49012494        NA
-2 ID3  0.26088040 10.433766
-3 ID4  0.85095586  8.750580
-4 ID6 -0.04278474        NA
-5 ID7 -0.96600942 10.063938
-6 ID8 -0.61587198  8.261917</code></pre>
+1 ID1 -0.23325437 10.007609
+2 ID2  1.09672919        NA
+3 ID3 -0.38056621 10.575114
+4 ID6  3.01396674  9.999062
+5 ID7 -1.04420192  8.720487
+6 ID8  0.00808038  8.439559</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># right join by ID</span></span>
 <span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>joined <span class="ot">&lt;-</span> <span class="fu">merge</span>(df_x, df_y, <span class="at">by=</span><span class="st">"ID"</span>, <span class="at">all.y =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>joined</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   ID      val_x     val_y
-1 ID1         NA 12.306198
-2 ID3  0.2608804 10.433766
-3 ID4  0.8509559  8.750580
-4 ID5         NA  9.949744
-5 ID7 -0.9660094 10.063938
-6 ID8 -0.6158720  8.261917</code></pre>
+<pre><code>   ID       val_x     val_y
+1 ID1 -0.23325437 10.007609
+2 ID3 -0.38056621 10.575114
+3 ID4          NA 10.629807
+4 ID6  3.01396674  9.999062
+5 ID7 -1.04420192  8.720487
+6 ID8  0.00808038  8.439559</code></pre>
 </div>
 </div>
 <p>As you can see, in case of the <em>left</em> join, there are missing values in the <em>right</em> column only, and in case of the <em>right</em> join – only in the <em>left</em> column.</p>
@@ -1070,38 +1070,38 @@ To quote or not to quote?
 <span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>meta_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   ID age   group
-1 ID1   2 control
-2 ID2   3 control
-3 ID3   1 treated
-4 ID4   2 treated</code></pre>
+1 ID1   3 control
+2 ID2   1 control
+3 ID3   3 treated
+4 ID4   1 treated</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>crp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ID=</span><span class="fu">rep</span>(<span class="fu">paste0</span>(<span class="st">"ID"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="at">each=</span><span class="dv">2</span>),</span>
 <span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">time=</span><span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"day1"</span>, <span class="st">"day2"</span>), <span class="dv">4</span>),</span>
 <span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">CRP=</span><span class="fu">rnorm</span>(<span class="dv">8</span>))</span>
 <span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>crp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   ID time        CRP
-1 ID1 day1 -0.9147404
-2 ID1 day2  0.1746050
-3 ID2 day1 -0.1052144
-4 ID2 day2 -1.2549840
-5 ID3 day1 -1.8076750
-6 ID3 day2 -0.9105108
-7 ID4 day1  0.5603573
-8 ID4 day2 -2.0386231</code></pre>
+<pre><code>   ID time         CRP
+1 ID1 day1  0.66073201
+2 ID1 day2 -0.04600628
+3 ID2 day1  0.48068587
+4 ID2 day2  1.62568347
+5 ID3 day1  0.10535403
+6 ID3 day2  1.09810425
+7 ID4 day1  0.35014032
+8 ID4 day2 -1.07264076</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>merged_data <span class="ot">&lt;-</span> <span class="fu">merge</span>(meta_data, crp, <span class="at">by=</span><span class="st">"ID"</span>)</span>
 <span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>merged_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   ID age   group time        CRP
-1 ID1   2 control day1 -0.9147404
-2 ID1   2 control day2  0.1746050
-3 ID2   3 control day1 -0.1052144
-4 ID2   3 control day2 -1.2549840
-5 ID3   1 treated day1 -1.8076750
-6 ID3   1 treated day2 -0.9105108
-7 ID4   2 treated day1  0.5603573
-8 ID4   2 treated day2 -2.0386231</code></pre>
+<pre><code>   ID age   group time         CRP
+1 ID1   3 control day1  0.66073201
+2 ID1   3 control day2 -0.04600628
+3 ID2   1 control day1  0.48068587
+4 ID2   1 control day2  1.62568347
+5 ID3   3 treated day1  0.10535403
+6 ID3   3 treated day2  1.09810425
+7 ID4   1 treated day1  0.35014032
+8 ID4   1 treated day2 -1.07264076</code></pre>
 </div>
 </div>
 <p>As you can see, each line in the <code>meta_data</code> data frame is duplicated to fill up the information matching the <code>ID</code> in the <code>crp</code> data frame.</p>
@@ -1115,23 +1115,23 @@ To quote or not to quote?
 <span id="cb86-6"><a href="#cb86-6" aria-hidden="true" tabindex="-1"></a>crp_alb <span class="ot">&lt;-</span> <span class="fu">merge</span>(crp, albumin, <span class="at">by=</span><span class="st">"ID"</span>)</span>
 <span id="cb86-7"><a href="#cb86-7" aria-hidden="true" tabindex="-1"></a>crp_alb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    ID time.x        CRP time.y        ALB
-1  ID1   day1 -0.9147404   day1 -0.8046922
-2  ID1   day1 -0.9147404   day2  0.9248835
-3  ID1   day2  0.1746050   day1 -0.8046922
-4  ID1   day2  0.1746050   day2  0.9248835
-5  ID2   day1 -0.1052144   day1 -0.6786603
-6  ID2   day1 -0.1052144   day2  0.3257268
-7  ID2   day2 -1.2549840   day1 -0.6786603
-8  ID2   day2 -1.2549840   day2  0.3257268
-9  ID3   day1 -1.8076750   day1 -1.0614504
-10 ID3   day1 -1.8076750   day2  0.4686709
-11 ID3   day2 -0.9105108   day1 -1.0614504
-12 ID3   day2 -0.9105108   day2  0.4686709
-13 ID4   day1  0.5603573   day1  1.1110624
-14 ID4   day1  0.5603573   day2  1.2042447
-15 ID4   day2 -2.0386231   day1  1.1110624
-16 ID4   day2 -2.0386231   day2  1.2042447</code></pre>
+<pre><code>    ID time.x         CRP time.y        ALB
+1  ID1   day1  0.66073201   day1  0.4067437
+2  ID1   day1  0.66073201   day2 -0.4877067
+3  ID1   day2 -0.04600628   day1  0.4067437
+4  ID1   day2 -0.04600628   day2 -0.4877067
+5  ID2   day1  0.48068587   day1  0.9262626
+6  ID2   day1  0.48068587   day2 -0.1293915
+7  ID2   day2  1.62568347   day1  0.9262626
+8  ID2   day2  1.62568347   day2 -0.1293915
+9  ID3   day1  0.10535403   day1  0.1094009
+10 ID3   day1  0.10535403   day2  1.2669628
+11 ID3   day2  1.09810425   day1  0.1094009
+12 ID3   day2  1.09810425   day2  1.2669628
+13 ID4   day1  0.35014032   day1  0.2103918
+14 ID4   day1  0.35014032   day2 -1.4263396
+15 ID4   day2 -1.07264076   day1  0.2103918
+16 ID4   day2 -1.07264076   day2 -1.4263396</code></pre>
 </div>
 </div>
 <p>Uh-oh, what happened here?</p>
@@ -1141,24 +1141,22 @@ To quote or not to quote?
 <div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>crp_alb <span class="ot">&lt;-</span> <span class="fu">merge</span>(crp, albumin, <span class="at">by=</span><span class="fu">c</span>(<span class="st">"ID"</span>, <span class="st">"time"</span>))</span>
 <span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>crp_alb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   ID time        CRP        ALB
-1 ID1 day1 -0.9147404 -0.8046922
-2 ID1 day2  0.1746050  0.9248835
-3 ID2 day1 -0.1052144 -0.6786603
-4 ID2 day2 -1.2549840  0.3257268
-5 ID3 day1 -1.8076750 -1.0614504
-6 ID3 day2 -0.9105108  0.4686709
-7 ID4 day1  0.5603573  1.1110624
-8 ID4 day2 -2.0386231  1.2042447</code></pre>
+<pre><code>   ID time         CRP        ALB
+1 ID1 day1  0.66073201  0.4067437
+2 ID1 day2 -0.04600628 -0.4877067
+3 ID2 day1  0.48068587  0.9262626
+4 ID2 day2  1.62568347 -0.1293915
+5 ID3 day1  0.10535403  0.1094009
+6 ID3 day2  1.09810425  1.2669628
+7 ID4 day1  0.35014032  0.2103918
+8 ID4 day2 -1.07264076 -1.4263396</code></pre>
 </div>
 </div>
 </section>
-<section id="bringing-it-all-together" class="level3 page-columns page-full" data-number="4.5.5">
+<section id="bringing-it-all-together" class="level3" data-number="4.5.5">
 <h3 data-number="4.5.5" class="anchored" data-anchor-id="bringing-it-all-together"><span class="header-section-number">4.5.5</span> Bringing it all together</h3>
 <p>We are now coming to the final exercise in this section. This exercise is based on data from the vaccination study <span class="citation" data-cites="weiner2019characterization">(<a href="references.html#ref-weiner2019characterization" role="doc-biblioref">Weiner et al. 2019</a>)</span>. One file contains meta-data for the samples used in transcriptomic analysis – it only includes the subjects and time points for which the gene expression data is present. The other file is quite large and contains the results of several laboratory tests taken for many patients at many time points.</p>
-<div class="no-row-height column-margin column-container"><div id="ref-weiner2019characterization" class="csl-entry" role="listitem">
-Weiner, January, David JM Lewis, Jeroen Maertzdorf, Hans-Joachim Mollenkopf, Caroline Bodinham, Kat Pizzoferro, Catherine Linley, et al. 2019. <span>“Characterization of Potential Biomarkers of Reactogenicity of Licensed Antiviral Vaccines: Randomized Controlled Clinical Trials Conducted by the BIOVACSAFE Consortium.”</span> <em>Scientific Reports</em> 9 (1): 20362.
-</div></div><p>Note that the data is not real, just based on real data.</p>
+<p>Note that the data is not real, just based on real data.</p>
 <div class="callout callout-style-simple callout-caution no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -1196,18 +1194,18 @@ Weiner, January, David JM Lewis, Jeroen Maertzdorf, Hans-Joachim Mollenkopf, Car
 <div class="cell">
 <div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
-<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a>iris <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Datasets/iris.csv"</span>)</span>
-<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a>iris <span class="ot">&lt;-</span> <span class="fu">clean_names</span>(iris)</span>
-<span id="cb92-5"><a href="#cb92-5" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>species <span class="ot">&lt;-</span> <span class="fu">tolower</span>(iris<span class="sc">$</span>species)</span>
-<span id="cb92-6"><a href="#cb92-6" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>petal_length <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(iris<span class="sc">$</span>petal_length ,<span class="st">"[^0-9.]"</span>, <span class="st">""</span>) </span>
-<span id="cb92-7"><a href="#cb92-7" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>petal_length <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(iris<span class="sc">$</span>petal_length)</span>
-<span id="cb92-8"><a href="#cb92-8" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>sepal_length <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(iris<span class="sc">$</span>sepal_length, <span class="st">","</span>, <span class="st">"."</span>)</span>
-<span id="cb92-9"><a href="#cb92-9" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>sepal_length <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(iris<span class="sc">$</span>sepal_length ,<span class="st">"&gt; "</span>, <span class="st">""</span>) </span>
-<span id="cb92-10"><a href="#cb92-10" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>sepal_length <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(iris<span class="sc">$</span>sepal_length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a>iris_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Datasets/iris.csv"</span>)</span>
+<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a>iris_data <span class="ot">&lt;-</span> <span class="fu">clean_names</span>(iris_data)</span>
+<span id="cb92-5"><a href="#cb92-5" aria-hidden="true" tabindex="-1"></a>iris_data<span class="sc">$</span>species <span class="ot">&lt;-</span> <span class="fu">tolower</span>(iris_data<span class="sc">$</span>species)</span>
+<span id="cb92-6"><a href="#cb92-6" aria-hidden="true" tabindex="-1"></a>iris_data<span class="sc">$</span>petal_length <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(iris_data<span class="sc">$</span>petal_length ,<span class="st">"[^0-9.]"</span>, <span class="st">""</span>) </span>
+<span id="cb92-7"><a href="#cb92-7" aria-hidden="true" tabindex="-1"></a>iris_data<span class="sc">$</span>petal_length <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(iris_data<span class="sc">$</span>petal_length)</span>
+<span id="cb92-8"><a href="#cb92-8" aria-hidden="true" tabindex="-1"></a>iris_data<span class="sc">$</span>sepal_length <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(iris_data<span class="sc">$</span>sepal_length, <span class="st">","</span>, <span class="st">"."</span>)</span>
+<span id="cb92-9"><a href="#cb92-9" aria-hidden="true" tabindex="-1"></a>iris_data<span class="sc">$</span>sepal_length <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(iris_data<span class="sc">$</span>sepal_length ,<span class="st">"&gt; "</span>, <span class="st">""</span>) </span>
+<span id="cb92-10"><a href="#cb92-10" aria-hidden="true" tabindex="-1"></a>iris_data<span class="sc">$</span>sepal_length <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(iris_data<span class="sc">$</span>sepal_length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>That is a lot of code. However, we <em>could</em> do it all on one line:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>iris <span class="ot">&lt;-</span> </span>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>iris_data <span class="ot">&lt;-</span> </span>
 <span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">mutate</span>(<span class="fu">mutate</span>(<span class="fu">clean_names</span>(<span class="fu">read_csv</span>(<span class="st">"Datasets/iris.csv"</span>)),</span>
 <span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">petal_length =</span> <span class="fu">as.numeric</span>(</span>
 <span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(petal_length, <span class="st">"[^0-9.]"</span>, <span class="st">""</span>))),</span>
@@ -1215,7 +1213,7 @@ Weiner, January, David JM Lewis, Jeroen Maertzdorf, Hans-Joachim Mollenkopf, Car
 <span id="cb93-6"><a href="#cb93-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(sepal_length, <span class="st">","</span>, <span class="st">"."</span>), <span class="st">"&gt; "</span>, <span class="st">""</span>))),</span>
 <span id="cb93-7"><a href="#cb93-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">species =</span> <span class="fu">tolower</span>(species))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>If you spend some time deciphering this, you will see that it does precisely the same operations as the previous beat of code. However, it is unreadable and unmaintainable<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<p>If you spend some time deciphering this, you will see that it does precisely the same operations as the previous code fragment. However, it is completely unreadable and unmaintainable<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
 <div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;I got a headache just trying to figure out the correct number of parentheses in this code.</p></div></div></section>
 <section id="pipes" class="level3 page-columns page-full" data-number="4.6.2">
 <h3 data-number="4.6.2" class="anchored" data-anchor-id="pipes"><span class="header-section-number">4.6.2</span> Pipes</h3>
@@ -1247,7 +1245,7 @@ Weiner, January, David JM Lewis, Jeroen Maertzdorf, Hans-Joachim Mollenkopf, Car
 <p>The two lines are equivalent. However, the latter is much more readable: it shows how the value goes into <code>as.numeric()</code>, then the output of <code>as.numeric()</code> goes into <code>is.na()</code>, and the resulting logical vector goes into <code>which()</code>.</p>
 <p>See how that works for our iris dataset:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>iris <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Datasets/iris.csv"</span>) <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>iris_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Datasets/iris.csv"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>        <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
 <span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">tolower</span>(species)) <span class="sc">|&gt;</span></span>
 <span id="cb102-4"><a href="#cb102-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">petal_length =</span> <span class="fu">str_replace_all</span>(petal_length ,<span class="st">"[^0-9.]"</span>, <span class="st">""</span>)) <span class="sc">|&gt;</span></span>
@@ -1257,19 +1255,19 @@ Weiner, January, David JM Lewis, Jeroen Maertzdorf, Hans-Joachim Mollenkopf, Car
 <span id="cb102-8"><a href="#cb102-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">sepal_length =</span> <span class="fu">as.numeric</span>(sepal_length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>It is just as clear and readable as the first example, but with some additional benefits.</p>
-<p>First, think what happens if you want to change the name of the variable, say, from <code>iris</code> to <code>flowers</code>. In the first example, you would have to change every single occurence of <code>iris</code> to <code>flowers</code>. Sure, it would not be all too bad if you can do it automatically with a search-and-replace, but what if the variable name was <code>a</code>?</p>
+<p>First, think what happens if you want to change the name of the variable, say, from <code>iris_data</code> to <code>flowers</code>. In the first example, you would have to change every single occurence of <code>iris_data</code> to <code>flowers</code>. Sure, it would not be all too bad if you can do it automatically with a search-and-replace, but what if the variable name was <code>a</code>?</p>
 <p>Second, the pipe facilitates development. You build a pipe line by line, and each time you execute the code, all operations are repeated. This is a good thing – you avoid the situation where you forget to execute one line and the code does not work.</p>
 <p>There is an alternative to the above code which uses pipes, but not all on the same line:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>iris <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Datasets/iris.csv"</span>) <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>iris_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Datasets/iris.csv"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>        <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
 <span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">tolower</span>(species))</span>
 <span id="cb103-4"><a href="#cb103-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb103-5"><a href="#cb103-5" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>petal_length <span class="ot">&lt;-</span> iris<span class="sc">$</span>petal_length <span class="sc">|&gt;</span> </span>
+<span id="cb103-5"><a href="#cb103-5" aria-hidden="true" tabindex="-1"></a>iris_data<span class="sc">$</span>petal_length <span class="ot">&lt;-</span> iris_data<span class="sc">$</span>petal_length <span class="sc">|&gt;</span> </span>
 <span id="cb103-6"><a href="#cb103-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_replace_all</span>(<span class="st">"[^0-9.]"</span>, <span class="st">""</span>) <span class="sc">|&gt;</span></span>
 <span id="cb103-7"><a href="#cb103-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">as.numeric</span>()</span>
 <span id="cb103-8"><a href="#cb103-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb103-9"><a href="#cb103-9" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>sepal_length <span class="ot">&lt;-</span> iris<span class="sc">$</span>sepal_length <span class="sc">|&gt;</span></span>
+<span id="cb103-9"><a href="#cb103-9" aria-hidden="true" tabindex="-1"></a>iris_data<span class="sc">$</span>sepal_length <span class="ot">&lt;-</span> iris_data<span class="sc">$</span>sepal_length <span class="sc">|&gt;</span></span>
 <span id="cb103-10"><a href="#cb103-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_replace_all</span>(<span class="st">","</span>, <span class="st">"."</span>) <span class="sc">|&gt;</span></span>
 <span id="cb103-11"><a href="#cb103-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_replace_all</span>(<span class="st">"&gt; "</span>, <span class="st">""</span>) <span class="sc">|&gt;</span></span>
 <span id="cb103-12"><a href="#cb103-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">as.numeric</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1333,7 +1331,11 @@ Weiner, January, David JM Lewis, Jeroen Maertzdorf, Hans-Joachim Mollenkopf, Car
 </ul>
 
 
-
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-weiner2019characterization" class="csl-entry" role="listitem">
+Weiner, January, David JM Lewis, Jeroen Maertzdorf, Hans-Joachim Mollenkopf, Caroline Bodinham, Kat Pizzoferro, Catherine Linley, et al. 2019. <span>“Characterization of Potential Biomarkers of Reactogenicity of Licensed Antiviral Vaccines: Randomized Controlled Clinical Trials Conducted by the BIOVACSAFE Consortium.”</span> <em>Scientific Reports</em> 9 (1): 20362. <a href="https://www.nature.com/articles/s41598-019-56994-8">https://www.nature.com/articles/s41598-019-56994-8</a>.
+</div>
+</div>
 </section>
 
 
@@ -1909,8 +1911,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./day5-visualization-and-statistics.html" class="pagination-link" aria-label="Rmarkdown, basic statistics and visualizations">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Rmarkdown, basic statistics and visualizations</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./day5-visualization-and-statistics.html" class="pagination-link" aria-label="R markdown, basic statistics and visualizations">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">R markdown, basic statistics and visualizations</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

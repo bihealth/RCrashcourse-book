@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Rmarkdown, basic statistics and visualizations – Five days of R</title>
+<title>5&nbsp; R markdown, basic statistics and visualizations – Five days of R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 /* CSS for citations */
 div.csl-bib-body { }
@@ -96,7 +130,39 @@ div.csl-indent {
     document.body.classList.add('hypothesis-enabled');
   });
 </script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="custom.css">
 </head>
@@ -164,7 +230,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./day5-visualization-and-statistics.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Rmarkdown, basic statistics and visualizations</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./day5-visualization-and-statistics.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">R markdown, basic statistics and visualizations</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -217,7 +283,7 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./day5-visualization-and-statistics.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Rmarkdown, basic statistics and visualizations</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">R markdown, basic statistics and visualizations</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -248,16 +314,38 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#rmarkdown" id="toc-rmarkdown" class="nav-link active" data-scroll-target="#rmarkdown"><span class="header-section-number">5.1</span> Rmarkdown</a>
+  <li><a href="#r-markdown" id="toc-r-markdown" class="nav-link active" data-scroll-target="#r-markdown"><span class="header-section-number">5.1</span> R markdown</a>
   <ul class="collapse">
-  <li><a href="#what-is-rmarkdown" id="toc-what-is-rmarkdown" class="nav-link" data-scroll-target="#what-is-rmarkdown"><span class="header-section-number">5.1.1</span> What is Rmarkdown?</a></li>
+  <li><a href="#what-is-r-markdown" id="toc-what-is-r-markdown" class="nav-link" data-scroll-target="#what-is-r-markdown"><span class="header-section-number">5.1.1</span> What is R markdown?</a></li>
   <li><a href="#markdown-basics" id="toc-markdown-basics" class="nav-link" data-scroll-target="#markdown-basics"><span class="header-section-number">5.1.2</span> Markdown basics</a></li>
+  <li><a href="#r-markdown-header" id="toc-r-markdown-header" class="nav-link" data-scroll-target="#r-markdown-header"><span class="header-section-number">5.1.3</span> R markdown header</a></li>
+  <li><a href="#r-code-chunks" id="toc-r-code-chunks" class="nav-link" data-scroll-target="#r-code-chunks"><span class="header-section-number">5.1.4</span> R code chunks</a></li>
   </ul></li>
-  <li><a href="#basic-statistics-with-r" id="toc-basic-statistics-with-r" class="nav-link" data-scroll-target="#basic-statistics-with-r"><span class="header-section-number">5.2</span> Basic statistics with R</a></li>
-  <li><a href="#visualizations-with-r" id="toc-visualizations-with-r" class="nav-link" data-scroll-target="#visualizations-with-r"><span class="header-section-number">5.3</span> Visualizations with R</a>
+  <li><a href="#visualizations-with-r" id="toc-visualizations-with-r" class="nav-link" data-scroll-target="#visualizations-with-r"><span class="header-section-number">5.2</span> Visualizations with R</a>
   <ul class="collapse">
-  <li><a href="#base-r-vs-ggplot2" id="toc-base-r-vs-ggplot2" class="nav-link" data-scroll-target="#base-r-vs-ggplot2"><span class="header-section-number">5.3.1</span> Base R vs <code>ggplot2</code></a></li>
+  <li><a href="#base-r-vs-ggplot2" id="toc-base-r-vs-ggplot2" class="nav-link" data-scroll-target="#base-r-vs-ggplot2"><span class="header-section-number">5.2.1</span> Base R vs <code>ggplot2</code></a></li>
+  <li><a href="#esthetics-and-information-channels" id="toc-esthetics-and-information-channels" class="nav-link" data-scroll-target="#esthetics-and-information-channels"><span class="header-section-number">5.2.2</span> Esthetics and information channels</a></li>
+  <li><a href="#pca-and-scatter-plots" id="toc-pca-and-scatter-plots" class="nav-link" data-scroll-target="#pca-and-scatter-plots"><span class="header-section-number">5.2.3</span> PCA and scatter plots</a></li>
+  <li><a href="#boxplots-and-violin-plots" id="toc-boxplots-and-violin-plots" class="nav-link" data-scroll-target="#boxplots-and-violin-plots"><span class="header-section-number">5.2.4</span> Boxplots and violin plots</a></li>
+  <li><a href="#boxplots-and-violin-plots-vs-bar-plots" id="toc-boxplots-and-violin-plots-vs-bar-plots" class="nav-link" data-scroll-target="#boxplots-and-violin-plots-vs-bar-plots"><span class="header-section-number">5.2.5</span> Boxplots and violin plots vs bar plots</a></li>
+  <li><a href="#heatmaps" id="toc-heatmaps" class="nav-link" data-scroll-target="#heatmaps"><span class="header-section-number">5.2.6</span> Heatmaps</a></li>
+  <li><a href="#output-formats" id="toc-output-formats" class="nav-link" data-scroll-target="#output-formats"><span class="header-section-number">5.2.7</span> Output formats</a></li>
   </ul></li>
+  <li><a href="#basic-statistics-with-r" id="toc-basic-statistics-with-r" class="nav-link" data-scroll-target="#basic-statistics-with-r"><span class="header-section-number">5.3</span> Basic statistics with R</a>
+  <ul class="collapse">
+  <li><a href="#statistics-with-r" id="toc-statistics-with-r" class="nav-link" data-scroll-target="#statistics-with-r"><span class="header-section-number">5.3.1</span> Statistics with R</a></li>
+  <li><a href="#descriptive-statistics" id="toc-descriptive-statistics" class="nav-link" data-scroll-target="#descriptive-statistics"><span class="header-section-number">5.3.2</span> Descriptive statistics</a></li>
+  <li><a href="#simple-tests" id="toc-simple-tests" class="nav-link" data-scroll-target="#simple-tests"><span class="header-section-number">5.3.3</span> Simple tests</a></li>
+  <li><a href="#correlations" id="toc-correlations" class="nav-link" data-scroll-target="#correlations"><span class="header-section-number">5.3.4</span> Correlations</a></li>
+  <li><a href="#simple-linear-models" id="toc-simple-linear-models" class="nav-link" data-scroll-target="#simple-linear-models"><span class="header-section-number">5.3.5</span> Simple linear models</a></li>
+  <li><a href="#correcting-for-multiple-testing" id="toc-correcting-for-multiple-testing" class="nav-link" data-scroll-target="#correcting-for-multiple-testing"><span class="header-section-number">5.3.6</span> Correcting for multiple testing</a></li>
+  </ul></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">5.4</span> Conclusions</a>
+  <ul class="collapse">
+  <li><a href="#where-to-go-from-here" id="toc-where-to-go-from-here" class="nav-link" data-scroll-target="#where-to-go-from-here"><span class="header-section-number">5.4.1</span> Where to go from here</a></li>
+  <li><a href="#famous-last-words" id="toc-famous-last-words" class="nav-link" data-scroll-target="#famous-last-words"><span class="header-section-number">5.4.2</span> Famous last words</a></li>
+  </ul></li>
+  <li><a href="#review" id="toc-review" class="nav-link" data-scroll-target="#review"><span class="header-section-number">5.5</span> Review</a></li>
   </ul>
 </nav>
     </div>
@@ -266,7 +354,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Rmarkdown, basic statistics and visualizations</span></h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">R markdown, basic statistics and visualizations</span></h1>
 </div>
 
 
@@ -283,32 +371,1002 @@ div.csl-indent {
 </header>
 
 
-<section id="rmarkdown" class="level2 page-columns page-full" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="rmarkdown"><span class="header-section-number">5.1</span> Rmarkdown</h2>
-<section id="what-is-rmarkdown" class="level3 page-columns page-full" data-number="5.1.1">
-<h3 data-number="5.1.1" class="anchored" data-anchor-id="what-is-rmarkdown"><span class="header-section-number">5.1.1</span> What is Rmarkdown?</h3>
-<p>Rmarkdown is a remarkably simple to use and yet powerfull tool. The basic idea is as follows: you write a document in a simple text format – for example, a manuscript or a report. In that document, you include R “code chunks”. These code chunks are executed by R, and the output is included in the document – including figures or tables. And then, from this single simple text document you can create a PDF, a Word document, an HTML page (or a whole website!), a book, a slide presentation and much, much more.</p>
-<p>In fact, this book you are reading now has been entirely written in Rmarkdown<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. You can go to the <a href="https://github.com/bihealth/RCrashcourse-book/">github repository</a> for this book and see the Rmarkdown/Quarto files that generated it – for example, <a href="https://github.com/bihealth/RCrashcourse-book/blob/main/day5-visualization-and-statistics.qmd">here</a> is the page you are reading right now. It is also possible to create a scientific paper completely in Rmarkdown (here an example of such a paper: <span class="citation" data-cites="weiner2022venn">Weiner 3rd, Obermayer, and Beule (<a href="references.html#ref-weiner2022venn" role="doc-biblioref">2022</a>)</span>).</p>
-<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;Actually, in its successor called “Quarto”.</p></div></div></section>
-<section id="markdown-basics" class="level3" data-number="5.1.2">
+<section id="r-markdown" class="level2 page-columns page-full" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="r-markdown"><span class="header-section-number">5.1</span> R markdown</h2>
+<section id="what-is-r-markdown" class="level3 page-columns page-full" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="what-is-r-markdown"><span class="header-section-number">5.1.1</span> What is R markdown?</h3>
+<p>R markdown is a remarkably simple to use and yet powerfull tool. The basic idea is as follows: you write a document in a simple text format – for example, a manuscript, a report, or even a thesis. In that document, you include R “code chunks”. These code chunks are executed by R, and the output is included in the document – including figures or tables. And then, from this single simple text document you can create a PDF, a Word document, an HTML page (or a whole website!), a book, a slide presentation and much, much more.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A(R markdown / Quarto\ndocument\nwith R code) --&gt;|knitr| B(Markdown\nwith R code output)
+    B --&gt; C[LaTeX]
+    C --&gt; CC[PDF]
+    B --&gt; D[Word]
+    B --&gt; E[HTML]
+    B --&gt; F[Presentation]
+    B --&gt; G[Book]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>In fact, this book you are reading now has been entirely written in R markdown<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. You can go to the <a href="https://github.com/bihealth/RCrashcourse-book/">github repository</a> for this book and see the R markdown/Quarto files that generated it – for example, <a href="https://github.com/bihealth/RCrashcourse-book/blob/main/day5-visualization-and-statistics.qmd">here</a> is the page you are reading right now. It is also possible to create a scientific paper completely in R markdown (here is an example of such a paper: <span class="citation" data-cites="weiner2022venn">Weiner 3rd, Obermayer, and Beule (<a href="references.html#ref-weiner2022venn" role="doc-biblioref">2022</a>)</span>).</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;Actually, in its successor called “Quarto”.</p></div></div><p>Why is this so great?</p>
+<ul>
+<li><strong>Reproducibility:</strong> It allows you to keep the methods, analysis itself and the analysis results in one place.</li>
+<li><strong>Avoiding errors:</strong> Whenever you re-run your analysis, R automatically updates all your figures, tables, results, etc. in your document. This prevents you from forgetting to update a figure or a number in your manuscript.</li>
+<li><strong>Flexibility:</strong> You can easily change the output format of your document; you can update your figures or your tables easily without having to resort to manual editing.</li>
+<li><strong>Bibliography</strong>. As you have seen in this book, it is not hard to include bibliography in your document, in any style you desire. You can use a free package manager such as Zotero or Mendeley to manage your bibliography, and produce the bibliography in the format that R markdown uses.</li>
+</ul>
+<p>What are the disadvantages?</p>
+<ul>
+<li><strong>Steep learning curve.</strong> You have to learn all the stuff first. Luckily, when it comes to R markdown, there are plenty of resources, and after today you will know all the most important stuff.</li>
+<li><strong>No fine control over the layout.</strong> While you can easily use simple formatting commands, you will have to resort to more complex tools to control things like font size of the chapter headers<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Some of us consider it to be a good thing<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> – this is the boring part that the computers should take care of, but sometimes it is annoying. However, you can always generate a Word file with R markdown that uses a Word template, and then fine tune it in Word.</li>
+<li><strong>Collaboration.</strong> Collaborating with markdown is not as easy as with a Word document, because most people can’t use markdown. Often that means that you need to communicate with your co-authors using Word, and then patiently type in their changes into your markdown document.</li>
+</ul>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;Actually, you can control the format for PDF and HTML output very precisely, but then you have to learn LaTeX and CSS, respectively. For Word, the only option is to use a Word file with pre-defined styles as a template.</p></div><div id="fn3"><p><sup>3</sup>&nbsp;Me.</p></div></div><div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+R markdown vs Quarto
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>R markdown is older and more widely supported</li>
+<li>Quarto is newer, slightly more complex, with additional features and generally better looking</li>
+</ul>
+<p>Documents created in Quarto can largely be processed with R markdown and vice versa, only some visual bells &amp; whistles might be lacking.</p>
+<p>Both Quarto and R markdown are available if you have installed RStudio. Standalone R installations without RStudio may require additional packages (e.g.&nbsp;<code>rmarkdown</code> for R markdown) or programs (<code>quarto</code> for Quarto).</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-caution no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exr-basic-markdown" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.1 (Create an R markdown document)</strong></span> Go to the “File” menu in Rstudio and choose “New File” -&gt; “R markdown”. Enter a title and click on “OK”. Save the file in your project directory and take a look at it. Rstudio has created a simple R markdown file for you so that you might get an idea of how it works.</p>
+<p>Click on the “knit” icon in the toolbar to render the document. What do you see? How does it relate to the content of the document? Try changing a few words in the document and click on “knit” again. What happens?</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="markdown-basics" class="level3 page-columns page-full" data-number="5.1.2">
 <h3 data-number="5.1.2" class="anchored" data-anchor-id="markdown-basics"><span class="header-section-number">5.1.2</span> Markdown basics</h3>
+<p>The “R” in R markdown stands for “R”, the programming language, combined with markdown. But what <em>is</em> markdown?</p>
+<div class="page-columns page-full"><p>Markdown is a very lightweight formatting system, much like what many of us are using in emails or messengers, stressing words by surrounding them with stars etc., but with a few extra features. The idea is that you can write the text in a very simple way and it remains readable <em>even with the formatting marks</em> (<a href="https://github.com/bihealth/RCrashcourse-book/blob/main/day5-visualization-and-statistics.qmd">take a look!</a>). </p><div class="no-row-height column-margin column-container"><span class="margin-aside">Basic markdown formatting</span></div></div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Code</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>**bold**</code></td>
+<td><strong>bold</strong></td>
+</tr>
+<tr class="even">
+<td><code>*italic*</code></td>
+<td><em>italic</em></td>
+</tr>
+<tr class="odd">
+<td><code>3^2^</code></td>
+<td>3<sup>2</sup></td>
+</tr>
+<tr class="even">
+<td><code>log~2~</code></td>
+<td>log<sub>2</sub></td>
+</tr>
+<tr class="odd">
+<td><code>`code`</code></td>
+<td><code>code</code></td>
+</tr>
+<tr class="even">
+<td><code>[URL](https://cubi.bihealth.org)</code></td>
+<td><a href="https://cubi.bihealth.org">link</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<div class="page-columns page-full"><p>Here is another feature: lists. </p><div class="no-row-height column-margin column-container"><span class="margin-aside">Lists in markdown</span></div></div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Code:</p>
+<pre><code>- item 1
+- item 2
+  - subitem 1
+  - subitem 2
+- item 3</code></pre>
+</div><div class="column" style="width:50%;">
+<p>Result:</p>
+<ul>
+<li>item 1</li>
+<li>item 2
+<ul>
+<li>subitem 1</li>
+<li>subitem 2</li>
+</ul></li>
+<li>item 3</li>
+</ul>
+</div>
+</div>
+<hr>
+<p>There is much more to it (look up for example <a href="https://rmarkdown.rstudio.com/lesson-1.html">markdown guide</a> from Rstudio or the <a href="https://quarto.org/docs/authoring/markdown-basics.html">Quarto markdown documentation</a>), but you don’t need it right now. Just keep in mind that you can always take a look at the markdown source of this document to see how things can be done.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Mathematical formulas
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Using a special syntax, it is possible to include virtually any mathematical formula in R, both inline variant (like <span class="math inline">\(\sigma=\sqrt{\frac{(x_i-\bar{x})^2}{n}}\)</span>) or as a stand-alone block:</p>
+<p><span class="math display">\[\sigma=\sqrt{\frac{(x_i-\bar{x})^2}{n}}\]</span></p>
+<p>There are several formulas in this book, if you are interested, look up the book quarto sources on <a href="https://github.com/bihealth/RcrashCourse-book/">github</a> or check <a href="https://rpruim.github.io/s341/S19/from-class/MathinRmd.html">this guide</a>.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-caution no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exr-formatting-markdown" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.2 (Formatting markdown)</strong></span> Try some formatting commands in markdown. For example, try to make a word <strong>bold</strong> or <em>italic</em>. Try to create a list.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="r-markdown-header" class="level3 page-columns page-full" data-number="5.1.3">
+<h3 data-number="5.1.3" class="anchored" data-anchor-id="r-markdown-header"><span class="header-section-number">5.1.3</span> R markdown header</h3>
+<p>You might have noticed that at the top of the first R markdown file you created there is a block of text that might look something like this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Untitled"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "JW"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "`​r Sys.Date()`"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> html_document</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="page-columns page-full"><p>This is a block with meta-information about your document. For example, it specifies the title, author and date. Note that date is updated automatically every time the document is rendered by executing the r command <code>Sys.Date()</code> (you will learn about the inline chunks in a moment). Naturally, you can run the command in your console or script. </p><div class="no-row-height column-margin column-container"><span class="margin-aside">`Sys.Date()´</span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.Date</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "2024-09-27"</code></pre>
+</div>
+</div>
+<p>The <code>output:</code> specifies the type of output you would like to have.</p>
+<div class="callout callout-style-simple callout-caution no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exr-output-options" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.3 (Choosing output format)</strong></span> When editing your R markdown document, click on the little ▼ arrow next to the “Knit” icon in RStudio. Choose the PDF format. Observe what happens to the header of your document.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="r-code-chunks" class="level3 page-columns page-full" data-number="5.1.4">
+<h3 data-number="5.1.4" class="anchored" data-anchor-id="r-code-chunks"><span class="header-section-number">5.1.4</span> R code chunks</h3>
+<p>In between the markdown text, you can include R code chunks. These are executed consicutively by R and the output is included in the document. Every single fragment of code in this book is a code chunk.</p>
+<div class="page-columns page-full"><p>Each chunk starts with a <code>```{r}</code> and ends with a <code>```</code> (these should  be placed on separate lines). You can also add the chunks by clicking on the little green plus sign in the Rstudio toolbar and choosing “R chunk”. Here is an example of a code chunk:</p><div class="no-row-height column-margin column-container"><span class="margin-aside">R chunks</span></div></div>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p>R markdown:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="in">x &lt;- 1:10</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="in">print(x)</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="in">plot(x)</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:5%;">
+
+</div><div class="column" style="width:50%;">
+<p>Output:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="day5-visualization-and-statistics_files/figure-html/unnamed-chunk-4-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="page-columns page-full"><p>By default, the code itself is also shown in the document. You can configure this by clicking on the little cogwheel ⚙ icon to the right of the chunk start. You will notice that configuring the options means essentially adding stuff like <code>echo=FALSE</code> to the chunk start (<code>echo=FALSE</code>  means that the code itself is not shown in the document).</p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>echo=FALSE</code></span></div></div>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p>R markdown:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r echo=FALSE}</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="in">x &lt;- 1:10</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="in">print(x)</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="in">plot(x)</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:5%;">
+
+</div><div class="column" style="width:50%;">
+<p>Output:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="day5-visualization-and-statistics_files/figure-html/unnamed-chunk-5-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>The code chunks can also be <em>inline</em>, that is, you can put directly a code chunk in your sentence. For example, when I write that the <span class="math inline">\(pi\)</span> constant is equal to 3.1415927, I am using an inline code chunk:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>For example, when I write that the $pi$ constant is </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>equal to <span class="in">`​r pi`</span>, I am using an inline code chunk:</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This point is not to save typing. The point is to <em>update</em> your document whenever you <em>update</em> your analysis. For example, if you add samples to your data and re-run the analysis, the number of samples that you have written in your method section must reflect the change. If you use an inline code chunk, it will do so automatically, without you needing to painstakingly update each number, each figure, each result in your manuscript.</p>
+<div class="callout callout-style-simple callout-caution no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exr-basic-markdown" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.4 (Put your code in your markdown)</strong></span> &nbsp;</p>
+<ul>
+<li>Go back to Day 1, the water lillies example in <a href="day1-intro-to-r.html#sec-lilies" class="quarto-xref"><span>Section 1.6.1</span></a>. Copy the code to the R markdown, including the plot and <a href="day1-intro-to-r.html#exr-lilies" class="quarto-xref">Exercise&nbsp;<span>1.8</span></a>.</li>
+<li>Write a brief summary including inline code chunks that show the number of days of the simulation used.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
 </section>
 </section>
-<section id="basic-statistics-with-r" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="basic-statistics-with-r"><span class="header-section-number">5.2</span> Basic statistics with R</h2>
+<section id="visualizations-with-r" class="level2 page-columns page-full" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="visualizations-with-r"><span class="header-section-number">5.2</span> Visualizations with R</h2>
+<section id="base-r-vs-ggplot2" class="level3 page-columns page-full" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="base-r-vs-ggplot2"><span class="header-section-number">5.2.1</span> Base R vs <code>ggplot2</code></h3>
+<p>We already had simple examples of plots in R (for example on day one, in the Water Lily example - <a href="day1-intro-to-r.html#sec-lilies" class="quarto-xref"><span>Section 1.6.1</span></a>). We even had a look at the <code>ggplot2</code> package on Day 3 (<a href="day3-reading-your-data.html#sec-quick-look" class="quarto-xref"><span>Section 3.5.5</span></a>). Why are there so many plotting systems in R?</p>
+<p>Actully, the situation is even more complex than you might imagine. Partly that is because there are so many different types of plots that it is hard to make a single system that would be good for all of them. But the main problem, as usual, is that anybody can write their own. And so they did.</p>
+<p>Fortunately for us, the two graphic systems – base R and <code>ggplot2</code> – are sufficient even for the most sophisticated plots. It is useful to know them both, however. Base R is simple and allows very quick plotting of simple tasks. Moreover, many base R statistical functions have built-in plotting capabilities (e.g.&nbsp;you can simply call <code>plot(model)</code> for a linear regression model to get all relevant plots). <code>ggplot2</code>, on the other hand, is more complex, but it is also working on a much higher level and takes care of many things automatically.</p>
+<p>Here is a table comparing the basic features of the two systems.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Base R</th>
+<th style="text-align: left;">ggplot2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Simple to use for simple task, gets very complex for complex tasks</td>
+<td style="text-align: left;">More complex, but more powerful and makes complex tasks easier</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Many packages</td>
+<td style="text-align: left;">Many packages</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Plots need many lines to be customized</td>
+<td style="text-align: left;">Plots are customized in one line</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Low-level, with absolute feature control</td>
+<td style="text-align: left;">High-level, with automatic feature control</td>
+</tr>
+</tbody>
+</table>
+<p>Most of what can be done with <code>ggplot2</code> can be done with base R, but it often requires many more lines of code. On the other hand, it is easier to develop a <em>de novo</em> approach with base R, because programming new features in ggplot is not for the faint of heart.</p>
+<p>Let us plot a simple scatter plot with both systems and show how customization will look like in both. We will use the <code>iris</code> data set<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;Not the doctored version we have been loading in the previous days, but the built-in original data set. If you have created an <code>iris</code> variable in your environment, type <code>rm(iris)</code> to remove it.</p></div></div><p><strong>Base R:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>colors_map <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">setosa=</span><span class="st">"red"</span>, <span class="at">versicolor=</span><span class="st">"green"</span>, <span class="at">virginica=</span><span class="st">"blue"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>colors <span class="ot">&lt;-</span> colors_map[iris<span class="sc">$</span>Species]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(iris<span class="sc">$</span>Sepal.Length, iris<span class="sc">$</span>Sepal.Width, </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">col=</span>colors, <span class="at">pch=</span><span class="dv">19</span>, <span class="at">xlab=</span><span class="st">"Sepal length"</span>, </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">cex=</span><span class="fl">1.5</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">"Sepal width"</span>, <span class="at">main=</span><span class="st">"The iris data set"</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="sc">-</span><span class="fl">2.8</span>, <span class="fl">1.1</span>, <span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend=</span><span class="fu">unique</span>(iris<span class="sc">$</span>Species), </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span>colors_map[<span class="fu">unique</span>(iris<span class="sc">$</span>Species)], <span class="at">pch=</span><span class="dv">19</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="day5-visualization-and-statistics_files/figure-html/unnamed-chunk-6-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Note that in the code above the <code>col=</code> parameter simply takes a vector describing colors. Color management must be done by the user – you cannot simply say “choose the viridis palette” (or similar). You also need to remember some weird things, like that the <code>pch=19</code> means “filled circles” (in contrast, <code>pch=1</code> means “empty circles”, and if you need triangles, you have to use <code>pch=2</code>)<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. And <code>cex</code> is the size of the points.</p>
+<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;For many years I had a piece of paper hanging over my desk with all the <code>pch</code> values written on it and symbols scrawled with pencil next to them.</p></div></div><p>Legend drawing is a completely separate function that slaps the legend on top of the existing plot, whatever it is. The <code>abline()</code> function draws a line on the plot, also not really caring what was drawn before.</p>
+<p>Ggplot2:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x =</span> Sepal.Length, <span class="at">y =</span> Sepal.Width, <span class="at">color =</span> Species)) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="sc">-</span><span class="fl">2.8</span>, <span class="at">slope =</span> <span class="fl">1.1</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>() <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sepal length"</span>, <span class="at">y =</span> <span class="st">"Sepal width"</span>, </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"The iris data set"</span>) <span class="sc">+</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="day5-visualization-and-statistics_files/figure-html/unnamed-chunk-7-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In this example you see why <code>ggplot2</code> is so popular. The code is much cleaner and does not require you calling separate functions for each task. The parameters have explicit names, easy to remember. Legend and abline are directly connected to the plot, and the color scale is chosen with a single command. There is no need to separately change colors for the legend and the plot. The <code>theme_minimal()</code> function changes a number of parameters such as the font face used or the background color.</p>
+<p>However, some operations can be challenging. If you want your legend placed directly on top of the drawing in the right upper corner, you have to specify the coordinates manually. And if you want triangles… well, you still have to use the numbers, for example using <code>geom_point(shape=2)</code> for triangles<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</p>
+<div class="no-row-height column-margin column-container"><div id="fn6"><p><sup>6</sup>&nbsp;And here the punchline: I still have this piece of paper with symbols scrawled on it.</p></div></div><p>Then again, some complex operations are easy. For example, to add per-group LOESS lines to the plot with confidence intervals, you would simply add <code>geom_smooth(method="loess")</code>. In base R, the same operation requires about a dozen lines of code.</p>
+<div class="callout callout-style-simple callout-caution no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exr-basic-statistics" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.5 (Ggplot2)</strong></span> Take the code for the <code>ggplot2</code> plot above and make the following modifications:</p>
+<ul>
+<li>Try adding a <code>geom_smooth()</code> layer</li>
+<li>Remove <code>scale_color_viridis_d()</code> layer. What happens?</li>
+<li>Add the following layer: <code>scale_color_manual(values=colors_map)</code>. What happens?</li>
+<li>Change the color of all points to black (use the <code>color</code> parameter in <code>geom_point()</code>)</li>
+<li>If you wanted to show different shapes for different species rather than different colors, where would you change the plot? Hint: where is the species mentioned in the code?</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
 </section>
-<section id="visualizations-with-r" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="visualizations-with-r"><span class="header-section-number">5.3</span> Visualizations with R</h2>
-<section id="base-r-vs-ggplot2" class="level3" data-number="5.3.1">
-<h3 data-number="5.3.1" class="anchored" data-anchor-id="base-r-vs-ggplot2"><span class="header-section-number">5.3.1</span> Base R vs <code>ggplot2</code></h3>
+<section id="esthetics-and-information-channels" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="esthetics-and-information-channels"><span class="header-section-number">5.2.2</span> Esthetics and information channels</h3>
+<p>The last point in the exercise was sneaky. The answer is: you would need to change the <code>aes()</code> function call. Rather than use <code>color=Species</code>, you would have to use <code>shape=Species</code>.</p>
+<p>The <code>aes()</code> function – and the concept of plot esthetics – is at the core of <code>ggplot2</code>. The idea is that a plot has different information channels, such as x position, y position, color, shape, size, etc. Each of these can be mapped or linked to a column in the input data frame. This is the job of <code>aes()</code>. The <code>geom</code> functions such as <code>geom_point()</code> then use these mapping to actually draw the plot.</p>
+<p>This is why the layers (<code>geom_point()</code>, <code>scale_color_viridis_d()</code>, etc.) are being <em>added</em> to the plot using the <code>+</code> operator. Each layer adds another piece of information on how to display the plot. Then, the plot is displayed all in one go.</p>
+<p>The assumption is also that this information is mapped automatically. You do not need (or should not need) to specify which precisely color which groups get, or which symbols are used for plotting. Rather, you chose a particular information channel (“use different shapes depending on species”) and <code>ggplot2</code> takes care of the rest.</p>
+<p>Of course, it is still possible to manually specify the colors, shapes etc. For example, and as you have seen in the previous exercise, you can use the same manual mapping of colors as above by using <code>scale_color_manual(values=colors_map)</code>.</p>
+</section>
+<section id="pca-and-scatter-plots" class="level3 page-columns page-full" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="pca-and-scatter-plots"><span class="header-section-number">5.2.3</span> PCA and scatter plots</h3>
+<div class="page-columns page-full"><p>One of the basic plots in statistics is the scatter plot, with two continuous variables. They are easy enough to generate in R, but we will do it with a twist, introducing you to a new statistical concept: <em>principal component analysis</em> (PCA). </p><div class="no-row-height column-margin column-container"><span class="margin-aside">Principal component analysis</span></div></div>
+<p>Rember how we plotted the iris data set two days ago (<a href="day3-reading-your-data.html#sec-quick-look" class="quarto-xref"><span>Section 3.5.5</span></a>)? It was easy to see the differences between the groups, and if we wanted, we could have plotted all four variables on two plots. But what if we had thousands of variables? For example, expression of thousands of genes for hundreds of samples?</p>
+<p>One of the possible approaches is to use a technique like PCA. PCA converts the data replacing the original variables with a new, smaller set, that however covers all the variance in the data. While the old variables are clearly defined, the new ones, called “principal components”, result from combining them, so they do not correspond to something specific<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>. However, they have a few nice properties:</p>
+<div class="no-row-height column-margin column-container"><div id="fn7"><p><sup>7</sup>&nbsp;Components are the linear combinations of the original variables. So for a given sample, we basically add up expression of all genes, but each gene has a different weight.</p></div></div><ul>
+<li>Most of the variance of the samples sits in the first components, then the next biggest share sits in the second etc. That means that by looking at the first few we are likely to get a very good idea of the overall differences in the data.</li>
+<li>The components are orthogonal, that is, they are not correlated with each other. This means that if, say, two groups correspond to one component, then it is quite likely that they will <em>only</em> correspond to that component. And thus we are able to say: “this component explains differences between treatments, and this explains gender”.</li>
+<li>The analysis is unsupervised, that is, we do not need to tell the algorithm which samples belong to which group. It will find the differences on its own (if there are any).</li>
+</ul>
+<p>The data set <code>Datasets/expression_data_vaccination_example.xlsx</code> contains over 8 thousand genes for over 120 samples. Luckily for us, the data is pretty much cleaned up and ready for analysis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ lubridate 1.9.3     ✔ tibble    3.2.1
+✔ purrr     1.0.2     ✔ tidyr     1.3.1
+── Conflicts ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">excel_sheets</span>(<span class="st">"Datasets/expression_data_vaccination_example.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "targets"    "genes"      "expression"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>meta <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"Datasets/expression_data_vaccination_example.xlsx"</span>,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">sheet=</span><span class="st">"targets"</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(meta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 122  15</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>trns <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"Datasets/expression_data_vaccination_example.xlsx"</span>,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">sheet=</span><span class="st">"expression"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">as.matrix</span>()</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(trns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8328  122</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(meta<span class="sc">$</span>ID <span class="sc">==</span> <span class="fu">colnames</span>(trns))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p>The <code>meta</code> data frame contains the sample information, and the <code>trns</code> data holds the actual data. We have already converted the expression data to a matrix. Before we run the PCA, however, we need to <em>transpose</em> it, that is, flip the dimensions. PCA wants the variables in columns, and samples in rows; however, the <code>trns</code> has the variables (genes) in rows and samples in columns. Note that we have checked that the column names of the <code>trns</code> data are identical to the <code>ID</code> column of the <code>meta</code> data frame.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>trns <span class="ot">&lt;-</span> <span class="fu">t</span>(trns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="page-columns page-full"><p>The PCA is a built-in function in R, and it is called <code>prcomp()</code>. We will only use a single parameter, <code>scale.</code> (mind the dot!) to tell PCA to scale the gene expression before working its magic: </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>prcomp()</code></span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(trns, <span class="at">scale.=</span><span class="cn">TRUE</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "sdev"     "rotation" "center"   "scale"    "x"       </code></pre>
+</div>
+</div>
+<p>The object returned by <code>prcomp()</code> is a list, and the element that we are particularly interested in is called <code>x</code>. This is a matrix of the principal components, PC1, PC2 etc. There are quite a few principal components, and each one has as many elements as there are samples in the data set:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(pca<span class="sc">$</span>x)[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "PC1"  "PC2"  "PC3"  "PC4"  "PC5"  "PC6"  "PC7"  "PC8"  "PC9"  "PC10"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(pca<span class="sc">$</span>x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 122 122</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(meta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 122  15</code></pre>
+</div>
+</div>
+<div class="page-columns page-full"><p>We won’t be interested in more than the first few components, but we want to see them in connection with the covariates. Therefore, we will use <code>cbind()</code> to combine the <code>meta</code> data frame with the first few columns of the <code>pca$x</code> matrix. We will use the <code>ggplot2</code> package to plot the data. </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>cbind()</code></span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>pca_df <span class="ot">&lt;-</span> <span class="fu">cbind</span>(meta, pca<span class="sc">$</span>x[,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]) <span class="sc">|&gt;</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Timepoint <span class="sc">==</span> <span class="st">"D1"</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pca_df, <span class="fu">aes</span>(<span class="at">x=</span>PC5, <span class="at">y=</span>PC6, <span class="at">color=</span>b.a.t)) <span class="sc">+</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="day5-visualization-and-statistics_files/figure-html/unnamed-chunk-12-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="boxplots-and-violin-plots" class="level3 page-columns page-full" data-number="5.2.4">
+<h3 data-number="5.2.4" class="anchored" data-anchor-id="boxplots-and-violin-plots"><span class="header-section-number">5.2.4</span> Boxplots and violin plots</h3>
+<div class="page-columns page-full"><p>For continuous data, violin plots combined with boxplots or boxplots alone are the method of choice. In the following, we will use the sepal lengths of the iris dataset<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>. First, a boxplot. We have created a boxplot a moment ago using the R base function <code>boxplot()</code>. Now we will do the same with <code>ggplot2</code>. </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>geom_boxplot()</code></span></div></div>
+<div class="no-row-height column-margin column-container"><div id="fn8"><p><sup>8</sup>&nbsp;Not the doctored version we have been loading in the previous days, but the built-in original data set. If you have created an <code>iris</code> variable in your environment, type <code>rm(iris)</code> to remove it.</p></div></div><div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Species, <span class="at">y=</span>Sepal.Length)) <span class="sc">+</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="day5-visualization-and-statistics_files/figure-html/unnamed-chunk-13-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The thick line in the middle of the box is the median, the box itself goes from the lower quartile to the upper quartile (so its vertical size is the interquartile range), and the whiskers show the range of the data (excepting the outliers). The points shown are outliers. All in all, it is a non-parametric representation – that is, we do not assume that the data is normally distributed and we can use it for any kind of continuous data.</p>
+<div class="page-columns page-full"><p>However, boxplots are still not perfect, as they do not show the actual distribution of the data. Here is a better method – we create a so-called violin plot which extrapolates a distribution from the data points.  In addition, we overlay that with a boxplot to show the quartiles and outliers.</p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>geom_violin()</code></span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Species, <span class="at">y=</span>Sepal.Length)) <span class="sc">+</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span> </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="day5-visualization-and-statistics_files/figure-html/unnamed-chunk-14-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="page-columns page-full"><p>Finally, in cases where we do not have too many data points we might want to show them directly on the plot (we can combine it with a boxplot or a violin plot). A particularly fine way of showing the actual points is implemented by the <code>ggbeeswarm</code> package and its <code>geom_beeswarm()</code> function. </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>geom_beeswarm()</code>, <code>ggbeeswarm</code></span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggbeeswarm)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Species, <span class="at">y=</span>Sepal.Length)) <span class="sc">+</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape=</span><span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_beeswarm</span>(<span class="at">alpha=</span>.<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="day5-visualization-and-statistics_files/figure-html/unnamed-chunk-15-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Show actual data
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If possible, always strive to show the actual data points (with <code>geom_beeswarm()</code> or <code>geom_jitter()</code>) in addition to the summary statistics. If not, at least show the distribution (with <code>geom_violin()</code>).</p>
+</div>
+</div>
+</section>
+<section id="boxplots-and-violin-plots-vs-bar-plots" class="level3 page-columns page-full" data-number="5.2.5">
+<h3 data-number="5.2.5" class="anchored" data-anchor-id="boxplots-and-violin-plots-vs-bar-plots"><span class="header-section-number">5.2.5</span> Boxplots and violin plots vs bar plots</h3>
+<p>Bar plots are quite common in scientific literature, despite the fact that they actually should be avoided in most scenarios <span class="citation" data-cites="barcharthabit2014">(<a href="references.html#ref-barcharthabit2014" role="doc-biblioref"><span>“Kick the Bar Chart Habit”</span> 2014</a>)</span>. Bar plots should actually only be used when showing count or proportion data, and the <span class="math inline">\(y\)</span> axis in this case should always start at zero. In all the other applications, box plots or, better, violin plots are preferred.</p>
+<p>The advantages of the box plots and violin plots over bar plots are evident when the data is not normally distributed. Let us construct a small example.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">250</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean=</span><span class="dv">20</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(n, <span class="dv">2</span>, <span class="dv">22</span>) <span class="sc">*</span> <span class="dv">20</span>  <span class="sc">+</span> <span class="fl">18.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The vectors <code>x</code> and <code>y</code> are normally distributed and beta distributed, respectively, and they have been on purpose manipulated such that the standard deviations calculated with <code>sd()</code> are the same, but the means differ a bit. This is why, on a bar chart, they would show a clear difference. Here is a ggplot2 code that produces a bar chart.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">value=</span><span class="fu">c</span>(<span class="fu">mean</span>(x), <span class="fu">mean</span>(y)), </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group=</span><span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>),</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">sd=</span><span class="fu">c</span>(<span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(n), <span class="fu">sd</span>(y)<span class="sc">/</span><span class="fu">sqrt</span>(n)))</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>group, <span class="at">y=</span>value)) <span class="sc">+</span> </span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">width=</span><span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"skyblue"</span>) <span class="sc">+</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> value <span class="sc">-</span> sd, <span class="at">ymax =</span> value <span class="sc">+</span> sd), <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Group"</span>, <span class="at">y=</span><span class="st">"Value"</span>) <span class="sc">+</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">19.5</span>, <span class="fl">20.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="day5-visualization-and-statistics_files/figure-html/unnamed-chunk-17-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Wow, that looks really different! Unfortunately, the above figure <em>is a lie</em>. It suggests something that it is not true.</p>
+<p>Firstly, instead of standard deviations, which show the true spread of the data, I used the standard error of the mean (SEM) equal to <span class="math inline">\(\frac{\sigma}{\sqrt{n}}\)</span>, which shows the precision of the mean estimate and gets very small for large data sets (but it looks good on a figure). Secondly, the y-axis does not start at zero, which is not OK.</p>
+<p>And last but not least, one should not use a bar plot for continuous data, because it does not show their real distribution. Let us now produce a box plot and a violin plot.</p>
+<div class="page-columns page-full"><p>Before, however, let me introduce yet another useful package, <code>cowplot</code><a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>. With this package, we can create composite plots that consist of several individual plots. Basically, first you create the ggplot plots and save them to a variable; then you use cowplot function <code>plot_grid()</code> to put the plots . </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>cowplot</code></span></div></div>
+<div class="no-row-height column-margin column-container"><div id="fn9"><p><sup>9</sup>&nbsp;There is also the newer <code>patchwork</code> package, which is more elegant and flexible, but the syntax requires a bit of getting used to.</p></div></div><div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>plot_grid()</code></span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">values =</span> <span class="fu">c</span>(x, y), </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"x"</span>, n), <span class="fu">rep</span>(<span class="st">"y"</span>, n)))</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>group, <span class="at">y=</span>values)) <span class="sc">+</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Group"</span>, <span class="at">y=</span><span class="st">"Value"</span>)</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="co"># violin plot</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>group, <span class="at">y=</span>values)) <span class="sc">+</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Group"</span>, <span class="at">y=</span><span class="st">"Value"</span>)</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a><span class="co"># plot_grid puts the different plots together </span></span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a><span class="co"># ncol=2 -&gt; two columns</span></span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a><span class="co"># labels=... -&gt; labels for the plots</span></span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grid</span>(p1, p2, <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="day5-visualization-and-statistics_files/figure-html/unnamed-chunk-18-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As you can see, the violin plots show a completely different story. The group y only looks larger, because the mean is driven by the long upper tail of the distribution. The medians are practically identical (median of x is 19.96, median of y is 19.98), and the distributions largely overlap.</p>
+<p>Similarly, if you were to run a t-test, which assumes normal distribution, the p-value would have been 0.0044; while in a Wilcoxon test, which does not assume normal distribution, the p-value would have been 0.15.</p>
+</section>
+<section id="heatmaps" class="level3 page-columns page-full" data-number="5.2.6">
+<h3 data-number="5.2.6" class="anchored" data-anchor-id="heatmaps"><span class="header-section-number">5.2.6</span> Heatmaps</h3>
+<div class="page-columns page-full"><p>A very common type of figure in high throughput data setting and one which is hard to achieve with other tools is the heatmap. There are numerous packages and functions (including the base R function <code>heatmap()</code>), however we will use the <code>pheatmap()</code> function from the <code>pheatmap</code> package. </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>pheatmap()</code></span></div></div>
+<p>First, however, we need some data. For starters, we take our beloved iris data set; however we will chose only 10 flowers from each species. You haven’t learned the following idiom yet, but here is how to do it efficiently in tidyverse:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>iris_sel <span class="ot">&lt;-</span> iris <span class="sc">|&gt;</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">group_by</span>(Species) <span class="sc">|&gt;</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">slice_sample</span>(<span class="at">n=</span><span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ungroup</span>()</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(iris_sel<span class="sc">$</span>Species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    setosa versicolor  virginica 
+        10         10         10 </code></pre>
+</div>
+</div>
+<p>The <code>group_by()</code> function groups the data by the <code>Species</code> column, which means that the subsequent functions will affect each group separately. The <code>slice_sample()</code> is a specialized function only for this purpose – it randomly selects rows from a data frame. Finally we remove the grouping with the <code>ungroup()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pheatmap)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>iris_mtx <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(iris_sel[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]))</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pheatmap</span>(iris_mtx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="day5-visualization-and-statistics_files/figure-html/unnamed-chunk-20-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As you can see, we have first converted the first four columns of the matrix into a data frame, then transposed it (“flipped” so the rows become columns and vice versa) and finally plotted it with <code>pheatmap()</code>.</p>
+<p>However, we do not see the species information on the plot. We can add it using a special data frame that contains the species information. We will also add a few more parameters to the <code>pheatmap()</code> function to make the plot more readable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>iris_species <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">species=</span>iris_sel<span class="sc">$</span>Species)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>foo <span class="ot">&lt;-</span> <span class="fu">pheatmap</span>(iris_mtx, <span class="at">labels_col=</span>iris_sel<span class="sc">$</span>Species,</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">color =</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"white"</span>, <span class="st">"red"</span>))(<span class="dv">100</span>)</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="day5-visualization-and-statistics_files/figure-html/unnamed-chunk-21-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="output-formats" class="level3 page-columns page-full" data-number="5.2.7">
+<h3 data-number="5.2.7" class="anchored" data-anchor-id="output-formats"><span class="header-section-number">5.2.7</span> Output formats</h3>
+<p>We will not be spending time here on the details of how to create different output formats for plots; however, there is one thing that we want to mention.</p>
+<p>In general, there are two types of graphical files: raster (bitmap) and vector graphics. Raster graphics are made of pixels, like photos, and are good for complex images. Vector graphics are made of lines and shapes, like drawings, and are good for plots.</p>
+<p>The advantage of vector graphics is not only that you can zoom in as much as you want and the image will not get pixelated. First and foremost, you can edit them using an appropriate tool. Many people use the commercial Adobe Illustrator for this task, but there are also free and open source tools like <a href="https://inkscape.org/">Inkscape</a>. Both these latter tools will do the job in a scientific setting – they will allow you to change the colors, the fonts, the line thickness, the text shown etc. of your plots.</p>
+<p>Therefore, if possible, you should always save your plots in a vector format. You can always convert them to a raster format later, but once a plot is in a raster format, converting it to a vector format is practically impossible. The only exception is when you have an image with millions of data points – sometimes this may challenge your computer’s memory (vector graphics is more computationally intensive than raster graphics).</p>
+<p>R can produce vector graphics in the PDF and in the SVG format. Both formats can be edited in Inkscape or Illustrator, but the SVG format is also suitable for HTML pages, because SVG is a standard related to HTML – in fact, all the plots in this book are in SVG format.</p>
+<p>To choose SVG or PDF format, you have the following options:</p>
+<p><strong>Use Rstudio.</strong> In the right hand “Plots” tab on the lower right panel, you can click on “Export” and choose one of the available formats, including PDF or SVG.</p>
+<p><strong>Using R markdown or Quarto.</strong> You can either use global document options or per-chunk options.</p>
+<p>For global options, include the following code at the beginning of your R markdown file, just after the header:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r include=FALSE}</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(dev="svg")</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Alternatively, insert this into the header:</p>
+<pre><code>knitr:
+  opts_chunk:
+    dev: svg</code></pre>
+<p>If you want to make sure that one specific chunk produces SVG, you can always set the option in the given chunk:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r dev="svg"}</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="in">plot(1:10)</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Directly creating graphics in your script.</strong> If you want your script to produce a file with the plot, you can do that in one of the many ways. Two of them are shown below, one using <code>svg()</code>, and the other one using <code>pdf()</code> or <code>cairo_pdf()</code><a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>. Both commands need to be finalized with <code>dev.off()</code>:</p>
+<div class="no-row-height column-margin column-container"><div id="fn10"><p><sup>10</sup>&nbsp;The <code>cairo_pdf()</code> supports a wider range of characters, including Unicode characters, and allows font embedding. Long story short, use it if your fonts are garbled.</p></div></div><div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># producing an SVG image file</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">svg</span>(<span class="st">"test.svg"</span>, <span class="at">width=</span><span class="dv">14</span>, <span class="at">height=</span><span class="dv">7</span>)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This produces an SVG file “test.svg” with the nominal size 14 x 7 inches.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># produce a PDF file</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">"test.pdf"</span>, <span class="at">width=</span><span class="dv">14</span>, <span class="at">height=</span><span class="dv">7</span>)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This produces a PDF file “test.pdf” with the nominal size 14 x 7 inches.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Remember!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use SVG format for your plots whenever possible.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="basic-statistics-with-r" class="level2 page-columns page-full" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="basic-statistics-with-r"><span class="header-section-number">5.3</span> Basic statistics with R</h2>
+<section id="statistics-with-r" class="level3 page-columns page-full" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="statistics-with-r"><span class="header-section-number">5.3.1</span> Statistics with R</h3>
+<p>R is a powerful tool for statistics. It has a staggering number of packages that can be used for statistical analysis. I would venture the guess that if someone somewhere came up with a statistical method, then there is an R package for it<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>.</p>
+<div class="no-row-height column-margin column-container"><div id="fn11"><p><sup>11</sup>&nbsp;Almost the same goes for bioinformatics and visualization.</p></div></div><p>One interesting fact about statistics is that is is <em>way</em> harder than programming in R. In fact, after some initial learning curve, you will find that it is much harder to understand, say, which statistical test you should use than how to actually run it in R. You will also see that it is harder to understand the plots that you have produced then to actually produce them.</p>
+<p>Nonetheless, it takes a while to get into the “R mindset” of doing statistics. It is done very much differently than in UI-based software like Graphpad Prism or Excel.</p>
+<div class="callout callout-style-simple callout-caution no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exr-basic-statistics" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.6 (P values)</strong></span> P-values are one of the most basic concepts in statistics, and part of the language of science – it is hard to find a scientific paper without any p-values.</p>
+<ul>
+<li>Take a piece of paper or open a text editor and write down a one- or two-sentence explanation of what a p-value is.</li>
+<li>Only when you have done this, read the section “Clarifications about p-values” in <a href="https://en.wikipedia.org/wiki/Misuse_of_p-values">this</a> Wikipedia article. Did you get it right? If yes, you are in the minority of scientists.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="descriptive-statistics" class="level3 page-columns page-full" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="descriptive-statistics"><span class="header-section-number">5.3.2</span> Descriptive statistics</h3>
+<div class="page-columns page-full"><p>You have already seen some basic statiscs in R (see Day 1, for example  <a href="day1-intro-to-r.html#tip-functions" class="quarto-xref">Tip&nbsp;<span>1.1</span></a>). Here is a quick reminder of how to get some basic statistics for a vector of numbers:</p><div class="no-row-height column-margin column-container"><span class="margin-aside">Descriptive statistics</span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="co"># mean</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.04245759</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># median</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.06697673</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># standard deviation</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.033466</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Some basic statistics in one go</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+-2.96087 -0.69269  0.06698  0.04246  0.74825  3.19717 </code></pre>
+</div>
+</div>
+<p>For a vector of numbers, the <code>summary()</code> function returns a vector with six numbers. Four of them should be self-explanatory: the minimum, median, mean, and maximum. The other two are the first and the third quartile.</p>
+<div class="page-columns page-full"><p>The first number is the 1st quartile, also called “the lower quartile” or  25th percentile, which means that 25% of the data are below that number. The second is the 75th percentile (or the upper quartile), which means that 75% of the data are below the number. Together, between the first and the second number, there are 50% of the data. You can check it for yourself:</p><div class="no-row-height column-margin column-container"><span class="margin-aside">Quartiles</span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">summary</span>(x)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(x <span class="sc">&lt;</span> s[<span class="dv">2</span>]) <span class="sc">/</span> <span class="fu">length</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.25</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(x <span class="sc">&gt;</span> s[<span class="dv">5</span>]) <span class="sc">/</span> <span class="fu">length</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.25</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(x <span class="sc">&gt;</span> s[<span class="dv">2</span>] <span class="sc">&amp;</span> x <span class="sc">&lt;</span> s[<span class="dv">5</span>]) <span class="sc">/</span> <span class="fu">length</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5</code></pre>
+</div>
+</div>
+<div class="page-columns page-full"><p>Of particular interest is the so called interquartile range (IQR), which is the difference between the upper and lower quartile.  Just like the median is a robust, non-parametric measure of the “center” of the data, the IQR is a robust, non-parametric measure of the “spread” of the data. While median corresponds to the parametric mean, IQR corresponds to the standard deviation.</p><div class="no-row-height column-margin column-container"><span class="margin-aside">Interquartile range</span></div></div>
+<p>In non-normally distributed data, for example count data (when we count things) median and IQR are often more informative than mean and standard deviation. We will see that later when we come to visualizing data with bar plots.</p>
+<div class="page-columns page-full"><p>You can get the IQR using the <code>IQR()</code> function: </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>IQR()</code></span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">IQR</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.440937</code></pre>
+</div>
+</div>
+<p>For data frames, you can either use the <code>summary()</code> function or use the <code>summary_colorDF</code> function from the <code>colorDF</code> package (see <a href="day3-reading-your-data.html#sec-diagnosing" class="quarto-xref"><span>Section 3.3.1</span></a> and <a href="day3-reading-your-data.html#sec-colorDF" class="quarto-xref"><span>Section 3.3.2</span></a>).</p>
+</section>
+<section id="simple-tests" class="level3 page-columns page-full" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="simple-tests"><span class="header-section-number">5.3.3</span> Simple tests</h3>
+<p>Most everyday statistical tests are available in base R without the need for loading any additional packages. Here we will show you some of them.</p>
+<div class="page-columns page-full"><p><strong>t-test.</strong> The Student’s test is one of the most common tests in all statistics. It compares two groups of data. In its simplest form, the function <code>t.test()</code> takes two vectors of numbers. </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>t.test()</code></span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># simulate two vectors with different means</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="at">mean=</span><span class="dv">1</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="at">mean=</span><span class="dv">3</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a><span class="co"># perform the t-test</span></span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  x and y
+t = -6.4119, df = 24.521, p-value = 1.129e-06
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -2.491792 -1.279291
+sample estimates:
+mean of x mean of y 
+0.8976566 2.7831983 </code></pre>
+</div>
+</div>
+<p>The actual output of the <code>t.test()</code> function is a list with a lot of information, but when printed to the console it shows a human-readable summary.</p>
+<p>It is often useful to extract and format the p-value from the output of the <code>t.test()</code> function. You can save the t.test output to a variable and then access the element <code>p.value</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">t.test</span>(x, y)</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.128802e-06</code></pre>
+</div>
+</div>
+<div class="page-columns page-full"><p>To show the p-value in a more readable format, you can use the <code>format.pval</code>  function which converts the number to a string with the correct number of significant digits:</p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>format.pval(..., digits=2)</code></span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format.pval</span>(res<span class="sc">$</span>p.value, <span class="at">digits=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "1.1e-06"</code></pre>
+</div>
+</div>
+<p>This allows us to include the p-value in a sentence, for example like this:</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>"The p-value of the t-test </span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>was <span class="in">`​r format.pval(res$p.value, digits=2)`</span>."</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will be rendered as: “The p-value of the t-test was 1.1e-06.”</p>
+<div class="page-columns page-full"><p>If we doo many tests or want to save the test results in a spreadsheet, it might be useful to use the <code>tidy()</code> function from the <code>broom</code> package. </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>tidy()</code></span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 10
+  estimate estimate1 estimate2 statistic    p.value parameter conf.low conf.high method                  alternative
+     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;                   &lt;chr&gt;      
+1    -1.89     0.898      2.78     -6.41 0.00000113      24.5    -2.49     -1.28 Welch Two Sample t-test two.sided  </code></pre>
+</div>
+</div>
+<p>The <code>tidy()</code> function returns a data frame with the test results. It understands many different statistical tests, not only the t-test.</p>
+<div class="callout callout-style-simple callout-caution no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exr-t-test" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 5.7 (T-test)</strong></span> Use either the builtin iris dataset or the cleaned-up version of the doctored data set from Day 3. Perform a t-test to compare the sepal length between <em>Iris setosa</em> and <em>Iris versicolor</em>, as well as between <em>Iris versicolor</em> and <em>Iris virginica</em>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="page-columns page-full"><p><strong>Paired t-test.</strong> The paired t-test is a special case of the t-test where  the two groups are not independent. For example, you might have measured the same individuals before and after a treatment. <strong>You are not allowed to use a regular t-test if the data is paired</strong>, because one of the most fundamental and important assumptions is not met. Also, in many cases, using a paired t-test will give you more statistical power.</p><div class="no-row-height column-margin column-container"><span class="margin-aside">Paired t-test with <code>paired=TRUE</code></span></div></div>
+<p>Consider this example. We first start with randomized vector <code>x</code>, then build vector <code>y</code> by adding a fixed effect and an error term:</p>
+<div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>boxplot()</code></span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="at">mean=</span><span class="dv">1</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="fl">0.5</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span>.<span class="dv">5</span>)</span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="day5-visualization-and-statistics_files/figure-html/unnamed-chunk-31-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x, y, <span class="at">paired=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Paired t-test
+
+data:  x and y
+t = -3.8378, df = 14, p-value = 0.001811
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ -0.6702263 -0.1896676
+sample estimates:
+mean difference 
+      -0.429947 </code></pre>
+</div>
+</div>
+<p>The <code>paired=TRUE</code> argument tells R that the two vectors are paired. We get a p-value of 0.0018, whereas with regular t-test we would have gotten a p-value of 0.3.</p>
+<p>Incidentally, we produced a boxplot. We will talk about boxplots in a moment.</p>
+<div class="page-columns page-full"><p><strong>Wilcoxon test.</strong> The Wilcoxon test is a non-parametric version of the t-test, and almost as powerful. Use it via <code>wilcox.test()</code>: </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>wilcox.test()</code></span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Wilcoxon rank sum exact test
+
+data:  x and y
+W = 85, p-value = 0.2671
+alternative hypothesis: true location shift is not equal to 0</code></pre>
+</div>
+</div>
+<div class="page-columns page-full"><p><strong><span class="math inline">\(\chi^2\)</span> (Chi-square) test.</strong> If we have two categorical vectors, we can  use the <span class="math inline">\(\chi^2\)</span> test. Consider the results of the gene expression analysis we have looked at yesterday. We can define two vectors: “significant/non-significant” and “interferon/noninterferon”. These can be logical or character vectors, it doesn’t matter:</p><div class="no-row-height column-margin column-container"><span class="margin-aside"><span class="math inline">\(\chi^2\)</span> test</span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>tr_res <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Datasets/transcriptomics_results.csv"</span>)</span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>tr_res <span class="ot">&lt;-</span> <span class="fu">select</span>(tr_res, </span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Gene=</span>GeneName, Description,</span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">logFC=</span>logFC.F.D1, <span class="at">FDR=</span>qval.F.D1)</span>
+<span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a>interferon <span class="ot">&lt;-</span> <span class="fu">grepl</span>(<span class="st">"interferon"</span>, tr_res<span class="sc">$</span>Description)</span>
+<span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a>significant <span class="ot">&lt;-</span> tr_res<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.01</span></span>
+<span id="cb79-8"><a href="#cb79-8" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(significant, interferon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           interferon
+significant FALSE  TRUE
+      FALSE 40725    59
+      TRUE    834    21</code></pre>
+</div>
+</div>
+<div class="page-columns page-full"><p>Above we constructed a <em>contingency</em> table. Rows show the two  values of <code>significant</code> vector, columns – same for the <code>interferon</code> vector. In other words, most (40725) genes are neither significant nor interferons. However, out of 855 significant genes, as much as 21 have “interferon” in their description. And vice verse, out of the 80 interferon genes, more than a third are significant. Is this significant? To answer this, we can use the <code>chisq.test()</code>. </p><div class="no-row-height column-margin column-container"><span class="margin-aside">Contingency table with <code>table(x, y)</code></span><span class="margin-aside"><code>chisq.test()</code></span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(significant, interferon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test with Yates' continuity correction
+
+data:  significant and interferon
+X-squared = 221.44, df = 1, p-value &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Yep, looks like it. In fact, the above was a simple case of gene set enrichment analysis.</p>
+</section>
+<section id="correlations" class="level3" data-number="5.3.4">
+<h3 data-number="5.3.4" class="anchored" data-anchor-id="correlations"><span class="header-section-number">5.3.4</span> Correlations</h3>
+</section>
+<section id="simple-linear-models" class="level3 page-columns page-full" data-number="5.3.5">
+<h3 data-number="5.3.5" class="anchored" data-anchor-id="simple-linear-models"><span class="header-section-number">5.3.5</span> Simple linear models</h3>
+<p>We end with an example of linear regression, and the most important reason for that is the introduction of formulas in R.</p>
+<p>A formula is a weird little construct. It contains variables, and links them using the <code>~</code> (tilde) sign. On the left side of the <code>~</code> are the <em>dependent</em> variables (the “y”), on the right side are the <em>independent</em> variables (the “x”, or covariates).</p>
+<p>Depending on the particular function, the formula can mean different things and will have different syntax. For example, in a package like the <code>DESeq2</code> from Bioconductor, there will be nothing on the left side – because <code>DESeq2</code> understands that the formula applies to every single gene in the input matrix.</p>
+<div class="page-columns page-full"><p>Here we will use the <code>lm()</code> function, which is the basic linear regression  included in base R. Somewhat similar to tidyverse, you can use column names of a data frame in the formula, and specify the data frame with the <code>data</code> parameter. We will use it to model regression of the mathematical form</p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>lm()</code></span></div></div>
+<p><span class="math display">\[ y = a + b \cdot x + \epsilon \]</span></p>
+<p>where <span class="math inline">\(a\)</span> is the intercept, <span class="math inline">\(b\)</span> is the slope, and <span class="math inline">\(\epsilon\)</span> is the error.</p>
+</section>
+<section id="correcting-for-multiple-testing" class="level3" data-number="5.3.6">
+<h3 data-number="5.3.6" class="anchored" data-anchor-id="correcting-for-multiple-testing"><span class="header-section-number">5.3.6</span> Correcting for multiple testing</h3>
+</section>
+</section>
+<section id="conclusions" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">5.4</span> Conclusions</h2>
+<section id="where-to-go-from-here" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="where-to-go-from-here"><span class="header-section-number">5.4.1</span> Where to go from here</h3>
+<p>There are numerous resources for R on the web, allow me to recommend a few.</p>
+<ul>
+<li><a href="https://stackoverflow.com">StackOverflow</a> – this is a general Q &amp; A forum for software developers. Most of the questions you have someone has previously asked here.</li>
+<li>Online R books
+<ul>
+<li><a href="https://rstudio-education.github.io/hopr/">Hands-On programming with R</a> A very different approach to teachin R to beginners than the one that I prefer, but maybe you will find it better. Worth checking in any case.</li>
+<li><a href="https://r4ds.had.co.nz/">R for data science (tidyverse)</a> The tidyverse book, written by the main tidyverse developer.</li>
+<li><a href="https://r-graphics.org/">R graphics cookbook</a> The cookbook format splits the information in small “recipies” for common problems.</li>
+<li><a href="https://bookdown.org/yihui/rmarkdown/">R markdown: the definitive guide</a> A comprehensive guide to R markdown written by the people who created it.</li>
+</ul></li>
+<li>Other books:
+<ul>
+<li><a href="https://www.google.com/search?q=the+r+book">The R Book by Michael J. Crawley</a> – this is a magnificent book on statistics. It uses very conservative R language (no tidyverse at all), but it discusses at length even the more complex statistical issues. I recommend this book to every person willing to learn statistics with R.</li>
+</ul></li>
+<li>Large Language Models (LLMs): I have good experiences with LLMs (ChatGPT, Perplexity AI) for learning programming languages. While complex tasks may be out of reach for them, they are very good at explaining basics. “How do I do X in R?” or “Why doesn’t the following code work?” seem to work quite well. RStudio allows you also to use <a href="https://docs.posit.co/ide/user/ide/guide/tools/copilot.html">Copilot</a> which is an LLM model that watches the code you write and tries to guess what you are trying to do. Just remember, that the one thing that LLMs don’t know how to say is “I don’t know”. If something doesn’t make sense, or if it is beyond the scope of their learning, they will “hallucinate” – give good sounding advice which is totally bonkers.</li>
+</ul>
+</section>
+<section id="famous-last-words" class="level3" data-number="5.4.2">
+<h3 data-number="5.4.2" class="anchored" data-anchor-id="famous-last-words"><span class="header-section-number">5.4.2</span> Famous last words</h3>
+<p>We are now at the end of Five Days of R. You are basically on the beginning of your journey. Here is my last advice to you.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Get on with R
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Start working with R, right now, for all your projects; for statistics, data management and even preparing reports and documents.</p>
+<p>At first, doing the same task in R will take much more time then the same task in programs you used before. You will feel that you are wasting your time.</p>
+<p>You are not. Sooner then you think, it will pay off.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="review" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="review"><span class="header-section-number">5.5</span> Review</h2>
+<ul>
+<li>R markdown / Quarto
+<ul>
+<li>creating R markdown documents</li>
+<li>basic markdown formatting (<strong>bold</strong>, <em>italic</em> etc.)</li>
+<li>including R chunks</li>
+<li>creating output in different formats</li>
+<li>choosing an output format</li>
+</ul></li>
+<li>Visualisations
+<ul>
+<li>basic scatterplots with <code>ggplot()</code></li>
+<li>understanding esthetics</li>
+<li>box plots with <code>geom_boxplot()</code> and violin plots with <code>geom_violin()</code></li>
+</ul></li>
+</ul>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-barcharthabit2014" class="csl-entry" role="listitem">
+<span>“Kick the Bar Chart Habit.”</span> 2014. <em>Nature Methods</em> 11: 113. <a href="https://doi.org/10.1038/nmeth.2837">https://doi.org/10.1038/nmeth.2837</a>.
+</div>
 <div id="ref-weiner2022venn" class="csl-entry" role="listitem">
 Weiner 3rd, January, Benedikt Obermayer, and Dieter Beule. 2022. <span>“Venn Diagrams May Indicate Erroneous Statistical Reasoning in Transcriptomics.”</span> <em>Frontiers in Genetics</em> 13: 818683. <a href="https://www.frontiersin.org/journals/genetics/articles/10.3389/fgene.2022.818683/full">https://www.frontiersin.org/journals/genetics/articles/10.3389/fgene.2022.818683/full</a>.
 </div>
 </div>
-</section>
 </section>
 
 
