@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Appendix 1: Wide vs long data – Five days of R</title>
+<title>Appendix: Wide vs long data – Five days of R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./solutions.html" rel="next">
+<link href="./appendix-more-stats.html" rel="next">
 <link href="./day5-visualization-and-statistics.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -138,23 +138,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./day1-intro-to-r.html"> 
-<span class="menu-text">Day One</span></a>
+<span class="menu-text">One</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./day2-complex-structures.html"> 
-<span class="menu-text">Day Two</span></a>
+<span class="menu-text">Two</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./day3-reading-your-data.html"> 
-<span class="menu-text">Day Three</span></a>
+<span class="menu-text">Three</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./day4-manipulating-your-data.html"> 
-<span class="menu-text">Day Four</span></a>
+<span class="menu-text">Four</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./day5-visualization-and-statistics.html"> 
-<span class="menu-text">Day Five</span></a>
+<span class="menu-text">Five</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./solutions.html"> 
@@ -178,7 +178,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appendix-wide-long.html">Appendix 1: Wide vs long data</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./appendix-wide-long.html">Appendix: Wide vs long data</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -231,13 +231,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./day5-visualization-and-statistics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Rmarkdown, basic statistics and visualizations</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">R markdown, basic statistics and visualizations</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./appendix-wide-long.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Appendix 1: Wide vs long data</span></a>
+ <span class="menu-text">Appendix: Wide vs long data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix-more-stats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">More statistics and visualizations</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -273,7 +279,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Appendix 1: Wide vs long data</h1>
+<h1 class="title">Appendix: Wide vs long data</h1>
 </div>
 
 
@@ -429,7 +435,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><code>labresults_wide.csv</code></li>
 <li>The built-in iris data set (<code>data(iris)</code>)</li>
-<li><code>cars.xlsx</code> (tricky!)</li>
+<li><code>cars.xlsx</code> (tricky! hint: how do you tell which value in the long format belongs to which row in the wide format?)</li>
 </ul>
 <p>Clean up and convert to long format (what seems to be the problem? How do we deal with that?):</p>
 <ul>
@@ -1010,13 +1016,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./day5-visualization-and-statistics.html" class="pagination-link" aria-label="Rmarkdown, basic statistics and visualizations">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Rmarkdown, basic statistics and visualizations</span></span>
+      <a href="./day5-visualization-and-statistics.html" class="pagination-link" aria-label="R markdown, basic statistics and visualizations">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">R markdown, basic statistics and visualizations</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./solutions.html" class="pagination-link" aria-label="Solutions to Exercises">
-        <span class="nav-page-text">Solutions to Exercises</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./appendix-more-stats.html" class="pagination-link" aria-label="More statistics and visualizations">
+        <span class="nav-page-text">More statistics and visualizations</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

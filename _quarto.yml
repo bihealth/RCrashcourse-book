@@ -16,7 +16,7 @@ book:
     - day3-reading-your-data.qmd
     - day4-manipulating-your-data.qmd
     - day5-visualization-and-statistics.qmd
-    - appendix-wide-long.qmd
+    - appendix-more-stats.qmd
     - solutions.qmd
     - references.qmd
   sidebar:

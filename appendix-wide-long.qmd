@@ -1,4 +1,4 @@
-# Appendix 1: Wide vs long data {.unnumbered}
+# Appendix: Wide vs long data {.unnumbered}
 
 ## Wide and Long format
 
@@ -109,7 +109,8 @@ Convert the following files to long format:
 
  * `labresults_wide.csv`
  * The built-in iris data set (`data(iris)`)
- * `cars.xlsx` (tricky!)
+ * `cars.xlsx` (tricky! hint: how do you tell which value in the long
+   format belongs to which row in the wide format?)
 
 Clean up and convert to long format (what seems to be the problem? How do
 we deal with that?):
