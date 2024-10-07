@@ -6,8 +6,6 @@ library(tidyverse)
 library(readxl)
 ```
 
-## Day 1
-
 ## Day 2
 
 ### Matrices (@exr-day2-matrices) {#sec-day2-matrices}

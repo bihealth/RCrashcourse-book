@@ -268,11 +268,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#day-1" id="toc-day-1" class="nav-link active" data-scroll-target="#day-1">Day 1</a></li>
-  <li><a href="#day-2" id="toc-day-2" class="nav-link" data-scroll-target="#day-2">Day 2</a>
+  <li><a href="#day-2" id="toc-day-2" class="nav-link active" data-scroll-target="#day-2">Day 2</a>
   <ul class="collapse">
-  <li><a href="#sec-day2-matrices" id="toc-sec-day2-matrices" class="nav-link" data-scroll-target="#sec-day2-matrices">Matrices (Exercise&nbsp;<span>2.2</span>)</a></li>
-  <li><a href="#sec-day2-data-frames" id="toc-sec-day2-data-frames" class="nav-link" data-scroll-target="#sec-day2-data-frames">Data frames (Exercise&nbsp;<span>2.3</span>)</a></li>
+  <li><a href="#sec-day2-matrices" id="toc-sec-day2-matrices" class="nav-link" data-scroll-target="#sec-day2-matrices">Matrices (Exercise&nbsp;<span>2.3</span>)</a></li>
+  <li><a href="#sec-day2-data-frames" id="toc-sec-day2-data-frames" class="nav-link" data-scroll-target="#sec-day2-data-frames">Data frames (Exercise&nbsp;<span>2.5</span>)</a></li>
   </ul></li>
   <li><a href="#day-3" id="toc-day-3" class="nav-link" data-scroll-target="#day-3">Day 3</a>
   <ul class="collapse">
@@ -312,13 +311,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="day-1" class="level2">
-<h2 class="anchored" data-anchor-id="day-1">Day 1</h2>
-</section>
 <section id="day-2" class="level2">
 <h2 class="anchored" data-anchor-id="day-2">Day 2</h2>
 <section id="sec-day2-matrices" class="level3">
-<h3 class="anchored" data-anchor-id="sec-day2-matrices">Matrices (<a href="day2-complex-structures.html#exr-day2-matrices" class="quarto-xref">Exercise&nbsp;<span>2.2</span></a>)</h3>
+<h3 class="anchored" data-anchor-id="sec-day2-matrices">Matrices (<a href="day2-complex-structures.html#exr-day2-matrices" class="quarto-xref">Exercise&nbsp;<span>2.3</span></a>)</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generate random readouts</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>readouts <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">48</span>)</span>
@@ -361,26 +357,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wells with inhibitor 3</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>res_mtx[ <span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">5</span><span class="sc">:</span><span class="dv">6</span> ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>             Inh3_control   Inh3_low
-Inh1_control    0.4550334 0.86579488
-Inh1_low        0.8449789 0.35691977
-Inh1_medium     0.5854112 0.08664418
-Inh1_high       0.6363096 0.06182834</code></pre>
+<pre><code>             Inh3_control    Inh3_low
+Inh1_control    0.3321711 0.006345858
+Inh1_low        0.3982630 0.079824351
+Inh1_medium     0.2210074 0.631413982
+Inh1_high       0.3061475 0.129795418</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inhibitor 1 as well as 2</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>inh1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Inh1_low"</span>, <span class="st">"Inh1_medium"</span>, <span class="st">"Inh1_high"</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>inh2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Inh2_low"</span>, <span class="st">"Inh2_high"</span>)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>res_mtx[ inh1, inh2 ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>              Inh2_low Inh2_high
-Inh1_low    0.01602508 0.4150862
-Inh1_medium 0.43053481 0.6865115
-Inh1_high   0.82219829 0.9782988</code></pre>
+<pre><code>             Inh2_low Inh2_high
+Inh1_low    0.4156938 0.9474393
+Inh1_medium 0.8910807 0.4154934
+Inh1_high   0.3061216 0.1372378</code></pre>
 </div>
 </div>
 </section>
 <section id="sec-day2-data-frames" class="level3">
-<h3 class="anchored" data-anchor-id="sec-day2-data-frames">Data frames (<a href="day2-complex-structures.html#exr-day2-data-frames" class="quarto-xref">Exercise&nbsp;<span>2.3</span></a>)</h3>
+<h3 class="anchored" data-anchor-id="sec-day2-data-frames">Data frames (<a href="day2-complex-structures.html#exr-day2-data-frames" class="quarto-xref">Exercise&nbsp;<span>2.5</span></a>)</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mtx <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">15</span>), <span class="at">nrow=</span><span class="dv">5</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(mtx)</span>
@@ -394,12 +390,12 @@ Inh1_high   0.82219829 0.9782988</code></pre>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>            X           Y          Z A sequence
-a  1.64946994 -1.02661992  0.1490667 A     0.00
-b -1.29539059 -0.36477979  0.2781169 A     0.25
-c -0.58434990 -0.04227556  0.5219598 A     0.50
-d  0.08594122  2.06608862 -0.6443339 A     0.75
-e -2.94363608  0.16223808  0.5503117 A     1.00</code></pre>
+<pre><code>            X         Y           Z A sequence
+a  1.09511183  1.529108 -0.07401407 A     0.00
+b -0.41978915  0.301408  1.15992497 A     0.25
+c -1.74822669 -1.431226 -0.03406642 A     0.50
+d -1.40055330  1.067503 -0.43711907 A     0.75
+e -0.05642588  1.006204  1.06145254 A     1.00</code></pre>
 </div>
 </div>
 </section>

@@ -150,17 +150,19 @@ Hint: pick up a dictionary... or any other alphabetically sorted list.
 ::: {#exr-day2-logical-vectors}
 ## Creating logical vectors
 
-Create a vector with 20 random numbers as follows:
+Create a vector with 50 random numbers as follows:
 
 
 ```{r eval=FALSE}
-vec <- rnorm(20)
+vec <- rnorm(50)
 ```
 
 How can you filter out all the numbers that are greater than 0.5?
 
 How can you filter out all the numbers that are (i) greater than 0.5 and
 (ii) smaller than 1.0?
+
+How many numbers that are greater than 0.5 are in your vector?
 
 :::
 :::

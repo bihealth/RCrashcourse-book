@@ -481,12 +481,13 @@ TRUE, FALSE and T and F
 </div>
 <div class="callout-body-container">
 <div id="exr-day2-logical-vectors" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 2.1 (Creating logical vectors)</strong></span> Create a vector with 20 random numbers as follows:</p>
+<p><span class="theorem-title"><strong>Exercise 2.1 (Creating logical vectors)</strong></span> Create a vector with 50 random numbers as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>vec <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>vec <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>How can you filter out all the numbers that are greater than 0.5?</p>
 <p>How can you filter out all the numbers that are (i) greater than 0.5 and (ii) smaller than 1.0?</p>
+<p>How many numbers that are greater than 0.5 are in your vector?</p>
 </div>
 </div>
 </div>
@@ -893,16 +894,16 @@ $age
 [1] 42
 
 $measurements
-[1] 0.4834412 0.5662668 0.9347117 0.9624288 0.6922349</code></pre>
+[1] 0.2114829 0.5853316 0.5339132 0.5395957 0.2995215</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>patient_data<span class="sc">$</span>measurements[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.4834412</code></pre>
+<pre><code>[1] 0.2114829</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>patient_data<span class="sc">$</span>measurements[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">42</span></span>
 <span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>patient_data<span class="sc">$</span>measurements <span class="sc">*</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 126.000000   1.698800   2.804135   2.887286   2.076705</code></pre>
+<pre><code>[1] 126.0000000   1.7559948   1.6017397   1.6187872   0.8985646</code></pre>
 </div>
 </div>
 <p>Since the lists are named, there must be a way to access and modify these names. And, of course, there is: the <code>names()</code> function.</p>
@@ -996,13 +997,13 @@ Boxplot
     Welch Two Sample t-test
 
 data:  group_a and group_b
-t = -3.7371, df = 17.959, p-value = 0.001514
+t = -3.9893, df = 17.092, p-value = 0.0009402
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -5.201311 -1.457336
+ -4.592864 -1.416151
 sample estimates:
 mean of x mean of y 
- 9.813547 13.142870 </code></pre>
+ 10.56279  13.56730 </code></pre>
 </div>
 </div>
 <p>This is because R has a special function for formatting the results of a t-test<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, so that it is easier to read.</p>
@@ -1010,7 +1011,7 @@ mean of x mean of y
 <div class="cell">
 <div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>t_test<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.001513669</code></pre>
+<pre><code>[1] 0.000940224</code></pre>
 </div>
 </div>
 </section>
