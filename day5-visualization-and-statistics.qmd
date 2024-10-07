@@ -12,7 +12,7 @@ set.seed(42)
 
 ### What is R markdown?
 
-R markdown is a remarkably simple to use and yet powerfull tool. The basic idea is as
+R markdown is a remarkably simple to use and yet powerful tool. The basic idea is as
 follows: you write a document in a simple text format – for example, a
 manuscript, a report, or even a thesis. In that document, you include R
 "code chunks". These code chunks are executed by R, and the output is
