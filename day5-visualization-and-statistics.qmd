@@ -135,7 +135,7 @@ formatting marks*
 |`3^2^`|3^2^|
 |`log~2~`|log~2~|
 |`` `code` ``|`code`|
-|`[URL](https://cubi.bihealth.org)`|[link](https://cubi.bihealth.org)|
+|`[link to website](https://cubi.bihealth.org)`|[link to website](https://cubi.bihealth.org)|
 
 ----
 
@@ -323,7 +323,7 @@ For example, when I write that the $\pi$ constant is
 equal to `​r pi`, I am using an inline code chunk:
 ```
 
-This point is not to save typing. The point is to *update* your document
+The point is not to save typing. The point is to *update* your document
 whenever you *update* your analysis. For example, if you add samples to
 your data and re-run the analysis, the number of samples that you have
 written in your method section must reflect the change. If you use an
@@ -696,8 +696,9 @@ haven't learned the following idiom yet, but here is how to do it
 efficiently in tidyverse:
 
 
-```{r}
+```{r message=FALSE,warning=FALSE}
 library(tidyverse)
+
 iris_sel <- iris |>
             group_by(Species) |>
             slice_sample(n=10) |>
