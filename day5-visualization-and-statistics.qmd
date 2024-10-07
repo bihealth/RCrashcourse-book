@@ -67,9 +67,10 @@ What are the disadvantages?
    after today you will know all the most important stuff.
  * **No fine control over the layout.** While you can easily use simple
    formatting commands, you will have to resort to more complex tools to
-   control things like font size of the chapter headers[^css]. Some of us
-   consider it to be a good thing[^me] – this is the boring part that the
-   computers should take care of, but sometimes it is annoying. However,
+   control things like font size of the chapter headers[^css]. Many people
+   consider it to be a good thing – this is the boring part that the
+   computers should take care of, you shouldn't worry about formatting but
+   about your text, but sometimes it *is* annoying. However,
    you can always generate a Word file with R markdown that uses a Word
    template, and then fine tune it in Word.
  * **Collaboration.** Collaborating with markdown is not as easy as with a
@@ -82,7 +83,6 @@ precisely, but then you have to learn LaTeX and CSS, respectively. For
 Word, the only option is to use a Word file with pre-defined styles as a
 template.
 
-[^me]: Me.
 
 ::: {.callout-tip}
 ## R markdown vs Quarto
