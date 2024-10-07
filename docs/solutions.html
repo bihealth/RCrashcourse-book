@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -31,7 +65,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./references.html" rel="next">
-<link href="./appendix-wide-long.html" rel="prev">
+<link href="./appendix-more-stats.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -81,7 +115,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="custom.css">
 </head>
 
-<body class="nav-sidebar floating nav-fixed">
+<body class="nav-sidebar floating nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -203,7 +237,13 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./appendix-wide-long.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Appendix 1: Wide vs long data</span></a>
+ <span class="menu-text">Appendix: Wide vs long data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix-more-stats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Appendix: More statistics and visualizations</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -228,12 +268,30 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-exercise-merging" id="toc-sec-exercise-merging" class="nav-link active" data-scroll-target="#sec-exercise-merging">The merging of two data frames</a></li>
+  <li><a href="#day-1" id="toc-day-1" class="nav-link active" data-scroll-target="#day-1">Day 1</a></li>
+  <li><a href="#day-2" id="toc-day-2" class="nav-link" data-scroll-target="#day-2">Day 2</a>
+  <ul class="collapse">
+  <li><a href="#sec-day2-matrices" id="toc-sec-day2-matrices" class="nav-link" data-scroll-target="#sec-day2-matrices">Matrices (Exercise&nbsp;<span>2.2</span>)</a></li>
+  <li><a href="#sec-day2-data-frames" id="toc-sec-day2-data-frames" class="nav-link" data-scroll-target="#sec-day2-data-frames">Data frames (Exercise&nbsp;<span>2.3</span>)</a></li>
+  </ul></li>
+  <li><a href="#day-3" id="toc-day-3" class="nav-link" data-scroll-target="#day-3">Day 3</a>
+  <ul class="collapse">
+  <li><a href="#sec-day3-opening-data-with-options" id="toc-sec-day3-opening-data-with-options" class="nav-link" data-scroll-target="#sec-day3-opening-data-with-options">Deaths.xlsx (Exercise&nbsp;<span>3.5</span>)</a></li>
+  <li><a href="#sec-day3-diagnosing" id="toc-sec-day3-diagnosing" class="nav-link" data-scroll-target="#sec-day3-diagnosing">Diagnosing <code>meta_data_botched.xlsx</code> (Exercise&nbsp;<span>3.7</span>)</a></li>
+  <li><a href="#sec-day3-correcting" id="toc-sec-day3-correcting" class="nav-link" data-scroll-target="#sec-day3-correcting">Correcting <code>meta_data_botched.xlsx</code> (Exercise&nbsp;<span>3.13</span>)</a></li>
+  </ul></li>
+  <li><a href="#day-4" id="toc-day-4" class="nav-link" data-scroll-target="#day-4">Day 4</a>
+  <ul class="collapse">
+  <li><a href="#sec-day4-selecting-columns" id="toc-sec-day4-selecting-columns" class="nav-link" data-scroll-target="#sec-day4-selecting-columns">Selecting columns (Exercise&nbsp;<span>4.1</span>)</a></li>
+  <li><a href="#sec-day4-lastname" id="toc-sec-day4-lastname" class="nav-link" data-scroll-target="#sec-day4-lastname">Sorting by last name (Exercise&nbsp;<span>4.3</span>)</a></li>
+  <li><a href="#sec-day4-logical-vectors" id="toc-sec-day4-logical-vectors" class="nav-link" data-scroll-target="#sec-day4-logical-vectors">Logical vectors (Exercise&nbsp;<span>4.6</span>)</a></li>
+  <li><a href="#sec-exercise-merging" id="toc-sec-exercise-merging" class="nav-link" data-scroll-target="#sec-exercise-merging">The merging of two data frames (Exercise&nbsp;<span>4.9</span>)</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -254,11 +312,424 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="sec-exercise-merging" class="level2">
-<h2 class="anchored" data-anchor-id="sec-exercise-merging">The merging of two data frames</h2>
-<p>Solution to <a href="day4-manipulating-your-data.html#exr-merging" class="quarto-xref">Exercise&nbsp;<span>4.9</span></a>.</p>
+<section id="day-1" class="level2">
+<h2 class="anchored" data-anchor-id="day-1">Day 1</h2>
+</section>
+<section id="day-2" class="level2">
+<h2 class="anchored" data-anchor-id="day-2">Day 2</h2>
+<section id="sec-day2-matrices" class="level3">
+<h3 class="anchored" data-anchor-id="sec-day2-matrices">Matrices (<a href="day2-complex-structures.html#exr-day2-matrices" class="quarto-xref">Exercise&nbsp;<span>2.2</span></a>)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generate random readouts</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>readouts <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">48</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create the matrix</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>res_mtx <span class="ot">&lt;-</span> <span class="fu">matrix</span>(readouts, <span class="at">nrow=</span><span class="dv">6</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># always check your results!</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(res_mtx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6 8</code></pre>
+</div>
+</div>
+<p>To change the “borders” to <code>NA</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>res_mtx[<span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>res_mtx[,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>res_mtx[<span class="fu">nrow</span>(res_mtx), ] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>res_mtx[, <span class="fu">ncol</span>(res_mtx)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Above, we could have used <code>res_mtx[6, ] &lt;- NA</code> instead of <code>res_mtx[nrow(res_mtx), ] &lt;- NA</code>, but the latter is more general and will keep working if you decide to use a matrix with a different layout.</p>
+<p>Row and column names:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>row_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"control"</span>, <span class="st">"low"</span>, <span class="st">"medium"</span>, <span class="st">"high"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>row_names <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"Inh1_"</span>, row_names)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>row_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>, row_names, <span class="cn">NA</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(res_mtx) <span class="ot">&lt;-</span> row_names</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>col_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"control"</span>, <span class="st">"low"</span>, <span class="st">"high"</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>col_names <span class="ot">&lt;-</span> <span class="fu">rep</span>(col_names, <span class="dv">2</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>inh <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Inh2_"</span>, <span class="st">"Inh3_"</span>), <span class="at">each=</span><span class="dv">3</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>col_names <span class="ot">&lt;-</span> <span class="fu">paste0</span>(inh, col_names)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>col_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>, col_names, <span class="cn">NA</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(res_mtx) <span class="ot">&lt;-</span> col_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Above, we use <code>NA</code> for row names and column names of the border row / column. We could have used another value as well, it doesn’t matter.</p>
+<p>Selecting from the matrix:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wells with inhibitor 3</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>res_mtx[ <span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">5</span><span class="sc">:</span><span class="dv">6</span> ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Inh3_control   Inh3_low
+Inh1_control    0.4550334 0.86579488
+Inh1_low        0.8449789 0.35691977
+Inh1_medium     0.5854112 0.08664418
+Inh1_high       0.6363096 0.06182834</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inhibitor 1 as well as 2</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>inh1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Inh1_low"</span>, <span class="st">"Inh1_medium"</span>, <span class="st">"Inh1_high"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>inh2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Inh2_low"</span>, <span class="st">"Inh2_high"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>res_mtx[ inh1, inh2 ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              Inh2_low Inh2_high
+Inh1_low    0.01602508 0.4150862
+Inh1_medium 0.43053481 0.6865115
+Inh1_high   0.82219829 0.9782988</code></pre>
+</div>
+</div>
+</section>
+<section id="sec-day2-data-frames" class="level3">
+<h3 class="anchored" data-anchor-id="sec-day2-data-frames">Data frames (<a href="day2-complex-structures.html#exr-day2-data-frames" class="quarto-xref">Exercise&nbsp;<span>2.3</span></a>)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mtx <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">15</span>), <span class="at">nrow=</span><span class="dv">5</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(mtx)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"X"</span>, <span class="st">"Y"</span>, <span class="st">"Z"</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="st">"d"</span>, <span class="st">"e"</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>A <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"A"</span>, <span class="dv">5</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>sequence <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out=</span><span class="dv">5</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            X           Y          Z A sequence
+a  1.64946994 -1.02661992  0.1490667 A     0.00
+b -1.29539059 -0.36477979  0.2781169 A     0.25
+c -0.58434990 -0.04227556  0.5219598 A     0.50
+d  0.08594122  2.06608862 -0.6443339 A     0.75
+e -2.94363608  0.16223808  0.5503117 A     1.00</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="day-3" class="level2">
+<h2 class="anchored" data-anchor-id="day-3">Day 3</h2>
+<section id="sec-day3-opening-data-with-options" class="level3">
+<h3 class="anchored" data-anchor-id="sec-day3-opening-data-with-options">Deaths.xlsx (<a href="day3-reading-your-data.html#exr-day3-opening-data-with-options" class="quarto-xref">Exercise&nbsp;<span>3.5</span></a>)</h3>
+<p>If you look at the file, you will find that there are 4 lines with gibberish (which you can skip with <code>skip=4</code>), then the header row, then 10 lines with actual data, and finally a few lines with gibberish again. Thus, we need to read <code>1 + 10 = 11</code> lines, starting with line 5, and finishing with line 16.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fn <span class="ot">&lt;-</span> <span class="fu">readxl_example</span>(<span class="st">"deaths.xls"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># one way: use the n_max argument</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>deaths <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(fn, <span class="at">skip=</span><span class="dv">4</span>, <span class="at">n_max=</span><span class="dv">11</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># another way: use the excel range specification</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>deaths <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(fn, <span class="at">range=</span><span class="st">"A5:F16"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="sec-day3-diagnosing" class="level3">
+<h3 class="anchored" data-anchor-id="sec-day3-diagnosing">Diagnosing <code>meta_data_botched.xlsx</code> (<a href="day3-reading-your-data.html#exr-day3-diagnosing" class="quarto-xref">Exercise&nbsp;<span>3.7</span></a>)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>botched <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"Datasets/meta_data_botched.xlsx"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(botched)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "SUBJ"       "time point" "AGE"        "SEX"        "PLACEBO"   
+[6] "ARM"       </code></pre>
+</div>
+</div>
+<p>First thing that we see is that one of the columns is called <code>time point</code> with a space in between. This is neither conforming to the other column names (which are ALL CAPS) nor it is a good idea to have spaces in column names.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(botched)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      SUBJ       time point            AGE                SEX           
+ Min.   :4023   Length:122         Length:122         Length:122        
+ 1st Qu.:4232   Class :character   Class :character   Class :character  
+ Median :4429   Mode  :character   Mode  :character   Mode  :character  
+ Mean   :4473                                                           
+ 3rd Qu.:4701                                                           
+ Max.   :4973                                                           
+   PLACEBO              ARM           
+ Length:122         Length:122        
+ Class :character   Class :character  
+ Mode  :character   Mode  :character  
+                                      
+                                      
+                                      </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>colorDF<span class="sc">::</span><span class="fu">summary_colorDF</span>(botched)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Color data frame (class colorDF) 5 x 6:
+ │Col       │Class│NAs  │unique│Summary                                     
+1│SUBJ      │&lt;dbl&gt;│    0│    61│4023 [4232 &lt;4429&gt; 4701] 4973                
+2│time point│&lt;chr&gt;│    0│     8│D0: 52, D1: 50, D 0: 5, D 1: 5, Day1: 4, da…
+3│AGE       │&lt;chr&gt;│    0│    34│21: 11, 23: 10, 20: 7, 29: 7, 31: 7, 26: 6,…
+4│SEX       │&lt;chr&gt;│    0│    12│F: 40, M: 40, Female: 9, male: 7, männlich:…
+5│PLACEBO   │&lt;chr&gt;│    0│    10│FALSE: 60, TRUE: 27, F: 8, no: 6, false: 5,…
+6│ARM       │&lt;chr&gt;│    0│    20│A: 20, P: 20, F: 18, Placibo: 7, control: 6…</code></pre>
+</div>
+</div>
+<p>OK, so we see several problems. First, the column “Age” is not numeric, but we would expect it to be. Let’s take a closer look:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>age_n <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(botched<span class="sc">$</span>AGE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: NAs introduced by coercion</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>botched<span class="sc">$</span>AGE[ <span class="fu">is.na</span>(age_n) ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "32 ,"   "23 yrs" "28 ,"   "30 ,"   "3 7"    "23 yrs" "32 yrs" "40 yrs"
+ [9] "35 yrs" "22 ,"   "30 ,"  </code></pre>
+</div>
+</div>
+<p>Right, so someone added extra text or spaces to the the actual values. And what does “3 0” mean? It could be <code>30</code>, but it also could mean “3 years 0 months” – who knows?</p>
+<p>Next, the <code>SEX</code> column. <code>summary_colorDF()</code> shows that it has 12 unique values, but this is not the number we expect. What are these unique values?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(botched<span class="sc">$</span>SEX)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Mann"     "M"        "männlich" "F"        "female"   "Female"  
+ [7] "Herr"     "Male"     "male"     "Frau"     "Femal"    "Weiblich"</code></pre>
+</div>
+</div>
+<p>Maybe the data was entered by hand by different people, and they did not agree beforehand on how to enter the data. We see a similar problem also in the columns <code>PLACEBO</code>, <code>ARM</code> and <code>time point</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(botched<span class="sc">$</span>PLACEBO)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "TRUE"  "yes"   "T"     "1"     "true"  "FALSE" "false" "0"     "no"   
+[10] "F"    </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(botched<span class="sc">$</span>ARM)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Placebo"          "placebo"          "P"                "Plazebo"         
+ [5] "control"          "Placibo"          "F"                "fluad vaccine"   
+ [9] "A"                "Fl."              "agrippal vaccine" "agrippal"        
+[13] "Agrippal vaccine" "grippal"          "AGRP."            "Fuad"            
+[17] "Fluad"            "Agrippal"         "FLUAD"            "Fluad vaccine"   </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(botched[[<span class="st">"time point"</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "D0"    "D1"    "Day1"  "D 0"   "day 1" "day 0" "D 1"   "Day0" </code></pre>
+</div>
+</div>
+</section>
+<section id="sec-day3-correcting" class="level3">
+<h3 class="anchored" data-anchor-id="sec-day3-correcting">Correcting <code>meta_data_botched.xlsx</code> (<a href="day3-reading-your-data.html#exr-day3-correcting" class="quarto-xref">Exercise&nbsp;<span>3.13</span></a>)</h3>
+<p>Let’s start with the easiest one, the time point. First, we should fix the name of the column:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># either works</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>botched <span class="ot">&lt;-</span> <span class="fu">rename</span>(botched, <span class="at">TIMEPOINT=</span><span class="st">`</span><span class="at">time point</span><span class="st">`</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(botched)[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">"TIMEPOINT"</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(botched)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "SUBJ"      "TIMEPOINT" "AGE"       "SEX"       "PLACEBO"   "ARM"      </code></pre>
+</div>
+</div>
+<p>Now, fix the values in the <code>TIMEPOINT</code> column. We can use the <code>toupper()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change to upper case</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>tp <span class="ot">&lt;-</span> <span class="fu">toupper</span>(botched<span class="sc">$</span>TIMEPOINT)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># replace day with "D"</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>tp <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(tp, <span class="st">"DAY"</span>, <span class="st">"D"</span>)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co"># remove all spaces</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>tp <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(tp, <span class="st">" *"</span>, <span class="st">""</span>)</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(tp, botched<span class="sc">$</span>TIMEPOINT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    
+tp   D 0 D 1 D0 D1 day 0 day 1 Day0 Day1
+  D0   5   0 52  0     3     0    1    0
+  D1   0   5  0 50     0     2    0    4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># looks good!</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>botched<span class="sc">$</span>TIMEPOINT <span class="ot">&lt;-</span> tp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>ARM</code> column should be easy, too. We only have to pay attention to the first letter. There are two exceptions, though – sometimes <code>control</code> is used instead of <code>placebo</code>, and in some cases <code>grippal</code> has been used instead of <code>agrippal</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>arm <span class="ot">&lt;-</span> <span class="fu">toupper</span>(botched<span class="sc">$</span>ARM)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>arm <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(arm, <span class="st">"^P.*"</span>, <span class="st">"PLACEBO"</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>arm <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(arm, <span class="st">"^F.*"</span>, <span class="st">"FLUAD"</span>)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>arm <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(arm, <span class="st">"^A.*"</span>, <span class="st">"AGRIPPAL"</span>)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>arm <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(arm, <span class="st">"^C.*"</span>, <span class="st">"PLACEBO"</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>arm <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(arm, <span class="st">"^G.*"</span>, <span class="st">"AGRIPPAL"</span>)</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(arm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "PLACEBO"  "FLUAD"    "AGRIPPAL"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>botched<span class="sc">$</span>ARM <span class="ot">&lt;-</span> arm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Proceed with the columns <code>SEX</code> and <code>PLACEBO</code> in the same way.</p>
+<p>Finally, <code>AGE</code>. The simplest way would be to replace everything that is not a digit:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> botched<span class="sc">$</span>AGE</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(age, <span class="st">"[^0-9]"</span>, <span class="st">""</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(age)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="co"># check for NAs</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="fu">any</span>(<span class="fu">is.na</span>(age))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># replace the original column</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>botched<span class="sc">$</span>AGE <span class="ot">&lt;-</span> age</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="day-4" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="day-4">Day 4</h2>
+<section id="sec-day4-selecting-columns" class="level3">
+<h3 class="anchored" data-anchor-id="sec-day4-selecting-columns">Selecting columns (<a href="day4-manipulating-your-data.html#exr-day4-selecting-columns" class="quarto-xref">Exercise&nbsp;<span>4.1</span></a>)</h3>
+<p>Solution to <a href="day4-manipulating-your-data.html#exr-day4-selecting-columns" class="quarto-xref">Exercise&nbsp;<span>4.1</span></a>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Datasets/transcriptomics_results.csv"</span>)</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="co"># what columns are there?</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "...1"           "ProbeName"      "GeneName"       "SystematicName"
+ [5] "Description"    "logFC.F.D0"     "qval.F.D0"      "logFC.F.D1"    
+ [9] "qval.F.D1"      "logFC.F.D2"     "qval.F.D2"      "logFC.F.D3"    
+[13] "qval.F.D3"     </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the columns that we need</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">select</span>(results, GeneName, Description, logFC.F.D1, qval.F.D1)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(results) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Gene"</span>, <span class="st">"Description"</span>, <span class="st">"logFC"</span>, <span class="st">"qval"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Alternatively, we could have specified the new column names directly in the <code>select()</code> function. This is useful if you want to rename only some of the columns:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">select</span>(results, <span class="at">Gene=</span>GeneName, </span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  Description, </span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">LFC=</span>logFC.F.D1, <span class="at">FDR=</span>qval.F.D1)</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Gene"        "Description" "LFC"         "FDR"        </code></pre>
+</div>
+</div>
+</section>
+<section id="sec-day4-lastname" class="level3">
+<h3 class="anchored" data-anchor-id="sec-day4-lastname">Sorting by last name (<a href="day4-manipulating-your-data.html#exr-day4-lastname" class="quarto-xref">Exercise&nbsp;<span>4.3</span></a>)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>persons <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Henry Fonda"</span>, <span class="st">"Bob Marley"</span>, <span class="st">"Robert F. Kennedy"</span>, </span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Bob Dylan"</span>, <span class="st">"Alan Rickman"</span>)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="co"># first, create a vector with last names only. </span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="co"># basically, remove everything before the last space</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="co"># and the space itself</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>lastnames <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(persons, <span class="st">".* "</span>, <span class="st">""</span>)</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>lastnames</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Fonda"   "Marley"  "Kennedy" "Dylan"   "Rickman"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># now get the order for the last names</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">order</span>(lastnames)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>ord</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4 1 3 2 5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># and use it to sort the original vector</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>persons[ord]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Bob Dylan"         "Henry Fonda"       "Robert F. Kennedy"
+[4] "Bob Marley"        "Alan Rickman"     </code></pre>
+</div>
+</div>
+</section>
+<section id="sec-day4-logical-vectors" class="level3">
+<h3 class="anchored" data-anchor-id="sec-day4-logical-vectors">Logical vectors (<a href="day4-manipulating-your-data.html#exr-day4-logical-vectors" class="quarto-xref">Exercise&nbsp;<span>4.6</span></a>)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>significant <span class="ot">&lt;-</span> tr_res<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>interferons <span class="ot">&lt;-</span> <span class="fu">str_detect</span>(tr_res<span class="sc">$</span>Description, <span class="st">"interferon"</span>)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>both <span class="ot">&lt;-</span> significant <span class="sc">&amp;</span> interferons</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="co"># how many are there?</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(both)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 23</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># how many are significant, but not interferons?</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(significant <span class="sc">&amp;</span> <span class="sc">!</span>interferons)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1455</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>gbps <span class="ot">&lt;-</span> <span class="fu">str_detect</span>(tr_res<span class="sc">$</span>Gene, <span class="st">"^GBP"</span>)</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(gbps <span class="sc">&amp;</span> interferons)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+</div>
+</section>
+<section id="sec-exercise-merging" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="sec-exercise-merging">The merging of two data frames (<a href="day4-manipulating-your-data.html#exr-day4-merging" class="quarto-xref">Exercise&nbsp;<span>4.9</span></a>)</h3>
+<p>Solution to <a href="day4-manipulating-your-data.html#exr-day4-merging" class="quarto-xref">Exercise&nbsp;<span>4.9</span></a>.</p>
+<p>First, we load the data. Nothing fancy here. You should examine the resulting data frames with <code>View</code> (or by clicking on the data frame in the Environment pane in RStudio), but in the code below we simply list the available columns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The libraries needed</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data</span></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>labresults <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Datasets/labresults_full.csv"</span>)</span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>targets <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"Datasets/expression_data_vaccination_example.xlsx"</span>, </span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">sheet=</span><span class="st">"targets"</span>)</span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a><span class="co"># what columns are there?</span></span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(labresults)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "USUBJID"   "SUBJ"      "LBTEST"    "LBTESTCD"  "LBCAT"     "LBORRES"  
+ [7] "LBORRESU"  "LBSPEC"    "VISIT"     "Timepoint"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(targets)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "USUBJID"   "SUBJ"      "Batch"     "ID"        "Timepoint" "ARMCD"    
+ [7] "ARM"       "AGE"       "SEX"       "PLACEBO"  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>(<span class="fu">colnames</span>(labresults), <span class="fu">colnames</span>(targets))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "USUBJID"   "SUBJ"      "Timepoint"</code></pre>
+</div>
+</div>
+<div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>intersect</code></span></div></div>
+<p>The <code>intersect()</code> function returns the common elements between two vectors. In this case, it returns the common column names between the two data frames. As you can see, there are <code>USUBJID</code> and <code>SUBJ</code> columns in both data frames, chances are that there are common elements between the data frame here. We will focus at the <code>SUBJ</code> column.</p>
+<p>OK, do we see any common subjects between the two data frames?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># how many unique subjects are there in each data frame?</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(labresults<span class="sc">$</span>SUBJ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 123</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(targets<span class="sc">$</span>SUBJ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 61</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># how many are common?</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">intersect</span>(labresults<span class="sc">$</span>SUBJ, targets<span class="sc">$</span>SUBJ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 61</code></pre>
+</div>
+</div>
+<p>Right, so there are more unique subjects in the <code>labresults</code> data frame than in the <code>targets</code> data frame.</p>
+<p>The other column that is common between the two data frames is <code>Timepoint</code>. That already indicates that each row – in both data frames – corresponds to a <em>sample</em> rather than <em>subject</em>. That is, we need to identify the rows not only by <em>subject</em>, but also by <em>timepoint</em>.</p>
+<p>If you use the <code>unique()</code> function as above, you will find that there are only 2 unique timepoints in the <code>targets</code> data frame, but 23 unique timepoints in the <code>labresults</code> data frame.</p>
+<p>Now first let us select only the column that we need, as mentioned in the exercise. For the <code>targets</code> data frame, we need the columns <code>SUBJ</code> and <code>Timepoint</code>, as well as <code>ARM</code>, <code>Timepoint</code>, <code>AGE</code> and <code>SEX</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>targets <span class="ot">&lt;-</span> <span class="fu">select</span>(targets, SUBJ, Timepoint, ARM, AGE, SEX)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If you inspect the <code>labresults</code> data frame, you will see that it has only one column that looks like a measurement – <code>LBORRES</code>. Also, the column <code>LBTEST</code> ostensibly contains the name of the test that was performed, and <code>LBTESTCD</code> contains the code for the test. However, we also find the <code>Timepoint</code> column here as well.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>labresults <span class="ot">&lt;-</span> <span class="fu">select</span>(labresults, SUBJ, Timepoint, LBTEST, LBTESTCD, LBORRES)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Depending on what one wants to do, we can try to get one of the four types of join (inner, left, right, full) between the two data frames. However, assuming that the goal is correlate expression data with lab data, we will need an inner join, so either the <code>tidyverse</code> function <code>inner_join()</code> or the base R function <code>merge()</code> with default parameter values will do the job.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>joined <span class="ot">&lt;-</span> <span class="fu">merge</span>(targets, labresults, <span class="at">by=</span><span class="fu">c</span>(<span class="st">"SUBJ"</span>, <span class="st">"Timepoint"</span>))</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(joined)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3782    8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(joined)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "SUBJ"      "Timepoint" "ARM"       "AGE"       "SEX"       "LBTEST"   
+[7] "LBTESTCD"  "LBORRES"  </code></pre>
+</div>
+</div>
+<p>Yep, seems to have worked well. The resulting data frame has 3782 rows – since we have many different measurements for each person.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -828,8 +1299,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./appendix-wide-long.html" class="pagination-link" aria-label="Appendix 1: Wide vs long data">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Appendix 1: Wide vs long data</span>
+      <a href="./appendix-more-stats.html" class="pagination-link" aria-label="Appendix: More statistics and visualizations">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Appendix: More statistics and visualizations</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

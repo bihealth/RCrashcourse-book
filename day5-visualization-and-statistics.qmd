@@ -5,7 +5,12 @@
 set.seed(42)
 ```
 
+## Aims for today
 
+ * working R markdown / Quarto
+ * basic visualisations with R and `ggplot2`
+ * simple statistics with R
+ * final example: principal component analysis
 
 
 ## R markdown
@@ -59,6 +64,9 @@ Why is this so great?
    use a free package manager such as Zotero or Mendeley to manage your
    bibliography, and produce the bibliography in the format that R markdown
    uses.
+ * **Focus on content**. The minimal formatting required in R markdown
+   allows you to focus on the content of your document, not on the
+   formatting.
 
 What are the disadvantages?
 
@@ -197,8 +205,13 @@ check [this guide](https://rpruim.github.io/s341/S19/from-class/MathinRmd.html).
 ::: {#exr-formatting-markdown}
 ### Formatting markdown
 
-Try some formatting commands in markdown. For example, try to make a word
-**bold** or *italic*. Try to create a list. 
+ * Try some formatting commands in markdown. For example, try to make a word
+**bold** or *italic*. Try to create a list. Insert a link to a website.
+ * This one is a bit harder, because I did not show it to you (on purpose).
+   First download any kind of image from the internet and save it in your
+   project directory. Then, using whatever means necessary (Google, the
+   markdown guide, the Rstudio help), try to insert an image in your
+   document.
 :::
 :::
 
@@ -312,6 +325,15 @@ plot(x)
 ```
 :::
 ::::
+
+::: {.callout-tip}
+## Code chunks run in one environment
+
+Code chunks share their environment. That is, if you define a variable in
+one chunk, you will be able to use it in the subsequent chunks.
+
+Think of all the chunks as consecutive fragments of your script file!
+:::
 
 
 The code chunks can also be *inline*, that is, you can put directly a code
@@ -453,7 +475,7 @@ color to achieve a "minimal look".
 [`scale_color_viridis_d()`, `theme_minimal()`]{.aside}
 
 Noteworthy is also the `labs()` function, which allows you to change the
-labes of the axes and the title of the plot in one go (you can also use
+labels of the axes and the title of the plot in one go (you can also use
 individual functions like `xlab()`, `ylab()` and `ggtitle()`).
 [`labs()`, `xlab()`, `ylab()`, `ggtitle()`]{.aside}
 
@@ -1156,7 +1178,7 @@ work group-by-group, and therefore lines connect only
 points within one group.
 [`geom_line()`, `group` aesthetic]{.aside}
 
-On this plot we can clearly see that for almost every individual, the value
+On this plot we can clearly see that for the majority of individuals, the value
 in the second measurement (group B) is higher than in the first measurement
 (group A). We can confirm this with a paired t-test:
 
@@ -1206,7 +1228,7 @@ In other words, most (`r t[1,1]`) genes are neither significant nor
 interferons. However, out of `r t[2,1]+t[2,2]` significant genes, 
 as much as `r t[2,2]` have "interferon" in their description. And vice
 verse, out of the `r t[1,2] + t[2,2]` interferon genes, more than a third
-are significant. Is this significant? To answer this, we can use the
+are significant. But is this *statistically* significant? To answer this, we can use the
 `chisq.test()`. 
 [`chisq.test()`]{.aside}
 
@@ -1651,3 +1673,10 @@ You are not. Sooner then you think, it will pay off.
    * basic scatterplots with `ggplot()`
    * understanding esthetics
    * box plots with `geom_boxplot()` and violin plots with `geom_violin()`
+   * heatmaps
+   * vector vs raster graphics
+ * Basic statistics
+   * t-test and Wilcoxon test
+   * paired tests
+   * $\chi^2$ test
+ * Running a principal component analysis

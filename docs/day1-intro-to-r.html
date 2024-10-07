@@ -266,7 +266,13 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./appendix-wide-long.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Appendix 1: Wide vs long data</span></a>
+ <span class="menu-text">Appendix: Wide vs long data</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix-more-stats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Appendix: More statistics and visualizations</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -301,8 +307,6 @@ window.Quarto = {
   <li><a href="#projects-and-workspaces" id="toc-projects-and-workspaces" class="nav-link" data-scroll-target="#projects-and-workspaces"><span class="header-section-number">1.3</span> Projects and Workspaces</a>
   <ul class="collapse">
   <li><a href="#creating-a-project-start-here" id="toc-creating-a-project-start-here" class="nav-link" data-scroll-target="#creating-a-project-start-here"><span class="header-section-number">1.3.1</span> Creating a project: start here!</a></li>
-  <li><a href="#workspaces-history-and-environments" id="toc-workspaces-history-and-environments" class="nav-link" data-scroll-target="#workspaces-history-and-environments"><span class="header-section-number">1.3.2</span> Workspaces, history and environments</a></li>
-  <li><a href="#tab-completion" id="toc-tab-completion" class="nav-link" data-scroll-target="#tab-completion"><span class="header-section-number">1.3.3</span> Tab completion</a></li>
   </ul></li>
   <li><a href="#lets-start-with-r" id="toc-lets-start-with-r" class="nav-link" data-scroll-target="#lets-start-with-r"><span class="header-section-number">1.4</span> Let’s start with R</a>
   <ul class="collapse">
@@ -310,6 +314,8 @@ window.Quarto = {
   <li><a href="#using-script-files" id="toc-using-script-files" class="nav-link" data-scroll-target="#using-script-files"><span class="header-section-number">1.4.2</span> Using script files</a></li>
   <li><a href="#variables" id="toc-variables" class="nav-link" data-scroll-target="#variables"><span class="header-section-number">1.4.3</span> Variables</a></li>
   <li><a href="#character-variables" id="toc-character-variables" class="nav-link" data-scroll-target="#character-variables"><span class="header-section-number">1.4.4</span> Character variables</a></li>
+  <li><a href="#workspaces-history-and-environments" id="toc-workspaces-history-and-environments" class="nav-link" data-scroll-target="#workspaces-history-and-environments"><span class="header-section-number">1.4.5</span> Workspaces, history and environments</a></li>
+  <li><a href="#tab-completion" id="toc-tab-completion" class="nav-link" data-scroll-target="#tab-completion"><span class="header-section-number">1.4.6</span> Tab completion</a></li>
   </ul></li>
   <li><a href="#vectors-and-vectorization" id="toc-vectors-and-vectorization" class="nav-link" data-scroll-target="#vectors-and-vectorization"><span class="header-section-number">1.5</span> Vectors and vectorization</a>
   <ul class="collapse">
@@ -416,13 +422,8 @@ window.Quarto = {
 </div>
 <div class="page-columns page-full"><p>When Rstudio creates a new project, it creates a new directory with the same name as the project. Furthermore, it creates a new file in this directory called <code>projectname.Rproj</code>. This file is used by RStudio to keep track of  project-specific settings.</p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>projectname.Rproj</code></span></div></div>
 <p>You can open this file by double-clicking on it in the Files pane in RStudio. Like most of the files that you will be working with, it is a simple text file: you can open it in any text editor, including RStudio.</p>
+<p>The other file I told you to create is a <em>script</em> file. This is where you will later be typing your code, and we will discuss it in more detail in a moment.</p>
 <div class="page-columns page-full"><p>Later on, if you choose to do so, R can create two hidden files, <code>Rhistory</code>  (called <code>.Rhistory</code> on Unix-like systems and <code>_Rhistory</code> on Windows) and <code>.RData</code> (or <code>_RData</code>). This files save the state of your R session (of your R workspace, to be specific).</p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>.Rhistory</code> and <code>.RData</code></span></div></div>
-</section>
-<section id="workspaces-history-and-environments" class="level3" data-number="1.3.2">
-<h3 data-number="1.3.2" class="anchored" data-anchor-id="workspaces-history-and-environments"><span class="header-section-number">1.3.2</span> Workspaces, history and environments</h3>
-</section>
-<section id="tab-completion" class="level3" data-number="1.3.3">
-<h3 data-number="1.3.3" class="anchored" data-anchor-id="tab-completion"><span class="header-section-number">1.3.3</span> Tab completion</h3>
 </section>
 </section>
 <section id="lets-start-with-r" class="level2 page-columns page-full" data-number="1.4">
@@ -451,7 +452,7 @@ window.Quarto = {
 </section>
 <section id="using-script-files" class="level3" data-number="1.4.2">
 <h3 data-number="1.4.2" class="anchored" data-anchor-id="using-script-files"><span class="header-section-number">1.4.2</span> Using script files</h3>
-<p>On the left side of the RStudio window you have (by default) two panels: the lower one is called “Console”. When you create a new script file, it appears above.</p>
+<p>On the left side of the RStudio window you have (by default) two panels: the lower one is called “Console”. When you create a new script file, as you have done it a moment ago, it appears above.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -474,7 +475,7 @@ Typing in console
 </div>
 <div class="callout-body-container">
 <div id="exr-script" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.3</strong></span> Repeat <a href="#exr-calc" class="quarto-xref">Exercise&nbsp;<span class="quarto-unresolved-ref">exr-calc</span></a>, but now type the expressions into the script which you have created in <a href="#exr-create" class="quarto-xref">Exercise&nbsp;<span class="quarto-unresolved-ref">exr-create</span></a>. Run the script by pressing <code>Ctrl+Enter</code> after each line.</p>
+<p><span class="theorem-title"><strong>Exercise 1.3</strong></span> Repeat <a href="#exr-calc" class="quarto-xref">Exercise&nbsp;<span>1.2</span></a>, but now type the expressions into the script which you have created in <a href="#exr-create" class="quarto-xref">Exercise&nbsp;<span>1.1</span></a>. Run the script by pressing <code>Ctrl+Enter</code> after each line.</p>
 </div>
 </div>
 </div>
@@ -636,6 +637,14 @@ Other types
 </div>
 </div>
 </div>
+</section>
+<section id="workspaces-history-and-environments" class="level3" data-number="1.4.5">
+<h3 data-number="1.4.5" class="anchored" data-anchor-id="workspaces-history-and-environments"><span class="header-section-number">1.4.5</span> Workspaces, history and environments</h3>
+<p>XXX</p>
+</section>
+<section id="tab-completion" class="level3" data-number="1.4.6">
+<h3 data-number="1.4.6" class="anchored" data-anchor-id="tab-completion"><span class="header-section-number">1.4.6</span> Tab completion</h3>
+<p>XXX</p>
 </section>
 </section>
 <section id="vectors-and-vectorization" class="level2 page-columns page-full" data-number="1.5">
@@ -810,12 +819,20 @@ Vectors and indices
 <pre><code>[1] 5 7 9</code></pre>
 </div>
 </div>
-<p>As you can see, R has added the first element of the first vector to the first element of the second vector, the second element of the first vector to the second element of the second vector, and so on. Makes sense, right? Same would happen if we were to subtract, multiply or divide the vectors (or use logical operations, which you will learn on Day 3). This does not look like much now, but trust me, it will be extremely useful in the future.</p>
+<p>As you can see, R has added the first element of the first vector to the first element of the second vector, the second element of the first vector to the second element of the second vector, and so on. Makes sense, right? Same would happen if we were to subtract, multiply or divide the vectors (or use logical operations, which you will learn on Day 3).</p>
+<p>Imagine the two vectors one beneath the other:</p>
+<pre><code>numbers1:   c(1,    4,    5)
+              +     +     +
+numbers2:   c(2,    5,    6)
+              ↓     ↓     ↓
+result:     c(3,    9,   11)
+</code></pre>
+<p>R is simply adding up corresponding elements. This does not look like much now, but trust me, it will be extremely useful in the future.</p>
 <p>However, if the vectors have <em>different</em> lengths, it is a different story altogher. Take a look:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>numbers1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>numbers2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>)</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>numbers1 <span class="sc">+</span> numbers2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>numbers1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>numbers2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>numbers1 <span class="sc">+</span> numbers2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in numbers1 + numbers2: longer object length is not a multiple of shorter object length</code></pre>
 </div>
@@ -824,16 +841,30 @@ Vectors and indices
 </div>
 </div>
 <p>Ooops, what exactly happened here? First thing to note is that <em>there was no error</em>. There was a <em>warning</em>, but still our code executed and produced a result. But what is that result? For the first element of the result, it is clear enough: <code>1 + 4 = 5</code>. Same for the second, <code>2 + 5 = 7</code>. But what about the third? It seems that R added <code>3 + 4 = 7</code>. But why?</p>
-<div class="page-columns page-full"><p>R noticed that it is missing an element to be added to the third element of the vector <code>numbers1</code>. So, it did what is called <strong>recycling</strong>. It  “rewound” the vector <code>numbers2</code> to the beginning and added the first element of <code>numbers2</code> to the third element of <code>numbers1</code>. However, since after the rewinding and adding one element of vector <code>numbers2</code> was left (because <code>numbers1</code> did not have any more elements), R issued a warning. If the length of the first vector was a multiple of the length of the second vector, R would not have complained:</p><div class="no-row-height column-margin column-container"><span class="margin-aside">Recycling</span></div></div>
+<div class="page-columns page-full"><p>R noticed that it is missing an element to be added to the third element of the vector <code>numbers1</code>. So, it did what is called <strong>recycling</strong>. It  “rewound” the vector <code>numbers2</code> to the beginning and added the first element of <code>numbers2</code> to the third element of <code>numbers1</code>. However, since after the rewinding and adding one element of vector <code>numbers2</code> was left (because <code>numbers1</code> did not have any more elements), R issued a warning.</p><div class="no-row-height column-margin column-container"><span class="margin-aside">Recycling</span></div></div>
+<pre><code>numbers1:   c(1,     2,      3)
+              +      +       +
+numbers2:   c(4,     5)    c(4,    5)
+              ↓      ↓       ↓
+result:     c(3,     9,     11)
+</code></pre>
+<p>If the length of the first vector was a multiple of the length of the second vector, R would not have complained:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>numbers1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>)</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>numbers2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">8</span>)</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>numbers1 <span class="sc">+</span> numbers2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>numbers1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>numbers2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">8</span>)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>numbers1 <span class="sc">+</span> numbers2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  8 10 10 12 12 14</code></pre>
 </div>
 </div>
 <p>See? No warning. R was recycling the second vector over and over again. Recycling is a dangerous business: if you are not careful, you can get results which you have not expected.</p>
+<pre><code>numbers1:   c(1,     2,      3,     4,     5,     6)
+              +      +       +      +      +      +
+numbers2:   c(7,     8)    c(7,     8)   c(7,     8)
+              ↓      ↓       ↓      ↓      ↓      ↓
+result:     c(8,    10,     10,    12,    12,    14)
+</code></pre>
+<p>Take it slow. This is advanced stuff, but I had to warn you already at this stage – this is one of the common sources of errors in R. Watch out for this “longer object length is not a multiple of shorter object length” warning.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -849,11 +880,11 @@ Recycling advice
 </div>
 <div class="page-columns page-full"><p>With vectors that have only a couple of numbers it is quite easy to see what is happening, but what if you have thousands of variables? In other words, how to check the lenght of a vector? You can use the <code>length()</code>: </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>length()</code></span></div></div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(numbers1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(numbers1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(numbers2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(numbers2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2</code></pre>
 </div>
@@ -896,24 +927,24 @@ Messages, Warnings and Errors
 <div class="page-columns page-full"><p>One more thing: there are a couple of special values in R that you should know about. One of the most prominent, useful and frequently encountered is the <code>NA</code> value, which stands for “Not Available”. You will see it  frequently when you work with data.</p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>NA</code></span></div></div>
 <p>It is possible to apply mathematical operations to <code>NA</code> values, but the result is inadvertently <code>NA</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="cn">NA</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="cn">NA</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] NA</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">4</span>)</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>numbers <span class="sc">*</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">4</span>)</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>numbers <span class="sc">*</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  3  6 NA 12</code></pre>
 </div>
 </div>
 <div class="page-columns page-full"><p>This also goes for some functions, which, quite often, have a special parameter to omit the <code>NA</code> values. For example, the <code>mean()</code> function  calculates the mean of a vector:</p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>mean()</code></span></div></div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">4</span>)</span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(numbers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">4</span>)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(numbers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] NA</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(numbers, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(numbers, <span class="at">na.rm=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.333333</code></pre>
 </div>
@@ -933,13 +964,13 @@ Tip&nbsp;1.1: Useful functions
 </div>
 <div class="no-row-height column-margin column-container"><span class="margin-aside callout-margin-content">Descriptive statistics: <code>sum()</code>, <code>min()</code>, <code>max()</code> etc.</span></div><div class="page-columns page-full"><p>The <code>NA</code> value very frequently pop up when you try to convert a character vector holding what looks like numbers into a numeric vector. We will see many such examples in the days to come; the conversion is often done using the <code>as.numeric()</code> function. For example, it is quite common that values  typed in a spreadsheet contain comments or values which look like this <code>&gt; 50</code> (measurement out of range).</p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>as.numeric()</code></span></div></div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>imported_data <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"10"</span>, <span class="st">"20"</span>, <span class="st">"30"</span>, <span class="st">"&gt; 50"</span>, <span class="st">"40"</span>, <span class="st">"N.A."</span>, <span class="st">"60 (unsure)"</span>)</span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="co"># this will generate a warning</span></span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>imported_data <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(imported_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>imported_data <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"10"</span>, <span class="st">"20"</span>, <span class="st">"30"</span>, <span class="st">"&gt; 50"</span>, <span class="st">"40"</span>, <span class="st">"N.A."</span>, <span class="st">"60 (unsure)"</span>)</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="co"># this will generate a warning</span></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>imported_data <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(imported_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: NAs introduced by coercion</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>imported_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>imported_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 10 20 30 NA 40 NA NA</code></pre>
 </div>
@@ -1032,16 +1063,16 @@ Special values
 </table>
 <p>Once we have the formula, it is very easy to calculate the area covered by water lillies on the first 10 days. We will use vectorization to do this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>days <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>area <span class="ot">&lt;-</span> <span class="fl">0.01</span> <span class="sc">*</span> <span class="dv">2</span><span class="sc">^</span>(days <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>area</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>days <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>area <span class="ot">&lt;-</span> <span class="fl">0.01</span> <span class="sc">*</span> <span class="dv">2</span><span class="sc">^</span>(days <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>area</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 0.01 0.02 0.04 0.08 0.16 0.32 0.64 1.28 2.56 5.12</code></pre>
 </div>
 </div>
 <p>This calls out for a plot. We will talk about visualizations more extensively on Day 5, but for now, we will use a very basic and simple function to plot the area of the lily on the first 30 days. The function is called <code>plot()</code> and can be used to plot a graph of two vectors. The first vector is the days, the second vector is the area.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(days, area, <span class="at">type=</span><span class="st">"b"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(days, area, <span class="at">type=</span><span class="st">"b"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1054,8 +1085,8 @@ Special values
 <div class="page-columns page-full"><p>O-K, days and area are clear, but what is this <code>type="b"</code>? This is a  so-called <em>named</em> argument<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. The <code>plot()</code> function has many arguments, and if you want to use only some of them, you can use their names with an equal sign. You will see that a lot in the days to come. This particular argument, <code>type</code>, tells R what kind of plot to draw. The <code>"b"</code> stands for “both” and tells R to draw both points and lines. If you want only points, you can use <code>"p"</code> (or simple leave the argument out), if you want only lines, you can use <code>"l"</code>.</p><div class="no-row-height column-margin column-container"><span class="margin-aside">Named arguments</span><div id="fn3"><p><sup>3</sup>&nbsp;Full disclosure: all arguments have names in R and can be named explicitely. However, some of the arguments have a default value, so we do not have to specify them unless we need them. The <code>type</code> argument is one of them. Others must always be specified.</p></div></div></div>
 <p>Note another thing on this plot: after day 7, the area is greater than 1. But 1 means 100%, so after day 7, the lily covers more than the entire lake. Obviously, this is not possible – and it shows a limitation of our model. We can show it by adding a horizontal line to the plot:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(days, area, <span class="at">type=</span><span class="st">"b"</span>)</span>
-<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">1</span>, <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(days, area, <span class="at">type=</span><span class="st">"b"</span>)</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">1</span>, <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1092,24 +1123,24 @@ Special values
 <p>During this course, we will not really discuss or require creating your own functions. However, we would nonetheless like to show you how it is done. There are two reasons for that. Firstly, it is really, really easy. Secondly, it will help you understand how functions work in R, and that will help you understand how to use functions that others have created.</p>
 <div class="page-columns page-full"><p>In the water lilies example we have used a formula to calculate the area of the lily on the <span class="math inline">\(n\)</span>-th day. The formula includes three parameters: the initial fraction of the area covered by the lily on day 1, the day number and the factor by which the area is increased each day. We will now create a function that takes two parameters: the day (or days) and the factor, and return the area of the lily on that day. Here is how you can do it using <code>function()</code> keyword in R: </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>function() { ... }</code></span></div></div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>area_lily <span class="ot">&lt;-</span> <span class="cf">function</span>(day, fct) {</span>
-<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  ret <span class="ot">&lt;-</span> <span class="fl">0.1</span> <span class="sc">*</span> fct<span class="sc">^</span>(day <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(ret)</span>
-<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>area_lily <span class="ot">&lt;-</span> <span class="cf">function</span>(day, fct) {</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>  ret <span class="ot">&lt;-</span> <span class="fl">0.1</span> <span class="sc">*</span> fct<span class="sc">^</span>(day <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(ret)</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>As you can see, the function is created using the <code>function</code> keyword. In parentheses (<code>(</code> and <code>)</code>), you specify the arguments that the function takes, separated by commas. Then comes the body of the function, enclosed in the curly braces (<code>{</code> and <code>}</code>). On the last line of the function code, the <code>return()</code> function is used to return the value of the <code>area_lily</code> function.</p>
 <p>Once you have run the code above, you can use it to calculate the area of the lily on the first 10 days like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>area <span class="ot">&lt;-</span> <span class="fu">area_lily</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">2</span>)</span>
-<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>area</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>area <span class="ot">&lt;-</span> <span class="fu">area_lily</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">2</span>)</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>area</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]  0.1  0.2  0.4  0.8  1.6  3.2  6.4 12.8 25.6 51.2</code></pre>
 </div>
 </div>
 <p>One interesting and important fact about the defining the functions is that you use the assignment operator <code>&lt;-</code> to assign the function to a variable. In other words, <code>area_lily</code> <em>is</em>, in fact, a variable! A variable which holds not a value or character string, but computer code that can be used to do stuff. You can copy it to another variable and it will behave exactly as the original function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>area_lily2 <span class="ot">&lt;-</span> area_lily</span>
-<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">area_lily2</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>area_lily2 <span class="ot">&lt;-</span> area_lily</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">area_lily2</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]  0.1  0.2  0.4  0.8  1.6  3.2  6.4 12.8 25.6 51.2</code></pre>
 </div>
@@ -1144,11 +1175,11 @@ Special values
 <h3 data-number="1.7.2" class="anchored" data-anchor-id="example"><span class="header-section-number">1.7.2</span> Example</h3>
 <p>The following fragment of code shows how you should <em>not</em> format your code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1"></a>a<span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb75-2"><a href="#cb75-2"></a>b <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">10</span>, </span>
-<span id="cb75-3"><a href="#cb75-3"></a><span class="dv">20</span>, <span class="dv">21</span>, <span class="dv">5</span>)</span>
-<span id="cb75-4"><a href="#cb75-4"></a>r<span class="ot">&lt;-</span><span class="fu">sqrt</span>(<span class="fu">sum</span>((b<span class="sc">-</span><span class="fu">mean</span>(b))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span></span>
-<span id="cb75-5"><a href="#cb75-5"></a>               a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a>a<span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb78-2"><a href="#cb78-2"></a>b <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">10</span>, </span>
+<span id="cb78-3"><a href="#cb78-3"></a><span class="dv">20</span>, <span class="dv">21</span>, <span class="dv">5</span>)</span>
+<span id="cb78-4"><a href="#cb78-4"></a>r<span class="ot">&lt;-</span><span class="fu">sqrt</span>(<span class="fu">sum</span>((b<span class="sc">-</span><span class="fu">mean</span>(b))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span></span>
+<span id="cb78-5"><a href="#cb78-5"></a>               a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The code <em>is</em> correct, but it is hard to read. What does it do, quickly? If you carefuly examine it, you will see that it calculates the standard deviation of the vector <code>b</code>, following the formula</p>
 <p><span class="math display">\[SD = \sqrt{\frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n-1}}\]</span></p>
@@ -1156,28 +1187,28 @@ Special values
 <p>Firstly, there are no comments in the code which would give a hint of what it does. Secondly, <span class="math inline">\(n - 1\)</span> (the variable <code>a</code>) is hard encoded - if you modify the vector <code>b</code> by adding one number, the code will execute, but the result will be incorrect.</p>
 <p>Thirdly, line 4 combines several operations making it very hard to read. It should be split for clarity. The following code is much more readable:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a><span class="co"># ---------------------------------------------------------</span></span>
-<span id="cb76-2"><a href="#cb76-2"></a><span class="co"># Calculating the standard deviation of a sample</span></span>
-<span id="cb76-3"><a href="#cb76-3"></a><span class="co"># ---------------------------------------------------------</span></span>
-<span id="cb76-4"><a href="#cb76-4"></a></span>
-<span id="cb76-5"><a href="#cb76-5"></a><span class="co"># example values for five samples</span></span>
-<span id="cb76-6"><a href="#cb76-6"></a>samples <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">21</span>, <span class="dv">5</span>)</span>
-<span id="cb76-7"><a href="#cb76-7"></a>samples_n <span class="ot">&lt;-</span> <span class="fu">length</span>(samples)</span>
-<span id="cb76-8"><a href="#cb76-8"></a></span>
-<span id="cb76-9"><a href="#cb76-9"></a><span class="co"># calculate standard deviation of samples manually</span></span>
-<span id="cb76-10"><a href="#cb76-10"></a>samples_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(samples)</span>
-<span id="cb76-11"><a href="#cb76-11"></a>samples_devs <span class="ot">&lt;-</span> samples <span class="sc">-</span> samples_mean</span>
-<span id="cb76-12"><a href="#cb76-12"></a></span>
-<span id="cb76-13"><a href="#cb76-13"></a><span class="co"># samples variance</span></span>
-<span id="cb76-14"><a href="#cb76-14"></a>samples_var <span class="ot">&lt;-</span> <span class="fu">sum</span>(samples_devs<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> </span>
-<span id="cb76-15"><a href="#cb76-15"></a>                (samples_n <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb76-16"><a href="#cb76-16"></a></span>
-<span id="cb76-17"><a href="#cb76-17"></a>samples_sd <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(samples_var)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1"></a><span class="co"># ---------------------------------------------------------</span></span>
+<span id="cb79-2"><a href="#cb79-2"></a><span class="co"># Calculating the standard deviation of a sample</span></span>
+<span id="cb79-3"><a href="#cb79-3"></a><span class="co"># ---------------------------------------------------------</span></span>
+<span id="cb79-4"><a href="#cb79-4"></a></span>
+<span id="cb79-5"><a href="#cb79-5"></a><span class="co"># example values for five samples</span></span>
+<span id="cb79-6"><a href="#cb79-6"></a>samples <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">21</span>, <span class="dv">5</span>)</span>
+<span id="cb79-7"><a href="#cb79-7"></a>samples_n <span class="ot">&lt;-</span> <span class="fu">length</span>(samples)</span>
+<span id="cb79-8"><a href="#cb79-8"></a></span>
+<span id="cb79-9"><a href="#cb79-9"></a><span class="co"># calculate standard deviation of samples manually</span></span>
+<span id="cb79-10"><a href="#cb79-10"></a>samples_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(samples)</span>
+<span id="cb79-11"><a href="#cb79-11"></a>samples_devs <span class="ot">&lt;-</span> samples <span class="sc">-</span> samples_mean</span>
+<span id="cb79-12"><a href="#cb79-12"></a></span>
+<span id="cb79-13"><a href="#cb79-13"></a><span class="co"># samples variance</span></span>
+<span id="cb79-14"><a href="#cb79-14"></a>samples_var <span class="ot">&lt;-</span> <span class="fu">sum</span>(samples_devs<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> </span>
+<span id="cb79-15"><a href="#cb79-15"></a>                (samples_n <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb79-16"><a href="#cb79-16"></a></span>
+<span id="cb79-17"><a href="#cb79-17"></a>samples_sd <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(samples_var)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This makes it absolutely clear what you are trying to do, and, in addition, calculates the mean, the deviations, sample length and sample variance – all of which might come in handy later on. Also note of the use of <code># ----</code>… comments. Programmers often use these to highlight the beginning of a new section of code. This is not necessary, but adds to readability. Lines 14 and 15 show how you can split a line of code in a way that is both readable and clear.</p>
 <div class="page-columns page-full"><p>Of course, the example is a bit silly – R has a lot of built-in statistical functions, and standard deviation naturally is one of them. You can calculate the standard deviation of a vector <code>b</code> using the <code>sd()</code> function: </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>sd()</code></span></div></div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>samples_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(samples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>samples_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(samples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Nonetheless, the principle stands.</p>
 </section>

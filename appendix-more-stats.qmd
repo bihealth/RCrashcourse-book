@@ -213,9 +213,9 @@ ggplot(mtcars, aes(x = hp, y = gpm)) +
   geom_point() +
   geom_abline(intercept = a, slope = b)
 ```
-[`coefficients()`]
+[`coefficients()`]{.aside}
 
-The `coefficients()` function extract the vector with the coefficients from
+The `coefficients()` function extracts the vector with the coefficients from
 the model.
 
 But wait. The intercept, $a$, is the fuel usage when the car's horsepower

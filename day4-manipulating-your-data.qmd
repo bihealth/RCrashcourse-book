@@ -184,12 +184,14 @@ are needed around the column names.
 
 
 ::: {.callout-caution icon=false appearance="simple"}
-::: {#exr-selecting-columns}
+::: {#exr-day4-selecting-columns}
 
  * Read the file 'Datasets/transcriptomics_results.csv'
  * What columns are in the file?
  * Select only the columns 'GeneName', 'Description', 'logFC.F.D1' and 'qval.F.D1'
  * Rename the columns to 'Gene', 'Description', 'LFC' and 'FDR'
+
+([Solution](solutions.html#sec-day4-selecting-columns))
 :::
 :::
 
@@ -312,7 +314,7 @@ chvec[ord]
 
 
 ::: {.callout-caution icon=false appearance="simple"}
-::: {#exr-lastname}
+::: {#exr-day4-lastname}
 ## Sorting by last name
 
 Here is a vector of names. Can you think of how to sort it by last name?
@@ -321,6 +323,8 @@ Here is a vector of names. Can you think of how to sort it by last name?
 persons <- c("Henry Fonda", "Bob Marley", "Robert F. Kennedy", 
   "Bob Dylan", "Alan Rickman")
 ```
+
+([Solution](solutions.html#sec-day4-lastname))
 :::
 :::
 
@@ -400,7 +404,7 @@ tr_res <- arrange(tr_res, logFC * FDR)
 [`abs()`]{.aside}
 
 ::: {.callout-caution icon=false appearance="simple"}
-::: {#exr-sorting-tidyverse}
+::: {#exr-day4-sorting-tidyverse}
 ## Sorting data frames with arrange()
 
 The `abs()` function returns the absolute value of a number, for 
@@ -561,7 +565,7 @@ position 2, the first vector is `TRUE` and the second is `FALSE`, so the
 result is `FALSE`. And so on. Try it.
 
 ::: {.callout-caution icon=false appearance="simple"}
-::: {#exr-logical}
+::: {#exr-day4-logical-vectors}
 ## Logical vectors
 
  * Create a logical vector that selects genes that are both significant
@@ -571,6 +575,8 @@ result is `FALSE`. And so on. Try it.
  * How many of the genes containing "interferon" in the Description are
    are guanylate binding proteins? You can recognize the GBPs by their Gene
    symbol – it starts with "GBP".
+([Solution](solutions.html#sec-day4-logical-vectors))
+gical
 :::
 :::
 
@@ -687,7 +693,7 @@ nrow(results)
 ::: {#exr-dups}
 
 You might have been expecting that there are only three duplicates; after
-all, only three genes were in common between `interferon` and `gbp`- So
+all, only four genes were in common between `interferon` and `gbp`- So
 where do these other duplicates come from? What are they?
 :::
 :::
@@ -929,16 +935,22 @@ Note that the data is not real, just based on real data.
 
 
 ::: {.callout-caution icon=false appearance="simple"}
-::: {#exr-merging}
+::: {#exr-day4-merging}
 ## Merging large data sets
 
 The files `expression_data_vaccination_example.xlsx` and
-`labresults_full.csv` contain data from the same study.
+`labresults_full.csv` contain data from the same study. The first contains
+some meta-data for samples for which gene expression has been measured, and
+the latter contains the results of laboratory tests for many patients in
+the trial. The goal here is to connect the RNA expression data with the
+laboratory values, so that one can analyze the relationship between the
+expression of certain genes and, say, the observed levels of inflammation.
 
- 1. Read CSV file and the first sheet from the XLSX file.
- 3. Which columns contain the ID the subjects? Are there any subjects in common? How do
-    you match the subjects?
- 5. We are interested only in the following information: Subject ID, ARM
+ 1. Read CSV file and the first sheet ("targets") from the XLSX file.
+ 3. Which columns contain the ID the subjects? Are there any subjects in common? (Hint: use the `intersect()` function)
+ 4. What other columns are common between the two data frames? Is the
+ column with the ID of the subject sufficient to identify each row?
+ 5. We are interested only in the following information: SUBJ, ARM
     (group), time point, sex, age, test name and the actual measurement.
     Are the measurements numeric? Remember, you can use expressions like `[ , c("ARM", "sex") ]` 
     or `select(df, ARM, sex)`
@@ -947,7 +959,7 @@ The files `expression_data_vaccination_example.xlsx` and
     frames however you see fit. Note that there are multiple time points per
     subject and multiple measurements per subject and time point.
 
-Solution: @sec-exercise-merging
+See [Solution](solutions.html#sec-exercise-merging)
 
 :::
 :::

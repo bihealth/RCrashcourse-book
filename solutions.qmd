@@ -1,5 +1,421 @@
 # Solutions to Exercises {.unnumbered}
 
-## The merging of two data frames {#sec-exercise-merging}
+```{r echo=FALSE,message=FALSE,warning=FALSE}
+options(width=80)
+library(tidyverse)
+library(readxl)
+```
 
-Solution to @exr-merging.
+## Day 1
+
+## Day 2
+
+### Matrices (@exr-day2-matrices) {#sec-day2-matrices}
+
+
+```{r}
+# generate random readouts
+readouts <- runif(48)
+
+# create the matrix
+res_mtx <- matrix(readouts, nrow=6)
+
+# always check your results!
+dim(res_mtx)
+```
+
+To change the "borders" to `NA`:
+
+
+```{r}
+res_mtx[1,] <- NA
+res_mtx[,1] <- NA
+res_mtx[nrow(res_mtx), ] <- NA
+res_mtx[, ncol(res_mtx)] <- NA
+```
+
+Above, we could have used `res_mtx[6, ] <- NA` instead of
+`res_mtx[nrow(res_mtx), ] <- NA`, but the latter is more general and will
+keep working if you decide to use a matrix with a different layout.
+
+
+Row and column names:
+
+```{r}
+row_names <- c("control", "low", "medium", "high")
+row_names <- paste0("Inh1_", row_names)
+row_names <- c(NA, row_names, NA)
+rownames(res_mtx) <- row_names
+
+col_names <- c("control", "low", "high")
+col_names <- rep(col_names, 2)
+
+inh <- rep(c("Inh2_", "Inh3_"), each=3)
+col_names <- paste0(inh, col_names)
+col_names <- c(NA, col_names, NA)
+colnames(res_mtx) <- col_names
+```
+
+Above, we use `NA` for row names and column names of the border row /
+column. We could have used another value as well, it doesn't matter.
+
+Selecting from the matrix:
+
+
+```{r}
+# wells with inhibitor 3
+res_mtx[ 2:5, 5:6 ]
+
+# inhibitor 1 as well as 2
+inh1 <- c("Inh1_low", "Inh1_medium", "Inh1_high")
+inh2 <- c("Inh2_low", "Inh2_high")
+res_mtx[ inh1, inh2 ]
+```
+
+### Data frames (@exr-day2-data-frames) {#sec-day2-data-frames}
+
+
+```{r}
+mtx <- matrix(rnorm(15), nrow=5)
+df <- as.data.frame(mtx)
+
+colnames(df) <- c("X", "Y", "Z")
+rownames(df) <- c("a", "b", "c", "d", "e")
+
+df$A <- rep("A", 5)
+
+df$sequence <- seq(0, 1, length.out=5)
+
+df
+```
+
+
+
+
+
+## Day 3
+
+### Deaths.xlsx (@exr-day3-opening-data-with-options) {#sec-day3-opening-data-with-options}
+
+If you look at the file, you will find that there are 4 lines with
+gibberish (which you can skip with `skip=4`), then the header row,
+then 10 lines with actual data, and finally a few lines with gibberish
+again. Thus, we need to read `1 + 10 = 11` lines, starting with line 5, and
+finishing with line 16.
+
+```{r}
+fn <- readxl_example("deaths.xls")
+
+# one way: use the n_max argument
+deaths <- read_excel(fn, skip=4, n_max=11)
+
+# another way: use the excel range specification
+deaths <- read_excel(fn, range="A5:F16")
+```
+
+### Diagnosing `meta_data_botched.xlsx` (@exr-day3-diagnosing) {#sec-day3-diagnosing}
+
+
+```{r message=TRUE}
+botched <- read_excel("Datasets/meta_data_botched.xlsx")
+colnames(botched)
+```
+
+First thing that we see is that one of the columns is called `time point`
+with a space in between. This is neither conforming to the other column
+names (which are ALL CAPS) nor it is a good idea to have spaces in column
+names.
+
+
+
+```{r}
+summary(botched)
+
+colorDF::summary_colorDF(botched)
+```
+
+OK, so we see several problems. First, the column "Age" is not numeric, but
+we would expect it to be. Let's take a closer look:
+
+
+```{r}
+age_n <- as.numeric(botched$AGE)
+botched$AGE[ is.na(age_n) ]
+```
+
+Right, so someone added extra text or spaces to the the actual values. And
+what does "3 0" mean? It could be `30`, but it also could mean "3 years 0
+months" – who knows?
+
+Next, the `SEX` column. `summary_colorDF()` shows that it has 12 unique
+values, but this is not the number we expect. What are these unique values?
+
+
+```{r}
+unique(botched$SEX)
+```
+
+Maybe the data was entered by hand by different people, and they did not
+agree beforehand on how to enter the data. We see a similar problem also in
+the columns `PLACEBO`, `ARM` and `time point`:
+
+
+```{r}
+unique(botched$PLACEBO)
+unique(botched$ARM)
+unique(botched[["time point"]])
+```
+
+
+### Correcting `meta_data_botched.xlsx` (@exr-day3-correcting) {#sec-day3-correcting}
+
+
+
+Let's start with the easiest one, the time point. First, we should fix the name of the column:
+
+
+```{r}
+# either works
+botched <- rename(botched, TIMEPOINT=`time point`)
+# or
+colnames(botched)[2] <- "TIMEPOINT"
+colnames(botched)
+```
+
+Now, fix the values in the `TIMEPOINT` column. We can use the `toupper()`.
+
+
+
+```{r}
+# change to upper case
+tp <- toupper(botched$TIMEPOINT)
+
+# replace day with "D"
+tp <- str_replace_all(tp, "DAY", "D")
+
+# remove all spaces
+tp <- str_replace_all(tp, " *", "")
+
+table(tp, botched$TIMEPOINT)
+
+# looks good!
+botched$TIMEPOINT <- tp
+```
+
+The `ARM` column should be easy, too. We only have to pay attention to the
+first letter. There are two exceptions, though – sometimes `control` is used
+instead of `placebo`, and in some cases `grippal` has been used instead of
+`agrippal`.
+
+
+```{r}
+arm <- toupper(botched$ARM)
+arm <- str_replace_all(arm, "^P.*", "PLACEBO")
+arm <- str_replace_all(arm, "^F.*", "FLUAD")
+arm <- str_replace_all(arm, "^A.*", "AGRIPPAL")
+arm <- str_replace_all(arm, "^C.*", "PLACEBO")
+arm <- str_replace_all(arm, "^G.*", "AGRIPPAL")
+unique(arm)
+botched$ARM <- arm
+```
+
+Proceed with the columns `SEX` and `PLACEBO` in the same way.
+
+Finally, `AGE`. The simplest way would be to replace everything that is not
+a digit:
+
+```{r}
+age <- botched$AGE
+age <- str_replace_all(age, "[^0-9]", "")
+age <- as.numeric(age)
+
+# check for NAs
+any(is.na(age))
+
+# replace the original column
+botched$AGE <- age
+```
+
+
+
+
+
+## Day 4
+
+### Selecting columns (@exr-day4-selecting-columns){#sec-day4-selecting-columns}
+
+Solution to @exr-day4-selecting-columns.
+
+```{r message=FALSE,warning=FALSE}
+# Load the data
+library(tidyverse)
+
+results <- read_csv("Datasets/transcriptomics_results.csv")
+
+# what columns are there?
+colnames(results)
+
+# Select the columns that we need
+results <- select(results, GeneName, Description, logFC.F.D1, qval.F.D1)
+colnames(results) <- c("Gene", "Description", "logFC", "qval")
+```
+
+
+```{r echo=FALSE,message=FALSE,warning=FALSE}
+results <- read_csv("Datasets/transcriptomics_results.csv")
+```
+
+Alternatively, we could have specified the new column names directly in the
+`select()` function. This is useful if you want to rename only some of the
+columns:
+
+
+```{r}
+results <- select(results, Gene=GeneName, 
+  Description, 
+  LFC=logFC.F.D1, FDR=qval.F.D1)
+colnames(results)
+```
+
+### Sorting by last name (@exr-day4-lastname) {#sec-day4-lastname}
+
+```{r}
+persons <- c("Henry Fonda", "Bob Marley", "Robert F. Kennedy", 
+  "Bob Dylan", "Alan Rickman")
+
+# first, create a vector with last names only. 
+# basically, remove everything before the last space
+# and the space itself
+lastnames <- str_replace_all(persons, ".* ", "")
+lastnames
+
+# now get the order for the last names
+ord <- order(lastnames)
+ord
+
+# and use it to sort the original vector
+persons[ord]
+```
+
+### Logical vectors (@exr-day4-logical-vectors) {#sec-day4-logical-vectors}
+
+```{r message=FALSE,echo=FALSE}
+library(tidyverse)
+tr_res <- read_csv("Datasets/transcriptomics_results.csv")
+tr_res <- select(tr_res, 
+                 Gene=GeneName, Description,
+                 logFC=logFC.F.D1, FDR=qval.F.D1)
+```
+
+
+```{r}
+significant <- tr_res$FDR < 0.05
+interferons <- str_detect(tr_res$Description, "interferon")
+both <- significant & interferons
+
+# how many are there?
+sum(both)
+
+# how many are significant, but not interferons?
+sum(significant & !interferons)
+
+gbps <- str_detect(tr_res$Gene, "^GBP")
+sum(gbps & interferons)
+```
+
+
+
+
+### The merging of two data frames (@exr-day4-merging) {#sec-exercise-merging}
+
+Solution to @exr-day4-merging.
+
+First, we load the data. Nothing fancy here. You should examine the
+resulting data frames with `View` (or by clicking on the data frame in the
+Environment pane in RStudio), but in the code below we simply list the
+available columns.
+
+
+```{r message=FALSE,warning=FALSE}
+# The libraries needed
+library(tidyverse)
+library(readxl)
+
+# Load the data
+labresults <- read_csv("Datasets/labresults_full.csv")
+targets <- read_excel("Datasets/expression_data_vaccination_example.xlsx", 
+  sheet="targets")
+
+# what columns are there?
+colnames(labresults)
+colnames(targets)
+
+intersect(colnames(labresults), colnames(targets))
+```
+[`intersect`]{.aside}
+
+The `intersect()` function returns the common elements between two vectors.
+In this case, it returns the common column names between the two data
+frames. As you can see, there are `USUBJID` and `SUBJ` columns in both data
+frames, chances are that there are common elements between the data frame
+here. We will focus at the `SUBJ` column.
+
+OK, do we see any common subjects between the two data frames?
+
+```{r}
+# how many unique subjects are there in each data frame?
+length(unique(labresults$SUBJ))
+length(unique(targets$SUBJ))
+
+# how many are common?
+length(intersect(labresults$SUBJ, targets$SUBJ))
+```
+
+Right, so there are more unique subjects in the `labresults` data frame than
+in the `targets` data frame.
+
+The other column that is common between the two data frames is `Timepoint`.
+That already indicates that each row – in both data frames – corresponds to
+a *sample* rather than *subject*. That is, we need to identify the rows not
+only by *subject*, but also by *timepoint*.
+
+If you use the `unique()` function as above, you will find that there are
+only `r length(unique(targets$Timepoint))` unique timepoints in the `targets` data
+frame, but `r length(unique(labresults$Timepoint))` unique timepoints in the
+`labresults` data frame.
+
+Now first let us select only the column that we need, as mentioned in the
+exercise. For the `targets` data frame, we need the columns `SUBJ` and `Timepoint`,
+as well as `ARM`, `Timepoint`, `AGE` and `SEX`.
+
+
+```{r}
+targets <- select(targets, SUBJ, Timepoint, ARM, AGE, SEX)
+```
+
+If you inspect the `labresults` data frame, you will see that it has only
+one column that looks like a measurement – `LBORRES`. Also, the column
+`LBTEST` ostensibly contains the name of the test that was performed, and
+`LBTESTCD` contains the code for the test. However, we also find the
+`Timepoint` column here as well.
+
+```{r}
+labresults <- select(labresults, SUBJ, Timepoint, LBTEST, LBTESTCD, LBORRES)
+```
+
+
+Depending on what one wants to do, we can try to get one of the four types
+of join (inner, left, right, full) between the two data frames. However,
+assuming that the goal is correlate expression data with lab data, we will
+need an inner join, so either the `tidyverse` function `inner_join()` or the
+base R function `merge()` with default parameter values will do the job.
+
+```{r}
+joined <- merge(targets, labresults, by=c("SUBJ", "Timepoint"))
+dim(joined)
+colnames(joined)
+```
+
+Yep, seems to have worked well. The resulting data frame has 
+`r nrow(joined)` rows – since we have many different measurements for each
+person.

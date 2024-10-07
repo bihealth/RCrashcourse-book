@@ -505,8 +505,8 @@ F-statistic: 41.79 on 1 and 30 DF,  p-value: 3.839e-07</code></pre>
 </div>
 </div>
 </div>
-<p>[<code>coefficients()</code>]</p>
-<p>The <code>coefficients()</code> function extract the vector with the coefficients from the model.</p>
+<div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>coefficients()</code></span></div></div>
+<p>The <code>coefficients()</code> function extracts the vector with the coefficients from the model.</p>
 <p>But wait. The intercept, <span class="math inline">\(a\)</span>, is the fuel usage when the car’s horsepower is 0. Logically, the fuel usage of a car with 0 horsepower should be precisely 0, and not almost 3. Any value other than 0 simply doesn’t make sense. We can tell <code>lm()</code> that the intercept should be 0 quite easily:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>model_0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gpm <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> hp, <span class="at">data=</span>mtcars)</span>

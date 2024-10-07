@@ -144,6 +144,27 @@ Also, the `>` and `<` operators can be used to compare strings, but the
 result is not always what you might expect. Can you guess what it does?
 Hint: pick up a dictionary... or any other alphabetically sorted list.
 
+
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-day2-logical-vectors}
+## Creating logical vectors
+
+Create a vector with 20 random numbers as follows:
+
+
+```{r eval=FALSE}
+vec <- rnorm(20)
+```
+
+How can you filter out all the numbers that are greater than 0.5?
+
+How can you filter out all the numbers that are (i) greater than 0.5 and
+(ii) smaller than 1.0?
+
+:::
+:::
+
 ## Matrices
 
 ### Creating matrices
@@ -418,13 +439,13 @@ AAA, AAB, AAC, …, ABA, ABC, …, ZZZ. Store the result in a variable called `c
 
 
 ::: {.callout-caution icon=false appearance="simple"}
-::: {#exr-paste-rep}
+::: {#exr-day2-matrices}
 ## Matrices - accessing and changing elements
 Assume you have a 48 well-plate for a drug sensitivity analysis with viability scores.
  
  - Create a 48-element vector "drugSensitivity_v" with random numbers between 0 and 1. Use `runif(48)` to generate these values. These reflect your viability scores.
  - What does the `runif()` function do?
- - Create a 6x8 matrix "drugSensitivity" from the vector.
+ - Create a 6x8 matrix (6 rows, 8 columns) "drugSensitivity" from the vector.
 
 Before starting you experiment, you decided to leave out the border wells to avoid edge effects:
 
@@ -433,10 +454,10 @@ Before starting you experiment, you decided to leave out the border wells to avo
 The rows are treated with inhibitor 1 with increasing concentrations (control, low, medium, high). Columns 2 to 4 are treated with inhibitor 2 with increasing concentrations (control, low, high) and column 5 to 7 are treated with inhibitor 3 (same concentrations as inhibitor 2).
 
  - Use row and column names to reflect treatments.
- - What are potential problems of this approach?
  - Select all wells with inhibitor 3.
- - Which wells can be used as negative control?
  - Select only wells with a combination of inhibitor 1 and inhibitor 2.
+
+([Solution](solutions.html#exr-day2-matrices))
 :::
 :::
 
@@ -543,6 +564,23 @@ columns of the data frame) to choose from. No need for tedious typing!
 :::
 
 
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-day2-lists}
+## Lists
+
+Create a list called `misc` containing the following elements:
+
+ * `vector`, a vector of numbers from 1 to 5
+ * `matrix`, a matrix with 2 rows and 3 columns, filled with numbers from 1 to 6
+ * `logical`, a logical vector with three elements: `TRUE`, `FALSE`, `TRUE`.
+ * `person` – another list, which contains your first (`first`) and last (`last`) name
+
+ What happens when you type `misc[2:4]`?
+
+ Click on the `misc` list in the Environment tab in RStudio. What do you see? Does it make sense?
+:::
+:::
+
 ### Lists as return values
 
 A common application of lists has something to do with functions.
@@ -565,6 +603,7 @@ group_b <- rnorm(10, mean = 14, sd = 2)
 Of course, before running any statistical test we usually want to have a
 look at the data, to see if the groups differ visually. We can do this by
 using the `boxplot()` function, which creates a boxplot of the data.
+[`boxplot()`]{.aside}
 
 
 ```{r}
@@ -589,11 +628,18 @@ store the result in a variable called `t_test`.
 ```{r}
 t_test <- t.test(group_a, group_b)
 typeof(t_test)
-t_test
 ```
 
 As you can see, the result is a list. However, when we print it to the
-console, it *does not look like one*. This is because R has a special
+console, it *does not look like one*: 
+
+
+```{r}
+t_test
+```
+
+
+This is because R has a special
 function for formatting the results of a t-test[^oo], so that it is easier to 
 read.
 
@@ -699,7 +745,7 @@ ignore the rownames, and for good reasons.
 
 
 ::: {.callout-caution icon=false appearance="simple"}
-::: {#exr-paste-rep}
+::: {#exr-day2-data-frames}
  * Create a 5x3 matrix with random numbers. Use `matrix` and `rnorm`.
  * Turn the matrix into a data frame. Use `as.data.frame` for that.
  * Add column and row names.
@@ -707,6 +753,8 @@ ignore the rownames, and for good reasons.
    `rep` function for that.
  * Add a column with five numbers from 0 to 1. Use the `seq` function for that. 
    Hint: look at the help for the `seq` function (`?seq`).
+
+([Solution](solutions.html#exr-day2-data-frames))
 :::
 :::
 
@@ -886,7 +934,7 @@ The Tidyverse data frame is called a `tibble`. It behaves almost exactly
 like a data frame, with a few crucial differences:
 
  * when printing the tibble to the console, the output is nicer
- * tibbles never have row names (and that is why we will not be using them)
+ * tibbles never have row names (and that is why we will not be using row names)
  * when you access a single column of a tibble, you **always** get a tibble, not a vector
 
 To use tibbles, you need the `tidyverse` package[^tidyverse]. You can install it using

@@ -100,15 +100,15 @@ You can open this file by double-clicking on it in the Files pane in
 RStudio. Like most of the files that you will be working with, it is a
 simple text file: you can open it in any text editor, including RStudio.
 
+The other file I told you to create is a *script* file. This is where you
+will later be typing your code, and we will discuss it in more detail in a
+moment.
+
 Later on, if you choose to do so, R can create two hidden files, `Rhistory`
 [`.Rhistory` and `.RData`]{.aside}
 (called `.Rhistory` on Unix-like systems and `_Rhistory` on Windows) and `.RData` (or `_RData`). 
 This files save the state of your R session (of your R workspace, to be
 specific).
-
-### Workspaces, history and environments
-
-### Tab completion
 
 ## Let's start with R
 
@@ -145,8 +145,8 @@ Calculate the following expressions in R:
 ### Using script files
 
 On the left side of the RStudio window you have (by default) two panels:
-the lower one is called "Console". When you create a new script file, it
-appears above.
+the lower one is called "Console". When you create a new script file, as
+you have done it a moment ago, it appears above.
 
 ::: {.callout-tip}
 ## Typing in console
@@ -343,6 +343,15 @@ Create the following variables in your script:
    result in a new variable `message`
 :::
 :::
+
+### Workspaces, history and environments
+
+XXX
+
+### Tab completion
+
+
+XXX
 
 ## Vectors and vectorization
 
@@ -545,6 +554,19 @@ first element of the second vector, the second element of the first vector
 to the second element of the second vector, and so on. Makes sense, right?
 Same would happen if we were to subtract, multiply or divide the vectors
 (or use logical operations, which you will learn on Day 3).
+
+Imagine the two vectors one beneath the other:
+
+```
+numbers1:   c(1,    4,    5)
+              +     +     +
+numbers2:   c(2,    5,    6)
+              ↓     ↓     ↓
+result:     c(3,    9,   11)
+
+```
+
+R is simply adding up corresponding elements.
 This does not look like much now, but trust me, it will be extremely useful
 in the future.
 
@@ -572,7 +594,20 @@ the vector `numbers1`. So, it did what is called **recycling**. It
 "rewound" the vector `numbers2` to the beginning and added the first
 element of `numbers2` to the third element of `numbers1`. However, since
 after the rewinding and adding one element of vector `numbers2` was left
-(because `numbers1` did not have any more elements), R issued a warning. If
+(because `numbers1` did not have any more elements), R issued a warning. 
+
+```
+numbers1:   c(1,     2,      3)
+              +      +       +
+numbers2:   c(4,     5)    c(4,    5)
+              ↓      ↓       ↓
+result:     c(3,     9,     11)
+
+```
+
+
+
+If
 the length of the first vector was a multiple of the length of the second
 vector, R would not have complained:
 
@@ -586,6 +621,20 @@ numbers1 + numbers2
 See? No warning. R was recycling the second vector over and over again.
 Recycling is a dangerous business: if you are not careful, you can get
 results which you have not expected.
+
+```
+numbers1:   c(1,     2,      3,     4,     5,     6)
+              +      +       +      +      +      +
+numbers2:   c(7,     8)    c(7,     8)   c(7,     8)
+              ↓      ↓       ↓      ↓      ↓      ↓
+result:     c(8,    10,     10,    12,    12,    14)
+
+```
+
+Take it slow. This is advanced stuff, but I had to warn you already at this
+stage – this is one of the common sources of errors in R. Watch out for
+this "longer object length is not a multiple of shorter object length"
+warning.
 
 ::: {.callout-tip}
 ## Recycling advice
