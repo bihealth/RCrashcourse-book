@@ -378,5 +378,15 @@
     "crumbs": [
       "Introduction"
     ]
+  },
+  {
+    "objectID": "index.html#acknowledgements",
+    "href": "index.html#acknowledgements",
+    "title": "Five days of R",
+    "section": "Acknowledgements",
+    "text": "Acknowledgements\nI have been teaching statistics and bioinformatics for more than two decades now. About ten years ago, I started teaching the first “R crash course” with the goal of introducing PhD students and postdocs to R as quickly and as painlessly as possible. The course evolved over the years, and I had many partners and co-teachers.\nIn the first place, I would like to thank Carlo Pecoraro from Physalia Courses for the opportunity to teach my first R course in the first place.\nSeveral times I have taught the course together with my colleague, Dr. Manuela Benary from the Core Unit of Bioinformatics at the Berlin Institute of Health, Charité - Universitätsmedizin Berlin. Manuela has been a great partner in teaching the course, and many ideas in this book are actually hers.\nI would also like to thank many colleagues and friends who had the patience to go through this book and provide feedback.\nFinally, I thank you, the Reader, for your interest in this book. I hope it was useful and that you will enjoy using R in your research.",
+    "crumbs": [
+      "Introduction"
+    ]
   }
 ]
