@@ -11,7 +11,7 @@ knitr::opts_chunk$set(dev="svg")
 I have been teaching R to biologists and medical students for many years
 now. At the Core Unit for Bioinformatics at the Berlin Institute of Health,
 Charité - Universitätsmedizin Berlin, we have developed a five-day, 5 hour
-per day crash course running for the last three years. This book is a
+per day R crash course running for the last three years. This book is a
 companion to that course.
 
 This is also the reason for how the materials in the book are arranged.
