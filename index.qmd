@@ -94,6 +94,7 @@ x <- 1 + 1
 
 The numbers on the left (if present) are not part of the code – they are
 just line numbers. You can copy the code by clicking on the "Copy" button
+(📋)
 and it will not copy these numbers.
 
 
@@ -135,7 +136,7 @@ And again[^again]!
 
 In each chapter there are several exercises. *However*, that does not mean
 that you should *only* do the exercises. In fact, you should try out
-*every* piece of code that is in the book. Copy it (there is a button next
+*every* piece of code that is in the book. Copy it (there is a 📋 button next
 to each code block that will do it for you), paste it into your RStudio and
 run it. Then try to modify it and see what happens.
 
