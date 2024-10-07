@@ -62,8 +62,8 @@ Why is this so great?
 
 What are the disadvantages?
 
- * **Steep learning curve.** You have to learn all the stuff first.
-   Luckily, when it comes to R markdown, there are plenty of resources, and
+ * **Steeper learning curve.** You have to learn all the stuff first.
+   Luckily, when it comes to R markdown, it is quite easy and there are plenty of resources, and
    after today you will know all the most important stuff.
  * **No fine control over the layout.** While you can easily use simple
    formatting commands, you will have to resort to more complex tools to
