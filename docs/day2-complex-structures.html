@@ -314,7 +314,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#creating-lists" id="toc-creating-lists" class="nav-link" data-scroll-target="#creating-lists"><span class="header-section-number">2.4.1</span> Creating lists</a></li>
   <li><a href="#accessing-elements-of-a-list" id="toc-accessing-elements-of-a-list" class="nav-link" data-scroll-target="#accessing-elements-of-a-list"><span class="header-section-number">2.4.2</span> Accessing elements of a list</a></li>
-  <li><a href="#lists-as-return-values" id="toc-lists-as-return-values" class="nav-link" data-scroll-target="#lists-as-return-values"><span class="header-section-number">2.4.3</span> Lists as return values</a></li>
+  <li><a href="#sec-lists-as-return-values" id="toc-sec-lists-as-return-values" class="nav-link" data-scroll-target="#sec-lists-as-return-values"><span class="header-section-number">2.4.3</span> Lists as return values</a></li>
   <li><a href="#replacing-adding-and-removing-elements-of-a-list" id="toc-replacing-adding-and-removing-elements-of-a-list" class="nav-link" data-scroll-target="#replacing-adding-and-removing-elements-of-a-list"><span class="header-section-number">2.4.4</span> Replacing, adding and removing elements of a list</a></li>
   </ul></li>
   <li><a href="#data-frames" id="toc-data-frames" class="nav-link" data-scroll-target="#data-frames"><span class="header-section-number">2.5</span> Data Frames</a>
@@ -894,16 +894,16 @@ $age
 [1] 42
 
 $measurements
-[1] 0.2114829 0.5853316 0.5339132 0.5395957 0.2995215</code></pre>
+[1] 0.8128119 0.7403742 0.6664835 0.7824713 0.1926792</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>patient_data<span class="sc">$</span>measurements[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2114829</code></pre>
+<pre><code>[1] 0.8128119</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>patient_data<span class="sc">$</span>measurements[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">42</span></span>
 <span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>patient_data<span class="sc">$</span>measurements <span class="sc">*</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 126.0000000   1.7559948   1.6017397   1.6187872   0.8985646</code></pre>
+<pre><code>[1] 126.0000000   2.2211226   1.9994504   2.3474140   0.5780375</code></pre>
 </div>
 </div>
 <p>Since the lists are named, there must be a way to access and modify these names. And, of course, there is: the <code>names()</code> function.</p>
@@ -949,8 +949,8 @@ Tab completion with lists and data frames
 </div>
 </div>
 </section>
-<section id="lists-as-return-values" class="level3 page-columns page-full" data-number="2.4.3">
-<h3 data-number="2.4.3" class="anchored" data-anchor-id="lists-as-return-values"><span class="header-section-number">2.4.3</span> Lists as return values</h3>
+<section id="sec-lists-as-return-values" class="level3 page-columns page-full" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="sec-lists-as-return-values"><span class="header-section-number">2.4.3</span> Lists as return values</h3>
 <p>A common application of lists has something to do with functions. Remeber that a function can return only one object? But what if a function would like to return several things at once? It can return a list!</p>
 <p>We will run now our first statistical test. First, we need to generate two groups of measurements to compare. We will simulate them using the <code>rnorm()</code> function which produces normally distributed random numbers. The function takes additional parameters, <code>mean</code> and <code>sd</code>, which specify the mean and the standard deviation of the distribution, respectively. That allows us to ensure that the groups differ:</p>
 <div class="cell">
@@ -997,13 +997,13 @@ Boxplot
     Welch Two Sample t-test
 
 data:  group_a and group_b
-t = -3.9893, df = 17.092, p-value = 0.0009402
+t = -3.7401, df = 16.967, p-value = 0.001634
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -4.592864 -1.416151
+ -4.820348 -1.343031
 sample estimates:
 mean of x mean of y 
- 10.56279  13.56730 </code></pre>
+ 10.32439  13.40607 </code></pre>
 </div>
 </div>
 <p>This is because R has a special function for formatting the results of a t-test<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, so that it is easier to read.</p>
@@ -1011,7 +1011,7 @@ mean of x mean of y
 <div class="cell">
 <div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>t_test<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.000940224</code></pre>
+<pre><code>[1] 0.001634243</code></pre>
 </div>
 </div>
 </section>
@@ -1206,7 +1206,7 @@ Remember!
 </div>
 <div class="callout-body-container">
 <div id="exr-paste-rep" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 2.6</strong></span> Use <code>install.packages</code> to install the package <code>colorDF</code> from CRAN. Then, load the package using <code>library(colorDF)</code>. What does that package do? How can you check that? (Hint: use <code>??colorDF</code>).</p>
+<p><span class="theorem-title"><strong>Exercise 2.6</strong></span> Use <code>install.packages</code> to install the package <code>skimr</code> from CRAN. Then, load the package using <code>library(skimr)</code>. What does that package do? How can you check that? (Hint: use <code>??skimr</code>, <code>?skim</code>).</p>
 </div>
 </div>
 </div>

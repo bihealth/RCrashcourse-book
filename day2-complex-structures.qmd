@@ -583,7 +583,7 @@ Create a list called `misc` containing the following elements:
 :::
 :::
 
-### Lists as return values
+### Lists as return values {#sec-lists-as-return-values}
 
 A common application of lists has something to do with functions.
 Remeber that a function can return only one object? But what if a function
@@ -865,9 +865,9 @@ but you need to load it every time you start a new R session with
 
 ::: {.callout-caution icon=false appearance="simple"}
 ::: {#exr-paste-rep}
-Use `install.packages` to install the package `colorDF` from CRAN. Then,
-load the package using `library(colorDF)`. What does that package do? How
-can you check that? (Hint: use `??colorDF`).
+Use `install.packages` to install the package `skimr` from CRAN. Then,
+load the package using `library(skimr)`. What does that package do? How
+can you check that? (Hint: use `??skimr`, `?skim`).
 :::
 :::
 

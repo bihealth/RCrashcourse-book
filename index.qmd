@@ -58,7 +58,7 @@ Here is the list of packages that you will have to install:
 
  * `tidyverse`
  * `ggplot2`
- * `colorDF`
+ * `skimr`
  * `pander`
  * `readxl`
  * `writexl`
@@ -72,8 +72,9 @@ Here is the list of packages that you will have to install:
 You can install them by running the following code in your RStudio:
 
 ```{r eval=FALSE}
-install.packages(c("tidyverse", "ggplot2", "colorDF", "pander", "readxl",
-                   "writexl", "janitor", "broom", "cowplot", "tinytex"))
+install.packages(c("tidyverse", "ggplot2", "skimr", "pander", 
+                   "readxl", "writexl", "janitor", "broom", 
+                   "cowplot", "ggbeeswarm", "pheatmap", "tinytex"))
 ```
 
 ## The structure of this book
@@ -105,6 +106,12 @@ and it will not copy these numbers.
  * This is how an exercise looks like!
  * Please do all exercises. It helps a lot.
  * Some things are learned only through exercises.
+
+::: {.callout-caution icon=false collapse=true}
+## Solution (click me!)
+Some exercises have a solution which you can click to reveal.
+:::
+
 :::
 :::
 
@@ -120,9 +127,10 @@ and it will not copy these numbers.
 ::: {.callout-important}
 ## Remember!
 
- * Run all code chunks in your RStudio.
- * Do all exercises.
- * Go through the "Review" section at the end of each chapter.
+ * Run *all* code chunks in your RStudio.
+ * Do *all* exercises.
+ * Go through the "Review" section at the end of each chapter and make sure
+   you understand *everything* on the list.
 :::
 
 
@@ -145,6 +153,12 @@ you understood the material, but they can also introduce new concepts or
 ideas. This is because this book is not only about learning R, but also
 learning *how to learn about R*. So, for example, sometimes we will want
 you to figure stuff on your own rather than give you a ready-made answer.
+
+Many of the exercises have a solution provided, either inline (you have to
+expand it by clicking on the "Solution" button) or in the "Solutions"
+section of the book. **It is really important that you do not give up too
+quickly**. Try to solve the exercise on your own, and only then look at the
+solution.
 
 Each chapter is ended by a "Review" section, which contains a list of
 things that you have learned that day. It is really important that you go
@@ -169,11 +183,15 @@ concepts and useful tidbits of information).
 
 Whenever you feel you don't understand something, stop and try to figure it
 out. Use internet search very liberally. Many answers can be found on sites
-such as StackOverflow, R-bloggers, or in the R documentation. Try out the
+such as [StackOverflow](https://stackoverflow.com), 
+[R-bloggers](https://www.r-bloggers.com/), or simply in the R documentation[^help]. Try out the
 code you will find in these sources – just copy-paste it into your RStudio
 and adapt it to your needs. Feel free to use Large Language Models (such as
 GPT) – they are very good at explaining code, especially when you are
 learning basic concepts.
+
+[^help]: You can access the R documentation by typing `?function_name` in
+the console. You can search for concepts using `??keyword`.
 
 However, if you want to learn R, simply doing this course will not be
 enough. You need to start using it in a real world setting. Unfortunately –
@@ -182,6 +200,15 @@ it will be switching to R: tasks that are a breeze in Excel will at first requir
 you to spend substantially more time in R. However, trust me: it pays off
 in the long run. Therefore, for best results, force yourself to use R *even
 if at first it is less efficient then other tools*.
+
+Finally: programming can be fun. Most programmers I know simply enjoy doing
+that. It is a satisfaction similar to building Lego models or solving
+puzzles or reading a crime story – and also very much like doing
+experiments. Unlike experiments, however, you can't break expensive
+equipment and the results of your attempts are usually immediately visible,
+no need to wait for weeks for the results. You can play, experiment, try
+out various things at no expense and no risk. If you can get into this
+mindset, learning R will be much, much easier. 
 
 
 ## Acknowledgements
@@ -194,7 +221,7 @@ and I had many partners and co-teachers.
 
 In the first place, I would like to thank Carlo Pecoraro from 
 [Physalia Courses](https://www.physalia-courses.org/) for the opportunity
-to teach my first R course in the first place.
+to teach my first R crash course for Physalia.
 
 Several times I have taught the course together with my colleague, 
 Dr. Manuela Benary from the 
@@ -207,4 +234,4 @@ I would also like to thank many colleagues and friends who had the patience
 to go through this book and provide feedback.
 
 Finally, I thank you, the Reader, for your interest in this book. I hope
-it was useful and that you will enjoy using R in your research.
+it will be useful and that you will enjoy using R in your research.

@@ -341,7 +341,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><code>tidyverse</code></li>
 <li><code>ggplot2</code></li>
-<li><code>colorDF</code></li>
+<li><code>skimr</code></li>
 <li><code>pander</code></li>
 <li><code>readxl</code></li>
 <li><code>writexl</code></li>
@@ -354,8 +354,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>You can install them by running the following code in your RStudio:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"ggplot2"</span>, <span class="st">"colorDF"</span>, <span class="st">"pander"</span>, <span class="st">"readxl"</span>,</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"writexl"</span>, <span class="st">"janitor"</span>, <span class="st">"broom"</span>, <span class="st">"cowplot"</span>, <span class="st">"tinytex"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"ggplot2"</span>, <span class="st">"skimr"</span>, <span class="st">"pander"</span>, </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"readxl"</span>, <span class="st">"writexl"</span>, <span class="st">"janitor"</span>, <span class="st">"broom"</span>, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"cowplot"</span>, <span class="st">"ggbeeswarm"</span>, <span class="st">"pheatmap"</span>, <span class="st">"tinytex"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -382,6 +383,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Please do all exercises. It helps a lot.</li>
 <li>Some things are learned only through exercises.</li>
 </ul>
+<div class="callout callout-style-default callout-caution no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution (click me!)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Some exercises have a solution which you can click to reveal.</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -412,9 +429,9 @@ Remember!
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Run all code chunks in your RStudio.</li>
-<li>Do all exercises.</li>
-<li>Go through the “Review” section at the end of each chapter.</li>
+<li>Run <em>all</em> code chunks in your RStudio.</li>
+<li>Do <em>all</em> exercises.</li>
+<li>Go through the “Review” section at the end of each chapter and make sure you understand <em>everything</em> on the list.</li>
 </ul>
 </div>
 </div>
@@ -422,23 +439,25 @@ Remember!
 <p>And again<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>!</p>
 <div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;And also footnotes.</p></div></div><p>In each chapter there are several exercises. <em>However</em>, that does not mean that you should <em>only</em> do the exercises. In fact, you should try out <em>every</em> piece of code that is in the book. Copy it (there is a 📋 button next to each code block that will do it for you), paste it into your RStudio and run it. Then try to modify it and see what happens.</p>
 <p>Exercises in this book are important. They are not only there to check if you understood the material, but they can also introduce new concepts or ideas. This is because this book is not only about learning R, but also learning <em>how to learn about R</em>. So, for example, sometimes we will want you to figure stuff on your own rather than give you a ready-made answer.</p>
+<p>Many of the exercises have a solution provided, either inline (you have to expand it by clicking on the “Solution” button) or in the “Solutions” section of the book. <strong>It is really important that you do not give up too quickly</strong>. Try to solve the exercise on your own, and only then look at the solution.</p>
 <p>Each chapter is ended by a “Review” section, which contains a list of things that you have learned that day. It is really important that you go through that list and make sure that you understand everything on it. Some of the new things appeared in the exercises, so if you skipped them, you might want to go back and do them.</p>
 <p>If you do all that, I personally <em>guarantee you</em> that by the end of this course you will be able to use R in your work.</p>
 </section>
-<section id="general-advice" class="level2">
+<section id="general-advice" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="general-advice">General advice</h2>
 <p>The course is a real crash course. There is a lot of material coming at you in a very short time. You will feel overloaded and overwhelmed – this is normal. Don’t worry! It will soon get better, and in a few days you will be able to do fairly advanced things with R.</p>
 <p>The key is to keep playing with your R; trying out new things, breaking it. Please go through all exercises in that book, even if they seem simple at the first glance (some of them are tricky, others are used to smuggle in new concepts and useful tidbits of information).</p>
-<p>Whenever you feel you don’t understand something, stop and try to figure it out. Use internet search very liberally. Many answers can be found on sites such as StackOverflow, R-bloggers, or in the R documentation. Try out the code you will find in these sources – just copy-paste it into your RStudio and adapt it to your needs. Feel free to use Large Language Models (such as GPT) – they are very good at explaining code, especially when you are learning basic concepts.</p>
-<p>However, if you want to learn R, simply doing this course will not be enough. You need to start using it in a real world setting. Unfortunately – the better you already are at Excel, Word and other such tools, the harder it will be switching to R: tasks that are a breeze in Excel will at first require you to spend substantially more time in R. However, trust me: it pays off in the long run. Therefore, for best results, force yourself to use R <em>even if at first it is less efficient then other tools</em>.</p>
+<p>Whenever you feel you don’t understand something, stop and try to figure it out. Use internet search very liberally. Many answers can be found on sites such as <a href="https://stackoverflow.com">StackOverflow</a>, <a href="https://www.r-bloggers.com/">R-bloggers</a>, or simply in the R documentation<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Try out the code you will find in these sources – just copy-paste it into your RStudio and adapt it to your needs. Feel free to use Large Language Models (such as GPT) – they are very good at explaining code, especially when you are learning basic concepts.</p>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;You can access the R documentation by typing <code>?function_name</code> in the console. You can search for concepts using <code>??keyword</code>.</p></div></div><p>However, if you want to learn R, simply doing this course will not be enough. You need to start using it in a real world setting. Unfortunately – the better you already are at Excel, Word and other such tools, the harder it will be switching to R: tasks that are a breeze in Excel will at first require you to spend substantially more time in R. However, trust me: it pays off in the long run. Therefore, for best results, force yourself to use R <em>even if at first it is less efficient then other tools</em>.</p>
+<p>Finally: programming can be fun. Most programmers I know simply enjoy doing that. It is a satisfaction similar to building Lego models or solving puzzles or reading a crime story – and also very much like doing experiments. Unlike experiments, however, you can’t break expensive equipment and the results of your attempts are usually immediately visible, no need to wait for weeks for the results. You can play, experiment, try out various things at no expense and no risk. If you can get into this mindset, learning R will be much, much easier.</p>
 </section>
 <section id="acknowledgements" class="level2">
 <h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
 <p>I have been teaching statistics and bioinformatics for more than two decades now. About ten years ago, I started teaching the first “R crash course” with the goal of introducing PhD students and postdocs to R as quickly and as painlessly as possible. The course evolved over the years, and I had many partners and co-teachers.</p>
-<p>In the first place, I would like to thank Carlo Pecoraro from <a href="https://www.physalia-courses.org/">Physalia Courses</a> for the opportunity to teach my first R course in the first place.</p>
+<p>In the first place, I would like to thank Carlo Pecoraro from <a href="https://www.physalia-courses.org/">Physalia Courses</a> for the opportunity to teach my first R crash course for Physalia.</p>
 <p>Several times I have taught the course together with my colleague, Dr.&nbsp;Manuela Benary from the <a href="https://cubi.bihealth.org">Core Unit of Bioinformatics</a> at the Berlin Institute of Health, Charité - Universitätsmedizin Berlin. Manuela has been a great partner in teaching the course, and many ideas in this book are actually hers.</p>
 <p>I would also like to thank many colleagues and friends who had the patience to go through this book and provide feedback.</p>
-<p>Finally, I thank you, the Reader, for your interest in this book. I hope it was useful and that you will enjoy using R in your research.</p>
+<p>Finally, I thank you, the Reader, for your interest in this book. I hope it will be useful and that you will enjoy using R in your research.</p>
 
 
 </section>

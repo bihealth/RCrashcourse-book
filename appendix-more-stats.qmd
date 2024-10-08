@@ -1,5 +1,13 @@
 # Appendix: More statistics and visualizations {#sec-stats .unnumbered}
 
+```{r echo=FALSE}
+set.seed(42)
+options(width=80)
+
+```
+
+
+
 ### Correlations
 
 Correlation is a measure of how two variables change together. There are
@@ -298,4 +306,196 @@ anova(model_iris)
 There is much more to ANOVA, the `lm()` function, and to linear models in general.
 If you are interested, I would recommend reading the [R Book](https://www.google.com/search?q=r+book)
 by Michael J. Crawley, which is a great resource for learning statistics in R.
+
+
+### Image sizes in R markdown {#sec-image-sizes}
+
+Unlike in other programs, you can not simply drag images to change their
+size or aspect ratio in R, and you cannot click on a text and choose the
+font size. What can you do when you want to change the size of the image,
+to make the fonts larger relative to the image size etc.?
+
+For font size, it is possible to change individual font sizes (and font
+types) in both basic R and `ggplot2`, however these operations tend to be
+annoying (see
+[here](https://statisticaloddsandends.wordpress.com/2021/07/08/using-different-fonts-with-ggplot2/)
+for a description of how to do it in `ggplot2`).
+
+However, quite often what you want to achieve is simply make the overall
+fonts larger in an image. If you are using a vector graphic output (as you
+should), it does not really matter whether the font size is actually 12, 22
+or 32 points – you can always scale the image to the desired size without
+losing quality. What matters is how large the fonts are *in relation to the
+nominal image size in inches*.
+
+The good news is: you can change the nominal size of an image in R very
+easily. You have already seen it done in the section 
+@sec-output-formats when generating images with `svg()` or `pdf()`.
+However, you can change this size also in your R Markdown document by
+providing chunk options `fig.width` and `fig.height`:
+
+:::: {.columns}
+::: {.column width="45%"}
+
+````
+```{{r fig.width=4,fig.height=3}}
+ggplot(iris, 
+  aes(x = Sepal.Length, 
+      y = Sepal.Width, 
+      color = Species)) +
+  geom_point(size=3) +
+  scale_color_viridis_d() +
+  labs(x = "Sepal length", 
+       y = "Sepal width", 
+       title = "The iris data set") +
+  theme_minimal()
+```
+````
+
+
+```{r fig.width=4, fig.height=3, echo=FALSE}
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point(size=3) +
+  scale_color_viridis_d() +
+  labs(x = "Sepal length", y = "Sepal width", 
+       title = "The iris data set") +
+  theme_minimal()
+```
+
+:::
+::: {.column width="5%"}
+:::
+::: {.column width="45%"}
+
+````
+```{{r fig.width=8,fig.height=8}}
+ggplot(iris, 
+  aes(x = Sepal.Length, 
+      y = Sepal.Width, 
+      color = Species)) +
+  geom_point(size=3) +
+  scale_color_viridis_d() +
+  labs(x = "Sepal length", 
+       y = "Sepal width", 
+       title = "The iris data set") +
+  theme_minimal()
+```
+````
+
+
+```{r dev="svg", fig.width=8, fig.height=6, echo=FALSE}
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point(size=3) +
+  scale_color_viridis_d() +
+  labs(x = "Sepal length", y = "Sepal width", 
+       title = "The iris data set") +
+  theme_minimal()
+```
+:::
+::::
+
+As you can see, the only difference between these two chunks are the values
+next to `fig.width` and `fig.height`. Since the left-hand figure is
+smaller, even though in reality the fonts have the same sizes in points,
+they appear much larger.
+
+### Boxplots and violin plots vs bar plots {#sec-barplots}
+
+Bar plots are quite common in scientific literature, despite the fact that
+they actually should be avoided in most scenarios [@barcharthabit2014]. Bar
+plots should actually only be used when showing count or proportion data,
+and the $y$ axis in this case should always start at zero. In all the other
+applications, box plots or, better, violin plots are preferred.
+
+The advantages of the box plots and violin plots over bar plots are evident
+when the data is not normally distributed. Let us construct a small
+example.
+
+```{r}
+n <- 250
+x <- rnorm(n, mean=20, sd=1)
+y <- rbeta(n, 2, 22) * 20  + 18.6
+```
+
+The vectors `x` and `y` are normally distributed and beta distributed,
+respectively, and they have been on purpose manipulated such that the 
+standard deviations calculated with `sd()` are the same, but the means
+differ a bit. This is why, on a bar chart, they would show a clear difference.
+Here is a ggplot2 code that produces a bar chart. Don't worry too much about the
+syntax: it is here for demonstration purposes only, and you will rarely bar
+plots in practice. The function `geom_bar()` is the one responsible for the
+bar plots; `geom_errorbar()` adds the error bars; `coord_cartesian()` is
+here to limit the y-axis to a certain range.
+[`geom_bar()`, `geom_errorbar()`, `coord_cartesian()`]{.aside}
+
+```{r}
+df <- data.frame(value=c(mean(x), mean(y)), 
+                 group=c("x", "y"),
+                 sd=c(sd(x)/sqrt(n), sd(y)/sqrt(n)))
+ggplot(df, aes(x=group, y=value)) + 
+  geom_errorbar(aes(ymin = value - sd, ymax = value + sd), width = 0.2) +
+  geom_bar(stat="identity", width=0.5, fill = "skyblue") +
+  labs(x="Group", y="Value") +
+  coord_cartesian(ylim = c(19.5, 20.5))
+```
+
+Wow, that looks really different! Unfortunately, the above figure *is a
+lie*. It suggests something that it is not true.
+
+Firstly, instead of standard deviations, which show the true spread of the
+data, I used the standard error of the mean (SEM) equal to 
+$\frac{\sigma}{\sqrt{n}}$, which shows the precision
+of the mean estimate and gets very small for large data sets (but it looks
+good on a figure). Secondly, the y-axis does not start at zero, which is
+not acceptable for bar plots.
+
+And last but not least, one should not use a bar plot for continuous data,
+because it does not show their real distribution. Let us now produce a box plot and a violin plot.
+
+Before, however, let me introduce yet another useful package,
+`cowplot`[^patchwork]. With this package, we can create composite plots
+that consist of several individual plots. Basically, first you create the
+ggplot plots and save them to a variable; then you use cowplot function
+`plot_grid()` to put the plots . 
+[`cowplot`]{.aside}
+
+[^patchwork]: There is also the newer `patchwork` package, which is more
+elegant and flexible, but the syntax requires a bit of getting used to.
+
+[`plot_grid()`]{.aside}
+
+```{r message=FALSE}
+library(cowplot)
+df <- data.frame(values = c(x, y), 
+                 group = c(rep("x", n), rep("y", n)))
+p1 <- ggplot(df, aes(x=group, y=values)) +
+  geom_boxplot() +
+  labs(x="Group", y="Value")
+
+# violin plot
+p2 <- ggplot(df, aes(x=group, y=values)) +
+  geom_violin() +
+  geom_boxplot(width=0.1) +
+  labs(x="Group", y="Value")
+
+# plot_grid puts the different plots together 
+# ncol=2 -> two columns
+# labels=... -> labels for the plots
+plot_grid(p1, p2, ncol=2, labels=c("A", "B"))
+```
+
+As you can see, the violin plots show a completely different story. The
+group y only looks larger, because the mean is driven by the long upper
+tail of the distribution. The medians are practically identical
+(median of x is `r format(median(x), digits=4)`, 
+median of y is `r format(median(y), digits=4)`), and the
+distributions largely overlap.
+
+Similarly, if you were to run a t-test, which assumes normal distribution,
+the p-value would have been 
+`r format.pval(t.test(x, y)$p.value, digits=2)`; while in a Wilcoxon
+test, which does not make this assumption, the p-value would have
+been
+`r format.pval(wilcox.test(x, y)$p.value, digits=2)`.
+
 

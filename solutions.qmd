@@ -6,6 +6,52 @@ library(tidyverse)
 library(readxl)
 ```
 
+## Day 1
+
+### Water lilies (@exr-day1-lilies-plot) {#sec-day1-lilies-plot}
+
+
+```{r echo=FALSE}
+days <- 1:10
+area <- 0.01 * 2^(days - 1)
+```
+
+
+
+
+```{r}
+# plots with a blue color
+plot(days, area, type="b", col="blue")
+
+# plots with filled circles
+plot(days, area, type="b", col="blue", pch=19)
+
+# plots with labels
+plot(days, area, type="b",
+  xlab="Day", ylab="Area", main="Area of water lilies")
+
+# limits on the y axis and x axis
+plot(days, area, type="b",
+  xlim=c(0, 8), ylim=c(0, 1))
+```
+
+Formula for area when the growth is by 75% per day:
+
+$$a(n) = 0.01 \times 1.75^{n-1}$$
+
+
+
+```{r}
+area_slow <- 0.01 * 1.75^(days - 1)
+plot(days, area, type="b", col="blue")
+
+# add another data series to the plot
+lines(days, area_slow, type="b", col="red")
+```
+
+
+
+
 ## Day 2
 
 ### Matrices (@exr-day2-matrices) {#sec-day2-matrices}
@@ -129,7 +175,8 @@ names.
 ```{r}
 summary(botched)
 
-colorDF::summary_colorDF(botched)
+library(skimr)
+skim(botched)
 ```
 
 OK, so we see several problems. First, the column "Age" is not numeric, but
@@ -145,7 +192,7 @@ Right, so someone added extra text or spaces to the the actual values. And
 what does "3 0" mean? It could be `30`, but it also could mean "3 years 0
 months" – who knows?
 
-Next, the `SEX` column. `summary_colorDF()` shows that it has 12 unique
+Next, the `SEX` column. `skim()` shows that it has 12 unique
 values, but this is not the number we expect. What are these unique values?
 
 
@@ -417,3 +464,16 @@ colnames(joined)
 Yep, seems to have worked well. The resulting data frame has 
 `r nrow(joined)` rows – since we have many different measurements for each
 person.
+
+
+
+
+
+
+
+## Day 5
+
+
+
+
+

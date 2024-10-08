@@ -545,38 +545,35 @@ This provides a more detailed summary for each column:
 str(iris_data)
 ```
 
-### Using colorDF to diagnose datasets {#sec-colorDF}
+### Using `skim()` to diagnose datasets {#sec-skim}
 
-[`colorDF`,`summary_colorDF()`]{.aside}
-I have written a package called `colorDF` that creates yet another flavor
-of data frames, which is displayed in the console in color (if you haven't
-installed it yet, do so now with `install.packages("colorDF")`. However, we
-will only use one convenient function from this data set,
-`summary_colorDF`. Because `summary_colorDF` is too much to type, we will
-use a shortcut, `scdf`.
+[`skim()`]{.aside}
+Another option to diagnose the dataset is to use the `skim` function from
+the `skimr` package, which you installed (hopefully) yesterday. The `skim`
+package provides a more detailed summary of the dataset, including the
+number of missing values, the number of unique values and summary
+statistics. To use it, you need first to load the package:
+
 
 ```{r message=FALSE}
-scdf <- colorDF::summary_colorDF
-scdf(iris_data)
+library(skimr)
 ```
 
-[Copying functions]{.aside}
-Above we have created a copy of the `summary_colorDF` function in the
-variable `scdf`. This new variable behaves exactly like the original and
-you can use it just as you would use `summary_colorDF`. The `colorDF::`
-[`package::function()`]{.aside}
-prefix is there so that we don't have to load the `colorDF` package.
-Instead we tell R to look for the function directly in the `colorDF` package.
-
-This summary function shows more than just the `str` function. In addition
+This `skim()` function shows more than just the `str` function. In addition
 to column types, for character and factor columns it shows the unique
 values, ordered by their frequency. For numerical values, it shows their
-non-parametric summary statistics (range, median, quartiles).
+non-parametric summary statistics (range, median, quartiles):
+
+
+```{r}
+skim(iris_data)
+```
+
 
 [`unique()`]{.aside}
 Hm, when you look at the output you might notice one more thing: for the
-last column, "Species", `summary_colorDF` shows that there are six unique
-values. However, how can that be? We know that there are only three species
+last column, "Species", `skim()` shows that there are six unique
+values (take a look at the `n_unique` column). However, how can that be? We know that there are only three species
 in this dataset. We can check this using the `unique` function:
 
 ```{r}
@@ -587,7 +584,7 @@ There it is. Looks like whoever typed the data[^whoever], sometimes used a lower
 species designation, and sometimes upper-case. However, for R (and for
 computers in general), "versicolor" and "Versicolor" are two different things.
 
-[^whoever]: In this case, it was me.
+[^whoever]: In this case, it was probably me.
 
 
 [`table()`]{.aside}
@@ -1313,7 +1310,7 @@ Done! The iris data set is now clean.
 
 
 ```{r}
-scdf(iris_data)
+skim(iris_data)
 ```
 
 ::: {.callout-caution icon=false appearance="simple"}
@@ -1581,7 +1578,7 @@ Things that you learned today:
    * data types: `str`, `class`, `typeof`
    * summaries: `summary`, `glimpse`
    * categorical data: `unique`, `table`
-   * `summary_colorDF`
+   * `skim()` from the `skimr` package
    * diagnosis checklist
  * Correcting datasets
    * converting character vectors to numbers with `as.numeric()`
@@ -1595,5 +1592,3 @@ Things that you learned today:
    * working with Excel
  * Other
    * using help pages to find out about functions and their parameters
-   * accessing functions in a package without loading it (`colorDF::summary_colorDF`)
-

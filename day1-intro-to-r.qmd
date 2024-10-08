@@ -1,6 +1,15 @@
 # Introduction to R
 
 
+```{r echo=FALSE}
+options(width=80)
+
+```
+
+
+
+
+
 ## Goals for today
 
  * what is R?
@@ -127,7 +136,9 @@ To logarithmize, you can use `log()`, `log2()` and `log10()` functions. For
 example, to calculate $\log_{10}(100)$, type `log10(100)`. Can you guess
 how to calculate $\sqrt{2}$? Yes, you are right: `sqrt(2)`. Or `2^(1/2)`,
 [`sqrt()`]{.aside}
-that will also do.
+that will also do. Finally, the `exp()` function calculates the exponential function
+$e^x$.
+[`exp()`]{.aside}
 
 ::: {.callout-caution icon=false appearance="simple"}
 ::: {#exr-calc}
@@ -138,6 +149,20 @@ Calculate the following expressions in R:
  * $\sin(\pi)$
  * $2^{10}$
  * $\sqrt{e}$
+
+::: {.callout-caution icon=false collapse=true}
+## Solution
+
+
+```{r}
+log2(8)
+sin(pi)
+2^10
+sqrt(exp(1))
+```
+:::
+
+
 
 :::
 :::
@@ -272,6 +297,14 @@ we will not discuss them here.
 ::: {#exr-variables-and-rstudio}
 Create a variable using `x <- 42`. Take a look at the Environment pane in
 RStudio (top left part of the window). Do you notice anything?
+
+::: {.callout-caution icon=false collapse="true"}
+## Solution
+
+A new entry appeared in the "Environment pane". It shows that there is a
+new variable present in your environment.
+:::
+
 :::
 :::
 
@@ -340,7 +373,23 @@ Create the following variables in your script:
  * `age` with the value of your age
  * `greeting` with the value "Hello,"
  * concatenate the variables `greeting` and `name` and store the
-   result in a new variable `message`
+   result in a new variable `hellothere`
+
+::: {.callout-caution icon=false collapse="true"}
+## Solution
+
+```{r}
+name <- "January"
+city <- "Hoppegarten"
+age <- 199
+greeting <- "Hello,"
+hellothere <- paste(greeting, name)
+```
+
+
+
+
+:::
 :::
 :::
 
@@ -502,10 +551,48 @@ you will be using it a lot.
  * Create a vector with the first 10 prime numbers. Call it `primes`.
  * How do you access the 3rd, 5th and 7th prime number? 
  * What happens when you do `primes[11]`?
- * What happens when you do `primes[11] <- 11`?
+ * What happens when you do `primes[11] <- 31`?
+ * What happens when you do `primes[15] <- 47`?
  * What happens when you do `primes[-1]`?
  * Change the 3rd, 5th and 7th prime number to 100, 500 and 700,
    respectively.
+
+::: {.callout-caution icon=false collapse="true"}
+## Solution
+
+
+```{r}
+# note that 1 is not a prime number!
+primes <- c(2, 3, 5, 7, 11, 13, 17, 19, 23, 29)
+primes[c(3, 5, 7)]
+
+# returns a special value, NA
+# (not available)
+primes[11]
+
+# adds a new element to the vector
+# at the end
+primes[11] <- 31
+primes
+
+# adds a new element to the vector
+# at position 15, fills the gap with
+# NAs
+primes[15] <- 47
+primes
+
+# returns the vector without the first
+# element
+primes[-1]
+
+primes[c(3, 5, 7)] <- c(100, 500, 700)
+
+```
+
+
+
+
+:::
 :::
 :::
 
@@ -670,6 +757,32 @@ length(numbers2)
  * One vector, `lengths`, contains the lengths of the sides of three rectangles,
    and the other, `widths`, contains their widths. Create a
    vector containing the areas of these rectangles.
+
+::: {.callout-caution icon=false collapse="true"}
+## Solution
+
+```{r}
+# create a vector
+numbers <- c(1, 2, 3, 4, 5)
+# add, subtract, multiply and divide
+numbers + 10
+numbers - 10
+numbers * 10
+numbers / 10
+
+diameters <- c(1, 5, 13)
+areas <- pi * (diameters/2)^2
+areas
+
+length(areas)
+
+lengths <- c(1, 2, 3)
+widths <- c(4, 5, 6)
+areas <- lengths * widths
+areas
+```
+:::
+
 :::
 :::
 
@@ -864,22 +977,24 @@ abline(h=1, col="red")
 [abline()]{.aside}
 
 ::: {.callout-caution icon=false appearance="simple"}
-::: {#exr-lilies-plot}
+::: {#exr-day1-lilies-plot}
 ## Plotting water lilies
 
  * Create the same plot using the `plot()` function, but add, as a parameter, `col="blue"`. What happens? 
+ * Now add a parameter `pch=19`. What happens?
  * Use the argument `xlab` to label the x-axis with "Day". Use the argument
    `ylab` to label the y-axis with "Area". Use the argument `main` to give
    the plot a title.
  * Use the argument `ylim=c(0, 1)` to change the range of the y-axis. How
    would you change the limit of the x axis?
  * What is the formula for the area of the lily assuming
-   that each day, the lily covers 1.5 times the area of the previous day?
+   that each day, the lily covers 1.75 times the area of the previous day?
  * Create a new area vector (call it `area_slow`) which will be calculated
    with the new formula.
  * Add the new vector to the plot using the function `lines()`. What does
    the `lines()` function do? (Hint: type `?lines` in the console).
 
+([Solution](solutions.html#exr-day1-lilies-plot))
 :::
 :::
 
@@ -951,6 +1066,19 @@ Modify the `area_lily` function so that it takes three arguments: the day,
 the initial fraction and the factor. Use the new function to calculate the
 area of the lily on the first 10 days with the initial fraction of 0.001 and
 the factor of 1.5. What is the area on the 10th day?
+
+::: {.callout-caution icon=false collapse="true"}
+## Solution
+
+```{r}
+area_lily <- function(day, fct, start) {
+  ret <- start * fct^(day - 1)
+  return(ret)
+}
+
+area_lily(1:10, 1.5, 0.001)
+```
+:::
 
 :::
 :::

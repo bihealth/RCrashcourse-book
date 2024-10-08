@@ -243,7 +243,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./appendix-more-stats.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">More statistics and visualizations</span></a>
+ <span class="menu-text">Appendix: More statistics and visualizations</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -298,16 +298,471 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="wide-and-long-format" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="wide-and-long-format">Wide and Long format</h2>
-<div class="page-columns page-full"><p> Long advantages:</p><div class="no-row-height column-margin column-container"><span class="margin-aside">Wide and long format</span></div></div>
+<p>Consider a data set with laboratory measurement for a number of patients. We can measure, for example, the concentration of calcium, of C-reactive protein, number of white blood cells in billions per liter etc., etc.</p>
+<p>We have many ways to represent the data in a data frame. For example, we can put all measurements for a patient in one row, and have a column for each measurement type. This results in a nice, compact format, where each row corresponds to one patient, and each column to one measurement. Here is how it might look like:</p>
+<div class="cell">
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script>
+      function styleCell_kjexv635u3ntdu18x5q6(i, j, css_id) {
+        var table = document.getElementById("tinytable_kjexv635u3ntdu18x5q6");
+        table.rows[i].cells[j].classList.add(css_id);
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_kjexv635u3ntdu18x5q6');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_kjexv635u3ntdu18x5q6(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_kjexv635u3ntdu18x5q6");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+window.addEventListener('load', function () { styleCell_kjexv635u3ntdu18x5q6(0, 0, 'tinytable_css_idz3qx81s7r7o36334u9ur') })
+window.addEventListener('load', function () { styleCell_kjexv635u3ntdu18x5q6(0, 1, 'tinytable_css_idz3qx81s7r7o36334u9ur') })
+window.addEventListener('load', function () { styleCell_kjexv635u3ntdu18x5q6(0, 2, 'tinytable_css_idz3qx81s7r7o36334u9ur') })
+window.addEventListener('load', function () { styleCell_kjexv635u3ntdu18x5q6(0, 3, 'tinytable_css_idz3qx81s7r7o36334u9ur') })
+    </script>
+
+    <style>
+    .table td.tinytable_css_idz3qx81s7r7o36334u9ur, .table th.tinytable_css_idz3qx81s7r7o36334u9ur {  border-bottom: solid 0.1em #d3d8dc; }
+    </style>
+    <div class="container">
+      <table class="table table-borderless" id="tinytable_kjexv635u3ntdu18x5q6" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        <thead>
+        
+              <tr>
+                <th scope="col">SUBJ</th>
+                <th scope="col">CA</th>
+                <th scope="col">CRP</th>
+                <th scope="col">WBC</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td>4081</td>
+                  <td>2.3</td>
+                  <td>0.45</td>
+                  <td>12.2</td>
+                </tr>
+                <tr>
+                  <td>4368</td>
+                  <td>2.1</td>
+                  <td>0.62</td>
+                  <td> 6.2</td>
+                </tr>
+                <tr>
+                  <td>4601</td>
+                  <td>2.3</td>
+                  <td>0.6 </td>
+                  <td> 5  </td>
+                </tr>
+                <tr>
+                  <td>4224</td>
+                  <td>2.2</td>
+                  <td>0.32</td>
+                  <td> 7.6</td>
+                </tr>
+                <tr>
+                  <td>4323</td>
+                  <td>2  </td>
+                  <td>0.6 </td>
+                  <td> 5.8</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+<p>This is called the <strong>wide format</strong>. It is easy to view, and suitable for some applications – like principal component analysis. It is also easy to filter the data by patients, or by certain measurement parameters. However, we can’t use it for many other applications, for example for plotting and many statistical applications.</p>
+<p>And what if we want to include additional information about the measurements? For example, when the measurement was made, in what units, who conducted the test? We could add columns for each of these, but then we would have a mess.</p>
+<div class="cell">
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script>
+      function styleCell_gsnbx1d28pcsnv7kmd0i(i, j, css_id) {
+        var table = document.getElementById("tinytable_gsnbx1d28pcsnv7kmd0i");
+        table.rows[i].cells[j].classList.add(css_id);
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_gsnbx1d28pcsnv7kmd0i');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_gsnbx1d28pcsnv7kmd0i(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_gsnbx1d28pcsnv7kmd0i");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+window.addEventListener('load', function () { styleCell_gsnbx1d28pcsnv7kmd0i(0, 0, 'tinytable_css_idesqp4b8c737js5rv119k') })
+window.addEventListener('load', function () { styleCell_gsnbx1d28pcsnv7kmd0i(0, 1, 'tinytable_css_idesqp4b8c737js5rv119k') })
+window.addEventListener('load', function () { styleCell_gsnbx1d28pcsnv7kmd0i(0, 2, 'tinytable_css_idesqp4b8c737js5rv119k') })
+window.addEventListener('load', function () { styleCell_gsnbx1d28pcsnv7kmd0i(0, 3, 'tinytable_css_idesqp4b8c737js5rv119k') })
+window.addEventListener('load', function () { styleCell_gsnbx1d28pcsnv7kmd0i(0, 4, 'tinytable_css_idesqp4b8c737js5rv119k') })
+window.addEventListener('load', function () { styleCell_gsnbx1d28pcsnv7kmd0i(0, 5, 'tinytable_css_idesqp4b8c737js5rv119k') })
+window.addEventListener('load', function () { styleCell_gsnbx1d28pcsnv7kmd0i(0, 6, 'tinytable_css_idesqp4b8c737js5rv119k') })
+window.addEventListener('load', function () { styleCell_gsnbx1d28pcsnv7kmd0i(0, 7, 'tinytable_css_idesqp4b8c737js5rv119k') })
+window.addEventListener('load', function () { styleCell_gsnbx1d28pcsnv7kmd0i(0, 8, 'tinytable_css_idesqp4b8c737js5rv119k') })
+window.addEventListener('load', function () { styleCell_gsnbx1d28pcsnv7kmd0i(0, 9, 'tinytable_css_idesqp4b8c737js5rv119k') })
+window.addEventListener('load', function () { styleCell_gsnbx1d28pcsnv7kmd0i(0, 10, 'tinytable_css_idesqp4b8c737js5rv119k') })
+window.addEventListener('load', function () { styleCell_gsnbx1d28pcsnv7kmd0i(0, 11, 'tinytable_css_idesqp4b8c737js5rv119k') })
+window.addEventListener('load', function () { styleCell_gsnbx1d28pcsnv7kmd0i(0, 12, 'tinytable_css_idesqp4b8c737js5rv119k') })
+    </script>
+
+    <style>
+    .table td.tinytable_css_idesqp4b8c737js5rv119k, .table th.tinytable_css_idesqp4b8c737js5rv119k {  border-bottom: solid 0.1em #d3d8dc; }
+    </style>
+    <div class="container">
+      <table class="table table-borderless" id="tinytable_gsnbx1d28pcsnv7kmd0i" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        <thead>
+        
+              <tr>
+                <th scope="col">SUBJ</th>
+                <th scope="col">LBORRES_CA</th>
+                <th scope="col">LBORRESU_CA</th>
+                <th scope="col">LABTECH_CA</th>
+                <th scope="col">LBORDATE_CA</th>
+                <th scope="col">LBORRES_CRP</th>
+                <th scope="col">LBORRESU_CRP</th>
+                <th scope="col">LABTECH_CRP</th>
+                <th scope="col">LBORDATE_CRP</th>
+                <th scope="col">LBORRES_WBC</th>
+                <th scope="col">LBORRESU_WBC</th>
+                <th scope="col">LABTECH_WBC</th>
+                <th scope="col">LBORDATE_WBC</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td>4081</td>
+                  <td>2.3</td>
+                  <td>mmol/L</td>
+                  <td>Dr. Jekyll</td>
+                  <td>2022-06-06</td>
+                  <td>0.45</td>
+                  <td>mg/L</td>
+                  <td>Dr. Jekyll    </td>
+                  <td>2022-02-16</td>
+                  <td>12.2</td>
+                  <td>10*9/L</td>
+                  <td>Mr. Hyde      </td>
+                  <td>2022-03-12</td>
+                </tr>
+                <tr>
+                  <td>4368</td>
+                  <td>2.1</td>
+                  <td>mmol/L</td>
+                  <td>Mr. Hyde  </td>
+                  <td>2022-04-02</td>
+                  <td>0.62</td>
+                  <td>mg/L</td>
+                  <td>Frank N. Stein</td>
+                  <td>2021-09-05</td>
+                  <td> 6.2</td>
+                  <td>10*9/L</td>
+                  <td>Mr. Hyde      </td>
+                  <td>2021-11-11</td>
+                </tr>
+                <tr>
+                  <td>4601</td>
+                  <td>2.3</td>
+                  <td>mmol/L</td>
+                  <td>Dr. Jekyll</td>
+                  <td>2022-01-21</td>
+                  <td>0.6 </td>
+                  <td>mg/L</td>
+                  <td>Frank N. Stein</td>
+                  <td>2021-11-15</td>
+                  <td> 5  </td>
+                  <td>10*9/L</td>
+                  <td>Frank N. Stein</td>
+                  <td>2022-07-02</td>
+                </tr>
+                <tr>
+                  <td>4224</td>
+                  <td>2.2</td>
+                  <td>mmol/L</td>
+                  <td>Mr. Hyde  </td>
+                  <td>2021-09-15</td>
+                  <td>0.32</td>
+                  <td>mg/L</td>
+                  <td>Frank N. Stein</td>
+                  <td>2022-04-16</td>
+                  <td> 7.6</td>
+                  <td>10*9/L</td>
+                  <td>Mr. Hyde      </td>
+                  <td>2022-07-04</td>
+                </tr>
+                <tr>
+                  <td>4323</td>
+                  <td>2  </td>
+                  <td>mmol/L</td>
+                  <td>Mr. Hyde  </td>
+                  <td>2022-02-18</td>
+                  <td>0.6 </td>
+                  <td>mg/L</td>
+                  <td>Mr. Hyde      </td>
+                  <td>2021-12-16</td>
+                  <td> 5.8</td>
+                  <td>10*9/L</td>
+                  <td>Frank N. Stein</td>
+                  <td>2022-03-26</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+<p>Yeah, no, this is not going to work. It is hard to view manually, but for computing applications it is even worse. We cannot easily convert it to a matrix, and we <em>still</em> can’t use it for <code>ggplot2</code> or linear modeling. It is, quite probably, the worst of both worlds<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;Actually, that is not true. Even worse is adding information <em>directly into the column names</em>, like <code>CA (mmol/L, 2021-09-01, Dr. Jekyll)</code>. Close second comes adding information in the values directly, like <code>7.9 mmol/L (2021-09-01, Dr. Jekyll)</code>, but at least here we can attempt to automatically parse the values – as long as there are no typos…</p></div></div><p>Enter the <strong>long format</strong>. In the long format, each row corresponds to one measurement, and one measurement only:</p>
+<div class="cell">
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script>
+      function styleCell_su63ewqt0fcds9nciaw9(i, j, css_id) {
+        var table = document.getElementById("tinytable_su63ewqt0fcds9nciaw9");
+        table.rows[i].cells[j].classList.add(css_id);
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_su63ewqt0fcds9nciaw9');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_su63ewqt0fcds9nciaw9(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_su63ewqt0fcds9nciaw9");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+window.addEventListener('load', function () { styleCell_su63ewqt0fcds9nciaw9(0, 0, 'tinytable_css_id3i2f6t9elrxdcfa0ipps') })
+window.addEventListener('load', function () { styleCell_su63ewqt0fcds9nciaw9(0, 1, 'tinytable_css_id3i2f6t9elrxdcfa0ipps') })
+window.addEventListener('load', function () { styleCell_su63ewqt0fcds9nciaw9(0, 2, 'tinytable_css_id3i2f6t9elrxdcfa0ipps') })
+window.addEventListener('load', function () { styleCell_su63ewqt0fcds9nciaw9(0, 3, 'tinytable_css_id3i2f6t9elrxdcfa0ipps') })
+window.addEventListener('load', function () { styleCell_su63ewqt0fcds9nciaw9(0, 4, 'tinytable_css_id3i2f6t9elrxdcfa0ipps') })
+window.addEventListener('load', function () { styleCell_su63ewqt0fcds9nciaw9(0, 5, 'tinytable_css_id3i2f6t9elrxdcfa0ipps') })
+window.addEventListener('load', function () { styleCell_su63ewqt0fcds9nciaw9(0, 6, 'tinytable_css_id3i2f6t9elrxdcfa0ipps') })
+    </script>
+
+    <style>
+    .table td.tinytable_css_id3i2f6t9elrxdcfa0ipps, .table th.tinytable_css_id3i2f6t9elrxdcfa0ipps {  border-bottom: solid 0.1em #d3d8dc; }
+    </style>
+    <div class="container">
+      <table class="table table-borderless" id="tinytable_su63ewqt0fcds9nciaw9" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        <thead>
+        
+              <tr>
+                <th scope="col">SUBJ</th>
+                <th scope="col">LBTEST</th>
+                <th scope="col">LBTESTCD</th>
+                <th scope="col">LBORRES</th>
+                <th scope="col">LBORRESU</th>
+                <th scope="col">LBORDATE</th>
+                <th scope="col">LABTECH</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td>4081</td>
+                  <td>Calcium           </td>
+                  <td>CA </td>
+                  <td> 2.31</td>
+                  <td>mmol/L</td>
+                  <td>2022-06-06</td>
+                  <td>Dr. Jekyll    </td>
+                </tr>
+                <tr>
+                  <td>4081</td>
+                  <td>C Reactive Protein</td>
+                  <td>CRP</td>
+                  <td> 0.45</td>
+                  <td>mg/L  </td>
+                  <td>2022-02-16</td>
+                  <td>Dr. Jekyll    </td>
+                </tr>
+                <tr>
+                  <td>4081</td>
+                  <td>White Blood Cells </td>
+                  <td>WBC</td>
+                  <td>12.2 </td>
+                  <td>10*9/L</td>
+                  <td>2022-03-12</td>
+                  <td>Mr. Hyde      </td>
+                </tr>
+                <tr>
+                  <td>4368</td>
+                  <td>Calcium           </td>
+                  <td>CA </td>
+                  <td> 2.14</td>
+                  <td>mmol/L</td>
+                  <td>2022-04-02</td>
+                  <td>Mr. Hyde      </td>
+                </tr>
+                <tr>
+                  <td>4368</td>
+                  <td>C Reactive Protein</td>
+                  <td>CRP</td>
+                  <td> 0.62</td>
+                  <td>mg/L  </td>
+                  <td>2021-09-05</td>
+                  <td>Frank N. Stein</td>
+                </tr>
+                <tr>
+                  <td>4368</td>
+                  <td>White Blood Cells </td>
+                  <td>WBC</td>
+                  <td> 6.18</td>
+                  <td>10*9/L</td>
+                  <td>2021-11-11</td>
+                  <td>Mr. Hyde      </td>
+                </tr>
+                <tr>
+                  <td>4601</td>
+                  <td>Calcium           </td>
+                  <td>CA </td>
+                  <td> 2.26</td>
+                  <td>mmol/L</td>
+                  <td>2022-01-21</td>
+                  <td>Dr. Jekyll    </td>
+                </tr>
+                <tr>
+                  <td>4601</td>
+                  <td>C Reactive Protein</td>
+                  <td>CRP</td>
+                  <td> 0.6 </td>
+                  <td>mg/L  </td>
+                  <td>2021-11-15</td>
+                  <td>Frank N. Stein</td>
+                </tr>
+                <tr>
+                  <td>4601</td>
+                  <td>White Blood Cells </td>
+                  <td>WBC</td>
+                  <td> 5.03</td>
+                  <td>10*9/L</td>
+                  <td>2022-07-02</td>
+                  <td>Frank N. Stein</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+<p>This is by far the most advantageous format for transfering and storing data. It is also the most flexible format for data analysis. We can easily convert it to the wide format (possibly losing some information, like units or who conducted the test), or to a matrix, or to a plot. We can easily filter the data, or do statistics on it.</p>
+<p>However, as you can see above, some of the information might be duplicated many times – for example, if we have a column with patient’s name, it will appear many times next to each measurement of that patient.</p>
+<p>To sum it up:</p>
+<p>Long advantages:</p>
 <ul>
 <li>easier to filter, process, visualize, do statistics with</li>
 <li>focused on measurement (“patient ID” or equivalent is a covariate, and so is measurement type)</li>
+<li>safer</li>
 </ul>
 <p>Wide advantages:</p>
 <ul>
 <li>groups data by a covariate (“patient ID”)</li>
 <li>can be easier to manage (each column one measurement type)</li>
+<li>less duplication of information (smaller files)</li>
 </ul>
+<p>I recommend using the long format in most situations, however there are always occasions where we need to move from one option to the other. For example, we might want to do a PCA – so we need to convert to the wide format. Or the wide format is more suitable for manual data entry – and we have to convert it to the long format for analysis.</p>
+<p>It is crucial to be fluent in switching between both formats.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Use long format
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In general, you should always use the long format as the main format for your data. It is easier to work with, and you can always convert it to wide format if you need to.</p>
+</div>
+</div>
 </section>
 <section id="converting-from-wide-to-long" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="converting-from-wide-to-long">Converting from wide to long:</h2>
@@ -448,6 +903,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 </section>
+
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1021,8 +1477,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./appendix-more-stats.html" class="pagination-link" aria-label="More statistics and visualizations">
-        <span class="nav-page-text">More statistics and visualizations</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./appendix-more-stats.html" class="pagination-link" aria-label="Appendix: More statistics and visualizations">
+        <span class="nav-page-text">Appendix: More statistics and visualizations</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

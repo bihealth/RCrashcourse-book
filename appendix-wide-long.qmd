@@ -2,16 +2,117 @@
 
 ## Wide and Long format
 
- [Wide and long format]{.aside}
+Consider a data set with laboratory measurement for a number of patients.
+We can measure, for example, the concentration of calcium, of C-reactive
+protein, number of white blood cells in billions per liter etc., etc.
+
+
+```{r echo=FALSE,message=FALSE,warning=FALSE}
+library(tidyverse)
+library(tinytable)
+people <- c("Frank N. Stein", "Dr. Jekyll", "Mr. Hyde")
+labres <- read_csv("Datasets/labresults_full.csv") |>
+  filter(Timepoint == "D1") |>
+  select(SUBJ, LBTEST, LBTESTCD, LBORRES, LBORRESU) |>
+  filter(LBTESTCD %in% c("CA", "CRP", "WBC")) |>
+  mutate(LBORDATE = 
+    sample(seq(as.Date("2021-09-01"), as.Date("2022-07-10"), by="day"), n(), replace=TRUE)) |>
+  mutate(LABTECH = sample(people, n(), replace=TRUE))
+
+labres_w <- labres |>
+  pivot_wider(id_cols = SUBJ, names_from=LBTESTCD, values_from=LBORRES) 
+
+labres_w2 <- labres |>
+  pivot_wider(id_cols = SUBJ,
+    names_from = LBTESTCD,
+    values_from = c(LBORRES, LBORRESU, LABTECH, LBORDATE),
+    names_vary = "slowest"
+    )
+```
+
+We have many ways to represent the data in a
+data frame. For example, we can put all measurements for a patient in one
+row, and have a column for each measurement type. This results in a nice,
+compact format, where each row corresponds to one patient, and each column
+to one measurement. Here is how it might look like:
+
+```{r echo=FALSE}
+tt(labres_w[1:5,], digits=2)
+```
+
+This is called the **wide format**. It is easy to view, and suitable for some
+applications – like principal component analysis. It is also easy to filter
+the data by patients, or by certain measurement parameters. However, we
+can't use it for many other applications, for example for plotting and many
+statistical applications.
+
+And what if we want to include additional information about the
+measurements? For example, when the measurement was made, in what units, 
+who conducted the test? We could add columns for each of these, but then we
+would have a mess.
+
+```{r echo=FALSE}
+tt(labres_w2[1:5,], digits=2)
+```
+
+Yeah, no, this is not going to work. It is hard to view manually, but for
+computing applications it is even worse. We cannot easily convert it to a
+matrix, and we *still* can't use it for `ggplot2` or linear modeling. It
+is, quite probably, the worst of both worlds[^worst].
+
+[^worst]: Actually, that is not true. Even worse is adding information
+*directly into the column names*, like `CA (mmol/L, 2021-09-01, Dr. Jekyll)`. 
+Close second comes adding information in the values directly,
+like `7.9 mmol/L (2021-09-01, Dr. Jekyll)`, but at least here we can
+attempt to automatically parse the values – as long as there are no
+typos...
+
+Enter the **long format**. In the long format, each row corresponds to one
+measurement, and one measurement only:
+
+```{r echo=FALSE}
+tt(labres[1:9,], digits=2)
+```
+
+This is by far the most advantageous format for transfering and storing
+data. It is also the most flexible format for data analysis. We can easily
+convert it to the wide format (possibly losing some information, like
+units or who conducted the test), or to a matrix, or to a plot. We can
+easily filter the data, or do statistics on it.
+
+However, as you can see above, some of the information might be duplicated
+many times – for example, if we have a column with patient's name, it will
+appear many times next to each measurement of that patient.
+
+To sum it up:
+
  Long advantages:
 
   * easier to filter, process, visualize, do statistics with
   * focused on measurement ("patient ID" or equivalent is a covariate, and so is measurement type)
- 
+  * safer 
+
  Wide advantages:
 
   * groups data by a covariate ("patient ID")
   * can be easier to manage (each column one measurement type)
+  * less duplication of information (smaller files)
+
+I recommend using the long format in most situations, however there are
+always occasions where we need to move from one option to the other. For
+example, we might want to do a PCA – so we need to convert to the wide
+format. Or the wide format is more suitable for manual data entry – and we
+have to convert it to the long format for analysis.
+
+It is crucial to be fluent in switching between both formats.
+
+::: {.callout-tip}
+## Use long format
+
+In general, you should always use the long format as the main format for
+your data. It is easier to work with, and you can always convert it to wide
+format if you need to. 
+:::
 
 ## Converting from wide to long:
 
