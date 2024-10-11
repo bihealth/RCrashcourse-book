@@ -280,7 +280,7 @@ in the "data" directory. How to read them?
 
 When you type `getwd()`, you will get the path to the "R_project"
 directory, something like `C:/Users/johndoe/Documents/PhD/R_project`. The
-date files are in the directory `C:/Users/johndoe/Documents/PhD/data`. To
+data files are in the directory `C:/Users/johndoe/Documents/PhD/data`. To
 get the relative path from the R project directory to the data directory,
 think about how you would navigate from one directory to another in the
 Windows Explorer or Finder. You need to go up one level, to get into
@@ -364,12 +364,13 @@ portability of your script.
 
  * Go to the URL [https://github.com/bihealth/RCrashcourse-book/Datasets](https://github.com/bihealth/RCrashcourse-book/Datasets)
  * Download the following files: 
-   * `TB_ORD_Gambia_Sutherland_biochemicals.csv`
-   * `iris.tsv`
+   * `iris.csv`
    * `meta_data_botched.xlsx` 
+   * `transcriptomics_results.csv` 
  * Alternatively, you can download the whole repository as a ZIP file and unpack it.
- * Save the files in the "Data" directory in your working directory – or
-   another location of your choice.
+ * Save the files in the `Datasets/` directory in your working directory – or
+   another location of your choice. From now on, I will assume that this is
+   the location of your data files.
  * Read the files using the appriopriate functions. Consult the table above
    for the correct function names, or use the RStudio data import feature.
    Make sure that you are using relative paths.
@@ -397,15 +398,17 @@ library(readxl)
 fn <- readxl_example("deaths.xls")
 print(fn)
 deaths <- read_excel(fn)
+head(deaths)
 ```
 
-If you view this file (or if you use the RStudio data import feature), you
+If you view this file using the `head()` function (or if you use the RStudio data import feature), you
+[`head()`]{.aside}
 will notice that the actual data in this file starts on line 5; the first 4
 lines contain the text "Lots of people simply cannot resist writing some notes
 at the top of their spreadsheets or merging cells". To skip these lines, we
 need to use an argument to the `read_excel` function. If you look up the
 help file for the function (e.g. using `?read_excel`), you will find the
-following line:
+following fragment:
 
 [skipping lines with `read_excel(skip=...)`]{.aside}
 ```
@@ -419,6 +422,7 @@ Therefore, we can modify the code above to skip the first four lines:
 
 ```{r}
 deaths <- read_excel(fn, skip=4)
+head(deaths)
 ```
 
 ::: {.callout-caution icon=false appearance="simple"}
@@ -430,7 +434,7 @@ there is some extra text at the bottom of the file as well. How can you
 omit that part when reading? *Hint: there are two ways to do that. If in
 doubt, look up the "examples" section of the `readxl` helpfile.*
 
-([Solution](solutions.html#exr-day3-opening-data-with-options))
+([Solution](solutions.html#sec-day3-opening-data-with-options))
 :::
 :::
  
@@ -584,7 +588,7 @@ There it is. Looks like whoever typed the data[^whoever], sometimes used a lower
 species designation, and sometimes upper-case. However, for R (and for
 computers in general), "versicolor" and "Versicolor" are two different things.
 
-[^whoever]: In this case, it was probably me.
+[^whoever]: I hate to say it, it was probably me.
 
 
 [`table()`]{.aside}
@@ -721,7 +725,7 @@ the problems.
 ### Correcting column names
 
 Column names should contain only letters, numbers and underscores. While
-all other characters are also allowed (so a column name can be `豚肉 "temp."? (°C) 😀`), it
+all other characters are also allowed (so a column name can be `豚肉 😀 "temp."? (°C)`), it
 is *way* easier to work with columns with simple, standardized names.
 
 You already know one way of dealing with this – simply assign new names to the columns:

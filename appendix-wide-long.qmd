@@ -1,5 +1,13 @@
 # Appendix: Wide vs long data {.unnumbered}
 
+
+```{r echo=FALSE}
+options(width=80)
+```
+
+
+
+
 ## Wide and Long format
 
 Consider a data set with laboratory measurement for a number of patients.
@@ -106,30 +114,25 @@ have to convert it to the long format for analysis.
 
 It is crucial to be fluent in switching between both formats.
 
+
 ::: {.callout-tip}
 ## Use long format
 
-In general, you should always use the long format as the main format for
-your data. It is easier to work with, and you can always convert it to wide
-format if you need to. 
+In general, you should probably always use the long format as the main
+format for your data. It is easier to work with, and you can always convert
+it to wide format if you need to. 
+
+There are exceptions to this rule – typically when it comes to
+high-throughput data (like RNA-Seq).
 :::
 
 ## Converting from wide to long:
 
-First, let's create a wide data set. We use a neat trick here that you have
-not seen before: you can use the base R function `read.table` to read data
-directly from a character string, rather than a file!
+First, let's read an example wide data set:
 
-
-[`read.table(text=...)`]{.aside}
-```{r}
-wide <- read.table(header=TRUE, text='
- subject sex control cond1 cond2
-       1   M     7.9  12.3  10.7
-       2   F     6.3  10.6  11.1
-       3   F     9.5  13.1  13.8
-       4   M    11.5  13.4  12.9
-')
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+wide <- read_csv("Datasets/wide_example.csv")
 wide
 ```
 
@@ -138,11 +141,8 @@ This is clearly a wide format – each row corresponds not to one observation
 where each row corresponds to one observation (and therefore, for each
 subject, there are three rows).
 
-
 [`pivot_longer()`]{.aside}
 ```{r message=FALSE, warning=FALSE}
-library(tidyverse)
-
 pivot_longer(wide, cols=control:cond2,
   names_to="condition", values_to="measurement")
 ```
@@ -154,30 +154,23 @@ code above. These are column names, but the columns don't exist yet.
 
 Here is another example data set, this time in long format:
 
-```{r}
-long <- read.table(header=TRUE, text='
- subject  sampleID sex condition measurement
-       1  ID000001 M   control         7.9
-       1  ID000002 M     cond1        12.3
-       1  ID000003 M     cond2        10.7
-       2  ID000004 F   control         6.3
-       2  ID000005 F     cond1        10.6
-       2  ID000006 F     cond2        11.1
-       3  ID000007 F   control         9.5
-       3  ID000008 F     cond1        13.1
-       3  ID000009 F     cond2        13.8
-')
+```{r message=FALSE, warning=FALSE}
+long <- read_csv("Datasets/long_example.csv")
 long
 ```
 
-As you see, there are three subject, each with three measurements (one
+As you see, there are three subjects again, each with three measurements (one
 control, one for condition 1, and one for condition 2). We want to convert
 it to wide format, so we expect one row per subject, in total three rows.
+
+We can use the `pivot_wider()` function to do this. We need to specify which
+column contains the values that should be spread out, and which column
+contains the names of the new columns. 
+[`pivot_wider()`]{.aside}
 
 However, watch out. The first thing we might want to try does not give the
 expected result:
 
-[`pivot_wider()`]{.aside}
 ```{r}
 ## not what we wanted!!! Why?
 pivot_wider(long, names_from=condition, values_from=measurement)

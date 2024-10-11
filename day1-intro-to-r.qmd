@@ -1,4 +1,4 @@
-# Introduction to R
+# First day of R
 
 
 ```{r echo=FALSE}
@@ -284,6 +284,38 @@ x
 ```
 
 Please spend some time on this, as it is a very common source of errors.
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-variables-and-rstudio}
+
+Without actually running the code, guess what will be the value of `x` if
+you execute the following code:
+
+```{r eval=FALSE}
+# first, assign starting value
+x <- 2
+
+# multiply by 100
+x <- x * 100
+
+# power of 2, add 10
+x^2 + 10
+
+# divide by 10
+x / 10
+
+# subtract 10*20 and take the square root
+x <- sqrt(x - 10 * 20)
+```
+
+::: {.callout-caution icon=false collapse="true"}
+## Solution
+
+Just run the code ;-) Which lines contain the assignment operator? 
+:::
+
+:::
+:::
 
 ::: {.callout-important}
 As a rule of thumb[^exceptions], if the expression you type in your script

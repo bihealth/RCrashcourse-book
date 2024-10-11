@@ -1,14 +1,16 @@
 # Appendix: More statistics and visualizations {#sec-stats .unnumbered}
 
-```{r echo=FALSE}
+```{r echo=FALSE,message=FALSE,warning=FALSE}
 set.seed(42)
 options(width=80)
-
+library(tidyverse)
+library(ggplot2)
+library(ggbeeswarm)
 ```
 
 
 
-### Correlations
+## Correlations
 
 Correlation is a measure of how two variables change together. There are
 many different variants, the most popular being the Pearson correlation
@@ -156,6 +158,7 @@ As you can see, the corrected p-values are higher than the original ones,
 and the BH correction is less conservative (i.e., the p-values are smaller)
 than the Bonferroni correction.
 
+## Linear models with `lm()`
 
 ### Simple linear models
 
@@ -240,6 +243,8 @@ summary(model_0)
 As you can see, we have now only one coefficient – because we forced the
 other one to be 0 with the `0 +` syntax.
 
+### Additional covariates
+
 The nice thing about this type of approach is that it can be easily
 extended to model much more complex situations. For example, what else does
 the fuel usage depend on? One of the columns in the `mtcars` dataset is the 
@@ -307,8 +312,145 @@ There is much more to ANOVA, the `lm()` function, and to linear models in genera
 If you are interested, I would recommend reading the [R Book](https://www.google.com/search?q=r+book)
 by Michael J. Crawley, which is a great resource for learning statistics in R.
 
+### Interactions
 
-### Image sizes in R markdown {#sec-image-sizes}
+Consider the following example. We have two strains, knockout (KO) and
+wild type (WT), and we measure something (let's say, the expression of a
+gene) in two conditions, control and treatment.
+
+We want to assess the impact of the strain on how an animal reacts to the
+treatment. Clearly, we can't just compare the treatment in WT with the
+treatment in KO – maybe the gene expression in KO is generally higher,
+independent of the treatment.
+
+It would be also incorrect to compare the control with the
+treatment separately in the WT and KO strains. Chances are, we will get a
+significant difference in one, but not the other case – but that does not
+mean that there is a difference between the strains. Maybe the change is
+really present in both strains, but we *failed* to detect it in one case.
+Here is what I mean:
+
+
+```{r echo=FALSE}
+n <- 10
+set.seed(42)
+df1 <- data.frame(nn = 1:(n*4),
+  strain = rep(c("WT", "KO"), each=2*n),
+  group = rep(c("control", "treatment"), each = n)) |>
+  mutate(strain = factor(strain, levels=c("WT", "KO"))) |>
+  mutate(value = 
+    c(rnorm(n, mean=10, sd=1),
+      rnorm(n, mean=11.5, sd=1),
+      rnorm(n, mean=10, sd=1),
+      rnorm(n, mean=12, sd=1)))
+ko <- df1 |> filter(strain == "KO")
+wt <- df1 |> filter(strain == "WT")
+```
+
+```{r echo=FALSE}
+ggplot(df1, aes(x = group, y = value)) +
+  geom_boxplot() +
+  geom_beeswarm() +
+  facet_wrap(~ strain)
+```
+
+As you can see, the treatment has similar effect on both WT and KO
+(actually, I made sure of it when generating the data set), but it is not
+significant in the WT
+($p = $`r format.pval(with(wt, t.test(value ~ group))$p.value, 2)`)
+and significant in the KO
+($p = $`r format.pval(with(ko, t.test(value ~ group))$p.value, 2)`).
+
+Instead, what we need to figure out is whether the difference between the
+groups in KO is different from the difference between the groups in WT.
+This "difference of differences" is called an *interaction*. We can write
+it like this:
+
+$$I = (treat_{KO} - ctrl_{KO}) - (treat_{WT} - ctrl_{WT})$$
+
+Interaction will allow us to find strain-specific differences even if both,
+there is an effect of the strain and there is an effect of the treatment.
+For example, the average expression can be *generally* higher in one
+strain.
+
+We should now generate a new data frame with the interaction term:
+
+```{r echo=FALSE}
+set.seed(42)
+```
+
+
+```{r}
+dfi <- data.frame(nn = 1:(n*4),
+  strain = rep(c("WT", "KO"), each=2*n),
+  group = rep(c("control", "treatment"), each = n)) |>
+  mutate(strain = factor(strain, levels=c("WT", "KO"))) |>
+  mutate(value = 
+    c(rnorm(n, mean=10, sd=1),
+      rnorm(n, mean=10, sd=1),
+      rnorm(n, mean=12, sd=1),
+      rnorm(n, mean=14, sd=1)))
+ggplot(dfi, aes(x = group, y = value)) +
+  geom_boxplot() +
+  geom_beeswarm() +
+  facet_wrap(~ strain)
+```
+
+As you can see, there is an effect of the strain (the KO has a higher
+expression on average), and an effect of the treatment – but only in the KO
+strain.
+
+We can easily run an ANOVA with interaction term in R. As before, we use a
+formula, but now instead of adding (with a `+`) the two terms, strain and
+group, we multiply them (with a `*`):
+
+
+```{r}
+model1 <- lm(value ~ strain * group, data=dfi)
+anova(model1)
+```
+
+In the ANOVA of the model above, we see the strong effect of the strain,
+and although we do not see a significant overall effect of the group
+(because there is no effect in the WT strain), we do see a significant
+interaction – that is the coefficient `strain:group`.
+
+Let us now take a look at a negative example. In the data frame below, we
+have an effect of the strain, but also an effect of the group – in both
+strains, the expression goes up. However, the effect is identical in both
+strains – the expression shifts up by the same amount in both strains. In
+other words, there is no *interaction between strain and group*.
+
+
+```{r}
+dfni <- data.frame(nn = 1:(n*4),
+  strain = rep(c("WT", "KO"), each=2*n),
+  group = rep(c("control", "treatment"), each = n)) |>
+  mutate(strain = factor(strain, levels=c("WT", "KO"))) |>
+  mutate(value = 
+    c(rnorm(n, mean=10, sd=1),
+      rnorm(n, mean=12, sd=1),
+      rnorm(n, mean=13, sd=1),
+      rnorm(n, mean=15, sd=1)))
+ggplot(dfni, aes(x = group, y = value)) +
+  geom_boxplot() +
+  geom_beeswarm() +
+  facet_wrap(~ strain)
+```
+
+```{r}
+model2 <- lm(value ~ strain * group, data=dfni)
+anova(model2)
+```
+
+The ANOVA shows now a significant effect of the group
+(p = `r format.pval(anova(model2)["group", "Pr(>F)"], 2)`),
+and a strong effect of the strain
+(p = `r format.pval(anova(model2)["strain", "Pr(>F)"], 2)`),
+but no effect of the interaction
+(p = `r format.pval(anova(model2)["strain:group", "Pr(>F)"], 2)`).
+
+## Image sizes in R markdown {#sec-image-sizes}
 
 Unlike in other programs, you can not simply drag images to change their
 size or aspect ratio in R, and you cannot click on a text and choose the
@@ -399,7 +541,7 @@ next to `fig.width` and `fig.height`. Since the left-hand figure is
 smaller, even though in reality the fonts have the same sizes in points,
 they appear much larger.
 
-### Boxplots and violin plots vs bar plots {#sec-barplots}
+## Boxplots and violin plots vs bar plots {#sec-barplots}
 
 Bar plots are quite common in scientific literature, despite the fact that
 they actually should be avoided in most scenarios [@barcharthabit2014]. Bar
@@ -414,18 +556,19 @@ example.
 ```{r}
 n <- 250
 x <- rnorm(n, mean=20, sd=1)
-y <- rbeta(n, 2, 22) * 20  + 18.6
+y <- rbeta(n, 2, 22) * 20  + 18.65
 ```
 
 The vectors `x` and `y` are normally distributed and beta distributed,
 respectively, and they have been on purpose manipulated such that the 
-standard deviations calculated with `sd()` are the same, but the means
-differ a bit. This is why, on a bar chart, they would show a clear difference.
-Here is a ggplot2 code that produces a bar chart. Don't worry too much about the
-syntax: it is here for demonstration purposes only, and you will rarely bar
-plots in practice. The function `geom_bar()` is the one responsible for the
-bar plots; `geom_errorbar()` adds the error bars; `coord_cartesian()` is
-here to limit the y-axis to a certain range.
+standard deviations calculated with `sd()` and means calculated with
+`mean()` are the same.
+Here is a ggplot2 code that produces a bar chart. Don't worry too much
+about the syntax below: it is here for demonstration purposes only, and,
+hopefully, you will rarely need bar plots in practice. The function
+`geom_bar()` is the one responsible for the bar plots; `geom_errorbar()`
+adds the error bars; `coord_cartesian()` is here to limit the y-axis to a
+certain range.
 [`geom_bar()`, `geom_errorbar()`, `coord_cartesian()`]{.aside}
 
 ```{r}
@@ -445,8 +588,9 @@ lie*. It suggests something that it is not true.
 Firstly, instead of standard deviations, which show the true spread of the
 data, I used the standard error of the mean (SEM) equal to 
 $\frac{\sigma}{\sqrt{n}}$, which shows the precision
-of the mean estimate and gets very small for large data sets (but it looks
-good on a figure). Secondly, the y-axis does not start at zero, which is
+of the mean estimate and gets very small for large data sets even when the
+spread (standard deviation) is large – but it looks
+good on a figure. Secondly, the y-axis does not start at zero, which is
 not acceptable for bar plots.
 
 And last but not least, one should not use a bar plot for continuous data,

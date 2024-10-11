@@ -22,7 +22,7 @@ R markdown is a remarkably simple to use and yet powerful tool. The basic idea i
 follows: you write a document in a simple text format – for example, a
 manuscript, a report, or even a thesis. In that document, you include R
 "code chunks". These code chunks are executed by R, and the output is
-included in the document – including figures or tables. And then, from this
+included in the document – including figures, numbers or tables. And then, from this
 single simple text document you can create a PDF, a Word document, an HTML
 page (or a whole website!), a book, a slide presentation and much, much
 more.
@@ -1780,8 +1780,8 @@ There are numerous resources for R on the web, allow me to recommend a few.
 
 ### Famous last words
 
-We are now at the end of Five Days of R. You are basically on the beginning
-of your journey. Here is my last advice to you.
+We are now at the end of Five Days of R, but your journey just started.
+Here is my last advice to you.
 
 ::: {.callout-tip}
 ## Get on with R
@@ -1806,7 +1806,7 @@ You are not. Sooner then you think, it will pay off.
    * choosing an output format
  * Visualisations
    * basic scatterplots with `ggplot()`
-   * understanding esthetics
+   * understanding esthetics (`aes()`)
    * box plots with `geom_boxplot()` and violin plots with `geom_violin()`
    * heatmaps
    * vector vs raster graphics
@@ -1814,4 +1814,5 @@ You are not. Sooner then you think, it will pay off.
    * t-test and Wilcoxon test
    * paired tests
    * $\chi^2$ test
+   * principal component analysis with `prcomp()`
  * Running a principal component analysis

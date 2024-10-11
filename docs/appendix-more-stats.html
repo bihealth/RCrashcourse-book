@@ -256,7 +256,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./day1-intro-to-r.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">First day of R</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -317,9 +317,16 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#correlations" id="toc-correlations" class="nav-link active" data-scroll-target="#correlations">Correlations</a></li>
+  <li><a href="#correlations" id="toc-correlations" class="nav-link active" data-scroll-target="#correlations">Correlations</a>
+  <ul class="collapse">
   <li><a href="#correcting-for-multiple-testing" id="toc-correcting-for-multiple-testing" class="nav-link" data-scroll-target="#correcting-for-multiple-testing">Correcting for multiple testing</a></li>
+  </ul></li>
+  <li><a href="#linear-models-with-lm" id="toc-linear-models-with-lm" class="nav-link" data-scroll-target="#linear-models-with-lm">Linear models with <code>lm()</code></a>
+  <ul class="collapse">
   <li><a href="#simple-linear-models" id="toc-simple-linear-models" class="nav-link" data-scroll-target="#simple-linear-models">Simple linear models</a></li>
+  <li><a href="#additional-covariates" id="toc-additional-covariates" class="nav-link" data-scroll-target="#additional-covariates">Additional covariates</a></li>
+  <li><a href="#interactions" id="toc-interactions" class="nav-link" data-scroll-target="#interactions">Interactions</a></li>
+  </ul></li>
   <li><a href="#sec-image-sizes" id="toc-sec-image-sizes" class="nav-link" data-scroll-target="#sec-image-sizes">Image sizes in R markdown</a></li>
   <li><a href="#sec-barplots" id="toc-sec-barplots" class="nav-link" data-scroll-target="#sec-barplots">Boxplots and violin plots vs bar plots</a></li>
   </ul>
@@ -347,8 +354,8 @@ window.Quarto = {
 </header>
 
 
-<section id="correlations" class="level3">
-<h3 class="anchored" data-anchor-id="correlations">Correlations</h3>
+<section id="correlations" class="level2">
+<h2 class="anchored" data-anchor-id="correlations">Correlations</h2>
 <p>Correlation is a measure of how two variables change together. There are many different variants, the most popular being the Pearson correlation and the Spearman correlation. Both can be calculated using the <code>cor()</code> function in base R and tested for significance using the <code>cor.test()</code>. Here they are in action on the <code>iris</code> dataset:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(iris<span class="sc">$</span>Sepal.Length, iris<span class="sc">$</span>Petal.Length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -430,7 +437,6 @@ Petal.Width     0.8179411  -0.3661259    0.9628654   1.0000000</code></pre>
 </div>
 </div>
 </div>
-</section>
 <section id="correcting-for-multiple-testing" class="level3">
 <h3 class="anchored" data-anchor-id="correcting-for-multiple-testing">Correcting for multiple testing</h3>
 <p>When you run multiple tests, you increase the chance of finding a false positive. If two data sets do not differ, and you run a test a 100 times, on average 5 of those tests will show a significant difference at the 0.05 level. This is called the multiple testing problem.</p>
@@ -474,6 +480,9 @@ Petal.Width     0.8179411  -0.3661259    0.9628654   1.0000000</code></pre>
 </div>
 <p>As you can see, the corrected p-values are higher than the original ones, and the BH correction is less conservative (i.e., the p-values are smaller) than the Bonferroni correction.</p>
 </section>
+</section>
+<section id="linear-models-with-lm" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="linear-models-with-lm">Linear models with <code>lm()</code></h2>
 <section id="simple-linear-models" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="simple-linear-models">Simple linear models</h3>
 <p>We end with an example of linear regression, and the most important reason for that is the introduction of formulas in R.</p>
@@ -555,6 +564,9 @@ F-statistic: 381.7 on 1 and 31 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <p>As you can see, we have now only one coefficient – because we forced the other one to be 0 with the <code>0 +</code> syntax.</p>
+</section>
+<section id="additional-covariates" class="level3">
+<h3 class="anchored" data-anchor-id="additional-covariates">Additional covariates</h3>
 <p>The nice thing about this type of approach is that it can be easily extended to model much more complex situations. For example, what else does the fuel usage depend on? One of the columns in the <code>mtcars</code> dataset is the weight of the car. We can add it to the model like this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>model_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gpm <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> hp <span class="sc">+</span> wt, <span class="at">data=</span>mtcars)</span>
@@ -668,50 +680,11 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>There is much more to ANOVA, the <code>lm()</code> function, and to linear models in general. If you are interested, I would recommend reading the <a href="https://www.google.com/search?q=r+book">R Book</a> by Michael J. Crawley, which is a great resource for learning statistics in R.</p>
 </section>
-<section id="sec-image-sizes" class="level3">
-<h3 class="anchored" data-anchor-id="sec-image-sizes">Image sizes in R markdown</h3>
-<p>Unlike in other programs, you can not simply drag images to change their size or aspect ratio in R, and you cannot click on a text and choose the font size. What can you do when you want to change the size of the image, to make the fonts larger relative to the image size etc.?</p>
-<p>For font size, it is possible to change individual font sizes (and font types) in both basic R and <code>ggplot2</code>, however these operations tend to be annoying (see <a href="https://statisticaloddsandends.wordpress.com/2021/07/08/using-different-fonts-with-ggplot2/">here</a> for a description of how to do it in <code>ggplot2</code>).</p>
-<p>However, quite often what you want to achieve is simply make the overall fonts larger in an image. If you are using a vector graphic output (as you should), it does not really matter whether the font size is actually 12, 22 or 32 points – you can always scale the image to the desired size without losing quality. What matters is how large the fonts are <em>in relation to the nominal image size in inches</em>.</p>
-<p>The good news is: you can change the nominal size of an image in R very easily. You have already seen it done in the section <a href="day5-visualization-and-statistics.html#sec-output-formats" class="quarto-xref"><span>5.3.5 Output formats</span></a> when generating images with <code>svg()</code> or <code>pdf()</code>. However, you can change this size also in your R Markdown document by providing chunk options <code>fig.width</code> and <code>fig.height</code>:</p>
-<div class="columns">
-<div class="column" style="width:45%;">
-<div class="sourceCode" id="cb39"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig.width=4,fig.height=3}</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(iris, </span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="in">  aes(x = Sepal.Length, </span></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="in">      y = Sepal.Width, </span></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="in">      color = Species)) +</span></span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(size=3) +</span></span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_viridis_d() +</span></span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Sepal length", </span></span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Sepal width", </span></span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="in">       title = "The iris data set") +</span></span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="appendix-more-stats_files/figure-html/unnamed-chunk-18-1.svg" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:5%;">
-
-</div><div class="column" style="width:45%;">
-<div class="sourceCode" id="cb40"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig.width=8,fig.height=8}</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(iris, </span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="in">  aes(x = Sepal.Length, </span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="in">      y = Sepal.Width, </span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="in">      color = Species)) +</span></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(size=3) +</span></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_viridis_d() +</span></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Sepal length", </span></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Sepal width", </span></span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="in">       title = "The iris data set") +</span></span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="interactions" class="level3">
+<h3 class="anchored" data-anchor-id="interactions">Interactions</h3>
+<p>Consider the following example. We have two strains, knockout (KO) and wild type (WT), and we measure something (let’s say, the expression of a gene) in two conditions, control and treatment.</p>
+<p>We want to assess the impact of the strain on how an animal reacts to the treatment. Clearly, we can’t just compare the treatment in WT with the treatment in KO – maybe the gene expression in KO is generally higher, independent of the treatment.</p>
+<p>It would be also incorrect to compare the control with the treatment separately in the WT and KO strains. Chances are, we will get a significant difference in one, but not the other case – but that does not mean that there is a difference between the strains. Maybe the change is really present in both strains, but we <em>failed</em> to detect it in one case. Here is what I mean:</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -721,29 +694,27 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 </div>
-</div>
-</div>
-<p>As you can see, the only difference between these two chunks are the values next to <code>fig.width</code> and <code>fig.height</code>. Since the left-hand figure is smaller, even though in reality the fonts have the same sizes in points, they appear much larger.</p>
-</section>
-<section id="sec-barplots" class="level3 page-columns page-full">
-<h3 class="anchored" data-anchor-id="sec-barplots">Boxplots and violin plots vs bar plots</h3>
-<p>Bar plots are quite common in scientific literature, despite the fact that they actually should be avoided in most scenarios <span class="citation" data-cites="barcharthabit2014">(<a href="references.html#ref-barcharthabit2014" role="doc-biblioref"><span>“Kick the Bar Chart Habit”</span> 2014</a>)</span>. Bar plots should actually only be used when showing count or proportion data, and the <span class="math inline">\(y\)</span> axis in this case should always start at zero. In all the other applications, box plots or, better, violin plots are preferred.</p>
-<p>The advantages of the box plots and violin plots over bar plots are evident when the data is not normally distributed. Let us construct a small example.</p>
+<p>As you can see, the treatment has similar effect on both WT and KO (actually, I made sure of it when generating the data set), but it is not significant in the WT ($p = <span class="math inline">\(0.2)
+and significant in the KO
+(\)</span>p = $0.0022).</p>
+<p>Instead, what we need to figure out is whether the difference between the groups in KO is different from the difference between the groups in WT. This “difference of differences” is called an <em>interaction</em>. We can write it like this:</p>
+<p><span class="math display">\[I = (treat_{KO} - ctrl_{KO}) - (treat_{WT} - ctrl_{WT})\]</span></p>
+<p>Interaction will allow us to find strain-specific differences even if both, there is an effect of the strain and there is an effect of the treatment. For example, the average expression can be <em>generally</em> higher in one strain.</p>
+<p>We should now generate a new data frame with the interaction term:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">250</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean=</span><span class="dv">20</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(n, <span class="dv">2</span>, <span class="dv">22</span>) <span class="sc">*</span> <span class="dv">20</span>  <span class="sc">+</span> <span class="fl">18.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="page-columns page-full"><p>The vectors <code>x</code> and <code>y</code> are normally distributed and beta distributed, respectively, and they have been on purpose manipulated such that the standard deviations calculated with <code>sd()</code> are the same, but the means differ a bit. This is why, on a bar chart, they would show a clear difference. Here is a ggplot2 code that produces a bar chart. Don’t worry too much about the syntax: it is here for demonstration purposes only, and you will rarely bar plots in practice. The function <code>geom_bar()</code> is the one responsible for the bar plots; <code>geom_errorbar()</code> adds the error bars; <code>coord_cartesian()</code> is here to limit the y-axis to a certain range. </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>geom_bar()</code>, <code>geom_errorbar()</code>, <code>coord_cartesian()</code></span></div></div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">value=</span><span class="fu">c</span>(<span class="fu">mean</span>(x), <span class="fu">mean</span>(y)), </span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group=</span><span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>),</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">sd=</span><span class="fu">c</span>(<span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(n), <span class="fu">sd</span>(y)<span class="sc">/</span><span class="fu">sqrt</span>(n)))</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>group, <span class="at">y=</span>value)) <span class="sc">+</span> </span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> value <span class="sc">-</span> sd, <span class="at">ymax =</span> value <span class="sc">+</span> sd), <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">width=</span><span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"skyblue"</span>) <span class="sc">+</span></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Group"</span>, <span class="at">y=</span><span class="st">"Value"</span>) <span class="sc">+</span></span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">19.5</span>, <span class="fl">20.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>dfi <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">nn =</span> <span class="dv">1</span><span class="sc">:</span>(n<span class="sc">*</span><span class="dv">4</span>),</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">strain =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"WT"</span>, <span class="st">"KO"</span>), <span class="at">each=</span><span class="dv">2</span><span class="sc">*</span>n),</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"control"</span>, <span class="st">"treatment"</span>), <span class="at">each =</span> n)) <span class="sc">|&gt;</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">strain =</span> <span class="fu">factor</span>(strain, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"WT"</span>, <span class="st">"KO"</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">value =</span> </span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="fu">rnorm</span>(n, <span class="at">mean=</span><span class="dv">10</span>, <span class="at">sd=</span><span class="dv">1</span>),</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rnorm</span>(n, <span class="at">mean=</span><span class="dv">10</span>, <span class="at">sd=</span><span class="dv">1</span>),</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rnorm</span>(n, <span class="at">mean=</span><span class="dv">12</span>, <span class="at">sd=</span><span class="dv">1</span>),</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rnorm</span>(n, <span class="at">mean=</span><span class="dv">14</span>, <span class="at">sd=</span><span class="dv">1</span>)))</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dfi, <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_beeswarm</span>() <span class="sc">+</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> strain)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -752,39 +723,184 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 </div>
-<p>Wow, that looks really different! Unfortunately, the above figure <em>is a lie</em>. It suggests something that it is not true.</p>
-<p>Firstly, instead of standard deviations, which show the true spread of the data, I used the standard error of the mean (SEM) equal to <span class="math inline">\(\frac{\sigma}{\sqrt{n}}\)</span>, which shows the precision of the mean estimate and gets very small for large data sets (but it looks good on a figure). Secondly, the y-axis does not start at zero, which is not acceptable for bar plots.</p>
-<p>And last but not least, one should not use a bar plot for continuous data, because it does not show their real distribution. Let us now produce a box plot and a violin plot.</p>
-<div class="page-columns page-full"><p>Before, however, let me introduce yet another useful package, <code>cowplot</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. With this package, we can create composite plots that consist of several individual plots. Basically, first you create the ggplot plots and save them to a variable; then you use cowplot function <code>plot_grid()</code> to put the plots . </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>cowplot</code></span></div></div>
-<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;There is also the newer <code>patchwork</code> package, which is more elegant and flexible, but the syntax requires a bit of getting used to.</p></div></div><div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>plot_grid()</code></span></div></div>
+<p>As you can see, there is an effect of the strain (the KO has a higher expression on average), and an effect of the treatment – but only in the KO strain.</p>
+<p>We can easily run an ANOVA with interaction term in R. As before, we use a formula, but now instead of adding (with a <code>+</code>) the two terms, strain and group, we multiply them (with a <code>*</code>):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">values =</span> <span class="fu">c</span>(x, y), </span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"x"</span>, n), <span class="fu">rep</span>(<span class="st">"y"</span>, n)))</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>group, <span class="at">y=</span>values)) <span class="sc">+</span></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Group"</span>, <span class="at">y=</span><span class="st">"Value"</span>)</span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="co"># violin plot</span></span>
-<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>group, <span class="at">y=</span>values)) <span class="sc">+</span></span>
-<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span></span>
-<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Group"</span>, <span class="at">y=</span><span class="st">"Value"</span>)</span>
-<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a><span class="co"># plot_grid puts the different plots together </span></span>
-<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a><span class="co"># ncol=2 -&gt; two columns</span></span>
-<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a><span class="co"># labels=... -&gt; labels for the plots</span></span>
-<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grid</span>(p1, p2, <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(value <span class="sc">~</span> strain <span class="sc">*</span> group, <span class="at">data=</span>dfi)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: value
+             Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+strain        1 64.368  64.368 43.3669 1.156e-07 ***
+group         1  3.044   3.044  2.0507  0.160758    
+strain:group  1 15.938  15.938 10.7381  0.002329 ** 
+Residuals    36 53.434   1.484                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>In the ANOVA of the model above, we see the strong effect of the strain, and although we do not see a significant overall effect of the group (because there is no effect in the WT strain), we do see a significant interaction – that is the coefficient <code>strain:group</code>.</p>
+<p>Let us now take a look at a negative example. In the data frame below, we have an effect of the strain, but also an effect of the group – in both strains, the expression goes up. However, the effect is identical in both strains – the expression shifts up by the same amount in both strains. In other words, there is no <em>interaction between strain and group</em>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>dfni <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">nn =</span> <span class="dv">1</span><span class="sc">:</span>(n<span class="sc">*</span><span class="dv">4</span>),</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">strain =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"WT"</span>, <span class="st">"KO"</span>), <span class="at">each=</span><span class="dv">2</span><span class="sc">*</span>n),</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"control"</span>, <span class="st">"treatment"</span>), <span class="at">each =</span> n)) <span class="sc">|&gt;</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">strain =</span> <span class="fu">factor</span>(strain, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"WT"</span>, <span class="st">"KO"</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">value =</span> </span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="fu">rnorm</span>(n, <span class="at">mean=</span><span class="dv">10</span>, <span class="at">sd=</span><span class="dv">1</span>),</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rnorm</span>(n, <span class="at">mean=</span><span class="dv">12</span>, <span class="at">sd=</span><span class="dv">1</span>),</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rnorm</span>(n, <span class="at">mean=</span><span class="dv">13</span>, <span class="at">sd=</span><span class="dv">1</span>),</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rnorm</span>(n, <span class="at">mean=</span><span class="dv">15</span>, <span class="at">sd=</span><span class="dv">1</span>)))</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dfni, <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_beeswarm</span>() <span class="sc">+</span></span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> strain)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="appendix-more-stats_files/figure-html/unnamed-chunk-22-1.svg" class="img-fluid figure-img"></p>
+<p><img src="appendix-more-stats_files/figure-html/unnamed-chunk-23-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>As you can see, the violin plots show a completely different story. The group y only looks larger, because the mean is driven by the long upper tail of the distribution. The medians are practically identical (median of x is 19.96, median of y is 19.98), and the distributions largely overlap.</p>
-<p>Similarly, if you were to run a t-test, which assumes normal distribution, the p-value would have been 0.0044; while in a Wilcoxon test, which does not make this assumption, the p-value would have been 0.15.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(value <span class="sc">~</span> strain <span class="sc">*</span> group, <span class="at">data=</span>dfni)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: value
+             Df Sum Sq Mean Sq  F value    Pr(&gt;F)    
+strain        1 99.952  99.952 121.5962 4.279e-13 ***
+group         1 26.923  26.923  32.7534 1.630e-06 ***
+strain:group  1  1.582   1.582   1.9249    0.1738    
+Residuals    36 29.592   0.822                       
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>The ANOVA shows now a significant effect of the group (p = 1.6e-06), and a strong effect of the strain (p = 4.3e-13), but no effect of the interaction (p = 0.17).</p>
+</section>
+</section>
+<section id="sec-image-sizes" class="level2">
+<h2 class="anchored" data-anchor-id="sec-image-sizes">Image sizes in R markdown</h2>
+<p>Unlike in other programs, you can not simply drag images to change their size or aspect ratio in R, and you cannot click on a text and choose the font size. What can you do when you want to change the size of the image, to make the fonts larger relative to the image size etc.?</p>
+<p>For font size, it is possible to change individual font sizes (and font types) in both basic R and <code>ggplot2</code>, however these operations tend to be annoying (see <a href="https://statisticaloddsandends.wordpress.com/2021/07/08/using-different-fonts-with-ggplot2/">here</a> for a description of how to do it in <code>ggplot2</code>).</p>
+<p>However, quite often what you want to achieve is simply make the overall fonts larger in an image. If you are using a vector graphic output (as you should), it does not really matter whether the font size is actually 12, 22 or 32 points – you can always scale the image to the desired size without losing quality. What matters is how large the fonts are <em>in relation to the nominal image size in inches</em>.</p>
+<p>The good news is: you can change the nominal size of an image in R very easily. You have already seen it done in the section <a href="day5-visualization-and-statistics.html#sec-output-formats" class="quarto-xref"><span>5.3.5 Output formats</span></a> when generating images with <code>svg()</code> or <code>pdf()</code>. However, you can change this size also in your R Markdown document by providing chunk options <code>fig.width</code> and <code>fig.height</code>:</p>
+<div class="columns">
+<div class="column" style="width:45%;">
+<div class="sourceCode" id="cb45"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig.width=4,fig.height=3}</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(iris, </span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="in">  aes(x = Sepal.Length, </span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="in">      y = Sepal.Width, </span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="in">      color = Species)) +</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(size=3) +</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_viridis_d() +</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Sepal length", </span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Sepal width", </span></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="in">       title = "The iris data set") +</span></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="appendix-more-stats_files/figure-html/unnamed-chunk-25-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:5%;">
+
+</div><div class="column" style="width:45%;">
+<div class="sourceCode" id="cb46"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig.width=8,fig.height=8}</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(iris, </span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="in">  aes(x = Sepal.Length, </span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="in">      y = Sepal.Width, </span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="in">      color = Species)) +</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point(size=3) +</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="in">  scale_color_viridis_d() +</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(x = "Sepal length", </span></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="in">       y = "Sepal width", </span></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a><span class="in">       title = "The iris data set") +</span></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a><span class="in">  theme_minimal()</span></span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="appendix-more-stats_files/figure-html/unnamed-chunk-26-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>As you can see, the only difference between these two chunks are the values next to <code>fig.width</code> and <code>fig.height</code>. Since the left-hand figure is smaller, even though in reality the fonts have the same sizes in points, they appear much larger.</p>
+</section>
+<section id="sec-barplots" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-barplots">Boxplots and violin plots vs bar plots</h2>
+<p>Bar plots are quite common in scientific literature, despite the fact that they actually should be avoided in most scenarios <span class="citation" data-cites="barcharthabit2014">(<a href="references.html#ref-barcharthabit2014" role="doc-biblioref"><span>“Kick the Bar Chart Habit”</span> 2014</a>)</span>. Bar plots should actually only be used when showing count or proportion data, and the <span class="math inline">\(y\)</span> axis in this case should always start at zero. In all the other applications, box plots or, better, violin plots are preferred.</p>
+<p>The advantages of the box plots and violin plots over bar plots are evident when the data is not normally distributed. Let us construct a small example.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">250</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean=</span><span class="dv">20</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(n, <span class="dv">2</span>, <span class="dv">22</span>) <span class="sc">*</span> <span class="dv">20</span>  <span class="sc">+</span> <span class="fl">18.65</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="page-columns page-full"><p>The vectors <code>x</code> and <code>y</code> are normally distributed and beta distributed, respectively, and they have been on purpose manipulated such that the standard deviations calculated with <code>sd()</code> and means calculated with <code>mean()</code> are the same. Here is a ggplot2 code that produces a bar chart. Don’t worry too much about the syntax below: it is here for demonstration purposes only, and, hopefully, you will rarely need bar plots in practice. The function <code>geom_bar()</code> is the one responsible for the bar plots; <code>geom_errorbar()</code> adds the error bars; <code>coord_cartesian()</code> is here to limit the y-axis to a certain range. </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>geom_bar()</code>, <code>geom_errorbar()</code>, <code>coord_cartesian()</code></span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">value=</span><span class="fu">c</span>(<span class="fu">mean</span>(x), <span class="fu">mean</span>(y)), </span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group=</span><span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>),</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">sd=</span><span class="fu">c</span>(<span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(n), <span class="fu">sd</span>(y)<span class="sc">/</span><span class="fu">sqrt</span>(n)))</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>group, <span class="at">y=</span>value)) <span class="sc">+</span> </span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> value <span class="sc">-</span> sd, <span class="at">ymax =</span> value <span class="sc">+</span> sd), <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">width=</span><span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"skyblue"</span>) <span class="sc">+</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Group"</span>, <span class="at">y=</span><span class="st">"Value"</span>) <span class="sc">+</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">19.5</span>, <span class="fl">20.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="appendix-more-stats_files/figure-html/unnamed-chunk-28-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Wow, that looks really different! Unfortunately, the above figure <em>is a lie</em>. It suggests something that it is not true.</p>
+<p>Firstly, instead of standard deviations, which show the true spread of the data, I used the standard error of the mean (SEM) equal to <span class="math inline">\(\frac{\sigma}{\sqrt{n}}\)</span>, which shows the precision of the mean estimate and gets very small for large data sets even when the spread (standard deviation) is large – but it looks good on a figure. Secondly, the y-axis does not start at zero, which is not acceptable for bar plots.</p>
+<p>And last but not least, one should not use a bar plot for continuous data, because it does not show their real distribution. Let us now produce a box plot and a violin plot.</p>
+<div class="page-columns page-full"><p>Before, however, let me introduce yet another useful package, <code>cowplot</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. With this package, we can create composite plots that consist of several individual plots. Basically, first you create the ggplot plots and save them to a variable; then you use cowplot function <code>plot_grid()</code> to put the plots . </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>cowplot</code></span></div></div>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;There is also the newer <code>patchwork</code> package, which is more elegant and flexible, but the syntax requires a bit of getting used to.</p></div></div><div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>plot_grid()</code></span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">values =</span> <span class="fu">c</span>(x, y), </span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"x"</span>, n), <span class="fu">rep</span>(<span class="st">"y"</span>, n)))</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>group, <span class="at">y=</span>values)) <span class="sc">+</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Group"</span>, <span class="at">y=</span><span class="st">"Value"</span>)</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="co"># violin plot</span></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>group, <span class="at">y=</span>values)) <span class="sc">+</span></span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Group"</span>, <span class="at">y=</span><span class="st">"Value"</span>)</span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a><span class="co"># plot_grid puts the different plots together </span></span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a><span class="co"># ncol=2 -&gt; two columns</span></span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a><span class="co"># labels=... -&gt; labels for the plots</span></span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grid</span>(p1, p2, <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="appendix-more-stats_files/figure-html/unnamed-chunk-29-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As you can see, the violin plots show a completely different story. The group y only looks larger, because the mean is driven by the long upper tail of the distribution. The medians are practically identical (median of x is 19.97, median of y is 20.01), and the distributions largely overlap.</p>
+<p>Similarly, if you were to run a t-test, which assumes normal distribution, the p-value would have been 0.00044; while in a Wilcoxon test, which does not make this assumption, the p-value would have been 0.02.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">

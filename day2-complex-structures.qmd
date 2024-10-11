@@ -1,5 +1,13 @@
 # Complex data structures
 
+
+```{r echo=FALSE}
+options(width=80)
+```
+
+
+
+
 ## Goals for today
 
  * Complex data structures (matrices, lists and data frames)
@@ -153,7 +161,7 @@ Hint: pick up a dictionary... or any other alphabetically sorted list.
 Create a vector with 50 random numbers as follows:
 
 
-```{r eval=FALSE}
+```{r}
 vec <- rnorm(50)
 ```
 
@@ -163,6 +171,25 @@ How can you filter out all the numbers that are (i) greater than 0.5 and
 (ii) smaller than 1.0?
 
 How many numbers that are greater than 0.5 are in your vector?
+
+::: {.callout-caution icon=false collapse=true}
+## Solution
+
+```{r}
+# over 0.5
+over05 <- vec[ vec > 0.5 ]
+
+# between 0.5 and 1.0
+between <- over05[ over05 < 1.0 ]
+
+# how many numbers are greater than 0.5?
+sum(vec > 0.5)
+```
+
+
+
+
+:::
 
 :::
 :::
