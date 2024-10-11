@@ -694,11 +694,10 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 </div>
-<p>As you can see, the treatment has similar effect on both WT and KO (actually, I made sure of it when generating the data set), but it is not significant in the WT ($p = <span class="math inline">\(0.2)
-and significant in the KO
-(\)</span>p = $0.0022).</p>
+<p>As you can see, the treatment has similar effect on both WT and KO (actually, I made sure of it when generating the data set), but it is not significant in the WT (p = 0.053) and significant in the KO (p = 0.00021).</p>
 <p>Instead, what we need to figure out is whether the difference between the groups in KO is different from the difference between the groups in WT. This “difference of differences” is called an <em>interaction</em>. We can write it like this:</p>
-<p><span class="math display">\[I = (treat_{KO} - ctrl_{KO}) - (treat_{WT} - ctrl_{WT})\]</span></p>
+<p><span class="math display">\[\textrm{Interaction} = (\textrm{treated}_{\textrm{KO}} - \textrm{control}_{\textrm{KO}}) -
+(\textrm{treated}_{\textrm{WT}} - \textrm{control}_{\textrm{WT}})\]</span></p>
 <p>Interaction will allow us to find strain-specific differences even if both, there is an effect of the strain and there is an effect of the treatment. For example, the average expression can be <em>generally</em> higher in one strain.</p>
 <p>We should now generate a new data frame with the interaction term:</p>
 <div class="cell">
