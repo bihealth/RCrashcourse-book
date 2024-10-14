@@ -613,6 +613,29 @@ combined_v <- c(first_v, second_v)
 print(combined_v)
 ```
 
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-vectors-values}
+## Vectors
+
+Create a vector that combines the numeric value `1` and the string `"one"`.
+What happens? Can you venture a guess?
+
+::: {.callout-caution icon=false collapse="true"}
+## Solution
+
+```{r}
+combined <- c(1, "one")
+combined
+```
+
+In the resulting vector, the `1` is shown with quotes around it. This means
+that it is treated as a character string, not as a numeric value. The
+reason for that is that vectors can hold only one type of values. We will
+discuss it in more detail later.
+:::
+
+:::
+:::
 
 You can access individual elements of a vector using the `[ ]` operator:
 [Accessing elements of a vector with `[ ]`]{.aside}
@@ -980,7 +1003,8 @@ One more thing: there are a couple of special values in R that you should
 know about. One of the most prominent, useful and frequently encountered is
 the `NA` value, which stands for "Not Available". You will see it
 [`NA`]{.aside}
-frequently when you work with data.
+frequently when you work with data. Actually, you have already seen it when
+you tried to access an element of a vector that does not exist.
 
 It is possible to apply mathematical operations to `NA` values, but the
 result is inadvertently `NA`:
@@ -993,7 +1017,7 @@ numbers * 3
 ```
 
 This also goes for some functions, which, quite often, have a special
-parameter to omit the `NA` values. For example, the `mean()` function
+argument to omit the `NA` values. For example, the `mean()` function
 [`mean()`]{.aside}
 calculates the mean of a vector:
 
@@ -1011,7 +1035,8 @@ There is a whole bunch of functions that you can use to work with vectors,
 and here are some of them – with mostly self-explanatory names: `sum()`,
 `min()`, `max()`, `range()`, `sd()`, `var()`, `median()`, `quantile()`.
 [Descriptive statistics: `sum()`, `min()`, `max()` etc.]{.aside}
-Look them up in the help system by typing, for example, `?sum` in the console.
+Look them up in the help system by typing, for example, `?sum` 
+in the console, and try them out to see how they work.
 :::
 
 The `NA` value very frequently pop up when you try to convert a character
@@ -1056,9 +1081,11 @@ day the lily doubles in size. After 30 days, the lily covers the entire
 lake. On which day was the lily covering half of the lake?".
 
 In the following section we will model the behavior of the lily using R.
-Let us start with some assumptions. First: we designate the first day as
-Day 1. Second: every day, the lily doubles the area it covers. Third: on
-the first day, the lily covers 1% of the lake.
+Let us start with some assumptions. 
+
+ 1. We designate the first day as Day 1. 
+ 2. Every day, the lily doubles the area it covers. 
+ 3. On the first day, the lily covers 1% of the lake.
 
 ::: {.callout-caution icon=false appearance="simple"}
 ::: {#exr-lilies}
