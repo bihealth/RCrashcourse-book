@@ -325,14 +325,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>I have been teaching R to biologists and medical students for many years now. At the Core Unit for Bioinformatics at the Berlin Institute of Health, Charité - Universitätsmedizin Berlin, we have developed a five-day, 5 hour per day R crash course running for the last three years. This book is a companion to that course.</p>
 <p>This is also the reason for how the materials in the book are arranged. Rather then discussing everything about vectors first, then everything about matrices etc., we start with easy things, and return to them later to build on them. I call this “helical learning”<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> – we spiral around the same topics, but each time going a bit deeper, and each time you will understand a bit more. This is also why some topics are spread between the days – by trial and error, we have found the amount of material that can be covered in a day of learning.</p>
 <div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;I got this idea from the professor Barbara Płytycz from the Jagiellonian University, who taught me my first “helix” of the immune system.</p></div></div><p>There are two goals of this book. The first one is that after five days of learning R, you will be able to load, inspect, manipulate and save data files (such as Excel tables or CSV files), make some basic plots and perform simple statistical tests. The second goal is that you are in a good starting position to continue learning R on your own.</p>
-<p>In other words, this course should give you a jump start, allow to overcome this first hurdle of learning R.</p>
+<p>In other words, this course should give you a jump start, allowing to overcome this first big hurdle in learning R.</p>
 </section>
 <section id="prerequisites" class="level2">
 <h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
 <section id="installing-r-and-rstudio" class="level3">
 <h3 class="anchored" data-anchor-id="installing-r-and-rstudio">Installing R and RStudio</h3>
-<p>Before you dive in to the course, we would like to ask you to install both R and RStudio. The installation depends on your operating system, so please refer to specific instructions which can be found at the following links:</p>
-<p>XXX</p>
+<p>Before you dive in to the course, we would like to ask you to install both R and RStudio: you need R (obviously) and RStudio is a great and very popular interface for R. Minimal installation guide:</p>
+<ol type="1">
+<li>Install R. Go to <a href="https://cran.r-project.org/">R website</a> and download the version for your operating system. Install it.</li>
+<li>Install R Studio. Go to <a href="https://posit.co/download/rstudio-desktop/">R Studio installation page</a> and follow the instructions.</li>
+</ol>
+<p>This should be it. However, if you are stuck or have problems with installing R or RStudio, please search the internet – the installation, unfortunately, depends on your operating system and the version of the software, so it is hard to give a general advice.</p>
+<p>Here are some other websites with more detailed instructions:</p>
+<ul>
+<li><a href="https://techvidvan.com/tutorials/install-r/">Installing R on all systems</a></li>
+<li><a href="https://medium.com/@GalarnykMichael/install-r-and-rstudio-on-windows-5f503f708027">Installing R on Windows 7, 8, 10</a></li>
+</ul>
+<p>Potential problems:</p>
+<ol type="1">
+<li><p><strong>You already had R installed on the system.</strong> Having multiple R versions may be a source of problems. If you have an old version of R, unless you have a good reason to keep it, uninstall it.</p></li>
+<li><p><strong>You need to compile packages.</strong> Packages come in two forms: precompiled packages and source packages. Some exotic packages might not have the precompiled version for your system. If you need to compile packages, you will have to install additional packages. For example, for Windows, you need to install <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a> - make sure you download the version that corresponds to your version of R.</p></li>
+</ol>
 </section>
 <section id="installing-r-packages" class="level3">
 <h3 class="anchored" data-anchor-id="installing-r-packages">Installing R packages</h3>

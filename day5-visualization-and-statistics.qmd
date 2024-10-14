@@ -1886,6 +1886,8 @@ There are numerous resources for R on the web, allow me to recommend a few.
    * [R Workflow](https://hbiostat.org/rflow/) by Frank Harrell is somewhat
      hermetic, but there are many good ideas in it and a lot about
      reproducible scientific work with Quarto.
+   * [R manuals](https://cran.r-project.org/manuals.html) from CRAN. Be
+     warned – they tend to be rather comprehensive.
  * Other books:
    * [The R Book](https://www.google.com/search?q=the+r+book) by Michael J. Crawley
      – this is a magnificent book on statistics. It uses very conservative

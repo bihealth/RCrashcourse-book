@@ -32,18 +32,47 @@ manipulate and save data files (such as Excel tables or CSV files), make
 some basic plots and perform simple statistical tests. The second goal is
 that you are in a good starting position to continue learning R on your own.
 
-In other words, this course should give you a jump start, allow to overcome
-this first hurdle of learning R.
+In other words, this course should give you a jump start, allowing to overcome
+this first big hurdle in learning R.
 
 ## Prerequisites
 
 ### Installing R and RStudio
 
 Before you dive in to the course, we would like to ask you to install both
-R and RStudio. The installation depends on your operating system, so please
-refer to specific instructions which can be found at the following links:
+R and RStudio: you need R (obviously) and RStudio is a great and very
+popular interface for R. Minimal installation guide:
 
-XXX
+ 1. Install R. Go to [R website](https://cran.r-project.org/) and download
+    the version for your operating system. Install it.
+ 2. Install R Studio. Go to [R Studio installation
+ page](https://posit.co/download/rstudio-desktop/) and follow the
+ instructions.
+
+This should be it. However, if you are stuck or have problems with
+installing R or RStudio, please search the internet – the installation,
+unfortunately, depends on your operating system and the version of the
+software, so it is hard to give a general advice.
+
+Here are some other websites with more detailed instructions:
+
+ * [Installing R on all systems](https://techvidvan.com/tutorials/install-r/)
+ * [Installing R on Windows 7, 8, 10](https://medium.com/@GalarnykMichael/install-r-and-rstudio-on-windows-5f503f708027)
+
+Potential problems:
+
+ 1. **You already had R installed on the system.** Having multiple R
+ versions may be a source of problems. If you have an old version of R,
+ unless you have a good reason to keep it, uninstall it.
+
+ 2. **You need to compile packages.** Packages come in two forms:
+ precompiled packages and source packages. Some exotic packages might not
+ have the precompiled version for your system.
+ If you need to compile packages, you will have to install additional
+ packages. For example, for Windows, you need to install
+ [Rtools](https://cran.r-project.org/bin/windows/Rtools/) - make sure you
+ download the version that corresponds to your version of R.
+
 
 ### Installing R packages
 
