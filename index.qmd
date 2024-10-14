@@ -50,14 +50,15 @@ popular interface for R. Minimal installation guide:
  instructions.
 
 This should be it. However, if you are stuck or have problems with
-installing R or RStudio, please search the internet – the installation,
-unfortunately, depends on your operating system and the version of the
-software, so it is hard to give a general advice.
+installing R or RStudio, please search the internet – the installation and
+especially related problems unfortunately depends on your operating system
+and the version of the software, so it is hard to give a general advice.
 
-Here are some other websites with more detailed instructions:
+Here are some other websites with somewhat more detailed instructions:
 
  * [Installing R on all systems](https://techvidvan.com/tutorials/install-r/)
  * [Installing R on Windows 7, 8, 10](https://medium.com/@GalarnykMichael/install-r-and-rstudio-on-windows-5f503f708027)
+ * [Installing R, RStudio and configuring RStudio](https://www.stat.colostate.edu/~jah/talks_public_html/isec2020/installRStudio.html)
 
 Potential problems:
 
