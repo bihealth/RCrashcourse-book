@@ -544,6 +544,99 @@ next to `fig.width` and `fig.height`. Since the left-hand figure is
 smaller, even though in reality the fonts have the same sizes in points,
 they appear much larger.
 
+## Combining several plots into one {#sec-combining-plots}
+
+Quite often you will want to combine several plots into one. This can be
+done in R in several ways, different for base R and `ggplot2`. 
+
+### Base R
+
+For base R, the key function is `par()`. This function has many
+applications, but the one that we focus on here is the `mfrow` parameter,
+which specifies how many columns and how many rows you wish to have on the
+output. Then you create the subsequent plots as you would normally do, and
+they get placed in the grid. Here is an example with one row and two
+columns:
+
+```{r}
+par(mfrow=c(1, 2))
+hist(iris$Sepal.Length)
+boxplot(iris$Sepal.Length ~ iris$Species)
+```
+
+There are ways and packages to fine tune this, for example setting
+different sizes of columns and rows in the grid above –– look up the
+`layout()` function if you need it.
+
+### `ggplot2`
+
+First, quite often in `ggplot2` you can simply use `facet_wrap()` or
+`facet_grid()` to combine several plots into one. However, these plots are
+then of the same type.
+
+If you want to combine different types of plots, there are two packages
+that might interest you. The `cowplot` package allows you to combine
+multiple plots with the `plot_grid()` function. 
+
+
+```{r warning=FALSE,message=FALSE}
+library(cowplot)
+
+# we save the plots into a variable 
+# instead of printing them to the screen
+p1 <- ggplot(iris, aes(x=Sepal.Length)) +
+  geom_histogram()
+
+p2 <- ggplot(iris, aes(x = Species, y = Sepal.Length)) +
+  geom_boxplot()
+
+# plot both plots with labels in one row
+plot_grid(p1, p2, 
+  ncol = 2,
+  labels = c('A', 'B'), 
+  rel_widths = c(0.6, 0.4),
+  label_size = 12)
+```
+
+There are no limits – you
+can overlay plots, you can change the relative sizes of the plots, and you
+can even add base R plots[^baseR]:
+
+[^baseR]: However, you need to install the package `gridGraphics` to do that.
+
+
+```{r warning=FALSE,message=FALSE}
+# use the formula notation to create a base R subplot
+p3 <- ~hist(iris$Sepal.Width)
+
+# create a one column, two-row subplot
+p13 <- plot_grid(p1, p3, 
+  ncol = 1,
+  labels = c('A', 'B'), 
+  label_size = 12)
+
+# put the subplots together
+# no need for a label for p13, 
+# it already has labels
+plot_grid(p13, p2, 
+  labels = c("", "C"),
+  ncol=2)
+```
+
+Another package that is very popular is [`patchwork`](https://patchwork.data-imaginist.com/). It is more elegant and
+allows a lot of extras. This comes at the cost of a bit more complex syntax.
+
+```{r warning=FALSE,message=FALSE}
+library(patchwork)
+p3 <- ggplot(iris, aes(x=Sepal.Width)) +
+  geom_histogram()
+(p1 / p3) | p2
+```
+
+
+
+
+
 ## Boxplots and violin plots vs bar plots {#sec-barplots}
 
 Bar plots are quite common in scientific literature, despite the fact that

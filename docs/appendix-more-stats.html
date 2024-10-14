@@ -328,6 +328,11 @@ window.Quarto = {
   <li><a href="#interactions" id="toc-interactions" class="nav-link" data-scroll-target="#interactions">Interactions</a></li>
   </ul></li>
   <li><a href="#sec-image-sizes" id="toc-sec-image-sizes" class="nav-link" data-scroll-target="#sec-image-sizes">Image sizes in R markdown</a></li>
+  <li><a href="#sec-combining-plots" id="toc-sec-combining-plots" class="nav-link" data-scroll-target="#sec-combining-plots">Combining several plots into one</a>
+  <ul class="collapse">
+  <li><a href="#base-r" id="toc-base-r" class="nav-link" data-scroll-target="#base-r">Base R</a></li>
+  <li><a href="#ggplot2" id="toc-ggplot2" class="nav-link" data-scroll-target="#ggplot2"><code>ggplot2</code></a></li>
+  </ul></li>
   <li><a href="#sec-barplots" id="toc-sec-barplots" class="nav-link" data-scroll-target="#sec-barplots">Boxplots and violin plots vs bar plots</a></li>
   </ul>
 </nav>
@@ -788,7 +793,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>Unlike in other programs, you can not simply drag images to change their size or aspect ratio in R, and you cannot click on a text and choose the font size. What can you do when you want to change the size of the image, to make the fonts larger relative to the image size etc.?</p>
 <p>For font size, it is possible to change individual font sizes (and font types) in both basic R and <code>ggplot2</code>, however these operations tend to be annoying (see <a href="https://statisticaloddsandends.wordpress.com/2021/07/08/using-different-fonts-with-ggplot2/">here</a> for a description of how to do it in <code>ggplot2</code>).</p>
 <p>However, quite often what you want to achieve is simply make the overall fonts larger in an image. If you are using a vector graphic output (as you should), it does not really matter whether the font size is actually 12, 22 or 32 points – you can always scale the image to the desired size without losing quality. What matters is how large the fonts are <em>in relation to the nominal image size in inches</em>.</p>
-<p>The good news is: you can change the nominal size of an image in R very easily. You have already seen it done in the section <a href="day5-visualization-and-statistics.html#sec-output-formats" class="quarto-xref"><span>5.3.5 Output formats</span></a> when generating images with <code>svg()</code> or <code>pdf()</code>. However, you can change this size also in your R Markdown document by providing chunk options <code>fig.width</code> and <code>fig.height</code>:</p>
+<p>The good news is: you can change the nominal size of an image in R very easily. You have already seen it done in the section <a href="day5-visualization-and-statistics.html#sec-output-formats" class="quarto-xref"><span>5.3.6 Output formats</span></a> when generating images with <code>svg()</code> or <code>pdf()</code>. However, you can change this size also in your R Markdown document by providing chunk options <code>fig.width</code> and <code>fig.height</code>:</p>
 <div class="columns">
 <div class="column" style="width:45%;">
 <div class="sourceCode" id="cb45"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig.width=4,fig.height=3}</span></span>
@@ -840,25 +845,47 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>As you can see, the only difference between these two chunks are the values next to <code>fig.width</code> and <code>fig.height</code>. Since the left-hand figure is smaller, even though in reality the fonts have the same sizes in points, they appear much larger.</p>
 </section>
-<section id="sec-barplots" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="sec-barplots">Boxplots and violin plots vs bar plots</h2>
-<p>Bar plots are quite common in scientific literature, despite the fact that they actually should be avoided in most scenarios <span class="citation" data-cites="barcharthabit2014">(<a href="references.html#ref-barcharthabit2014" role="doc-biblioref"><span>“Kick the Bar Chart Habit”</span> 2014</a>)</span>. Bar plots should actually only be used when showing count or proportion data, and the <span class="math inline">\(y\)</span> axis in this case should always start at zero. In all the other applications, box plots or, better, violin plots are preferred.</p>
-<p>The advantages of the box plots and violin plots over bar plots are evident when the data is not normally distributed. Let us construct a small example.</p>
+<section id="sec-combining-plots" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-combining-plots">Combining several plots into one</h2>
+<p>Quite often you will want to combine several plots into one. This can be done in R in several ways, different for base R and <code>ggplot2</code>.</p>
+<section id="base-r" class="level3">
+<h3 class="anchored" data-anchor-id="base-r">Base R</h3>
+<p>For base R, the key function is <code>par()</code>. This function has many applications, but the one that we focus on here is the <code>mfrow</code> parameter, which specifies how many columns and how many rows you wish to have on the output. Then you create the subsequent plots as you would normally do, and they get placed in the grid. Here is an example with one row and two columns:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">250</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean=</span><span class="dv">20</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(n, <span class="dv">2</span>, <span class="dv">22</span>) <span class="sc">*</span> <span class="dv">20</span>  <span class="sc">+</span> <span class="fl">18.65</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(iris<span class="sc">$</span>Sepal.Length)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(iris<span class="sc">$</span>Sepal.Length <span class="sc">~</span> iris<span class="sc">$</span>Species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="appendix-more-stats_files/figure-html/unnamed-chunk-27-1.svg" class="img-fluid figure-img"></p>
+</figure>
 </div>
-<div class="page-columns page-full"><p>The vectors <code>x</code> and <code>y</code> are normally distributed and beta distributed, respectively, and they have been on purpose manipulated such that the standard deviations calculated with <code>sd()</code> and means calculated with <code>mean()</code> are the same. Here is a ggplot2 code that produces a bar chart. Don’t worry too much about the syntax below: it is here for demonstration purposes only, and, hopefully, you will rarely need bar plots in practice. The function <code>geom_bar()</code> is the one responsible for the bar plots; <code>geom_errorbar()</code> adds the error bars; <code>coord_cartesian()</code> is here to limit the y-axis to a certain range. </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>geom_bar()</code>, <code>geom_errorbar()</code>, <code>coord_cartesian()</code></span></div></div>
+</div>
+</div>
+<p>There are ways and packages to fine tune this, for example setting different sizes of columns and rows in the grid above –– look up the <code>layout()</code> function if you need it.</p>
+</section>
+<section id="ggplot2" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="ggplot2"><code>ggplot2</code></h3>
+<p>First, quite often in <code>ggplot2</code> you can simply use <code>facet_wrap()</code> or <code>facet_grid()</code> to combine several plots into one. However, these plots are then of the same type.</p>
+<p>If you want to combine different types of plots, there are two packages that might interest you. The <code>cowplot</code> package allows you to combine multiple plots with the <code>plot_grid()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">value=</span><span class="fu">c</span>(<span class="fu">mean</span>(x), <span class="fu">mean</span>(y)), </span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group=</span><span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>),</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">sd=</span><span class="fu">c</span>(<span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(n), <span class="fu">sd</span>(y)<span class="sc">/</span><span class="fu">sqrt</span>(n)))</span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>group, <span class="at">y=</span>value)) <span class="sc">+</span> </span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> value <span class="sc">-</span> sd, <span class="at">ymax =</span> value <span class="sc">+</span> sd), <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">width=</span><span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"skyblue"</span>) <span class="sc">+</span></span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Group"</span>, <span class="at">y=</span><span class="st">"Value"</span>) <span class="sc">+</span></span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">19.5</span>, <span class="fl">20.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co"># we save the plots into a variable </span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="co"># instead of printing them to the screen</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Length)) <span class="sc">+</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x =</span> Species, <span class="at">y =</span> Sepal.Length)) <span class="sc">+</span></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="co"># plot both plots with labels in one row</span></span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grid</span>(p1, p2, </span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="dv">2</span>,</span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'A'</span>, <span class="st">'B'</span>), </span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">rel_widths =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.4</span>),</span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">label_size =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -867,33 +894,101 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 </div>
-<p>Wow, that looks really different! Unfortunately, the above figure <em>is a lie</em>. It suggests something that it is not true.</p>
-<p>Firstly, instead of standard deviations, which show the true spread of the data, I used the standard error of the mean (SEM) equal to <span class="math inline">\(\frac{\sigma}{\sqrt{n}}\)</span>, which shows the precision of the mean estimate and gets very small for large data sets even when the spread (standard deviation) is large – but it looks good on a figure. Secondly, the y-axis does not start at zero, which is not acceptable for bar plots.</p>
-<p>And last but not least, one should not use a bar plot for continuous data, because it does not show their real distribution. Let us now produce a box plot and a violin plot.</p>
-<div class="page-columns page-full"><p>Before, however, let me introduce yet another useful package, <code>cowplot</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. With this package, we can create composite plots that consist of several individual plots. Basically, first you create the ggplot plots and save them to a variable; then you use cowplot function <code>plot_grid()</code> to put the plots . </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>cowplot</code></span></div></div>
-<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;There is also the newer <code>patchwork</code> package, which is more elegant and flexible, but the syntax requires a bit of getting used to.</p></div></div><div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>plot_grid()</code></span></div></div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">values =</span> <span class="fu">c</span>(x, y), </span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"x"</span>, n), <span class="fu">rep</span>(<span class="st">"y"</span>, n)))</span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>group, <span class="at">y=</span>values)) <span class="sc">+</span></span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Group"</span>, <span class="at">y=</span><span class="st">"Value"</span>)</span>
-<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="co"># violin plot</span></span>
-<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>group, <span class="at">y=</span>values)) <span class="sc">+</span></span>
-<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span></span>
-<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Group"</span>, <span class="at">y=</span><span class="st">"Value"</span>)</span>
-<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a><span class="co"># plot_grid puts the different plots together </span></span>
-<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a><span class="co"># ncol=2 -&gt; two columns</span></span>
-<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a><span class="co"># labels=... -&gt; labels for the plots</span></span>
-<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grid</span>(p1, p2, <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>There are no limits – you can overlay plots, you can change the relative sizes of the plots, and you can even add base R plots<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;However, you need to install the package <code>gridGraphics</code> to do that.</p></div></div><div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use the formula notation to create a base R subplot</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="er">~</span><span class="fu">hist</span>(iris<span class="sc">$</span>Sepal.Width)</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create a one column, two-row subplot</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>p13 <span class="ot">&lt;-</span> <span class="fu">plot_grid</span>(p1, p3, </span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="dv">1</span>,</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'A'</span>, <span class="st">'B'</span>), </span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">label_size =</span> <span class="dv">12</span>)</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a><span class="co"># put the subplots together</span></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a><span class="co"># no need for a label for p13, </span></span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a><span class="co"># it already has labels</span></span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grid</span>(p13, p2, </span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">""</span>, <span class="st">"C"</span>),</span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
 <p><img src="appendix-more-stats_files/figure-html/unnamed-chunk-29-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Another package that is very popular is <a href="https://patchwork.data-imaginist.com/"><code>patchwork</code></a>. It is more elegant and allows a lot of extras. This comes at the cost of a bit more complex syntax.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Width)) <span class="sc">+</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>(p1 <span class="sc">/</span> p3) <span class="sc">|</span> p2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="appendix-more-stats_files/figure-html/unnamed-chunk-30-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-barplots" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-barplots">Boxplots and violin plots vs bar plots</h2>
+<p>Bar plots are quite common in scientific literature, despite the fact that they actually should be avoided in most scenarios <span class="citation" data-cites="barcharthabit2014">(<a href="references.html#ref-barcharthabit2014" role="doc-biblioref"><span>“Kick the Bar Chart Habit”</span> 2014</a>)</span>. Bar plots should actually only be used when showing count or proportion data, and the <span class="math inline">\(y\)</span> axis in this case should always start at zero. In all the other applications, box plots or, better, violin plots are preferred.</p>
+<p>The advantages of the box plots and violin plots over bar plots are evident when the data is not normally distributed. Let us construct a small example.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">250</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean=</span><span class="dv">20</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(n, <span class="dv">2</span>, <span class="dv">22</span>) <span class="sc">*</span> <span class="dv">20</span>  <span class="sc">+</span> <span class="fl">18.65</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="page-columns page-full"><p>The vectors <code>x</code> and <code>y</code> are normally distributed and beta distributed, respectively, and they have been on purpose manipulated such that the standard deviations calculated with <code>sd()</code> and means calculated with <code>mean()</code> are the same. Here is a ggplot2 code that produces a bar chart. Don’t worry too much about the syntax below: it is here for demonstration purposes only, and, hopefully, you will rarely need bar plots in practice. The function <code>geom_bar()</code> is the one responsible for the bar plots; <code>geom_errorbar()</code> adds the error bars; <code>coord_cartesian()</code> is here to limit the y-axis to a certain range. </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>geom_bar()</code>, <code>geom_errorbar()</code>, <code>coord_cartesian()</code></span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">value=</span><span class="fu">c</span>(<span class="fu">mean</span>(x), <span class="fu">mean</span>(y)), </span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group=</span><span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>),</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">sd=</span><span class="fu">c</span>(<span class="fu">sd</span>(x)<span class="sc">/</span><span class="fu">sqrt</span>(n), <span class="fu">sd</span>(y)<span class="sc">/</span><span class="fu">sqrt</span>(n)))</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>group, <span class="at">y=</span>value)) <span class="sc">+</span> </span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> value <span class="sc">-</span> sd, <span class="at">ymax =</span> value <span class="sc">+</span> sd), <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">width=</span><span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"skyblue"</span>) <span class="sc">+</span></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Group"</span>, <span class="at">y=</span><span class="st">"Value"</span>) <span class="sc">+</span></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">19.5</span>, <span class="fl">20.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="appendix-more-stats_files/figure-html/unnamed-chunk-32-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Wow, that looks really different! Unfortunately, the above figure <em>is a lie</em>. It suggests something that it is not true.</p>
+<p>Firstly, instead of standard deviations, which show the true spread of the data, I used the standard error of the mean (SEM) equal to <span class="math inline">\(\frac{\sigma}{\sqrt{n}}\)</span>, which shows the precision of the mean estimate and gets very small for large data sets even when the spread (standard deviation) is large – but it looks good on a figure. Secondly, the y-axis does not start at zero, which is not acceptable for bar plots.</p>
+<p>And last but not least, one should not use a bar plot for continuous data, because it does not show their real distribution. Let us now produce a box plot and a violin plot.</p>
+<div class="page-columns page-full"><p>Before, however, let me introduce yet another useful package, <code>cowplot</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. With this package, we can create composite plots that consist of several individual plots. Basically, first you create the ggplot plots and save them to a variable; then you use cowplot function <code>plot_grid()</code> to put the plots . </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>cowplot</code></span></div></div>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;There is also the newer <code>patchwork</code> package, which is more elegant and flexible, but the syntax requires a bit of getting used to.</p></div></div><div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>plot_grid()</code></span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">values =</span> <span class="fu">c</span>(x, y), </span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"x"</span>, n), <span class="fu">rep</span>(<span class="st">"y"</span>, n)))</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>group, <span class="at">y=</span>values)) <span class="sc">+</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Group"</span>, <span class="at">y=</span><span class="st">"Value"</span>)</span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="co"># violin plot</span></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>group, <span class="at">y=</span>values)) <span class="sc">+</span></span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span></span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Group"</span>, <span class="at">y=</span><span class="st">"Value"</span>)</span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a><span class="co"># plot_grid puts the different plots together </span></span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a><span class="co"># ncol=2 -&gt; two columns</span></span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a><span class="co"># labels=... -&gt; labels for the plots</span></span>
+<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grid</span>(p1, p2, <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="appendix-more-stats_files/figure-html/unnamed-chunk-33-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>

@@ -367,6 +367,76 @@ manuscript.
 
 ## Visualizations with R
 
+### Basic principles of visualization
+
+Before we launch into creating our own plots, let me give you a few tips
+about visualizations in general.
+
+Each plot is a way of communicating with your reader. You want to tell them
+something with that plot. Therefore, before you code anything, *think* what
+you want to tell the reader with the plot. What is the message, what is the
+story? How to best get your point across? What *is* that point?
+
+This is really helpful, because we (and I do mean *we all*) have the
+tendency to want to document, to "show our data": show everything that we
+got, all the results, all the measurements, all the experiments. Very often
+this results in cluttered, unreadable plots that do not really communicate
+anything apart from your prowess in R. While this may (or may not) be
+needed for things like supplementary data, usually it is not very
+effective.
+
+The next step is to think *how* to communicate the message. Again, we all
+have a knee-jerk reflex to use the plots that we know how to do. This is
+why I would like to urge you to first take a piece of paper and a pencil
+and sketch a plot that you think would best communicate your message. Don't
+worry about the details or how to implement it, just think how you would
+like it to look.
+
+
+
+```{r echo=FALSE,include=FALSE}
+library(cowplot)
+library(readxl)
+library(pheatmap)
+library(tidyverse)
+lb <- read_csv("Datasets/labresults_wide.csv")
+meta <- read_excel("Datasets/expression_data_vaccination_example.xlsx", sheet="targets") |>
+  mutate(SUBJ.TP=paste0(SUBJ, ".", Timepoint))
+lb <- merge(lb, meta, by="SUBJ.TP") |>
+  filter(Timepoint == "D1")
+```
+
+
+
+
+In addition, you can always look at how other people have visualized
+similar data and get inspired. Not to copy, but to see which way of
+visualizing is convincing *for you*, which plots are clear and
+fantastically communicative, and which are hard to read and to understand. 
+
+Finally, when creating the plot, think about accessibility. 
+Thus, ask yourself. Are your fonts and symbols large enough to be read by a
+person with normal vision even if the plot is scaled down to fit a
+multi-panel illustration? Are the colors color-blind friendly[^colorblind]?
+
+[^colorblind]: Around 5%-8% of all males and 0.5%-1% of all femals are color-blind.
+When I was a young post-doc I created an interface to single-nucleotide
+polymorphism data in a sequencing project. I showed synonymous mutations
+with green arrows and non-synonymous mutations with red arrows. Very proud,
+I presented it to the twenty or so members of the consortium. One of them
+stood up and said: "I am color-blind. I can't see shit on your plot".
+
+
+::: {.callout-tip}
+## Visualization principles
+
+ * **Message**: think what the message of your plot is
+ * **Design**: make a sketch on how to best communicate the message
+ * **Inspiration**: look at other people's plots for inspiration
+ * **Simplicity**: less is more
+ * **Accessibility**: make your fonts large and colors color-blind friendly
+:::
+
 ### Base R vs `ggplot2`
 
 We already had simple examples of plots in R (for example on day one, in
@@ -548,6 +618,19 @@ can be mapped or linked to a column in the input data frame. This is the
 job of `aes()`. The `geom` functions such as `geom_point()` then use these
 mapping to actually draw the plot.
 
+
+
+```
+                    +------------+
+Petal Width ------> |            | -------> x position
+Petal Length -----> |  aes()     | -------> y position
+Species ----------> |            | -------> color
+                    +------------+
+```
+
+
+
+
 This is why the layers (`geom_point()`, `scale_color_viridis_d()`, etc.)
 are being *added* to the plot using the `+` operator. Each layer adds
 another piece of information on how to display the plot. Then, the plot is
@@ -716,9 +799,10 @@ d_f <- iris |>
   ungroup()
 
 ggplot(d_f, aes(x=variable, y=mean, fill=Species)) +
-  geom_errorbar(aes(ymin=mean-sem, ymax=mean+sem), position="dodge") +
+  geom_errorbar(aes(ymin=mean-sem, ymax=mean+sd), 
+    position=position_dodge(width=0.9), width=0.5) +
   scale_fill_manual(values=c(versicolor="white", virginica="grey", setosa="black")) +
-  geom_bar(stat="identity", position="dodge", color="black") +
+  geom_bar(stat="identity", position=position_dodge(width=0.9), color="black") +
   ylab("Mean size (mm) (+SEM)") +
   xlab("Variable")
 ```
@@ -940,8 +1024,12 @@ instructions or use the "Export" button in Rstudio), or copy the SVG graphics fr
 
 **Directly creating graphics in your script.** If you want your script to
 produce a file with the plot, you can do that in one of the many ways. Two
-of them are shown below, one using `svg()`, and the other one using
+of them are shown below, one using `svg()`[^svg], and the other one using
 `pdf()` or `cairo_pdf()`[^cairo]. Both commands need to be finalized with `dev.off()`:
+
+[^svg]: If you experience problems with SVG generated in R, you can try to
+use the `svglite()` function from the `svglite` package which produces a
+more standard-compliant SVG files.
 
 [^cairo]: The `cairo_pdf()` supports a wider range of characters, including
 Unicode characters, and allows font embedding. Long story short, use it if
@@ -969,6 +1057,17 @@ dev.off()
 ```
 
 This produces a PDF file "test.pdf" with the nominal size 14 x 7 inches.
+
+::: {.callout-tip}
+## Vector graphics with Microsoft Office
+
+If you rely heavily on Microsoft Office for your work, you might find
+another vector graphic format more useful – the Windows Meta File (WMF).
+The function is called `win.metafile()` and used in the same way as the
+`pdf()` function. The problems are that (a) you can only use it on Windows
+and (b) it does not support transparency.
+:::
+
 
 
 ::: {.callout-important}
@@ -1669,7 +1768,9 @@ variables contribute the most to this component? Can you explain why?
 
 ### Where to get R packages
 
-There are three main sources of R packages: CRAN, Bioconductor and github.
+There are three main sources of R packages: [CRAN](https://cran.r-project.org), 
+[Bioconductor](https://bioconductor.org)
+and [github](https://github.com).
 
 **CRAN** is the resource you are using when using `install.packages()`. It
 features more than 20,000 packages from all possible areas of science,
@@ -1690,6 +1791,9 @@ stage:
    similar to that of `skimr::skim()` (`colorDF::summary_colorDF()`).
  * [tinytable](https://vincentarelbundock.github.io/tinytable/) – package
    for generating awesome tables with R and R markdown.
+ * [gt](https://github.com/rstudio/gt) – another package
+   for creating tables in R markdown; they can be really complex and have a
+   professional look. Good for manuscripts and publications.
  * [tidylog](https://github.com/elbersb/tidylog) – a package for logging
    your data manipulation steps; makes functions like `filter()` more
    explicit.
@@ -1706,6 +1810,13 @@ stage:
    can download the changes and apply them to your R markdown document
    automatically. Unfortunately, the hardest part is to set up the
    authentication with Google.
+ * [renv](https://rstudio.github.io/renv/articles/renv.html) – a package
+   that helps you manage your R environment, including the packages you
+   have installed. The idea is that rather than using a single global
+   library on your computer, you install necessary packages into a local,
+   project-specific library. This has the advantage that for a given
+   project, you always work with the same versions of the packages, and
+   helps to ensure reproducibility of your code.
 
 **Bioconductor** is both a framework and repository for packages which are
 mostly related to bioinformatics and biomedicine. The framework differs
@@ -1733,11 +1844,14 @@ doing so over Github.
 
 Installing github packages may depend on the specific package, but usually
 you can use the `install_github()` available when you load the `devtools`
-package.
+package. For example, to install the development version of `colorDF`, you
+can type `devtools::install_github("january3/colorDF")` (in this case, it is
+the same version as the one on CRAN).
 
 There is no formalized check for the quality of the packages on Github.
 Individual developers may or may not include some QC, but there is no
-formal requirement for it. 
+formal requirement for it. Therefore, the software quality may vary
+considerably.
 
 ### Where to go from here
 
@@ -1748,24 +1862,42 @@ There are numerous resources for R on the web, allow me to recommend a few.
    has previously asked here, including many by yours truly.
  * Online R books
    * [Hands-On programming with R](https://rstudio-education.github.io/hopr/)
+     by Garrett Grolemund.
      A very different approach to teachin R to beginners than the one that
      I prefer, but maybe you will find it better. Worth checking in any
      case.
-   * [R for data science (tidyverse)](https://r4ds.had.co.nz/) The
-     tidyverse book, written by the main tidyverse developer.
-   * [R graphics cookbook](https://r-graphics.org/) The cookbook format
-     splits the information in small "recipies" for common problems.
-   * [R markdown: the definitive guide](https://bookdown.org/yihui/rmarkdown/) A 
+   * [R for data science (tidyverse)](https://r4ds.hadley.nz/) by
+     Hadley Wickham. The tidyverse book, written by the main tidyverse developer.
+     This book also starts with introducing R.
+   * [R graphics cookbook](https://r-graphics.org/) by Winston Chang.
+     The cookbook format
+     splits the information in small "recipies" for common problems, both
+     in base R and in ggplot2.
+   * [R markdown: the definitive guide](https://bookdown.org/yihui/rmarkdown/) 
+     by Yihui Xie, J. J. Allaire and Garrett Grolemund. A 
      comprehensive guide to R markdown written by the people who created it.
    * [R Workflow](https://hbiostat.org/rflow/) by Frank Harrell is somewhat
      hermetic, but there are many good ideas in it and a lot about
      reproducible scientific work with Quarto.
  * Other books:
-   * [The R Book by Michael J. Crawley](https://www.google.com/search?q=the+r+book)
+   * [The R Book](https://www.google.com/search?q=the+r+book) by Michael J. Crawley
      – this is a magnificent book on statistics. It uses very conservative
      R language (no tidyverse at all), but it discusses at length even the
      more complex statistical issues. I recommend this book to every person
      willing to learn statistics with R.
+   * [Computational Genomics with R](https://compgenomr.github.io/book/) 
+     by Altuna Akalin (available online)
+     – this is a book on bioinformatics with R and BioConductor. It
+     features both an introduction to genomics and a terse introduction to R.
+     The R flavor presented is somewhat different from the one I prefer
+     (for example, the author uses `=` instead of `<-`), but the main focus
+     of the book is elsewhere – on specific bioinformatics tasks.
+   * [Regression and other stories](https://avehtari.github.io/ROS-Examples/)
+     by  Andrew Gelman, Jennifer Hill and Aki Vehtari. This book focuses on 
+     doing bayesian statistics with the RStan package. It is both, a very
+     good introduction to R and a very good introduction to statistics,
+     with thoughtful explanations and a lot of examples. However, keep in
+     mind that the focus of the book is *bayesian* statistics.
  * Large Language Models (LLMs): I have good experiences with LLMs
    (ChatGPT, Perplexity AI) for learning programming languages. While
    complex tasks may be out of reach for them, they are very good at
