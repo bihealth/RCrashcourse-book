@@ -645,8 +645,12 @@ species") and `ggplot2` takes care of the rest.
 Of course, it is still possible to manually specify the colors, shapes etc.
 For example, and as you have seen in the previous exercise, you can use the
 same manual mapping of colors as above by using
-`scale_color_manual(values=colors_map)`.
+`scale_color_manual(values=colors_map)`[^scales].
 
+[^scales]: I do not really show here how to use the various
+`scale_color_....` and `scale_fill_...` functions. There are so many use
+cases, and so many options, that it is hard to give a general overview. Use
+the google, Luke, or take a look at the [R Graphics Cookbook](https://r-graphics.org/).
 
 
 ### Boxplots and violin plots
@@ -1817,6 +1821,9 @@ stage:
    project-specific library. This has the advantage that for a given
    project, you always work with the same versions of the packages, and
    helps to ensure reproducibility of your code.
+ * [RColorBrewer](https://r-graph-gallery.com/38-rcolorbrewers-palettes.html)
+   – a very popular set of color palettes for R graphics. You can use them
+   directly in `ggplot2` by calling `scale_fill_brewer()` or `scale_color_brewer()`.
 
 **Bioconductor** is both a framework and repository for packages which are
 mostly related to bioinformatics and biomedicine. The framework differs
@@ -1861,15 +1868,15 @@ There are numerous resources for R on the web, allow me to recommend a few.
    forum for programmers and other like them. Most of the questions you have someone
    has previously asked here, including many by yours truly.
  * Online R books
-   * [Hands-On programming with R](https://rstudio-education.github.io/hopr/)
+   * [Hands-On Programming with R](https://rstudio-education.github.io/hopr/)
      by Garrett Grolemund.
      A very different approach to teachin R to beginners than the one that
      I prefer, but maybe you will find it better. Worth checking in any
      case.
-   * [R for data science (tidyverse)](https://r4ds.hadley.nz/) by
+   * [R for Data Science (tidyverse)](https://r4ds.hadley.nz/) by
      Hadley Wickham. The tidyverse book, written by the main tidyverse developer.
      This book also starts with introducing R.
-   * [R graphics cookbook](https://r-graphics.org/) by Winston Chang.
+   * [R Graphics Cookbook](https://r-graphics.org/) by Winston Chang.
      The cookbook format
      splits the information in small "recipies" for common problems, both
      in base R and in ggplot2.
