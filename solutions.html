@@ -454,20 +454,20 @@ window.Quarto = {
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>res_mtx[ <span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">5</span><span class="sc">:</span><span class="dv">6</span> ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Inh3_control  Inh3_low
-Inh1_control   0.54402718 0.7762786
-Inh1_low       0.06492016 0.2029753
-Inh1_medium    0.92075243 0.1101775
-Inh1_high      0.25891825 0.4841687</code></pre>
+Inh1_control    0.1176258 0.4576290
+Inh1_low        0.2526631 0.2369185
+Inh1_medium     0.7776389 0.3400686
+Inh1_high       0.3190512 0.6485127</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inhibitor 1 as well as 2</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>inh1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Inh1_low"</span>, <span class="st">"Inh1_medium"</span>, <span class="st">"Inh1_high"</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>inh2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Inh2_low"</span>, <span class="st">"Inh2_high"</span>)</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>res_mtx[ inh1, inh2 ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>             Inh2_low Inh2_high
-Inh1_low    0.9705722 0.5520463
-Inh1_medium 0.8669703 0.6487436
-Inh1_high   0.5169990 0.9317378</code></pre>
+<pre><code>             Inh2_low  Inh2_high
+Inh1_low    0.4650854 0.68540332
+Inh1_medium 0.6189359 0.10531005
+Inh1_high   0.6080377 0.02720906</code></pre>
 </div>
 </div>
 </section>
@@ -486,12 +486,12 @@ Inh1_high   0.5169990 0.9317378</code></pre>
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>            X          Y          Z A sequence
-a  0.84250387 -0.5024891 -1.7527330 A     0.00
-b  0.22134878 -0.0900212 -0.6829499 A     0.25
-c -0.44233732  1.0737036 -0.1310709 A     0.50
-d -0.04898935  0.7877839 -0.4590288 A     0.75
-e  1.13666040  1.3270476 -0.6360110 A     1.00</code></pre>
+<pre><code>           X          Y          Z A sequence
+a -0.3551887 -0.3379952  1.4349657 A     0.00
+b  0.5389208  0.2618027 -0.3364332 A     0.25
+c -0.1786603  1.0218908 -2.1030068 A     0.50
+d -0.8444127  1.0125655 -0.3731203 A     0.75
+e -0.3119014 -0.7316247  0.2766870 A     1.00</code></pre>
 </div>
 </div>
 </section>

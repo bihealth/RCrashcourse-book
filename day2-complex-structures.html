@@ -510,7 +510,7 @@ Solution
 <span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># how many numbers are greater than 0.5?</span></span>
 <span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(vec <span class="sc">&gt;</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 17</code></pre>
+<pre><code>[1] 13</code></pre>
 </div>
 </div>
 </div>
@@ -922,16 +922,16 @@ $age
 [1] 42
 
 $measurements
-[1] 0.04378382 0.81003030 0.44180578 0.08467466 0.90552091</code></pre>
+[1] 0.4941126 0.6420069 0.1438457 0.3685637 0.4824686</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>patient_data<span class="sc">$</span>measurements[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.04378382</code></pre>
+<pre><code>[1] 0.4941126</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>patient_data<span class="sc">$</span>measurements[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">42</span></span>
 <span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>patient_data<span class="sc">$</span>measurements <span class="sc">*</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 126.000000   2.430091   1.325417   0.254024   2.716563</code></pre>
+<pre><code>[1] 126.0000000   1.9260207   0.4315372   1.1056912   1.4474058</code></pre>
 </div>
 </div>
 <p>Since the lists are named, there must be a way to access and modify these names. And, of course, there is: the <code>names()</code> function.</p>
@@ -1025,13 +1025,13 @@ Boxplot
     Welch Two Sample t-test
 
 data:  group_a and group_b
-t = -5.5003, df = 17.994, p-value = 3.19e-05
+t = -4.9269, df = 15.666, p-value = 0.0001611
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -5.989168 -2.678381
+ -4.708389 -1.872092
 sample estimates:
 mean of x mean of y 
- 9.352619 13.686393 </code></pre>
+ 9.997091 13.287332 </code></pre>
 </div>
 </div>
 <p>This is because R has a special function for formatting the results of a t-test<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, so that it is easier to read.</p>
@@ -1039,7 +1039,7 @@ mean of x mean of y
 <div class="cell">
 <div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>t_test<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 3.189732e-05</code></pre>
+<pre><code>[1] 0.0001611309</code></pre>
 </div>
 </div>
 </section>

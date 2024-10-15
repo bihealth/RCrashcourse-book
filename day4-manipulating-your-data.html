@@ -497,15 +497,15 @@ To quote or not to quote?
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>vec <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">10</span>), <span class="dv">2</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>vec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] -1.50  0.09  0.35 -0.62  0.34  0.49  0.47 -0.64  0.15  0.03</code></pre>
+<pre><code> [1]  0.24 -0.42 -1.42 -0.29  0.95  0.89 -0.08  1.48  0.61  1.14</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] -1.50 -0.64 -0.62  0.03  0.09  0.15  0.34  0.35  0.47  0.49</code></pre>
+<pre><code> [1] -1.42 -0.42 -0.29 -0.08  0.24  0.61  0.89  0.95  1.14  1.48</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(vec, <span class="at">decreasing=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  0.49  0.47  0.35  0.34  0.15  0.09  0.03 -0.62 -0.64 -1.50</code></pre>
+<pre><code> [1]  1.48  1.14  0.95  0.89  0.61  0.24 -0.08 -0.29 -0.42 -1.42</code></pre>
 </div>
 </div>
 <p>The <code>rnorm()</code> function generates a vector of random numbers from a normal distribution (you met it on Day 2). The <code>round()</code> function with parameter <code>2</code> rounds the numbers to two decimal places. The <code>sort()</code> with the <code>decreasing=TRUE</code> argument sorts the vector in descending order.</p>
@@ -514,15 +514,15 @@ To quote or not to quote?
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">order</span>(vec)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>ord</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  1  8  4 10  2  9  5  3  7  6</code></pre>
+<pre><code> [1]  3  2  4  7  1  9  6  5 10  8</code></pre>
 </div>
 </div>
-<p>So, what does that mean? Take the first element of <code>ord</code>. It is 1. This means that the first value to appear in the sorted vector should be the element number 1 of the original vector, which is -1.5 and the smallest number in <code>vec</code> (check it!). Likewise, the second element of <code>ord</code> is 8, which points to -0.64, the second smallest element of <code>vec</code>.</p>
+<p>So, what does that mean? Take the first element of <code>ord</code>. It is 3. This means that the first value to appear in the sorted vector should be the element number 3 of the original vector, which is -1.42 and the smallest number in <code>vec</code> (check it!). Likewise, the second element of <code>ord</code> is 2, which points to -0.42, the second smallest element of <code>vec</code>.</p>
 <p>So what happens if we use the vector <code>ord</code> to select element from the vector <code>vec</code>? We get the sorted vector, that’s what:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>vec[ord]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] -1.50 -0.64 -0.62  0.03  0.09  0.15  0.34  0.35  0.47  0.49</code></pre>
+<pre><code> [1] -1.42 -0.42 -0.29 -0.08  0.24  0.61  0.89  0.95  1.14  1.48</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-caution no-icon">
@@ -919,32 +919,32 @@ To quote or not to quote?
 <span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>df_x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   ID      val_x
-1 ID3 -1.6924509
-2 ID4  1.4357226
-3 ID6 -0.3119713
-4 ID1  1.8265576
-5 ID7 -0.8600407
-6 ID5 -0.5267426</code></pre>
+1 ID2 -1.9279142
+2 ID5 -1.5509956
+3 ID4  1.7265118
+4 ID7  0.5656358
+5 ID6  0.6835853
+6 ID1  1.1412166</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>ids_y <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"ID"</span>, <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>df_y <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ID=</span>ids_y, <span class="at">val_y=</span><span class="fu">rnorm</span>(<span class="dv">6</span>, <span class="dv">10</span>, <span class="dv">1</span>))</span>
 <span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>df_y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   ID     val_y
-1 ID1  9.475860
-2 ID4 10.351506
-3 ID2 10.846910
-4 ID8 10.170031
-5 ID5  9.839966
-6 ID6  9.412150</code></pre>
+1 ID4 10.992675
+2 ID2  9.898389
+3 ID1 12.815613
+4 ID8  8.851284
+5 ID6  9.860257
+6 ID5  9.042042</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>(ids_x, ids_y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "ID4" "ID6" "ID1" "ID5"</code></pre>
+<pre><code>[1] "ID2" "ID5" "ID4" "ID6" "ID1"</code></pre>
 </div>
 </div>
 <div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>sample()</code></span></div></div>
-<p>The <code>sample()</code> function is very useful – it generates a random sample by choosing elements from a vector. This is what is called <em>sampling</em> and comes in handy in many situations. Here we use it to create two sets of IDs that are similar, but not identical. As you can see from the output of <code>intersect()</code>, only 4 elements out of the total 6 are common between the two data frames.</p>
+<p>The <code>sample()</code> function is very useful – it generates a random sample by choosing elements from a vector. This is what is called <em>sampling</em> and comes in handy in many situations. Here we use it to create two sets of IDs that are similar, but not identical. As you can see from the output of <code>intersect()</code>, only 5 elements out of the total 6 are common between the two data frames.</p>
 <p>Merging can be done either with the base R function <code>merge()</code>, or with corresponding <code>*_join</code> functions from the tidyverse. Whether you prefer one or the other is a matter of preference; I like <code>merge()</code> and we will be using it in the examples below.</p>
 <div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="margin-aside">Inner join, full join</span></div></div>
 <p>First, however, let us think <em>how</em> we want to merge, or, more specifically, what to do with the identifiers that are present in one data frame, but not in the other? That depends only on what we want to achieve. Possibly we are not interested in any elements that are not present in <em>both</em> data frames. This is what is called in database lingo an <strong>inner join</strong> Alternatively, we might want to keep all possible elements, whether they are found in <code>df_x</code> or <code>df_y</code> only. This is called an <strong>full join</strong>.</p>
@@ -955,27 +955,27 @@ To quote or not to quote?
 <span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>joined</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   ID      val_x     val_y
-1 ID1  1.8265576  9.475860
-2 ID4  1.4357226 10.351506
-3 ID5 -0.5267426  9.839966
-4 ID6 -0.3119713  9.412150</code></pre>
+1 ID1  1.1412166 12.815613
+2 ID2 -1.9279142  9.898389
+3 ID4  1.7265118 10.992675
+4 ID5 -1.5509956  9.042042
+5 ID6  0.6835853  9.860257</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># full join by ID</span></span>
 <span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>joined <span class="ot">&lt;-</span> <span class="fu">merge</span>(df_x, df_y, <span class="at">by=</span><span class="st">"ID"</span>, <span class="at">all=</span><span class="cn">TRUE</span>)</span>
 <span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>joined</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   ID      val_x     val_y
-1 ID1  1.8265576  9.475860
-2 ID2         NA 10.846910
-3 ID3 -1.6924509        NA
-4 ID4  1.4357226 10.351506
-5 ID5 -0.5267426  9.839966
-6 ID6 -0.3119713  9.412150
-7 ID7 -0.8600407        NA
-8 ID8         NA 10.170031</code></pre>
+1 ID1  1.1412166 12.815613
+2 ID2 -1.9279142  9.898389
+3 ID4  1.7265118 10.992675
+4 ID5 -1.5509956  9.042042
+5 ID6  0.6835853  9.860257
+6 ID7  0.5656358        NA
+7 ID8         NA  8.851284</code></pre>
 </div>
 </div>
-<p>As you can see, in the first case there are just 4 rows – as many as there are common elements between the ID columns of the two data frames. In the second case, we get all 8 possible IDs. Where the ID was present in one, but not the other data frame, the values were filled up with <code>NA</code>’s. To get the full join we used the parameter <code>all=TRUE</code>, standing for “use <em>all</em> IDs”.</p>
+<p>As you can see, in the first case there are just 5 rows – as many as there are common elements between the ID columns of the two data frames. In the second case, we get all 7 possible IDs. Where the ID was present in one, but not the other data frame, the values were filled up with <code>NA</code>’s. To get the full join we used the parameter <code>all=TRUE</code>, standing for “use <em>all</em> IDs”.</p>
 <p>Note: it is possible to omit the <code>by=</code> parameter specifying by what column to join the data frames. However, do yourself a favor and <em>always</em> specify the column to join on explicitely.</p>
 <div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="margin-aside">Left join, right join</span></div></div>
 <p>There are two more situations, allthough less common in practice. We might want to keep all elements of <code>df_x</code>, but discard any elements of <code>df_y</code> which are not present in <code>df_x</code>. This is called a <strong>left join</strong>. Or, vice versa, we will discard only these elements which are present in <code>df_x</code>, but not in <code>df_y</code>. This is called, you guessed it, a <strong>right join</strong>.</p>
@@ -985,24 +985,24 @@ To quote or not to quote?
 <span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>joined</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   ID      val_x     val_y
-1 ID1  1.8265576  9.475860
-2 ID3 -1.6924509        NA
-3 ID4  1.4357226 10.351506
-4 ID5 -0.5267426  9.839966
-5 ID6 -0.3119713  9.412150
-6 ID7 -0.8600407        NA</code></pre>
+1 ID1  1.1412166 12.815613
+2 ID2 -1.9279142  9.898389
+3 ID4  1.7265118 10.992675
+4 ID5 -1.5509956  9.042042
+5 ID6  0.6835853  9.860257
+6 ID7  0.5656358        NA</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># right join by ID</span></span>
 <span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>joined <span class="ot">&lt;-</span> <span class="fu">merge</span>(df_x, df_y, <span class="at">by=</span><span class="st">"ID"</span>, <span class="at">all.y =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>joined</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   ID      val_x     val_y
-1 ID1  1.8265576  9.475860
-2 ID2         NA 10.846910
-3 ID4  1.4357226 10.351506
-4 ID5 -0.5267426  9.839966
-5 ID6 -0.3119713  9.412150
-6 ID8         NA 10.170031</code></pre>
+1 ID1  1.1412166 12.815613
+2 ID2 -1.9279142  9.898389
+3 ID4  1.7265118 10.992675
+4 ID5 -1.5509956  9.042042
+5 ID6  0.6835853  9.860257
+6 ID8         NA  8.851284</code></pre>
 </div>
 </div>
 <p>As you can see, in case of the <em>left</em> join, there are missing values in the <em>right</em> column only, and in case of the <em>right</em> join – only in the <em>left</em> column.</p>
@@ -1078,38 +1078,38 @@ To quote or not to quote?
 <span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>meta_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   ID age   group
-1 ID1   2 control
+1 ID1   3 control
 2 ID2   1 control
 3 ID3   1 treated
-4 ID4   1 treated</code></pre>
+4 ID4   3 treated</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>crp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ID=</span><span class="fu">rep</span>(<span class="fu">paste0</span>(<span class="st">"ID"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="at">each=</span><span class="dv">2</span>),</span>
 <span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">time=</span><span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"day1"</span>, <span class="st">"day2"</span>), <span class="dv">4</span>),</span>
 <span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">CRP=</span><span class="fu">rnorm</span>(<span class="dv">8</span>))</span>
 <span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>crp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   ID time         CRP
-1 ID1 day1  1.05391756
-2 ID1 day2 -2.19626183
-3 ID2 day1 -1.29026744
-4 ID2 day2 -0.55916919
-5 ID3 day1  0.25716763
-6 ID3 day2 -0.73619675
-7 ID4 day1 -0.20119911
-8 ID4 day2 -0.08679275</code></pre>
+<pre><code>   ID time        CRP
+1 ID1 day1  0.4921237
+2 ID1 day2 -1.1239875
+3 ID2 day1 -0.3332624
+4 ID2 day2 -0.4621417
+5 ID3 day1 -0.1111603
+6 ID3 day2 -0.4514105
+7 ID4 day1 -0.4508619
+8 ID4 day2  0.8336788</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>merged_data <span class="ot">&lt;-</span> <span class="fu">merge</span>(meta_data, crp, <span class="at">by=</span><span class="st">"ID"</span>)</span>
 <span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>merged_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   ID age   group time         CRP
-1 ID1   2 control day1  1.05391756
-2 ID1   2 control day2 -2.19626183
-3 ID2   1 control day1 -1.29026744
-4 ID2   1 control day2 -0.55916919
-5 ID3   1 treated day1  0.25716763
-6 ID3   1 treated day2 -0.73619675
-7 ID4   1 treated day1 -0.20119911
-8 ID4   1 treated day2 -0.08679275</code></pre>
+<pre><code>   ID age   group time        CRP
+1 ID1   3 control day1  0.4921237
+2 ID1   3 control day2 -1.1239875
+3 ID2   1 control day1 -0.3332624
+4 ID2   1 control day2 -0.4621417
+5 ID3   1 treated day1 -0.1111603
+6 ID3   1 treated day2 -0.4514105
+7 ID4   3 treated day1 -0.4508619
+8 ID4   3 treated day2  0.8336788</code></pre>
 </div>
 </div>
 <p>As you can see, each line in the <code>meta_data</code> data frame is duplicated to fill up the information matching the <code>ID</code> in the <code>crp</code> data frame.</p>
@@ -1123,23 +1123,23 @@ To quote or not to quote?
 <span id="cb86-6"><a href="#cb86-6" aria-hidden="true" tabindex="-1"></a>crp_alb <span class="ot">&lt;-</span> <span class="fu">merge</span>(crp, albumin, <span class="at">by=</span><span class="st">"ID"</span>)</span>
 <span id="cb86-7"><a href="#cb86-7" aria-hidden="true" tabindex="-1"></a>crp_alb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    ID time.x         CRP time.y        ALB
-1  ID1   day1  1.05391756   day1  0.2568342
-2  ID1   day1  1.05391756   day2 -0.1910566
-3  ID1   day2 -2.19626183   day1  0.2568342
-4  ID1   day2 -2.19626183   day2 -0.1910566
-5  ID2   day1 -1.29026744   day1 -1.7295804
-6  ID2   day1 -1.29026744   day2  1.7631138
-7  ID2   day2 -0.55916919   day1 -1.7295804
-8  ID2   day2 -0.55916919   day2  1.7631138
-9  ID3   day1  0.25716763   day1  0.6911536
-10 ID3   day1  0.25716763   day2 -0.9591632
-11 ID3   day2 -0.73619675   day1  0.6911536
-12 ID3   day2 -0.73619675   day2 -0.9591632
-13 ID4   day1 -0.20119911   day1 -0.3519864
-14 ID4   day1 -0.20119911   day2 -1.3727304
-15 ID4   day2 -0.08679275   day1 -0.3519864
-16 ID4   day2 -0.08679275   day2 -1.3727304</code></pre>
+<pre><code>    ID time.x        CRP time.y        ALB
+1  ID1   day1  0.4921237   day1 -1.0180195
+2  ID1   day1  0.4921237   day2 -1.1287590
+3  ID1   day2 -1.1239875   day1 -1.0180195
+4  ID1   day2 -1.1239875   day2 -1.1287590
+5  ID2   day1 -0.3332624   day1  1.0130927
+6  ID2   day1 -0.3332624   day2  0.7661092
+7  ID2   day2 -0.4621417   day1  1.0130927
+8  ID2   day2 -0.4621417   day2  0.7661092
+9  ID3   day1 -0.1111603   day1 -0.7651393
+10 ID3   day1 -0.1111603   day2 -1.1168553
+11 ID3   day2 -0.4514105   day1 -0.7651393
+12 ID3   day2 -0.4514105   day2 -1.1168553
+13 ID4   day1 -0.4508619   day1 -1.3267826
+14 ID4   day1 -0.4508619   day2  0.4038912
+15 ID4   day2  0.8336788   day1 -1.3267826
+16 ID4   day2  0.8336788   day2  0.4038912</code></pre>
 </div>
 </div>
 <p>Uh-oh, what happened here?</p>
@@ -1149,15 +1149,15 @@ To quote or not to quote?
 <div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>crp_alb <span class="ot">&lt;-</span> <span class="fu">merge</span>(crp, albumin, <span class="at">by=</span><span class="fu">c</span>(<span class="st">"ID"</span>, <span class="st">"time"</span>))</span>
 <span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>crp_alb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   ID time         CRP        ALB
-1 ID1 day1  1.05391756  0.2568342
-2 ID1 day2 -2.19626183 -0.1910566
-3 ID2 day1 -1.29026744 -1.7295804
-4 ID2 day2 -0.55916919  1.7631138
-5 ID3 day1  0.25716763  0.6911536
-6 ID3 day2 -0.73619675 -0.9591632
-7 ID4 day1 -0.20119911 -0.3519864
-8 ID4 day2 -0.08679275 -1.3727304</code></pre>
+<pre><code>   ID time        CRP        ALB
+1 ID1 day1  0.4921237 -1.0180195
+2 ID1 day2 -1.1239875 -1.1287590
+3 ID2 day1 -0.3332624  1.0130927
+4 ID2 day2 -0.4621417  0.7661092
+5 ID3 day1 -0.1111603 -0.7651393
+6 ID3 day2 -0.4514105 -1.1168553
+7 ID4 day1 -0.4508619 -1.3267826
+8 ID4 day2  0.8336788  0.4038912</code></pre>
 </div>
 </div>
 </section>
