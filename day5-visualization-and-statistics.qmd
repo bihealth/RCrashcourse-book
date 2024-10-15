@@ -1862,23 +1862,29 @@ considerably.
 
 ### Where to go from here
 
-There are numerous resources for R on the web, allow me to recommend a few.
+First, note that there are some appendices to this book, which you might
+find interesting.
+
+ * [Wide vs long data](appendix-wide-long.html) – a short explanation of
+   the difference between wide and long data formats, why you should
+   care and how to convert between wide and long formats.
+ * [More stats and visualizations](appendix-more-stats.html) – a few more
+   statistical tests (including correlations, linear models and ANOVA),
+   creating composite plots and also a lengthy explanation on why you
+   should not use bar plots.
+
+There are of course numerous resources for R on the web, so allow me to recommend a few.
 
  * [StackOverflow](https://stackoverflow.com) – this is a general Q & A
    forum for programmers and other like them. Most of the questions you have someone
    has previously asked here, including many by yours truly.
- * Online R books
-   * [Hands-On Programming with R](https://rstudio-education.github.io/hopr/)
-     by Garrett Grolemund.
-     A very different approach to teachin R to beginners than the one that
-     I prefer, but maybe you will find it better. Worth checking in any
-     case.
-   * [R for Data Science (tidyverse)](https://r4ds.hadley.nz/) by
-     Hadley Wickham. The tidyverse book, written by the main tidyverse developer.
-     This book also starts with introducing R.
+ * Online R books and tutorials:
    * [R Cookbook](https://rc2e.com/) by James JD Long. The cookbook format
      splits the information in small "recipies" for common problems, both
      in base R and in tidyverse.
+   * [R for Data Science (tidyverse)](https://r4ds.hadley.nz/) by
+     Hadley Wickham. The tidyverse book, written by the main tidyverse developer.
+     This book also starts with introducing R.
    * [R Graphics Cookbook](https://r-graphics.org/) by Winston Chang.
      The cookbook format
      splits the information in small "recipies" for common problems, both
@@ -1886,6 +1892,11 @@ There are numerous resources for R on the web, allow me to recommend a few.
    * [R markdown: the definitive guide](https://bookdown.org/yihui/rmarkdown/) 
      by Yihui Xie, J. J. Allaire and Garrett Grolemund. A 
      comprehensive guide to R markdown written by the people who created it.
+   * [Hands-On Programming with R](https://rstudio-education.github.io/hopr/)
+     by Garrett Grolemund.
+     A very different approach to teaching R to beginners than the one that
+     I prefer, but maybe you will find it better (whatever works!). Worth checking in any
+     case.
    * [R Workflow](https://hbiostat.org/rflow/) by Frank Harrell is somewhat
      hermetic, but there are many good ideas in it and a lot about
      reproducible scientific work with Quarto.

@@ -48,7 +48,8 @@ compact format, where each row corresponds to one patient, and each column
 to one measurement. Here is how it might look like:
 
 ```{r echo=FALSE}
-gt(labres_w[1:5,]) |> fmt_number(decimals = 2)
+#| label: labres_w
+gt(labres_w[1:5,]) |> fmt_number(columns=-SUBJ, decimals = 2)
 ```
 
 This is called the **wide format**. It is easy to view, and suitable for some
@@ -63,7 +64,8 @@ who conducted the test? We could add columns for each of these, but then we
 would have a mess.
 
 ```{r echo=FALSE}
-gt(labres_w2[1:5,]) |> fmt_number(decimals = 2)
+#| label: labres_w2
+gt(labres_w2[1:5,]) |> fmt_number(columns=-SUBJ, decimals = 2)
 ```
 
 Yeah, no, this is not going to work. It is hard to view manually, but for
@@ -82,7 +84,8 @@ Enter the **long format**. In the long format, each row corresponds to one
 measurement, and one measurement only:
 
 ```{r echo=FALSE}
-gt(labres[1:5,]) |> fmt_number(decimals = 2)
+#| label: labres
+gt(labres[1:5,]) |> fmt_number(columns=-SUBJ, decimals = 2)
 ```
 
 This is by far the most advantageous format for transfering and storing
@@ -115,7 +118,7 @@ example, we might want to do a PCA – so we need to convert to the wide
 format. Or the wide format is more suitable for manual data entry – and we
 have to convert it to the long format for analysis.
 
-It is crucial to be fluent in switching between both formats.
+It is very useful to be fluent in switching between both formats.
 
 
 ::: {.callout-tip}
@@ -134,6 +137,7 @@ high-throughput data (like RNA-Seq).
 First, let's read an example wide data set:
 
 ```{r message=FALSE, warning=FALSE}
+#| label: wide-example-data
 library(tidyverse)
 wide <- read_csv("Datasets/wide_example.csv")
 wide
@@ -146,18 +150,40 @@ subject, there are three rows).
 
 [`pivot_longer()`]{.aside}
 ```{r message=FALSE, warning=FALSE}
+#| label: pivot-longer
 pivot_longer(wide, cols=control:cond2,
   names_to="condition", values_to="measurement")
 ```
 
+The key function is `pivot_longer()`. We need to specify three things:
+
+ * which columns contain the measurements – in our case `control`, `cond1`,
+   and `cond2`, which we shorten to `control:cond2` using `tidyverse`
+   selection syntax;
+ * name of the columns which will contain the names of the old columns –
+   we choose `condition`. Now in the `condition` column we will have one of
+   the values `control`, `cond1`, or `cond2`;
+ * name of the column which will contain the actual measurement values – we
+   choose `measurement`.
+
+The remaining columns will be left as they are. So, the first three rows
+correspond to the originally first row. The `subject` and `sex` columns
+have identical values for all the three rows, but the `condition` and
+`measurement` columns differ. For example, the second row contains the
+value `cond1` in the `condition` column, and the value `12.3` in the
+corresponding `measurement` column. This corresponds to the value `12.3`
+from the `cond1` column in the first row of the original data set.
+
 Note that we must put quotes around `condition` and `measurement` in the
-code above. These are column names, but the columns don't exist yet.
+code above. These are column names, but the columns don't exist yet, so we
+cannot use the tidyverse selection syntax.
 
 ## Converting from long to wide
 
 Here is another example data set, this time in long format:
 
 ```{r message=FALSE, warning=FALSE}
+#| label: long-example-data
 long <- read_csv("Datasets/long_example.csv")
 long
 ```
@@ -175,6 +201,7 @@ However, watch out. The first thing we might want to try does not give the
 expected result:
 
 ```{r}
+#| label: pivot-wider-incorrect
 ## not what we wanted!!! Why?
 pivot_wider(long, names_from=condition, values_from=measurement)
 ```
@@ -193,10 +220,18 @@ only 1 value per subject.
 
 [`pivot_wider(id_cols=...)`]{.aside}
 ```{r}
+#| label: pivot-wider-correct
 ## Instead: 
 pivot_wider(long, id_cols=c(subject, sex),
                   names_from=condition, values_from=measurement)
 ```
+
+::: {.callout-important}
+## Be careful with `pivot_wider()`
+
+When using `pivot_wider()`, be careful to always specify the `id_cols` argument
+explicitely.
+:::
 
 ::: {.callout-caution icon=false appearance="simple"}
 ::: {#exr-widelong-exercise}
