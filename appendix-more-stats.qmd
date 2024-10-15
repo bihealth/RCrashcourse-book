@@ -606,6 +606,7 @@ can even add base R plots[^baseR]:
 
 
 ```{r warning=FALSE,message=FALSE}
+#| fig.width=8, fig.height=8
 # use the formula notation to create a base R subplot
 p3 <- ~hist(iris$Sepal.Width)
 
@@ -627,6 +628,7 @@ Another package that is very popular is [`patchwork`](https://patchwork.data-ima
 allows a lot of extras. This comes at the cost of a bit more complex syntax.
 
 ```{r warning=FALSE,message=FALSE}
+#| fig.width=8, fig.height=8
 library(patchwork)
 p3 <- ggplot(iris, aes(x=Sepal.Width)) +
   geom_histogram()

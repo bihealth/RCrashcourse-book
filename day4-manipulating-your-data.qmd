@@ -333,7 +333,7 @@ persons <- c("Henry Fonda", "Bob Marley", "Robert F. Kennedy",
 By now it should be clear that you can use this method to order data from
 data frames (or matrices, or other data types). We will show it on example
 of the `transcriptomics_results.csv` file that you have read in the
-@exr-selecting-columns. I assume that you have read the file and selected
+@exr-day4-selecting-columns. I assume that you have read the file and selected
 the columns with something like this:
 
 

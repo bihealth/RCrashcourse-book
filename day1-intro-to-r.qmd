@@ -2,8 +2,8 @@
 
 
 ```{r echo=FALSE}
+#| label: set-options
 options(width=80)
-
 ```
 
 
@@ -219,6 +219,7 @@ Calculate the following expressions in R:
 
 
 ```{r}
+#| label: r-exr-calc
 log2(8)
 sin(pi)
 2^10
@@ -279,6 +280,7 @@ that you should use a lot of comments in your code.
 
 
 ```{r}
+#| label: r-comments-example
 # this is a comment
 # this is another comment
 x <- 2
@@ -1143,6 +1145,7 @@ days, the second vector is the area.
 
 
 ```{r}
+#| label: fig-day1-lilies-plot
 plot(days, area, type="b")
 ```
 
@@ -1438,7 +1441,6 @@ you a list of all variables and functions that start with `sam`. You can
 then use the arrow keys to select the one you want, and press `Enter` or
 `Tab` to insert it into your code. 
 
-![Tab completion](images/samples.gif)
 
 This is an *extremely* useful feature. You will use it a lot and there is
 way more to it. For example, if you start typed a function name with the

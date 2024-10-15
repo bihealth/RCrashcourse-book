@@ -1,8 +1,12 @@
 # Appendix: Wide vs long data {.unnumbered}
 
 
-```{r echo=FALSE}
+```{r echo=FALSE,message=FALSE,warning=FALSE}
+#| label: libraries
 options(width=80)
+library(gt)
+library(tidyverse)
+library(tinytable)
 ```
 
 
@@ -16,8 +20,7 @@ protein, number of white blood cells in billions per liter etc., etc.
 
 
 ```{r echo=FALSE,message=FALSE,warning=FALSE}
-library(tidyverse)
-library(tinytable)
+#| label: prep-data
 people <- c("Frank N. Stein", "Dr. Jekyll", "Mr. Hyde")
 labres <- read_csv("Datasets/labresults_full.csv") |>
   filter(Timepoint == "D1") |>
@@ -45,7 +48,7 @@ compact format, where each row corresponds to one patient, and each column
 to one measurement. Here is how it might look like:
 
 ```{r echo=FALSE}
-tt(labres_w[1:5,], digits=2)
+gt(labres_w[1:5,]) |> fmt_number(decimals = 2)
 ```
 
 This is called the **wide format**. It is easy to view, and suitable for some
@@ -60,7 +63,7 @@ who conducted the test? We could add columns for each of these, but then we
 would have a mess.
 
 ```{r echo=FALSE}
-tt(labres_w2[1:5,], digits=2)
+gt(labres_w2[1:5,]) |> fmt_number(decimals = 2)
 ```
 
 Yeah, no, this is not going to work. It is hard to view manually, but for
@@ -79,7 +82,7 @@ Enter the **long format**. In the long format, each row corresponds to one
 measurement, and one measurement only:
 
 ```{r echo=FALSE}
-tt(labres[1:9,], digits=2)
+gt(labres[1:5,]) |> fmt_number(decimals = 2)
 ```
 
 This is by far the most advantageous format for transfering and storing
