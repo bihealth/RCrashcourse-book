@@ -59,6 +59,8 @@ Here are some other websites with somewhat more detailed instructions:
  * [Installing R on all systems](https://techvidvan.com/tutorials/install-r/)
  * [Installing R on Windows 7, 8, 10](https://medium.com/@GalarnykMichael/install-r-and-rstudio-on-windows-5f503f708027)
  * [Installing R, RStudio and configuring RStudio](https://www.stat.colostate.edu/~jah/talks_public_html/isec2020/installRStudio.html)
+ * [Getting started chapter](https://rc2e.com/gettingstarted) of the R
+   Cookbook by James JD Long.
 
 Potential problems:
 

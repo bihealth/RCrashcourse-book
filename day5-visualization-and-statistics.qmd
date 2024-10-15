@@ -1876,6 +1876,9 @@ There are numerous resources for R on the web, allow me to recommend a few.
    * [R for Data Science (tidyverse)](https://r4ds.hadley.nz/) by
      Hadley Wickham. The tidyverse book, written by the main tidyverse developer.
      This book also starts with introducing R.
+   * [R Cookbook](https://rc2e.com/) by James JD Long. The cookbook format
+     splits the information in small "recipies" for common problems, both
+     in base R and in tidyverse.
    * [R Graphics Cookbook](https://r-graphics.org/) by Winston Chang.
      The cookbook format
      splits the information in small "recipies" for common problems, both
