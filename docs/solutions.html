@@ -299,7 +299,7 @@ window.Quarto = {
   <ul>
   <li><a href="#day-1" id="toc-day-1" class="nav-link active" data-scroll-target="#day-1">Day 1</a>
   <ul class="collapse">
-  <li><a href="#sec-day1-lilies-plot" id="toc-sec-day1-lilies-plot" class="nav-link" data-scroll-target="#sec-day1-lilies-plot">Water lilies (Exercise&nbsp;<span>1.10</span>)</a></li>
+  <li><a href="#sec-day1-lilies-plot" id="toc-sec-day1-lilies-plot" class="nav-link" data-scroll-target="#sec-day1-lilies-plot">Water lilies (Exercise&nbsp;<span>1.12</span>)</a></li>
   </ul></li>
   <li><a href="#day-2" id="toc-day-2" class="nav-link" data-scroll-target="#day-2">Day 2</a>
   <ul class="collapse">
@@ -348,7 +348,7 @@ window.Quarto = {
 <section id="day-1" class="level2">
 <h2 class="anchored" data-anchor-id="day-1">Day 1</h2>
 <section id="sec-day1-lilies-plot" class="level3">
-<h3 class="anchored" data-anchor-id="sec-day1-lilies-plot">Water lilies (<a href="day1-intro-to-r.html#exr-day1-lilies-plot" class="quarto-xref">Exercise&nbsp;<span>1.10</span></a>)</h3>
+<h3 class="anchored" data-anchor-id="sec-day1-lilies-plot">Water lilies (<a href="day1-intro-to-r.html#exr-day1-lilies-plot" class="quarto-xref">Exercise&nbsp;<span>1.12</span></a>)</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plots with a blue color</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(days, area, <span class="at">type=</span><span class="st">"b"</span>, <span class="at">col=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -454,10 +454,10 @@ window.Quarto = {
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>res_mtx[ <span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">5</span><span class="sc">:</span><span class="dv">6</span> ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Inh3_control  Inh3_low
-Inh1_control    0.0653549 0.4150245
-Inh1_low        0.5507227 0.8577904
-Inh1_medium     0.7313592 0.2517559
-Inh1_high       0.7974431 0.9528039</code></pre>
+Inh1_control    0.5318356 0.2529198
+Inh1_low        0.1749013 0.5748859
+Inh1_medium     0.6235138 0.9570798
+Inh1_high       0.3933196 0.1889924</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inhibitor 1 as well as 2</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>inh1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Inh1_low"</span>, <span class="st">"Inh1_medium"</span>, <span class="st">"Inh1_high"</span>)</span>
@@ -465,9 +465,9 @@ Inh1_high       0.7974431 0.9528039</code></pre>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>res_mtx[ inh1, inh2 ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Inh2_low Inh2_high
-Inh1_low    0.2425845 0.2860479
-Inh1_medium 0.5415406 0.9230062
-Inh1_high   0.1336078 0.7508037</code></pre>
+Inh1_low    0.7640668 0.8073584
+Inh1_medium 0.6518344 0.6095979
+Inh1_high   0.9841590 0.8678792</code></pre>
 </div>
 </div>
 </section>
@@ -486,12 +486,12 @@ Inh1_high   0.1336078 0.7508037</code></pre>
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           X          Y          Z A sequence
-a -0.8094663 -0.4361581  0.5209584 A     0.00
-b  0.1004698  0.6565562 -0.4980637 A     0.25
-c -0.9939175  0.8454106 -2.1236907 A     0.50
-d  1.8479478 -0.7641707 -1.6114788 A     0.75
-e  1.8139472 -0.3281839  0.5946502 A     1.00</code></pre>
+<pre><code>            X          Y           Z A sequence
+a  0.02227622 -1.7439226 -0.69774890 A     0.00
+b  1.52864790  1.3575254 -1.38277660 A     0.25
+c -0.02981138 -2.1607091  0.66403722 A     0.50
+d  1.58715791  0.6751443 -0.08154999 A     0.75
+e -0.79699241 -0.7846672 -0.10150617 A     1.00</code></pre>
 </div>
 </div>
 </section>
