@@ -1902,6 +1902,9 @@ There are of course numerous resources for R on the web, so allow me to recommen
      reproducible scientific work with Quarto.
    * [R manuals](https://cran.r-project.org/manuals.html) from CRAN. Be
      warned – they tend to be rather comprehensive.
+   * [Big Book of R](https://www.bigbookofr.com/) by Oscar Baruffa. This is
+     a gigantic collection of links to other R materials, including books.
+
  * Other books:
    * [The R Book](https://www.google.com/search?q=the+r+book) by Michael J. Crawley
      – this is a magnificent book on statistics. It uses very conservative
@@ -1921,17 +1924,23 @@ There are of course numerous resources for R on the web, so allow me to recommen
      good introduction to R and a very good introduction to statistics,
      with thoughtful explanations and a lot of examples. However, keep in
      mind that the focus of the book is *bayesian* statistics.
- * Large Language Models (LLMs): I have good experiences with LLMs
-   (ChatGPT, Perplexity AI) for learning programming languages. While
-   complex tasks may be out of reach for them, they are very good at
-   explaining basics. "How do I do X in R?" or "Why doesn't the following
-   code work?" seem to work quite well. RStudio allows you also to use 
-   [Copilot](https://docs.posit.co/ide/user/ide/guide/tools/copilot.html)
-   which is an LLM model that watches the code you write and tries to guess
-   what you are trying to do. Just remember, that the one thing that LLMs
-   don't know how to say is "I don't know". If something doesn't make sense,
-   or if it is beyond the scope of their learning, they will "hallucinate"
-   – give good sounding advice which is totally bonkers.
+ * Large Language Models (LLMs): 
+   * I have good experiences with LLMs
+     (ChatGPT, Perplexity AI) for learning programming languages. While
+     complex tasks may be out of reach for them, they are very good at
+     explaining basics. "How do I do X in R?" or "Why doesn't the following
+     code work?" seem to work quite well. 
+   * There is a specialized LLM chat for R –
+     [R-tutor](https://chatgpt.com/g/g-iedyANQtM-r-and-r-studio-tutor) based
+     on ChatGTP.
+   * RStudio allows you also to use 
+     [Copilot](https://docs.posit.co/ide/user/ide/guide/tools/copilot.html)
+     which is an LLM model that watches the code you write and tries to guess
+     what you are trying to do. 
+   * Just remember, that the one thing that LLMs
+     don't know how to say is "I don't know". If something doesn't make sense,
+     or if it is beyond the scope of their learning, they will "hallucinate"
+     – give good sounding advice which is totally bonkers.
 
 ### Famous last words
 
