@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.54">
+<meta name="generator" content="quarto-1.6.33">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -91,12 +91,12 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-07ba0ad10f5680c660e360ac31d2f3b6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-8b864f0777c60eecff11d75b6b2e1175.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-32f8d0d929b92d1853669e1be66ffa99.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-76364221a834e84d92782d1a4a5bceac.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -571,7 +571,7 @@ Mathematical formulas
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.Date</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-10-15"</code></pre>
+<pre><code>[1] "2024-11-15"</code></pre>
 </div>
 </div>
 <p>The <code>output:</code> specifies the type of output you would like to have.</p>
@@ -1749,6 +1749,7 @@ CA   -0.26605009  0.280096277 -0.17364117 -0.02687325 -0.047787207</code></pre>
 <li><a href="https://rstudio-education.github.io/hopr/">Hands-On Programming with R</a> by Garrett Grolemund. A very different approach to teaching R to beginners than the one that I prefer, but maybe you will find it better (whatever works!). Worth checking in any case.</li>
 <li><a href="https://hbiostat.org/rflow/">R Workflow</a> by Frank Harrell is somewhat hermetic, but there are many good ideas in it and a lot about reproducible scientific work with Quarto.</li>
 <li><a href="https://cran.r-project.org/manuals.html">R manuals</a> from CRAN. Be warned – they tend to be rather comprehensive.</li>
+<li><a href="https://www.bigbookofr.com/">Big Book of R</a> by Oscar Baruffa. This is a gigantic collection of links to other R materials, including books.</li>
 </ul></li>
 <li>Other books:
 <ul>
@@ -1756,7 +1757,13 @@ CA   -0.26605009  0.280096277 -0.17364117 -0.02687325 -0.047787207</code></pre>
 <li><a href="https://compgenomr.github.io/book/">Computational Genomics with R</a> by Altuna Akalin (available online) – this is a book on bioinformatics with R and BioConductor. It features both an introduction to genomics and a terse introduction to R. The R flavor presented is somewhat different from the one I prefer (for example, the author uses <code>=</code> instead of <code>&lt;-</code>), but the main focus of the book is elsewhere – on specific bioinformatics tasks.</li>
 <li><a href="https://avehtari.github.io/ROS-Examples/">Regression and other stories</a> by Andrew Gelman, Jennifer Hill and Aki Vehtari. This book focuses on doing bayesian statistics with the RStan package. It is both, a very good introduction to R and a very good introduction to statistics, with thoughtful explanations and a lot of examples. However, keep in mind that the focus of the book is <em>bayesian</em> statistics.</li>
 </ul></li>
-<li>Large Language Models (LLMs): I have good experiences with LLMs (ChatGPT, Perplexity AI) for learning programming languages. While complex tasks may be out of reach for them, they are very good at explaining basics. “How do I do X in R?” or “Why doesn’t the following code work?” seem to work quite well. RStudio allows you also to use <a href="https://docs.posit.co/ide/user/ide/guide/tools/copilot.html">Copilot</a> which is an LLM model that watches the code you write and tries to guess what you are trying to do. Just remember, that the one thing that LLMs don’t know how to say is “I don’t know”. If something doesn’t make sense, or if it is beyond the scope of their learning, they will “hallucinate” – give good sounding advice which is totally bonkers.</li>
+<li>Large Language Models (LLMs):
+<ul>
+<li>I have good experiences with LLMs (ChatGPT, Perplexity AI) for learning programming languages. While complex tasks may be out of reach for them, they are very good at explaining basics. “How do I do X in R?” or “Why doesn’t the following code work?” seem to work quite well.</li>
+<li>There is a specialized LLM chat for R – <a href="https://chatgpt.com/g/g-iedyANQtM-r-and-r-studio-tutor">R-tutor</a> based on ChatGTP.</li>
+<li>RStudio allows you also to use <a href="https://docs.posit.co/ide/user/ide/guide/tools/copilot.html">Copilot</a> which is an LLM model that watches the code you write and tries to guess what you are trying to do.</li>
+<li>Just remember, that the one thing that LLMs don’t know how to say is “I don’t know”. If something doesn’t make sense, or if it is beyond the scope of their learning, they will “hallucinate” – give good sounding advice which is totally bonkers.</li>
+</ul></li>
 </ul>
 </section>
 <section id="famous-last-words" class="level3" data-number="5.6.3">
