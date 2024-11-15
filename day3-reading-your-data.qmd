@@ -1374,6 +1374,7 @@ points.
    e.g. `iris_cleaned_2021-09-01_JW_v1.csv`.
  * Do not use the old Excel XLS format (file extension `.xls`). Use the
    newer XLSX format (file extension `.xlsx`).
+ * When using Excel to enter data, [read this first](https://cghlewis.com/blog/excel_entry/).
 
 This latter point warrants an explanation. There are two main problems with
 that format. Firstly, it is less portable then XLSX (the new one) – so many
