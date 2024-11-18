@@ -1789,6 +1789,9 @@ actually do. There is no manual review process involved.
 Here are a few packages on CRAN that might be of interest to you at this
 stage:
 
+ * [tinyplot](https://github.com/grantmcdermott/tinyplot) – a great minimal
+   plotting package. It uses base R graphics, but makes the plot look like
+   their ggplot2 counterparts with minimum effort.
  * [colorDF](https://cran.r-project.org/web/packages/skimr/vignettes/skimr.html))
    – a package that I wrote for displaying colorized data frames in the
    console. It has also a summary function that provides information
@@ -1879,6 +1882,10 @@ There are of course numerous resources for R on the web, so allow me to recommen
    forum for programmers and other like them. Most of the questions you have someone
    has previously asked here, including many by yours truly.
  * Online R books and tutorials:
+   * [fasteR](https://github.com/matloff/fasteR) is a book by Norm Matloff
+     that is available online. This is another "crash-course" book that
+     aims at getting you up to speed with R quickly. However, it's focus is
+     more on programming than on data science / visualizations.
    * [R Cookbook](https://rc2e.com/) by James JD Long. The cookbook format
      splits the information in small "recipies" for common problems, both
      in base R and in tidyverse.
