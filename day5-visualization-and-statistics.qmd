@@ -1904,9 +1904,14 @@ There are of course numerous resources for R on the web, so allow me to recommen
      A very different approach to teaching R to beginners than the one that
      I prefer, but maybe you will find it better (whatever works!). Worth checking in any
      case.
+   * [ggplot2 extended](https://ggplot2-extended-book.com/) by Antti Rask.
+     The book describes the many extensions to ggplot2, allowing to create
+     specialized or complex plots.
    * [R Workflow](https://hbiostat.org/rflow/) by Frank Harrell is somewhat
      hermetic, but there are many good ideas in it and a lot about
-     reproducible scientific work with Quarto.
+     reproducible scientific work with Quarto. Note that Frank Harrell does
+     not use tidyverse, and instead focuses on a famous alternative called
+     [data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html).
    * [R manuals](https://cran.r-project.org/manuals.html) from CRAN. Be
      warned – they tend to be rather comprehensive.
    * [Big Book of R](https://www.bigbookofr.com/) by Oscar Baruffa. This is
