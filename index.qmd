@@ -51,8 +51,9 @@ popular interface for R. Minimal installation guide:
 
 This should be it. However, if you are stuck or have problems with
 installing R or RStudio, please search the internet – the installation and
-especially related problems unfortunately depends on your operating system
-and the version of the software, so it is hard to give a general advice.
+especially related problems unfortunately depend on your operating system,
+the version of the software and on the setup of your local network, so it
+is hard to give a general advice.
 
 Here are some other websites with somewhat more detailed instructions:
 
