@@ -497,15 +497,15 @@ To quote or not to quote?
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>vec <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">10</span>), <span class="dv">2</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>vec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  0.29  0.12  0.65  0.98  0.26  1.53  0.63 -0.03 -0.65  0.42</code></pre>
+<pre><code> [1] -0.74 -2.18 -0.47 -0.59 -0.15 -0.89  0.79 -1.48  0.20  0.86</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] -0.65 -0.03  0.12  0.26  0.29  0.42  0.63  0.65  0.98  1.53</code></pre>
+<pre><code> [1] -2.18 -1.48 -0.89 -0.74 -0.59 -0.47 -0.15  0.20  0.79  0.86</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(vec, <span class="at">decreasing=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  1.53  0.98  0.65  0.63  0.42  0.29  0.26  0.12 -0.03 -0.65</code></pre>
+<pre><code> [1]  0.86  0.79  0.20 -0.15 -0.47 -0.59 -0.74 -0.89 -1.48 -2.18</code></pre>
 </div>
 </div>
 <p>The <code>rnorm()</code> function generates a vector of random numbers from a normal distribution (you met it on Day 2). The <code>round()</code> function with parameter <code>2</code> rounds the numbers to two decimal places. The <code>sort()</code> with the <code>decreasing=TRUE</code> argument sorts the vector in descending order.</p>
@@ -514,15 +514,15 @@ To quote or not to quote?
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">order</span>(vec)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>ord</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  9  8  2  5  1 10  7  3  4  6</code></pre>
+<pre><code> [1]  2  8  6  1  4  3  5  9  7 10</code></pre>
 </div>
 </div>
-<p>So, what does that mean? Take the first element of <code>ord</code>. It is 9. This means that the first value to appear in the sorted vector should be the element number 9 of the original vector, which is -0.65 and the smallest number in <code>vec</code> (check it!). Likewise, the second element of <code>ord</code> is 8, which points to -0.03, the second smallest element of <code>vec</code>.</p>
+<p>So, what does that mean? Take the first element of <code>ord</code>. It is 2. This means that the first value to appear in the sorted vector should be the element number 2 of the original vector, which is -2.18 and the smallest number in <code>vec</code> (check it!). Likewise, the second element of <code>ord</code> is 8, which points to -1.48, the second smallest element of <code>vec</code>.</p>
 <p>So what happens if we use the vector <code>ord</code> to select element from the vector <code>vec</code>? We get the sorted vector, that’s what:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>vec[ord]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] -0.65 -0.03  0.12  0.26  0.29  0.42  0.63  0.65  0.98  1.53</code></pre>
+<pre><code> [1] -2.18 -1.48 -0.89 -0.74 -0.59 -0.47 -0.15  0.20  0.79  0.86</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-caution no-icon">
@@ -918,29 +918,29 @@ To quote or not to quote?
 <span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>df_x <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ID=</span>ids_x, <span class="at">val_x=</span><span class="fu">rnorm</span>(<span class="dv">6</span>))</span>
 <span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>df_x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   ID       val_x
-1 ID7 -0.40547520
-2 ID4  0.51267557
-3 ID5  1.01854443
-4 ID3  0.86495528
-5 ID8  0.35744654
-6 ID2 -0.09544592</code></pre>
+<pre><code>   ID      val_x
+1 ID5 -0.4734311
+2 ID8 -0.1391706
+3 ID3  0.3154094
+4 ID7  0.8270495
+5 ID2  0.6740373
+6 ID6  0.7387436</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>ids_y <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"ID"</span>, <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>df_y <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ID=</span>ids_y, <span class="at">val_y=</span><span class="fu">rnorm</span>(<span class="dv">6</span>, <span class="dv">10</span>, <span class="dv">1</span>))</span>
 <span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>df_y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   ID     val_y
-1 ID5 10.721460
-2 ID2  8.967534
-3 ID7 11.385568
-4 ID4  8.141899
-5 ID8 11.319685
-6 ID6 10.267109</code></pre>
+1 ID2  9.941235
+2 ID1  8.911635
+3 ID3 10.694519
+4 ID8 10.095637
+5 ID7 11.715017
+6 ID5 12.497531</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>(ids_x, ids_y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "ID7" "ID4" "ID5" "ID8" "ID2"</code></pre>
+<pre><code>[1] "ID5" "ID8" "ID3" "ID7" "ID2"</code></pre>
 </div>
 </div>
 <div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>sample()</code></span></div></div>
@@ -954,25 +954,25 @@ To quote or not to quote?
 <span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>joined <span class="ot">&lt;-</span> <span class="fu">merge</span>(df_x, df_y, <span class="at">by=</span><span class="st">"ID"</span>)</span>
 <span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>joined</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   ID       val_x     val_y
-1 ID2 -0.09544592  8.967534
-2 ID4  0.51267557  8.141899
-3 ID5  1.01854443 10.721460
-4 ID7 -0.40547520 11.385568
-5 ID8  0.35744654 11.319685</code></pre>
+<pre><code>   ID      val_x     val_y
+1 ID2  0.6740373  9.941235
+2 ID3  0.3154094 10.694519
+3 ID5 -0.4734311 12.497531
+4 ID7  0.8270495 11.715017
+5 ID8 -0.1391706 10.095637</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># full join by ID</span></span>
 <span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>joined <span class="ot">&lt;-</span> <span class="fu">merge</span>(df_x, df_y, <span class="at">by=</span><span class="st">"ID"</span>, <span class="at">all=</span><span class="cn">TRUE</span>)</span>
 <span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>joined</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   ID       val_x     val_y
-1 ID2 -0.09544592  8.967534
-2 ID3  0.86495528        NA
-3 ID4  0.51267557  8.141899
-4 ID5  1.01854443 10.721460
-5 ID6          NA 10.267109
-6 ID7 -0.40547520 11.385568
-7 ID8  0.35744654 11.319685</code></pre>
+<pre><code>   ID      val_x     val_y
+1 ID1         NA  8.911635
+2 ID2  0.6740373  9.941235
+3 ID3  0.3154094 10.694519
+4 ID5 -0.4734311 12.497531
+5 ID6  0.7387436        NA
+6 ID7  0.8270495 11.715017
+7 ID8 -0.1391706 10.095637</code></pre>
 </div>
 </div>
 <p>As you can see, in the first case there are just 5 rows – as many as there are common elements between the ID columns of the two data frames. In the second case, we get all 7 possible IDs. Where the ID was present in one, but not the other data frame, the values were filled up with <code>NA</code>’s. To get the full join we used the parameter <code>all=TRUE</code>, standing for “use <em>all</em> IDs”.</p>
@@ -984,25 +984,25 @@ To quote or not to quote?
 <span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>joined <span class="ot">&lt;-</span> <span class="fu">merge</span>(df_x, df_y, <span class="at">by=</span><span class="st">"ID"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>joined</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   ID       val_x     val_y
-1 ID2 -0.09544592  8.967534
-2 ID3  0.86495528        NA
-3 ID4  0.51267557  8.141899
-4 ID5  1.01854443 10.721460
-5 ID7 -0.40547520 11.385568
-6 ID8  0.35744654 11.319685</code></pre>
+<pre><code>   ID      val_x     val_y
+1 ID2  0.6740373  9.941235
+2 ID3  0.3154094 10.694519
+3 ID5 -0.4734311 12.497531
+4 ID6  0.7387436        NA
+5 ID7  0.8270495 11.715017
+6 ID8 -0.1391706 10.095637</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># right join by ID</span></span>
 <span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>joined <span class="ot">&lt;-</span> <span class="fu">merge</span>(df_x, df_y, <span class="at">by=</span><span class="st">"ID"</span>, <span class="at">all.y =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>joined</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   ID       val_x     val_y
-1 ID2 -0.09544592  8.967534
-2 ID4  0.51267557  8.141899
-3 ID5  1.01854443 10.721460
-4 ID6          NA 10.267109
-5 ID7 -0.40547520 11.385568
-6 ID8  0.35744654 11.319685</code></pre>
+<pre><code>   ID      val_x     val_y
+1 ID1         NA  8.911635
+2 ID2  0.6740373  9.941235
+3 ID3  0.3154094 10.694519
+4 ID5 -0.4734311 12.497531
+5 ID7  0.8270495 11.715017
+6 ID8 -0.1391706 10.095637</code></pre>
 </div>
 </div>
 <p>As you can see, in case of the <em>left</em> join, there are missing values in the <em>right</em> column only, and in case of the <em>right</em> join – only in the <em>left</em> column.</p>
@@ -1078,10 +1078,10 @@ To quote or not to quote?
 <span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>meta_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   ID age   group
-1 ID1   1 control
-2 ID2   2 control
-3 ID3   2 treated
-4 ID4   1 treated</code></pre>
+1 ID1   2 control
+2 ID2   3 control
+3 ID3   3 treated
+4 ID4   3 treated</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>crp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ID=</span><span class="fu">rep</span>(<span class="fu">paste0</span>(<span class="st">"ID"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="at">each=</span><span class="dv">2</span>),</span>
 <span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">time=</span><span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"day1"</span>, <span class="st">"day2"</span>), <span class="dv">4</span>),</span>
@@ -1089,27 +1089,27 @@ To quote or not to quote?
 <span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>crp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   ID time        CRP
-1 ID1 day1  0.2200032
-2 ID1 day2 -2.1753912
-3 ID2 day1 -0.3045905
-4 ID2 day2 -0.1098078
-5 ID3 day1 -0.9882752
-6 ID3 day2  0.3834958
-7 ID4 day1  0.6971875
-8 ID4 day2 -0.6397452</code></pre>
+1 ID1 day1  0.1146440
+2 ID1 day2 -0.9285660
+3 ID2 day1  1.0300067
+4 ID2 day2  0.6096340
+5 ID3 day1  1.4023240
+6 ID3 day2 -0.8914264
+7 ID4 day1  0.9249939
+8 ID4 day2 -0.8818364</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>merged_data <span class="ot">&lt;-</span> <span class="fu">merge</span>(meta_data, crp, <span class="at">by=</span><span class="st">"ID"</span>)</span>
 <span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>merged_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   ID age   group time        CRP
-1 ID1   1 control day1  0.2200032
-2 ID1   1 control day2 -2.1753912
-3 ID2   2 control day1 -0.3045905
-4 ID2   2 control day2 -0.1098078
-5 ID3   2 treated day1 -0.9882752
-6 ID3   2 treated day2  0.3834958
-7 ID4   1 treated day1  0.6971875
-8 ID4   1 treated day2 -0.6397452</code></pre>
+1 ID1   2 control day1  0.1146440
+2 ID1   2 control day2 -0.9285660
+3 ID2   3 control day1  1.0300067
+4 ID2   3 control day2  0.6096340
+5 ID3   3 treated day1  1.4023240
+6 ID3   3 treated day2 -0.8914264
+7 ID4   3 treated day1  0.9249939
+8 ID4   3 treated day2 -0.8818364</code></pre>
 </div>
 </div>
 <p>As you can see, each line in the <code>meta_data</code> data frame is duplicated to fill up the information matching the <code>ID</code> in the <code>crp</code> data frame.</p>
@@ -1124,22 +1124,22 @@ To quote or not to quote?
 <span id="cb86-7"><a href="#cb86-7" aria-hidden="true" tabindex="-1"></a>crp_alb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    ID time.x        CRP time.y        ALB
-1  ID1   day1  0.2200032   day1  0.6101125
-2  ID1   day1  0.2200032   day2  0.7113163
-3  ID1   day2 -2.1753912   day1  0.6101125
-4  ID1   day2 -2.1753912   day2  0.7113163
-5  ID2   day1 -0.3045905   day1 -0.9433044
-6  ID2   day1 -0.3045905   day2 -0.3702803
-7  ID2   day2 -0.1098078   day1 -0.9433044
-8  ID2   day2 -0.1098078   day2 -0.3702803
-9  ID3   day1 -0.9882752   day1  0.2029937
-10 ID3   day1 -0.9882752   day2 -0.4504760
-11 ID3   day2  0.3834958   day1  0.2029937
-12 ID3   day2  0.3834958   day2 -0.4504760
-13 ID4   day1  0.6971875   day1  0.2503059
-14 ID4   day1  0.6971875   day2 -1.3072411
-15 ID4   day2 -0.6397452   day1  0.2503059
-16 ID4   day2 -0.6397452   day2 -1.3072411</code></pre>
+1  ID1   day1  0.1146440   day1 -1.2880444
+2  ID1   day1  0.1146440   day2 -0.7141761
+3  ID1   day2 -0.9285660   day1 -1.2880444
+4  ID1   day2 -0.9285660   day2 -0.7141761
+5  ID2   day1  1.0300067   day1 -0.6550918
+6  ID2   day1  1.0300067   day2 -0.8755011
+7  ID2   day2  0.6096340   day1 -0.6550918
+8  ID2   day2  0.6096340   day2 -0.8755011
+9  ID3   day1  1.4023240   day1  1.1682567
+10 ID3   day1  1.4023240   day2  0.2921575
+11 ID3   day2 -0.8914264   day1  1.1682567
+12 ID3   day2 -0.8914264   day2  0.2921575
+13 ID4   day1  0.9249939   day1  0.7130101
+14 ID4   day1  0.9249939   day2 -1.6458486
+15 ID4   day2 -0.8818364   day1  0.7130101
+16 ID4   day2 -0.8818364   day2 -1.6458486</code></pre>
 </div>
 </div>
 <p>Uh-oh, what happened here?</p>
@@ -1150,14 +1150,14 @@ To quote or not to quote?
 <span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>crp_alb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   ID time        CRP        ALB
-1 ID1 day1  0.2200032  0.6101125
-2 ID1 day2 -2.1753912  0.7113163
-3 ID2 day1 -0.3045905 -0.9433044
-4 ID2 day2 -0.1098078 -0.3702803
-5 ID3 day1 -0.9882752  0.2029937
-6 ID3 day2  0.3834958 -0.4504760
-7 ID4 day1  0.6971875  0.2503059
-8 ID4 day2 -0.6397452 -1.3072411</code></pre>
+1 ID1 day1  0.1146440 -1.2880444
+2 ID1 day2 -0.9285660 -0.7141761
+3 ID2 day1  1.0300067 -0.6550918
+4 ID2 day2  0.6096340 -0.8755011
+5 ID3 day1  1.4023240  1.1682567
+6 ID3 day2 -0.8914264  0.2921575
+7 ID4 day1  0.9249939  0.7130101
+8 ID4 day2 -0.8818364 -1.6458486</code></pre>
 </div>
 </div>
 </section>

@@ -571,7 +571,7 @@ Mathematical formulas
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.Date</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-11-15"</code></pre>
+<pre><code>[1] "2024-11-22"</code></pre>
 </div>
 </div>
 <p>The <code>output:</code> specifies the type of output you would like to have.</p>
@@ -675,7 +675,7 @@ Code chunks run in one environment
 <div id="exr-basic-markdown" class="theorem exercise">
 <p><span class="theorem-title"><strong>Exercise 5.4 (Put your code in your markdown)</strong></span> &nbsp;</p>
 <ul>
-<li>Go back to Day 1, the water lillies example in <a href="day1-intro-to-r.html#sec-lilies" class="quarto-xref"><span>Section 1.6.1</span></a>. Copy the code to the R markdown, including the plot and <a href="day1-intro-to-r.html#exr-lilies" class="quarto-xref">Exercise&nbsp;<span>1.11</span></a>.</li>
+<li>Go back to Day 1, the water lillies example in <a href="day1-intro-to-r.html#sec-lilies" class="quarto-xref"><span>Section 1.6.1</span></a>. Copy the code to the R markdown, including the plot and <a href="day1-intro-to-r.html#exr-lilies" class="quarto-xref">Exercise&nbsp;<span>1.12</span></a>.</li>
 <li>Write a brief summary including inline code chunks that show the number of days of the simulation used.</li>
 </ul>
 </div>
@@ -1713,6 +1713,7 @@ CA   -0.26605009  0.280096277 -0.17364117 -0.02687325 -0.047787207</code></pre>
 <p><strong>CRAN</strong> is the resource you are using when using <code>install.packages()</code>. It features more than 20,000 packages from all possible areas of science, statistics and even entertainment. Packages in CRAN are rigorously tested for formal requirements: they must have a certain structure, all functions and data sets must be documented, and the package must pass a series of tests, including testing whether the packages can be installed on a variety of operating systems. However, the packages are never tested for their actual correctness, i.e.&nbsp;whether what they claim to do is what they actually do. There is no manual review process involved.</p>
 <p>Here are a few packages on CRAN that might be of interest to you at this stage:</p>
 <ul>
+<li><a href="https://github.com/grantmcdermott/tinyplot">tinyplot</a> – a great minimal plotting package. It uses base R graphics, but makes the plot look like their ggplot2 counterparts with minimum effort.</li>
 <li><a href="https://cran.r-project.org/web/packages/skimr/vignettes/skimr.html">colorDF</a>) – a package that I wrote for displaying colorized data frames in the console. It has also a summary function that provides information similar to that of <code>skimr::skim()</code> (<code>colorDF::summary_colorDF()</code>).</li>
 <li><a href="https://vincentarelbundock.github.io/tinytable/">tinytable</a> – package for generating awesome tables with R and R markdown.</li>
 <li><a href="https://github.com/rstudio/gt">gt</a> – another package for creating tables in R markdown; they can be really complex and have a professional look. Good for manuscripts and publications.</li>
@@ -1742,12 +1743,13 @@ CA   -0.26605009  0.280096277 -0.17364117 -0.02687325 -0.047787207</code></pre>
 <li><a href="https://stackoverflow.com">StackOverflow</a> – this is a general Q &amp; A forum for programmers and other like them. Most of the questions you have someone has previously asked here, including many by yours truly.</li>
 <li>Online R books and tutorials:
 <ul>
+<li><a href="https://github.com/matloff/fasteR">fasteR</a> is a book by Norm Matloff that is available online. This is another “crash-course” book that aims at getting you up to speed with R quickly. However, it’s focus is more on programming than on data science / visualizations.</li>
 <li><a href="https://rc2e.com/">R Cookbook</a> by James JD Long. The cookbook format splits the information in small “recipies” for common problems, both in base R and in tidyverse.</li>
 <li><a href="https://r4ds.hadley.nz/">R for Data Science (tidyverse)</a> by Hadley Wickham. The tidyverse book, written by the main tidyverse developer. This book also starts with introducing R.</li>
 <li><a href="https://r-graphics.org/">R Graphics Cookbook</a> by Winston Chang. The cookbook format splits the information in small “recipies” for common problems, both in base R and in ggplot2.</li>
 <li><a href="https://bookdown.org/yihui/rmarkdown/">R markdown: the definitive guide</a> by Yihui Xie, J. J. Allaire and Garrett Grolemund. A comprehensive guide to R markdown written by the people who created it.</li>
 <li><a href="https://rstudio-education.github.io/hopr/">Hands-On Programming with R</a> by Garrett Grolemund. A very different approach to teaching R to beginners than the one that I prefer, but maybe you will find it better (whatever works!). Worth checking in any case.</li>
-<li><a href="https://hbiostat.org/rflow/">R Workflow</a> by Frank Harrell is somewhat hermetic, but there are many good ideas in it and a lot about reproducible scientific work with Quarto.</li>
+<li><a href="https://hbiostat.org/rflow/">R Workflow</a> by Frank Harrell is somewhat hermetic, but there are many good ideas in it and a lot about reproducible scientific work with Quarto. Note that Frank Harrell does not use tidyverse, and instead focuses on a famous alternative called <a href="https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html">data.table</a>.</li>
 <li><a href="https://cran.r-project.org/manuals.html">R manuals</a> from CRAN. Be warned – they tend to be rather comprehensive.</li>
 <li><a href="https://www.bigbookofr.com/">Big Book of R</a> by Oscar Baruffa. This is a gigantic collection of links to other R materials, including books.</li>
 </ul></li>
