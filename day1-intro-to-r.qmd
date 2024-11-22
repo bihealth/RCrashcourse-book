@@ -31,19 +31,53 @@ What you should know after today:
 
 ### Why R?
 
-### R and RStudio
+So, why would one like to learn R?
 
-R is the name of both, the programming language and of the language
-*interpreter*. When you start RStudio, you can see the R language
-interpreter working in the part of the window left and bottom - called
-"console". So yes, you don't need RStudio to work with R and, in fact, many
-people prefer to work with R in a different environment.
+My personal answer is: it doesn't matter much whether you learn R, Python or
+another programming language you can use for statistics and data analysis.
+The important thing is to learn *a* programming language, as opposed to
+using Excel, SPSS or some other point-and-click software.
 
-RStudio is a so called IDE, an Integrated Development Environment. That is,
-it provides a lot of goodies that help make your work easier, faster and
-more efficient.
+The most important reason for this is that with a programming language, you
+solve the problems *programmatically*, that is by writing some code. This
+code stays with you, can be inspected, modified, adapted to other needs.
+That way, you ensure scientific reproducibility, transparency and
+reusability of your work. Your program, script or Rmarkdown file becomes
+your lab book, meticulously detailing the steps you have taken to arrive at
+a given solution. And just like a good lab book can be used to guide
+you in future experiments, replicating your previous results, you can
+re-use your code.
+
+Consider the following example: you need to create a complex illustration
+of your data for a paper manuscript you are working on. You could create
+the illustration in Excel, modify it in PowerPoint, paste it together with
+other illustrations and a caption in Word. That is how many people are
+actually working. However, this approach has several huge disadvantages.
+
+Firstly, if a few months later a reviewer asks you how precisely did you
+generate the figure, you will have a hard time remembering all the steps
+that were necessary, all the options you had to click in Excel and so on.
+Secondly, imagine you receive additional data – you will have to repeat
+every. Single. Step again. Then of course the figure is not the only one in
+your paper. What if the editor decides that your color scheme doesn't fit
+the journal requirements? You need to go through every single figure and
+modify the colors. And finally, when you want to create a similar
+figure for another paper, you will have to start from scratch.
+
+With R or another programming language figuring out how to achieve the same
+effect might be harder. However, once you have done it, all your operations have been
+recorded. You can show it to anyone and it will precisely document what you
+did. You can re-run the generation of your figure automatically. So if your
+data changes, you simply re-run the code and have your new figure reflect
+the change. If you want to change the color scheme in your whole paper, it
+will often be a matter of changing a single line in your code. And finally,
+for your next paper, you will simply cut, paste and adapt the code you
+have.
+
 
 ### R and other languages
+
+OK, so far so good, but why R in particular, and not, say, Python?
 
 R is not the only language that you can use for data analysis. There are
 many other languages that are used for this purpose, including Python,
@@ -52,10 +86,10 @@ weaknesses, and the choice of language depends on your needs. In fact, most
 bioinformaticians know more than one language, and use the one that is best
 suited for the task at hand.
 
-We think that R is a particularly good choice for all those who just need a
+I think that R is a particularly good choice for all those who just need a
 tool to use from time to time to help them with their work. It is
-relatively easy to learn, and it is very powerful. However, other choices
-are also worth mentioning.
+relatively easy to learn, it is very powerful, and it has a huge, vibrant,
+helpful community. However, two other choices are also worth mentioning.
 
 **Matlab** is a language that is in many ways similar to R. The main
 [Matlab]{.aside}
@@ -75,6 +109,19 @@ and it is not really meant to be used interactively (although it can be –
 especially when combined with Quarto or Jupyter Notebook). While many
 statistical modules exist for Python, it is not as strong in this area as
 R.
+
+
+### R and RStudio
+
+R is the name of both, the programming language and of the language
+*interpreter*. When you start RStudio, you can see the R language
+interpreter working in the part of the window left and bottom - called
+"console". So yes, you don't need RStudio to work with R and, in fact, many
+people prefer to work with R in a different environment.
+
+RStudio is a so called IDE, an Integrated Development Environment. That is,
+it provides a lot of goodies that help make your work easier, faster and
+more efficient.
 
 ## Projects and Workspaces
 
