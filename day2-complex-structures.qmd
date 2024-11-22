@@ -10,8 +10,8 @@ options(width=80)
 
 ## Goals for today
 
- * Complex data structures (matrices, lists and data frames)
  * Logical vectors and subsetting
+ * Complex data structures (matrices, lists and data frames)
 
 ## Logical vectors
 
@@ -73,7 +73,7 @@ There are six comparison operators in R:
  * `>=` – greater than or equal to
  * `<=` – less than or equal to
 
-They are vectorized like any other arithmetic operators, but their result
+They are vectorized like any other arithmetic operators. Their result
 is not a number – but a logical value. Take a look:
 
 
@@ -84,8 +84,20 @@ numbers > 0
 
 For each element of the vector, R checks if it is greater than zero. If it
 is, it returns `TRUE`, otherwise `FALSE`, producing, in the end, a vector
-containing as many elements as there were in the vector `numbers`. This
-logical vector can be used to subset the original vector.
+containing as many elements as there were in the vector `numbers`:
+
+```
+42     3      -17    0      -2     1
+ |     |       |     |       |     |
+> 0?   > 0?   > 0?   > 0?   > 0?   > 0?
+ |     |       |     |       |     |
+TRUE  TRUE   FALSE FALSE  FALSE  TRUE
+```
+
+Note that `0 > 0` is `FALSE`, not `TRUE`.
+
+Now we can use the resulting
+logical vector to select elements from the original vector:
 
 
 ```{r}
@@ -101,6 +113,7 @@ elements of a vector and return logical vectors. One of the most commonly
 used and most useful of these is the `is.na()` function, which checks if
 an element is "not available". This will come in handy later, when we start
 reading data from files – data which is full of NA's!
+[`is.na()`]{.aside}
 
 
 ```{r}
@@ -112,6 +125,7 @@ But hey, this does not tell us *which* elements are NA's. It is easy to see
 in the example above, but what if we have a vector with a million elements?
 Actually, to answer which elements are NA's you can simply use the `which()`
 function:
+[`which()`]{.aside}
 
 
 ```{r}
@@ -122,6 +136,7 @@ Fine, but what about the numbers which are *not* `NA`? What if we want to
 find all "good" numbers and store them for future use? In this case, we can
 use the `!` operator, which negates the logical vector. That is, each `TRUE`
 becomes `FALSE` and each `FALSE` becomes `TRUE`.
+[`!` (negation)]{.aside}
 
 
 ```{r}
@@ -159,6 +174,7 @@ Hint: pick up a dictionary... or any other alphabetically sorted list.
 ## Creating logical vectors
 
 Create a vector with 50 random numbers as follows:
+[`rnorm()`]{.aside}
 
 
 ```{r}
@@ -186,7 +202,10 @@ between <- over05[ over05 < 1.0 ]
 sum(vec > 0.5)
 ```
 
-
+Note: in the code above, we have sequentially filtered for numbers greater
+than 0.5, and then numbers smaller than 1.0. However, typically you would
+combine these two conditions into one using the `&` operator, which I
+will introduce on Day 4.
 
 
 :::
@@ -213,6 +232,7 @@ what you will learn today about matrices you will be able to use with data frame
 
 Creating a matrix is very simple. You can use the `matrix()` function,
 which takes a vector as input and reshapes it into a matrix:
+[`matrix()`]{.aside}
 
 
 ```{r}
@@ -282,7 +302,7 @@ the number of rows and the number of columns.
 You can access them using the `dim()` function, which returns a vector of
 length 2 (row and column number), and with functions `nrow()` and `ncol()`,
 which return the number of rows and columns, respectively.
-
+[`dim()`, `nrow()`, `ncol()`]{.aside}
 
 ```{r}
 dim(mtx)
@@ -374,6 +394,7 @@ to make our selection.
 Just like in case of named vectors, we can name rows and columns of a matrix. However,
 for this we need two different functions: `rownames()` and `colnames()`
 (for row names and column names, duh).
+[`rownames()`, `colnames()`]{.aside}
 
 
 ```{r}
@@ -388,13 +409,17 @@ In the code above, we use the `LETTERS` constant, which is a vector
 containing all the letters of the English alphabet. Just like constants
 `pi` and `e`, `LETTERS` is available in R by default, along with its
 lower-case counterpart, `letters`. It is useful for labeling.
+[`LETTERS`]{.aside}
 
 Unfortunately, we only have `r length(LETTERS)` letters in the alphabet, so
 what can we do with a matrix that has more columns than that? Well, we can
 use the same trick that Excel uses: after `Z`, we have `AA`, `AB`, etc.
 
 To create such a long vector, we will use two functions: `rep()` and
-`paste0()`.
+`paste0()`. I am introducing them here not because they are so frequently
+used for creating column and row names, but because they are very
+frequently used, full stop.
+[`paste0()`,`rep()`]{.aside}
 
 ### Using `rep()` to generate column names
 
@@ -433,7 +458,8 @@ and is vectorized, so it does *exactly* what we need.
 
 
 ```{r}
-col_names <- paste0(abc3, a3b3c3)
+col_names <- paste0(a3b3c3, abc3)
+col_names
 ```
 
 Of course, we need all the letters (we used only three in the example above
@@ -443,7 +469,7 @@ for demonstration purposes).
 n <- length(LETTERS)
 abc3 <- rep(LETTERS, n)
 a3b3c3 <- rep(LETTERS, each = n)
-col_names <- paste0(abc3, a3b3c3)
+col_names <- paste0(a3b3c3, abc3)
 length(col_names)
 head(col_names)
 tail(col_names)
@@ -453,6 +479,7 @@ The `head()` and `tail()` functions are very useful for inspecting the
 beginning and the end of a very large object such as a vector, matrix, or
 data frame. They are very useful for checking if the operation you just
 performed did what you expected it to do.
+[`head()`, `tail()`]{.aside}
 
 ::: {.callout-caution icon=false appearance="simple"}
 ::: {#exr-paste-rep}
@@ -462,6 +489,41 @@ Repeat the procedure above, but generate column names for a matrix with
 more than a 1000 columns. Use the LETTERS constant, but rather then
 generating two-letter column names, generate three-letter column names:
 AAA, AAB, AAC, …, ABA, ABC, …, ZZZ. Store the result in a variable called `col_names`.
+
+::: {.callout-caution icon=false collapse=true}
+## Solution
+
+```{r}
+# first, create vectors as before
+n <- length(LETTERS)
+abc3 <- rep(LETTERS, n)
+a3b3c3 <- rep(LETTERS, each = n)
+
+dublets <- paste0(a3b3c3, abc3)
+
+# now, reapeat each dublet n times
+# those are the first two letters of our code
+dublets <- rep(dublets, each = n)
+
+# for the third letter, repeat each letter n^2 times
+# and paste it to the dublets
+col_names <- paste0(dublets, rep(LETTERS, n^2))
+
+length(col_names)
+head(col_names)
+tail(col_names)
+col_names[1010:1020]
+```
+
+Note: *actually*, thanks to R recycling, you do not need to repeat the
+    `dublets` vector `n^2` times. R will repeat it for you. However, I
+    advice you not to rely on R recycling – at least not without double
+    checking.
+
+:::
+
+
+
 :::
 :::
 
@@ -505,6 +567,7 @@ like vectors; but unlike vectors, every element can be of any possible
 type. It can be a vector, of course, but can also be a matrix, a data
 frame, even a function – or another list. Actually, it is quite common to
 have a list of lists (or even list of lists of lists) in R.
+[`list()`]{.aside}
 
 
 ```{r}
@@ -532,6 +595,7 @@ lst["numbers"]
 You can see that it is a list because of this weird `$` (dollar) sign,
 which we will discuss in a moment. However, you can also check its type
 directly:
+[`typeof()`]{.aside}
 
 
 ```{r}
@@ -576,6 +640,7 @@ patient_data$measurements * 3
 
 Since the lists are named, there must be a way to access and modify these
 names. And, of course, there is: the `names()` function.
+[`names()`]{.aside}
 
 
 ```{r}
@@ -622,6 +687,7 @@ groups of measurements to compare. We will simulate them using the
 function takes additional parameters, `mean` and `sd`, which specify the
 mean and the standard deviation of the distribution, respectively. That
 allows us to ensure that the groups differ:
+[`rnorm()`]{.aside}
 
 
 ```{r}
@@ -678,7 +744,16 @@ something special, which is why R knows to print it in a different way. R
 is a functional language, but it also allows object oriented (OO)
 programming.
 
-Nonetheless, we can access the elements of the list in the usual way:
+However, if you ask what the names of the elements of the list are, you
+will get an answer:
+
+
+```{r}
+names(t_test)
+```
+
+
+And, of course, you can access the elements of the list in the usual way:
 
 
 ```{r}
@@ -706,6 +781,9 @@ person$city <- "Hoppegarten"
 person$pets <- NULL
 person
 ```
+
+Lists are one of the most frequently used data structures in R. You will
+see them a lot in everydays work with R.
 
 ## Data Frames
 
@@ -738,9 +816,11 @@ just say that each column of a data frame is a vector.
 This may seem like a limitation, but it is, in fact, a good thing. It makes
 data more consistent and less prone to errors.
 
+You create data frames with the `data.frame()` function.
 Like lists, data frames can be named or not, but typically they are. The
 names of a data frame are precisely the column names and you can access
 them (and modify) using both, `names` and `colnames` functions.
+[`data.frame()`]{.aside}
 
 ```{r}
 names <- c("January", "William", "Bill")
