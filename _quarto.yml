@@ -53,6 +53,7 @@ format:
       dark: darkly
     code-block-bg: true
     code-line-numbers: false
+    code-annotation: hover
     code-copy: true
     css: "custom.css"
 

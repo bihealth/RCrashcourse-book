@@ -330,10 +330,11 @@ that you should use a lot of comments in your code.
 #| label: r-comments-example
 # this is a comment
 # this is another comment
-x <- 2
+# the following will print "12"
+10 + 2
 
 # the following will not be executed:
-# x <- 5
+# 10 + 2
 ```
 
 Comments are also a great way to temporarily disable a line of code - we
@@ -414,9 +415,11 @@ but the variable **will not be modified**:
 
 ```{r results=FALSE}
 x <- 2
+
 # prints 0.9092974:
 sin(x) 
-# prints 2
+
+# prints 2:
 x 
 ```
 
@@ -425,8 +428,10 @@ In the code above, the value of `x` is not changed by the `sin()` function.
 
 ```{r results=FALSE}
 x <- 2
+
 # does not print anything:
 x <- sin(x) 
+
 # prints 0.9092974:
 x    
 ```
@@ -650,6 +655,30 @@ sequence <- 5:15
 numbers <- c(10, 42, 33, 14, 25)
 person <- c("January", "Weiner", "Hoppegarten")
 ```
+
+::: {.callout-caution icon=false appearance="simple"}
+::: {#exr-vectors-revseq}
+## Vectors
+
+The `:` operator can be used to create a sequence of numbers, for example
+`5:15` creates a vector `5, 6, ... 15`. How do you get a vector 
+`15, 14, ... 5`?
+
+::: {.callout-caution icon=false collapse="true"}
+## Solution
+
+```{r}
+sequence <- 15:5
+
+# alternatively:
+sequence <- rev(5:15)
+```
+
+:::
+
+:::
+:::
+
 
 It is also possible to combine two vectors longer than 1 into one:
 [Combining vectors]{.aside}
@@ -890,12 +919,11 @@ Same would happen if we were to subtract, multiply or divide the vectors
 Imagine the two vectors one beneath the other:
 
 ```
-numbers1:   c(1,    4,    5)
+numbers1:   c(1,    2,    3)
               +     +     +
-numbers2:   c(2,    5,    6)
+numbers2:   c(4,    5,    6)
               ↓     ↓     ↓
-result:     c(3,    9,   11)
-
+result:     c(5,    7,    9)
 ```
 
 R is simply adding up corresponding elements.
@@ -933,7 +961,7 @@ numbers1:   c(1,     2,      3)
               +      +       +
 numbers2:   c(4,     5)    c(4,    5)
               ↓      ↓       ↓
-result:     c(3,     9,     11)
+result:     c(5,     7,      7)
 
 ```
 
@@ -971,10 +999,10 @@ warning.
 ::: {.callout-tip}
 ## Recycling advice
 
-Here is our advice to you: either use a vector and a single element vector, or two 
-vectors of the same length. And in the cases where, for some reason, you
-need to recycle, make sure that you know what you are doing. For example,
-check the length of both vectors.
+Here is my advice to you when using vectorization: either use a vector and
+a single element vector, or two vectors of the same length. And in the
+cases where, for some reason, you need to recycle, make sure that you know
+what you are doing. For example, check the length of both vectors. 
 :::
 
 
@@ -1088,18 +1116,19 @@ Look them up in the help system by typing, for example, `?sum`
 in the console, and try them out to see how they work.
 :::
 
-The `NA` value very frequently pop up when you try to convert a character
+The `NA` values very frequently pop up when you try to convert a character
 vector holding what looks like numbers into a numeric vector. We will see
 many such examples in the days to come; the conversion is often done using
 the `as.numeric()` function. For example, it is quite common that values
 [`as.numeric()`]{.aside}
-typed in a spreadsheet contain comments or values which look like this `> 50`
-(measurement out of range).
+typed in a spreadsheet contain comments or values which look like this: `> 50`
+(and means: measurement out of range).
 
 
 ```{r}
 imported_data <- c("10", "20", "30", "> 50", "40", "N.A.", "60 (unsure)")
-# this will generate a warning
+
+# the following will generate a warning
 imported_data <- as.numeric(imported_data)
 imported_data
 ```
@@ -1255,10 +1284,14 @@ languages (including Python). It has some interesting implications which we
 will partially explore over the next few days. For now, however, we will be
 content with one important statement: in R, most of the stuff you do, you
 do using functions. A function takes zero or more arguments and returns
-exactly one argument.
+exactly one argument:
+
+```{r eval=FALSE}
+result <- some_function(arg1, arg2, arg3)
+```
 
 During this course, we will not really discuss or require creating your own
-functions. However, we would nonetheless like to show you how it is done.
+functions. However, I would nonetheless like to show you how it is done.
 There are two reasons for that. Firstly, it is really, really easy.
 Secondly, it will help you understand how functions work in R, and that
 will help you understand how to use functions that others have created.
@@ -1340,18 +1373,18 @@ area_lily(1:10, 1.5, 0.001)
 
 It is now time to conclude today's lesson with a bit of philosophy. When
 you write an R script, the first goal you have in mind is to analyse your
-data – in other words, by means of what you write you are trying the
-computer to do something for you. That is correct and fine, but there is
+data – in other words, by means of what you write you are trying to make the
+computer do something for you. That is correct and fine, but there is
 an important aspect of programming that is often overlooked.
 
-When you write a program, you are writing it not only for the computer, but
-also for other people. These other people may include your colleagues,
+When you write a program, you are writing it not only for the computer, *but
+also for other people*. These other people may include your colleagues,
 readers of your scientific articles, your students, and, last but not
 least, a future version of yourself. All these people need more then just
 a piece of code that works. You will quickly find it out yourself when you
 open a script or a project that you have not been working on for a few
 months – trust me on this, you will not know what it does, how it does and
-sometimes even whether you have written it or copied from somewhere.
+sometimes even whether you have written it yourself or copied from somewhere.
 
 You might be thinking that you are never willing to show your code to
 another person. You are wrong, and not only because it is useful *to you*
@@ -1393,7 +1426,7 @@ example, you should always put a space around your operators, like `x <- 2`
 (and not `x<-2`), you should always put a space after a comma, like
 `c(1, 2)` and not `c(1,2)` (and also not `c( 1 , 2 )`). 
 Lines should not be too long – 80 characters at most is a good rule of thumb. 
-If a line is too long, you can split it into several lines – R will not
+If a line is too long, you can split it into several lines – unlike Python, R will not
 mind.
 See [here](http://web.stanford.edu/class/cs109l/unrestricted/resources/google-style.html)
 for a more detailed guide on how to format your code.
