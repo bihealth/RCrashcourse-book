@@ -1882,6 +1882,9 @@ There are of course numerous resources for R on the web, so allow me to recommen
    forum for programmers and other like them. Most of the questions you have someone
    has previously asked here, including many by yours truly.
  * Online R books and tutorials:
+   * [An introduction to R](https://intro2r.com/) by Alex Douglas, Deon
+     Roos, Francesca Mancini, Ana Couto & David Lusseau. A basic book, but
+     still way more comprehensive than this little guide.
    * [fasteR](https://github.com/matloff/fasteR) is a book by Norm Matloff
      that is available online. This is another "crash-course" book that
      aims at getting you up to speed with R quickly. However, it's focus is

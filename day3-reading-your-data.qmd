@@ -31,8 +31,8 @@ you have worked with such files before.
 To read these files, we will use two packages: `readr` and `readxl`. The
 former, `readr`, is part of the `tidyverse` package, so when you load the
 tidyverse using `library(tidyverse)`, `readr` is loaded as well. The latter,
-`readxl`, is a separate package that you need to install and load
-separately.
+`readxl`, is used for Excel files and is a separate package that you need
+to install and load separately.
 
 [`read.table()`, `read.csv()`, `read.tsv()`]{.aside}
 There are also "base R" functions `read.table`, `read.csv`,
@@ -43,7 +43,7 @@ most important, they are safer – it is less likely to mess up your data
 with them.
 
 [tibbles]{.aside}
-tidyverse functions return *tibbles*, which, as you remember from
+The various tidyverse functions return *tibbles*, which, as you remember from
 yesterday, are a special flavor of data frames. Just to refresh your
 memory, here are key facts about tibbles:
 
@@ -85,7 +85,7 @@ XLSX (new Excel)             `read_xlsx()`                   `readxl`           
                                                                                              not a data frame! 
 ---------------------------- ------------------------------- ------------------------------- --------------------------
 
-As you can see, the functions we recommend to use can be used by loading
+As you can see, the functions I recommend to use can be used by loading
 the packages `tidyverse` and `readxl`. If you haven't done that yet, please
 install these packages now:
 
@@ -287,7 +287,7 @@ Windows Explorer or Finder. You need to go up one level, to get into
 "PhD", and then down again to "data".
 
 [Up one level with `..`]{.aside}
-Getting "up one level" in a path is done by using `..`. So the relative
+Getting "up one level" in a path is done by using `..` (two dots). So the relative
 path to the file "iris.csv" in your "data" directory is `../data/iris.csv`.
 
 ::: {.callout-caution icon=false appearance="simple"}
