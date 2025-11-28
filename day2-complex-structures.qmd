@@ -10,8 +10,8 @@ options(width=80)
 
 ## Goals for today
 
- * Logical vectors and subsetting
  * Complex data structures (matrices, lists and data frames)
+ * Logical vectors and subsetting
 
 ## Logical vectors
 
@@ -21,6 +21,7 @@ Yesterday, we mentioned briefly two special values in R: `TRUE` and `FALSE`.
 These are logical constants, and they are used to represent truth and
 falsehood, respectively. Using these values, it is possible to create
 *logical vectors* – vectors that contain only these two values.
+[Logical vectors]{.aside}
 
 
 ```{r}
@@ -55,9 +56,9 @@ that in more detail.
 ## TRUE, FALSE and T and F
 
 In R, `TRUE` and `FALSE` are the only two logical constants. However, there
-are also two other constants, `T` and `F`, which are equivalent to `TRUE`
+are also two other pre-defined values, `T` and `F`, which are equivalent to `TRUE`
 and `FALSE`, respectively. **Do not use them**. Unlike `TRUE` and `FALSE`,
-they can be overwritten, which can lead to chaos and mayhem.
+the values `T` and `F` can be overwritten, which will inevitably lead to chaos and mayhem.
 :::
 
 
