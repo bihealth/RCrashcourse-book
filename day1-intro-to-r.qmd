@@ -123,6 +123,23 @@ RStudio is a so called IDE, an Integrated Development Environment. That is,
 it provides a lot of goodies that help make your work easier, faster and
 more efficient.
 
+::: {.callout-tip icon=false appearance="simple"}
+## Positron
+
+In addition to RStudio, there is also a new popular IDE for R and Python
+called [Positron]{.aside}. While RStudio is still the most popular, mature
+IDE for R, Positron is thought as a long-term replacement for RStudio. At
+the moment, Positron is still in active development, but it is already getting traction.
+
+The main difference between RStudio and Positron is that RStudio is focused
+only on R, while Positron supports both R and Python equally well, with the
+goal of providing a professional IDE for Data Science. If you
+are interested, take a look at [Positron](https://positron.posit.co/) - it
+is free for individual use.
+
+:::
+
+
 ## Projects and Workspaces
 
 ### Creating a project: start here!
@@ -1561,4 +1578,3 @@ Things that you learned today:
    * Adding parameters to functions
    * Coding practices
 
-XXX
