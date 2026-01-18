@@ -573,17 +573,18 @@ window.Quarto = {
 <h3 data-number="1.2.3" class="anchored" data-anchor-id="r-and-rstudio"><span class="header-section-number">1.2.3</span> R and RStudio</h3>
 <p>R is the name of both, the programming language and of the language <em>interpreter</em>. When you start RStudio, you can see the R language interpreter working in the part of the window left and bottom - called “console”. So yes, you don’t need RStudio to work with R and, in fact, many people prefer to work with R in a different environment.</p>
 <p>RStudio is a so called IDE, an Integrated Development Environment. That is, it provides a lot of goodies that help make your work easier, faster and more efficient.</p>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
+<div class="callout callout-style-simple callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-body-container">
-<div id="exr-Positron" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.1 (Positron)</strong></span> In addition to RStudio, there is also a new popular IDE for R and Python called . While RStudio is still the most popular, mature IDE for R, Positron is thought as a long-term replacement for RStudio. At the moment, Positron is still in active development, but it is already getting traction.</p>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Positron
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In addition to RStudio, there is also a new popular IDE for R and Python called . While RStudio is still the most popular, mature IDE for R, Positron is thought as a long-term replacement for RStudio. At the moment, Positron is still in active development, but it is already getting traction.</p>
 <p>The main difference between RStudio and Positron is that RStudio is focused only on R, while Positron supports both R and Python equally well, with the goal of providing a professional IDE for Data Science. If you are interested, take a look at <a href="https://positron.posit.co/">Positron</a> - it is free for individual use.</p>
-</div>
-</div>
 </div>
 </div>
 <div class="no-row-height column-margin column-container"><span class="margin-aside callout-margin-content callout-margin-content-simple">Positron</span></div></section>
@@ -607,7 +608,7 @@ window.Quarto = {
 </div>
 <div class="callout-body-container">
 <div id="exr-create" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.2</strong></span> &nbsp;</p>
+<p><span class="theorem-title"><strong>Exercise 1.1</strong></span> &nbsp;</p>
 <ul>
 <li>Create a new project in RStudio. Do it now, you will continue to work with this project over the next few days (we hope).</li>
 <li>Inspect the contents of the project directory. What files are there?</li>
@@ -641,7 +642,7 @@ window.Quarto = {
 </div>
 <div class="callout-body-container">
 <div id="exr-help" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.3 (Help)</strong></span> Click on the “Help” tab in the right bottom panel. Type “t.test” in the search bar (mind the dot!) and press Enter. What do you see? Go through the document and notice the structure of the manual page. The majority of the manual pages will have precisely the same structure, as it is a part of the R documentation system.</p>
+<p><span class="theorem-title"><strong>Exercise 1.2 (Help)</strong></span> Click on the “Help” tab in the right bottom panel. Type “t.test” in the search bar (mind the dot!) and press Enter. What do you see? Go through the document and notice the structure of the manual page. The majority of the manual pages will have precisely the same structure, as it is a part of the R documentation system.</p>
 </div>
 </div>
 </div>
@@ -660,7 +661,7 @@ window.Quarto = {
 </div>
 <div class="callout-body-container">
 <div id="exr-calc" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.4</strong></span> Calculate the following expressions in R:</p>
+<p><span class="theorem-title"><strong>Exercise 1.3</strong></span> Calculate the following expressions in R:</p>
 <ul>
 <li><span class="math inline">\(\log_{2}(8)\)</span></li>
 <li><span class="math inline">\(\sin(\pi)\)</span></li>
@@ -668,7 +669,7 @@ window.Quarto = {
 <li><span class="math inline">\(\sqrt{e}\)</span></li>
 </ul>
 <div class="callout callout-style-default callout-caution no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -677,7 +678,7 @@ window.Quarto = {
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log2</span>(<span class="dv">8</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -765,7 +766,7 @@ window.Quarto = {
 </div>
 <div class="callout-body-container">
 <div id="exr-script" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.5</strong></span> Repeat <a href="#exr-calc" class="quarto-xref">Exercise&nbsp;<span>1.4</span></a>, but now type the expressions into the script which you have created in <a href="#exr-create" class="quarto-xref">Exercise&nbsp;<span>1.2</span></a>. Before each expression, insert a comment line stating what it does, for example <code># calculate sinus of pi</code>. Run the script by pressing <code>Ctrl+Enter</code> after each line.</p>
+<p><span class="theorem-title"><strong>Exercise 1.4</strong></span> Repeat <a href="#exr-calc" class="quarto-xref">Exercise&nbsp;<span>1.3</span></a>, but now type the expressions into the script which you have created in <a href="#exr-create" class="quarto-xref">Exercise&nbsp;<span>1.1</span></a>. Before each expression, insert a comment line stating what it does, for example <code># calculate sinus of pi</code>. Run the script by pressing <code>Ctrl+Enter</code> after each line.</p>
 </div>
 </div>
 </div>
@@ -850,7 +851,7 @@ Important
 </div>
 <div class="callout-body-container">
 <div id="exr-variables-and-rstudio" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.6</strong></span> Without actually running the code, guess what will be the value of <code>x</code> if you execute the following code:</p>
+<p><span class="theorem-title"><strong>Exercise 1.5</strong></span> Without actually running the code, guess what will be the value of <code>x</code> if you execute the following code:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># first, assign starting value</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span></span>
@@ -868,7 +869,7 @@ Important
 <span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(x <span class="sc">-</span> <span class="dv">10</span> <span class="sc">*</span> <span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-caution no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -877,7 +878,7 @@ Important
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Just run the code ;-) Which lines contain the assignment operator?</p>
 </div>
@@ -907,9 +908,9 @@ Important
 </div>
 <div class="callout-body-container">
 <div id="exr-variables-and-rstudio" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.7</strong></span> Create a variable using <code>x &lt;- 42</code>. Take a look at the Environment pane in RStudio (top left part of the window). Do you notice anything?</p>
+<p><span class="theorem-title"><strong>Exercise 1.6</strong></span> Create a variable using <code>x &lt;- 42</code>. Take a look at the Environment pane in RStudio (top left part of the window). Do you notice anything?</p>
 <div class="callout callout-style-default callout-caution no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -918,7 +919,7 @@ Important
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>A new entry appeared in the “Environment pane”. It shows that there is a new variable present in your environment.</p>
 </div>
@@ -980,7 +981,7 @@ Important
 </div>
 <div class="callout-body-container">
 <div id="exr-variables" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.8 (Variables)</strong></span> Create the following variables in your script:</p>
+<p><span class="theorem-title"><strong>Exercise 1.7 (Variables)</strong></span> Create the following variables in your script:</p>
 <ul>
 <li><code>name</code> with the value of your first name</li>
 <li><code>city</code> with the value of the city where you live</li>
@@ -989,7 +990,7 @@ Important
 <li>concatenate the variables <code>greeting</code> and <code>name</code> and store the result in a new variable <code>hellothere</code></li>
 </ul>
 <div class="callout callout-style-default callout-caution no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -998,7 +999,7 @@ Important
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>name <span class="ot">&lt;-</span> <span class="st">"January"</span></span>
@@ -1063,9 +1064,9 @@ Important
 </div>
 <div class="callout-body-container">
 <div id="exr-vectors-revseq" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.9 (Vectors)</strong></span> The <code>:</code> operator can be used to create a sequence of numbers, for example <code>5:15</code> creates a vector <code>5, 6, ... 15</code>. How do you get a vector <code>15, 14, ... 5</code>?</p>
+<p><span class="theorem-title"><strong>Exercise 1.8 (Vectors)</strong></span> The <code>:</code> operator can be used to create a sequence of numbers, for example <code>5:15</code> creates a vector <code>5, 6, ... 15</code>. How do you get a vector <code>15, 14, ... 5</code>?</p>
 <div class="callout callout-style-default callout-caution no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1074,7 +1075,7 @@ Important
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>sequence <span class="ot">&lt;-</span> <span class="dv">15</span><span class="sc">:</span><span class="dv">5</span></span>
@@ -1106,9 +1107,9 @@ Important
 </div>
 <div class="callout-body-container">
 <div id="exr-vectors-values" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.10 (Vectors)</strong></span> Create a vector that combines the numeric value <code>1</code> and the string <code>"one"</code>. What happens? Can you venture a guess?</p>
+<p><span class="theorem-title"><strong>Exercise 1.9 (Vectors)</strong></span> Create a vector that combines the numeric value <code>1</code> and the string <code>"one"</code>. What happens? Can you venture a guess?</p>
 <div class="callout callout-style-default callout-caution no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1117,7 +1118,7 @@ Important
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>combined <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="st">"one"</span>)</span>
@@ -1239,7 +1240,7 @@ Important
 </div>
 <div class="callout-body-container">
 <div id="exr-accessing" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.11 (Accessing and modifying vectors)</strong></span> &nbsp;</p>
+<p><span class="theorem-title"><strong>Exercise 1.10 (Accessing and modifying vectors)</strong></span> &nbsp;</p>
 <ul>
 <li>Create a vector with the first 10 prime numbers. Call it <code>primes</code>.</li>
 <li>How do you access the 3rd, 5th and 7th prime number?</li>
@@ -1250,7 +1251,7 @@ Important
 <li>Change the 3rd, 5th and 7th prime number to 100, 500 and 700, respectively.</li>
 </ul>
 <div class="callout callout-style-default callout-caution no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1259,7 +1260,7 @@ Important
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># note that 1 is not a prime number!</span></span>
@@ -1414,7 +1415,7 @@ result:     c(8,    10,     10,    12,    12,    14)
 </div>
 <div class="callout-body-container">
 <div id="exr-vectorisation" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.12 (Vectorisation)</strong></span> &nbsp;</p>
+<p><span class="theorem-title"><strong>Exercise 1.11 (Vectorisation)</strong></span> &nbsp;</p>
 <ul>
 <li>Create a vector with several numbers and try to add, subtract, multiply and divide it by a single number. What happens?</li>
 <li>Say, you have three values which are the diameters of three circles: 1, 5 and 13. You would like to have a vector containing the areas of these circles. What is the simplest way of doing that?</li>
@@ -1422,7 +1423,7 @@ result:     c(8,    10,     10,    12,    12,    14)
 <li>One vector, <code>lengths</code>, contains the lengths of the sides of three rectangles, and the other, <code>widths</code>, contains their widths. Create a vector containing the areas of these rectangles.</li>
 </ul>
 <div class="callout callout-style-default callout-caution no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1431,7 +1432,7 @@ result:     c(8,    10,     10,    12,    12,    14)
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a vector</span></span>
@@ -1581,7 +1582,7 @@ Tip&nbsp;1.1: Useful functions
 </div>
 <div class="callout-body-container">
 <div id="exr-lilies" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.13 (Modelling water lilies)</strong></span> Take a piece of paper and a pen. Your task is to come up with a formula to describe the area of the lily on the <span class="math inline">\(n\)</span>-th day. Write down the formula.</p>
+<p><span class="theorem-title"><strong>Exercise 1.12 (Modelling water lilies)</strong></span> Take a piece of paper and a pen. Your task is to come up with a formula to describe the area of the lily on the <span class="math inline">\(n\)</span>-th day. Write down the formula.</p>
 <p>Hint: if you are stuck, try to calculate the area of the lily on the first few days.</p>
 </div>
 </div>
@@ -1685,7 +1686,7 @@ Figure&nbsp;1.1
 </div>
 <div class="callout-body-container">
 <div id="exr-day1-lilies-plot" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.14 (Plotting water lilies)</strong></span> &nbsp;</p>
+<p><span class="theorem-title"><strong>Exercise 1.13 (Plotting water lilies)</strong></span> &nbsp;</p>
 <ul>
 <li>Create the same plot using the <code>plot()</code> function, but add, as a parameter, <code>col="blue"</code>. What happens?</li>
 <li>Now add a parameter <code>pch=19</code>. What happens?</li>
@@ -1739,9 +1740,9 @@ Figure&nbsp;1.1
 </div>
 <div class="callout-body-container">
 <div id="exr-lilies-plot" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.15 (Creating your own function)</strong></span> Modify the <code>area_lily</code> function so that it takes three arguments: the day, the initial fraction and the factor. Use the new function to calculate the area of the lily on the first 10 days with the initial fraction of 0.001 and the factor of 1.5. What is the area on the 10th day?</p>
+<p><span class="theorem-title"><strong>Exercise 1.14 (Creating your own function)</strong></span> Modify the <code>area_lily</code> function so that it takes three arguments: the day, the initial fraction and the factor. Use the new function to calculate the area of the lily on the first 10 days with the initial fraction of 0.001 and the factor of 1.5. What is the area on the 10th day?</p>
 <div class="callout callout-style-default callout-caution no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1750,7 +1751,7 @@ Figure&nbsp;1.1
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-22" class="callout-22-contents callout-collapse collapse">
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a>area_lily <span class="ot">&lt;-</span> <span class="cf">function</span>(day, fct, start) {</span>

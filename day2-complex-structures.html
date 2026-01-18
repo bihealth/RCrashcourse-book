@@ -685,7 +685,7 @@ TRUE  TRUE   FALSE FALSE  FALSE  TRUE</code></pre>
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># how many numbers are greater than 0.5?</span></span>
 <span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(vec <span class="sc">&gt;</span> <span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 12</code></pre>
+<pre><code>[1] 15</code></pre>
 </div>
 </div>
 <p>Note: in the code above, we have sequentially filtered for numbers greater than 0.5, and then numbers smaller than 1.0. However, typically you would combine these two conditions into one using the <code>&amp;</code> operator, which I will introduce on Day 4.</p>
@@ -1151,16 +1151,16 @@ $age
 [1] 42
 
 $measurements
-[1] 0.8641171 0.3068588 0.9898317 0.2004007 0.8601047</code></pre>
+[1] 0.9536999 0.3858184 0.7617949 0.2696979 0.9345734</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>patient_data<span class="sc">$</span>measurements[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.8641171</code></pre>
+<pre><code>[1] 0.9536999</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>patient_data<span class="sc">$</span>measurements[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">42</span></span>
 <span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>patient_data<span class="sc">$</span>measurements <span class="sc">*</span> <span class="dv">3</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 126.0000000   0.9205763   2.9694951   0.6012021   2.5803141</code></pre>
+<pre><code>[1] 126.0000000   1.1574552   2.2853847   0.8090938   2.8037202</code></pre>
 </div>
 </div>
 <div class="page-columns page-full"><p>Since the lists are named, there must be a way to access and modify these names. And, of course, there is: the <code>names()</code> function. </p><div class="no-row-height column-margin column-container"><span class="margin-aside"><code>names()</code></span></div></div>
@@ -1254,13 +1254,13 @@ $measurements
     Welch Two Sample t-test
 
 data:  group_a and group_b
-t = -4.8664, df = 17.554, p-value = 0.0001329
+t = -6.5684, df = 17.52, p-value = 4.113e-06
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -5.818374 -2.304962
+ -5.530721 -2.846102
 sample estimates:
 mean of x mean of y 
- 9.918275 13.979943 </code></pre>
+ 10.15617  14.34458 </code></pre>
 </div>
 </div>
 <p>This is because R has a special function for formatting the results of a t-test<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, so that it is easier to read.</p>
@@ -1276,7 +1276,7 @@ mean of x mean of y
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>t_test<span class="sc">$</span>p.value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0001328611</code></pre>
+<pre><code>[1] 4.11329e-06</code></pre>
 </div>
 </div>
 </section>

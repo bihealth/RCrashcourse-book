@@ -466,7 +466,7 @@ window.Quarto = {
   <ul>
   <li><a href="#day-1" id="toc-day-1" class="nav-link active" data-scroll-target="#day-1">Day 1</a>
   <ul class="collapse">
-  <li><a href="#sec-day1-lilies-plot" id="toc-sec-day1-lilies-plot" class="nav-link" data-scroll-target="#sec-day1-lilies-plot">Water lilies (Exercise&nbsp;<span>1.14</span>)</a></li>
+  <li><a href="#sec-day1-lilies-plot" id="toc-sec-day1-lilies-plot" class="nav-link" data-scroll-target="#sec-day1-lilies-plot">Water lilies (Exercise&nbsp;<span>1.13</span>)</a></li>
   </ul></li>
   <li><a href="#day-2" id="toc-day-2" class="nav-link" data-scroll-target="#day-2">Day 2</a>
   <ul class="collapse">
@@ -516,7 +516,7 @@ window.Quarto = {
 <section id="day-1" class="level2">
 <h2 class="anchored" data-anchor-id="day-1">Day 1</h2>
 <section id="sec-day1-lilies-plot" class="level3">
-<h3 class="anchored" data-anchor-id="sec-day1-lilies-plot">Water lilies (<a href="day1-intro-to-r.html#exr-day1-lilies-plot" class="quarto-xref">Exercise&nbsp;<span>1.14</span></a>)</h3>
+<h3 class="anchored" data-anchor-id="sec-day1-lilies-plot">Water lilies (<a href="day1-intro-to-r.html#exr-day1-lilies-plot" class="quarto-xref">Exercise&nbsp;<span>1.13</span></a>)</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plots with a blue color</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(days, area, <span class="at">type=</span><span class="st">"b"</span>, <span class="at">col=</span><span class="st">"blue"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -621,21 +621,21 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wells with inhibitor 3</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>res_mtx[ <span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">5</span><span class="sc">:</span><span class="dv">6</span> ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>             Inh3_control   Inh3_low
-Inh1_control    0.1461440 0.60244989
-Inh1_low        0.6907293 0.09645084
-Inh1_medium     0.9778994 0.78005150
-Inh1_high       0.4739231 0.91991208</code></pre>
+<pre><code>             Inh3_control  Inh3_low
+Inh1_control   0.07412565 0.3226252
+Inh1_low       0.62303807 0.4673535
+Inh1_medium    0.14124591 0.1224097
+Inh1_high      0.07733948 0.1271100</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inhibitor 1 as well as 2</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>inh1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Inh1_low"</span>, <span class="st">"Inh1_medium"</span>, <span class="st">"Inh1_high"</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>inh2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Inh2_low"</span>, <span class="st">"Inh2_high"</span>)</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>res_mtx[ inh1, inh2 ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>             Inh2_low   Inh2_high
-Inh1_low    0.3864039 0.029333730
-Inh1_medium 0.5186013 0.002376774
-Inh1_high   0.0402242 0.893527503</code></pre>
+<pre><code>             Inh2_low Inh2_high
+Inh1_low    0.2783113 0.7624287
+Inh1_medium 0.5034738 0.2935289
+Inh1_high   0.6351839 0.4784250</code></pre>
 </div>
 </div>
 </section>
@@ -654,12 +654,12 @@ Inh1_high   0.0402242 0.893527503</code></pre>
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>             X           Y          Z A sequence
-a -0.823591119  0.77872453 -1.1998842 A     0.00
-b  2.328649195  0.24372546 -0.1341511 A     0.25
-c -1.545546102 -0.74132450  1.1607855 A     0.50
-d  0.880943955  1.09196582  0.9372592 A     0.75
-e  0.004926774  0.06688357  0.6042526 A     1.00</code></pre>
+<pre><code>           X           Y          Z A sequence
+a  0.6757549  0.17308733 -1.6926300 A     0.00
+b -0.3873067  0.43174227 -0.7704792 A     0.25
+c  1.1891031 -1.79811236  1.1512611 A     0.50
+d -1.1311614  0.38568342  0.3088983 A     0.75
+e  1.7286470 -0.08846927  0.7044374 A     1.00</code></pre>
 </div>
 </div>
 </section>
